@@ -229,11 +229,17 @@ class FMPSDK:
         self.__init_url_query_vars()
         self.url_path = f"financial-statements/{self.symbol}"
         self.datatype = "zip"  # Only ZIP format is supported.
-        with urlopen(self.url) as response, open(FINANCIAL_STATEMENT_FILENAME, 'wb') as out_file:
-            logging.info(f"Saving {self.symbol} financial statement as {FINANCIAL_STATEMENT_FILENAME}.")
+        with urlopen(self.url) as response, open(
+            FINANCIAL_STATEMENT_FILENAME, "wb"
+        ) as out_file:
+            logging.info(
+                f"Saving {self.symbol} financial statement as {FINANCIAL_STATEMENT_FILENAME}."
+            )
             shutil.copyfileobj(response, out_file)
 
-    def income_statement(self, period: str = 'annual', download: bool = False, limit: int = 120):
+    def income_statement(
+        self, period: str = "annual", download: bool = False, limit: int = 120
+    ):
         """
         Query FMP API for CIncome Statement.
 
@@ -283,15 +289,21 @@ class FMPSDK:
         self.period = period
         if download:
             self.datatype = "csv"  # Only CSV is supported.
-            with urlopen(self.url) as response, open(INCOME_STATEMENT_FILENAME, 'wb') as out_file:
-                logging.info(f"Saving {self.symbol} financial statement as {INCOME_STATEMENT_FILENAME}.")
+            with urlopen(self.url) as response, open(
+                INCOME_STATEMENT_FILENAME, "wb"
+            ) as out_file:
+                logging.info(
+                    f"Saving {self.symbol} financial statement as {INCOME_STATEMENT_FILENAME}."
+                )
                 shutil.copyfileobj(response, out_file)
         else:
             response = urlopen(self.url)
             data = response.read().decode("utf-8")
             return json.loads(data)
 
-    def balance_sheet_statement(self, period: str = 'annual', download: bool = False, limit: int = 120):
+    def balance_sheet_statement(
+        self, period: str = "annual", download: bool = False, limit: int = 120
+    ):
         """
         Query FMP API for Balance Sheet Statement.
 
@@ -354,15 +366,21 @@ class FMPSDK:
         self.period = period
         if download:
             self.datatype = "csv"  # Only CSV is supported.
-            with urlopen(self.url) as response, open(BALANCE_SHEET_STATEMENT_FILENAME, 'wb') as out_file:
-                logging.info(f"Saving {self.symbol} financial statement as {BALANCE_SHEET_STATEMENT_FILENAME}.")
+            with urlopen(self.url) as response, open(
+                BALANCE_SHEET_STATEMENT_FILENAME, "wb"
+            ) as out_file:
+                logging.info(
+                    f"Saving {self.symbol} financial statement as {BALANCE_SHEET_STATEMENT_FILENAME}."
+                )
                 shutil.copyfileobj(response, out_file)
         else:
             response = urlopen(self.url)
             data = response.read().decode("utf-8")
             return json.loads(data)
 
-    def cash_flow_statement(self, period: str = 'annual', download: bool = False, limit: int = 120):
+    def cash_flow_statement(
+        self, period: str = "annual", download: bool = False, limit: int = 120
+    ):
         """
         Query FMP API for Cash Flow Statement.
 
@@ -416,8 +434,12 @@ class FMPSDK:
         self.period = period
         if download:
             self.datatype = "csv"  # Only CSV is supported.
-            with urlopen(self.url) as response, open(CASH_FLOW_STATEMENT_FILENAME, 'wb') as out_file:
-                logging.info(f"Saving {self.symbol} financial statement as {CASH_FLOW_STATEMENT_FILENAME}.")
+            with urlopen(self.url) as response, open(
+                CASH_FLOW_STATEMENT_FILENAME, "wb"
+            ) as out_file:
+                logging.info(
+                    f"Saving {self.symbol} financial statement as {CASH_FLOW_STATEMENT_FILENAME}."
+                )
                 shutil.copyfileobj(response, out_file)
         else:
             response = urlopen(self.url)
@@ -498,7 +520,7 @@ class FMPSDK:
         data = response.read().decode("utf-8")
         return json.loads(data)
 
-    def financial_ratios(self, period: str = 'annual', limit: int = 120):
+    def financial_ratios(self, period: str = "annual", limit: int = 120):
         """
         Query FMP API for Financial Ratios.
 
@@ -682,7 +704,7 @@ class FMPSDK:
         Return API key.
         :return str:
         """
-        if 'apikey' in self.__url['query']:
+        if "apikey" in self.__url["query"]:
             return self.__url["query"]["apikey"]
         else:
             return ""
@@ -719,8 +741,8 @@ class FMPSDK:
         Return query value.
         :return str:
         """
-        if 'query' in self.__url['query']:
-            return self.__url['query']['query']
+        if "query" in self.__url["query"]:
+            return self.__url["query"]["query"]
         else:
             return ""
 
@@ -731,7 +753,7 @@ class FMPSDK:
         :param str value: Query string
         :return None:
         """
-        self.__add_url_query_var(key='query', value=value)
+        self.__add_url_query_var(key="query", value=value)
 
     @property
     def exchange(self) -> str:
@@ -739,8 +761,8 @@ class FMPSDK:
         Return exchange value.
         :return str:
         """
-        if 'exchange' in self.__url['query']:
-            return self.__url['query']['exchange']
+        if "exchange" in self.__url["query"]:
+            return self.__url["query"]["exchange"]
         else:
             return ""
 
@@ -752,24 +774,26 @@ class FMPSDK:
         :return None:
         """
         valid_exchanges = [
-            'ETF',
-            'MUTUAL_FUND',
-            'COMMODITY',
-            'INDEX',
-            'CRYPTO',
-            'FOREX',
-            'TSX',
-            'AMEX',
-            'NASDAQ',
-            'NYSE',
-            'EURONEXT',
+            "ETF",
+            "MUTUAL_FUND",
+            "COMMODITY",
+            "INDEX",
+            "CRYPTO",
+            "FOREX",
+            "TSX",
+            "AMEX",
+            "NASDAQ",
+            "NYSE",
+            "EURONEXT",
         ]
 
         if value in valid_exchanges:
-            self.__add_url_query_var(key='exchange', value=value)
+            self.__add_url_query_var(key="exchange", value=value)
         else:
-            logging.error(f"Value: {value}: Invalid exchange.  Select from {valid_exchanges}.")
-            self.__add_url_query_var(key='exchange', value="")
+            logging.error(
+                f"Value: {value}: Invalid exchange.  Select from {valid_exchanges}."
+            )
+            self.__add_url_query_var(key="exchange", value="")
 
     @property
     def limit(self) -> int:
@@ -777,8 +801,8 @@ class FMPSDK:
         Return limit value.
         :return int:
         """
-        if 'limit' in self.__url['query']:
-            return self.__url['query']['limit']
+        if "limit" in self.__url["query"]:
+            return self.__url["query"]["limit"]
         else:
             return LIMIT
 
@@ -789,7 +813,7 @@ class FMPSDK:
         :param int value: Limit value
         :return None:
         """
-        self.__add_url_query_var(key='limit', value=value)
+        self.__add_url_query_var(key="limit", value=value)
 
     @property
     def datatype(self) -> str:
@@ -797,8 +821,8 @@ class FMPSDK:
         Return data type of file to download.
         :return str:
         """
-        if 'datatype' in self.__url['query']:
-            return self.__url['query']['datatype']
+        if "datatype" in self.__url["query"]:
+            return self.__url["query"]["datatype"]
         else:
             return "zip"
 
@@ -809,7 +833,7 @@ class FMPSDK:
         :param str value: datatype value
         :return None:
         """
-        self.__add_url_query_var(key='datatype', value=value)
+        self.__add_url_query_var(key="datatype", value=value)
 
     @property
     def period(self) -> str:
@@ -817,8 +841,8 @@ class FMPSDK:
         Return period of query (Annual or Quarterly).
         :return str:
         """
-        if 'period' in self.__url['query']:
-            return self.__url['query']['period']
+        if "period" in self.__url["query"]:
+            return self.__url["query"]["period"]
         else:
             return "annual"
 
@@ -829,6 +853,6 @@ class FMPSDK:
         :param str value: period value
         :return None:
         """
-        valid_values = ['annual', "quarter"]
+        valid_values = ["annual", "quarter"]
         if value in valid_values:
-            self.__add_url_query_var(key='period', value=value)
+            self.__add_url_query_var(key="period", value=value)
