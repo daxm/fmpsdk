@@ -3,16 +3,20 @@
 import os
 from dotenv import load_dotenv
 from fmpsdk import FMPSDK
+import pprint
 
 # Actual API key is stored in a .env file.  Not good to store API key directly in script.
 load_dotenv()
 apikey = os.environ.get('apikey')
 symbol = 'AAPL'
 
+pp = pprint.PrettyPrinter(indent=2)
+
 # Create an FMPSDK object
 company = FMPSDK(apikey=apikey, symbol=symbol)
 
 # Access the FMPSDK methods.  Most return a List of Dictionaries.
+"""
 print(f"Company Profile: {company.company_profile()}")
 print(f"Company Quote: {company.quote()}")
 print(f"Key Executives: {company.key_executives()}")
@@ -30,4 +34,9 @@ print(f"Quarterly Balance Sheet Statement: {company.balance_sheet_statement(peri
 company.balance_sheet_statement(download=True)
 print(f"Financial Ratios (TTM): {company.financial_ratios_ttm()}")
 print(f"Annual Financial Ratios: {company.financial_ratios(period='annual')}")
-print(f"Quarterly Financial Ratios: {company.financial_ratios(period='quarter')}")
+print("Quarterly Financial Ratios:")
+for item in company.financial_ratios(period='quarter'):
+    pp.pprint(item)
+"""
+print(f"Historical Dividends: {company.historical_stock_dividend()}")
+print(f"Historical Stock Split: {company.historical_stock_split()}")
