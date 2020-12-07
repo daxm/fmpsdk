@@ -37,6 +37,6 @@ print(f"Annual Financial Ratios: {company.financial_ratios(period='annual')}")
 print("Quarterly Financial Ratios:")
 for item in company.financial_ratios(period='quarter'):
     pp.pprint(item)
-"""
 print(f"Historical Dividends: {company.historical_stock_dividend()}")
 print(f"Historical Stock Split: {company.historical_stock_split()}")
+"""

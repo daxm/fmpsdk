@@ -224,21 +224,25 @@ class FMPSDK:
         data = response.read().decode("utf-8")
         return json.loads(data)
 
-    def financial_statement(self):
+    def financial_statement(self, filename: str = FINANCIAL_STATEMENT_FILENAME):
         """Download company's financial statement."""
         self.__init_url_query_vars()
         self.url_path = f"financial-statements/{self.symbol}"
         self.datatype = "zip"  # Only ZIP format is supported.
         with urlopen(self.url) as response, open(
-            FINANCIAL_STATEMENT_FILENAME, "wb"
+            filename, "wb"
         ) as out_file:
             logging.info(
-                f"Saving {self.symbol} financial statement as {FINANCIAL_STATEMENT_FILENAME}."
+                f"Saving {self.symbol} financial statement as {filename}."
             )
             shutil.copyfileobj(response, out_file)
 
     def income_statement(
-        self, period: str = "annual", download: bool = False, limit: int = 120
+            self,
+            period: str = "annual",
+            download: bool = False,
+            limit: int = 120,
+            filename: str = INCOME_STATEMENT_FILENAME,
     ):
         """
         Query FMP API for CIncome Statement.
@@ -290,10 +294,10 @@ class FMPSDK:
         if download:
             self.datatype = "csv"  # Only CSV is supported.
             with urlopen(self.url) as response, open(
-                INCOME_STATEMENT_FILENAME, "wb"
+                filename, "wb"
             ) as out_file:
                 logging.info(
-                    f"Saving {self.symbol} financial statement as {INCOME_STATEMENT_FILENAME}."
+                    f"Saving {self.symbol} financial statement as {filename}."
                 )
                 shutil.copyfileobj(response, out_file)
         else:
@@ -302,7 +306,11 @@ class FMPSDK:
             return json.loads(data)
 
     def balance_sheet_statement(
-        self, period: str = "annual", download: bool = False, limit: int = 120
+            self,
+            period: str = "annual",
+            download: bool = False,
+            limit: int = 120,
+            filename: str = BALANCE_SHEET_STATEMENT_FILENAME,
     ):
         """
         Query FMP API for Balance Sheet Statement.
@@ -367,10 +375,10 @@ class FMPSDK:
         if download:
             self.datatype = "csv"  # Only CSV is supported.
             with urlopen(self.url) as response, open(
-                BALANCE_SHEET_STATEMENT_FILENAME, "wb"
+                filename, "wb"
             ) as out_file:
                 logging.info(
-                    f"Saving {self.symbol} financial statement as {BALANCE_SHEET_STATEMENT_FILENAME}."
+                    f"Saving {self.symbol} financial statement as {filename}."
                 )
                 shutil.copyfileobj(response, out_file)
         else:
@@ -379,7 +387,11 @@ class FMPSDK:
             return json.loads(data)
 
     def cash_flow_statement(
-        self, period: str = "annual", download: bool = False, limit: int = 120
+            self,
+            period: str = "annual",
+            download: bool = False,
+            limit: int = 120,
+            filename: str = CASH_FLOW_STATEMENT_FILENAME,
     ):
         """
         Query FMP API for Cash Flow Statement.
@@ -435,10 +447,10 @@ class FMPSDK:
         if download:
             self.datatype = "csv"  # Only CSV is supported.
             with urlopen(self.url) as response, open(
-                CASH_FLOW_STATEMENT_FILENAME, "wb"
+                filename, "wb"
             ) as out_file:
                 logging.info(
-                    f"Saving {self.symbol} financial statement as {CASH_FLOW_STATEMENT_FILENAME}."
+                    f"Saving {self.symbol} financial statement as {filename}."
                 )
                 shutil.copyfileobj(response, out_file)
         else:
