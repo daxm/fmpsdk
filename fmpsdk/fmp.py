@@ -229,20 +229,16 @@ class FMPSDK:
         self.__init_url_query_vars()
         self.url_path = f"financial-statements/{self.symbol}"
         self.datatype = "zip"  # Only ZIP format is supported.
-        with urlopen(self.url) as response, open(
-            filename, "wb"
-        ) as out_file:
-            logging.info(
-                f"Saving {self.symbol} financial statement as {filename}."
-            )
+        with urlopen(self.url) as response, open(filename, "wb") as out_file:
+            logging.info(f"Saving {self.symbol} financial statement as {filename}.")
             shutil.copyfileobj(response, out_file)
 
     def income_statement(
-            self,
-            period: str = "annual",
-            download: bool = False,
-            limit: int = 120,
-            filename: str = INCOME_STATEMENT_FILENAME,
+        self,
+        period: str = "annual",
+        download: bool = False,
+        limit: int = 120,
+        filename: str = INCOME_STATEMENT_FILENAME,
     ):
         """
         Query FMP API for CIncome Statement.
@@ -293,12 +289,8 @@ class FMPSDK:
         self.period = period
         if download:
             self.datatype = "csv"  # Only CSV is supported.
-            with urlopen(self.url) as response, open(
-                filename, "wb"
-            ) as out_file:
-                logging.info(
-                    f"Saving {self.symbol} financial statement as {filename}."
-                )
+            with urlopen(self.url) as response, open(filename, "wb") as out_file:
+                logging.info(f"Saving {self.symbol} financial statement as {filename}.")
                 shutil.copyfileobj(response, out_file)
         else:
             response = urlopen(self.url)
@@ -306,11 +298,11 @@ class FMPSDK:
             return json.loads(data)
 
     def balance_sheet_statement(
-            self,
-            period: str = "annual",
-            download: bool = False,
-            limit: int = 120,
-            filename: str = BALANCE_SHEET_STATEMENT_FILENAME,
+        self,
+        period: str = "annual",
+        download: bool = False,
+        limit: int = 120,
+        filename: str = BALANCE_SHEET_STATEMENT_FILENAME,
     ):
         """
         Query FMP API for Balance Sheet Statement.
@@ -374,12 +366,8 @@ class FMPSDK:
         self.period = period
         if download:
             self.datatype = "csv"  # Only CSV is supported.
-            with urlopen(self.url) as response, open(
-                filename, "wb"
-            ) as out_file:
-                logging.info(
-                    f"Saving {self.symbol} financial statement as {filename}."
-                )
+            with urlopen(self.url) as response, open(filename, "wb") as out_file:
+                logging.info(f"Saving {self.symbol} financial statement as {filename}.")
                 shutil.copyfileobj(response, out_file)
         else:
             response = urlopen(self.url)
@@ -387,11 +375,11 @@ class FMPSDK:
             return json.loads(data)
 
     def cash_flow_statement(
-            self,
-            period: str = "annual",
-            download: bool = False,
-            limit: int = 120,
-            filename: str = CASH_FLOW_STATEMENT_FILENAME,
+        self,
+        period: str = "annual",
+        download: bool = False,
+        limit: int = 120,
+        filename: str = CASH_FLOW_STATEMENT_FILENAME,
     ):
         """
         Query FMP API for Cash Flow Statement.
@@ -446,12 +434,8 @@ class FMPSDK:
         self.period = period
         if download:
             self.datatype = "csv"  # Only CSV is supported.
-            with urlopen(self.url) as response, open(
-                filename, "wb"
-            ) as out_file:
-                logging.info(
-                    f"Saving {self.symbol} financial statement as {filename}."
-                )
+            with urlopen(self.url) as response, open(filename, "wb") as out_file:
+                logging.info(f"Saving {self.symbol} financial statement as {filename}.")
                 shutil.copyfileobj(response, out_file)
         else:
             response = urlopen(self.url)
