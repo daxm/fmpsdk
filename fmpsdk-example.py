@@ -39,4 +39,23 @@ for item in company.financial_ratios(period='quarter'):
     pp.pprint(item)
 print(f"Historical Dividends: {company.historical_stock_dividend()}")
 print(f"Historical Stock Split: {company.historical_stock_split()}")
+print(f"Financial Statements List: {company.financial_statement_lists()}")
+print(f"Income Statement Growth: {company.income_statement_growth(limit=10)}")
+print(f"Balance Sheet Statement Growth: {company.balance_sheet_statement_growth(limit=10)}")
+print(f"Cash Flow Statement Growth: {company.cash_flow_statement_growth(limit=10)}")
+print(f"Annual Income Statement as Reported : {company.income_statement_as_reported()}")
+print(f"Quarterly Income Statement as Reported: {company.income_statement_as_reported(period='quarter')}")
+company.income_statement_as_reported(download=True)
+print(f"Annual Balance Sheet Statement as Reported : {company.balance_sheet_statement_as_reported()}")
+print(f"Quarterly Balance Sheet Statement as Reported: "
+      f"{company.balance_sheet_statement_as_reported(period='quarter')}")
+company.balance_sheet_statement_as_reported(download=True)
+print(f"Annual Cash Flow Statement as Reported : {company.cash_flow_statement_as_reported()}")
+print(f"Quarterly Cash Flow Statement as Reported: {company.cash_flow_statement_as_reported(period='quarter')}")
+company.cash_flow_statement_as_reported(download=True)
+print(f"Annual Full Financial Statement as Reported : {company.financial_statement_full_as_reported()}")
+print(f"Quarterly Full Financial Statement as Reported:"
+      f" {company.financial_statement_full_as_reported(period='quarter')}")
 """
+print(f"Annual Enterprise Values: {company.enterprise_values()}")
+print(f"Quarterly Enterprise Values: {company.enterprise_values(period='quarter')}")
