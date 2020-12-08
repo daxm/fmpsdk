@@ -1,4 +1,4 @@
-from settings import (
+from .settings import (
     BASE_URL,
     FINANCIAL_STATEMENT_FILENAME,
     CASH_FLOW_STATEMENT_FILENAME,
@@ -9,7 +9,7 @@ from settings import (
     CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
 )
 import shutil
-from url_methods import *
+from .url_methods import *
 from urllib.request import urlopen
 
 

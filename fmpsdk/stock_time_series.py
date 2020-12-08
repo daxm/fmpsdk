@@ -1,5 +1,5 @@
-from settings import BASE_URL
-from url_methods import *
+from .settings import BASE_URL
+from .url_methods import *
 
 
 def historical_stock_dividend(apikey: str, symbol: str):
