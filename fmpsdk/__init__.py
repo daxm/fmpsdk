@@ -34,4 +34,6 @@ __all__ = [
     'financial_ratios_ttm',
     'financial_ratios',
     'enterprise_values',
+    'historical_stock_dividend',
+    'historical_stock_split',
 ]
