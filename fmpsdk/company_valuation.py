@@ -1,16 +1,9 @@
+from settings import BASE_URL, FINANCIAL_STATEMENT_FILENAME, CASH_FLOW_STATEMENT_FILENAME, \
+    INCOME_STATEMENT_FILENAME, BALANCE_SHEET_STATEMENT_FILENAME, INCOME_STATEMENT_AS_REPORTED_FILENAME, \
+    BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME, CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME
 import shutil
 from url_methods import *
-from urllib import parse
 from urllib.request import urlopen
-
-BASE_URL: str = "https://financialmodelingprep.com/api/v3/"
-FINANCIAL_STATEMENT_FILENAME: str = "financial_statement.zip"
-CASH_FLOW_STATEMENT_FILENAME: str = "cash_flow_statement.csv"
-INCOME_STATEMENT_FILENAME: str = "income_statement.csv"
-BALANCE_SHEET_STATEMENT_FILENAME: str = "balance_sheet_statement.csv"
-INCOME_STATEMENT_AS_REPORTED_FILENAME: str = "income_statement_as_reported.csv"
-BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME: str = "balance_sheet_as_reported.csv"
-CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME: str = "cash_flow_as_reported.csv"
 
 
 def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -366,14 +359,14 @@ def balance_sheet_statement(
         return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-'''
 def cash_flow_statement(
-        self,
+        apikey: str,
+        symbol: str,
         period: str = "annual",
         limit: int = 120,
         download: bool = False,
         filename: str = CASH_FLOW_STATEMENT_FILENAME,
-):
+) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP API for Cash Flow Statement.
 
@@ -421,22 +414,23 @@ def cash_flow_statement(
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"cash-flow-statement/{symbol}"
-    limit = limit
-    period = period
+    path = f"cash-flow-statement/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+        'period': set_period(period)
+    }
     if download:
-        datatype = "csv"  # Only CSV is supported.
+        query_vars['datatype'] = 'csv'  # Only CSV is supported.
+        url = make_url(base=BASE_URL, path=path, query_vars=query_vars)
         with urlopen(url) as response, open(filename, "wb") as out_file:
             logging.info(f"Saving {symbol} financial statement as {filename}.")
             shutil.copyfileobj(response, out_file)
     else:
-        response = urlopen(url)
-        data = response.read().decode("utf-8")
-        return json.loads(data)
+        return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def financial_statement_lists(self):
+def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
     """
     List of symbols that have financial statements
 
@@ -459,14 +453,12 @@ def financial_statement_lists(self):
       "0E6Y.L", "0E7S.L", "0E7Z.L", "0E9V.L", "0EA2.L", "0EAQ.L", "0EAW.L", "0EBQ.L", "0EDD.L", "0EDE.L", ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"financial-statement-symbol-lists"
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"financial-statement-symbol-lists"
+    query_vars = {'apikey': apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def income_statement_growth(self, limit: int = 120):
+def income_statement_growth(apikey: str, symbol: str, limit: int = 120) -> typing.List[typing.Dict]:
     """
     Income statements growth
 
@@ -505,15 +497,15 @@ def income_statement_growth(self, limit: int = 120):
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"income-statement-growth/{symbol}"
-    limit = limit
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"income-statement-growth/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+    }
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def balance_sheet_statement_growth(self, limit: int = 120):
+def balance_sheet_statement_growth(apikey: str, symbol: str, limit: int = 120) -> typing.List[typing.Dict]:
     """
     Balance Sheet statements growth
 
@@ -552,15 +544,15 @@ def balance_sheet_statement_growth(self, limit: int = 120):
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"balance-sheet-statement-growth/{symbol}"
-    limit = limit
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"balance-sheet-statement-growth/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+    }
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def cash_flow_statement_growth(self, limit: int = 120):
+def cash_flow_statement_growth(apikey: str, symbol: str, limit: int = 120) -> typing.List[typing.Dict]:
     """
     Cash Flow statements growth
 
@@ -599,21 +591,22 @@ def cash_flow_statement_growth(self, limit: int = 120):
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"cash-flow-statement-growth/{symbol}"
-    limit = limit
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"cash-flow-statement-growth/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+    }
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
 def income_statement_as_reported(
-        self,
+        apikey: str,
+        symbol: str,
         period: str = "annual",
         limit: int = 120,
         download: bool = False,
         filename: str = INCOME_STATEMENT_AS_REPORTED_FILENAME,
-):
+) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP API for Income Statement as Reported.
 
@@ -650,28 +643,30 @@ def income_statement_as_reported(
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"income-statement-as-reported/{symbol}"
-    limit = limit
-    period = period
+    path = f"income-statement-as-reported/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+        'period': set_period(value=period)
+    }
     if download:
-        datatype = "csv"  # Only CSV is supported.
+        query_vars['datatype'] = 'csv'  # Only CSV is supported.
+        url = make_url(base=BASE_URL, path=path, query_vars=query_vars)
         with urlopen(url) as response, open(filename, "wb") as out_file:
             logging.info(f"Saving {symbol} financial statement as {filename}.")
             shutil.copyfileobj(response, out_file)
     else:
-        response = urlopen(url)
-        data = response.read().decode("utf-8")
-        return json.loads(data)
+        return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
 def balance_sheet_statement_as_reported(
-        self,
+        apikey: str,
+        symbol: str,
         period: str = "annual",
         limit: int = 120,
         download: bool = False,
         filename: str = BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
-):
+) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP API for Balance Sheet Statement as Reported.
 
@@ -714,28 +709,30 @@ def balance_sheet_statement_as_reported(
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"balance-sheet-statement-as-reported/{symbol}"
-    limit = limit
-    period = period
+    path = f"balance-sheet-statement-as-reported/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+        'period': set_period(value=period)
+    }
     if download:
-        datatype = "csv"  # Only CSV is supported.
+        query_vars['datatype'] = 'csv'  # Only CSV is supported.
+        url = make_url(base=BASE_URL, path=path, query_vars=query_vars)
         with urlopen(url) as response, open(filename, "wb") as out_file:
             logging.info(f"Saving {symbol} financial statement as {filename}.")
             shutil.copyfileobj(response, out_file)
     else:
-        response = urlopen(url)
-        data = response.read().decode("utf-8")
-        return json.loads(data)
+        return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
 def cash_flow_statement_as_reported(
-        self,
+        apikey: str,
+        symbol: str,
         period: str = "annual",
         limit: int = 120,
         download: bool = False,
         filename: str = CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
-):
+) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP API for Cash Flow Statement as Reported.
 
@@ -783,25 +780,27 @@ def cash_flow_statement_as_reported(
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"cash-flow-statement-as-reported/{symbol}"
-    limit = limit
-    period = period
+    path = f"cash-flow-statement-as-reported/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+        'period': set_period(value=period)
+    }
     if download:
-        datatype = "csv"  # Only CSV is supported.
+        query_vars['datatype'] = 'csv'  # Only CSV is supported.
+        url = make_url(base=BASE_URL, path=path, query_vars=query_vars)
         with urlopen(url) as response, open(filename, "wb") as out_file:
             logging.info(f"Saving {symbol} financial statement as {filename}.")
             shutil.copyfileobj(response, out_file)
     else:
-        response = urlopen(url)
-        data = response.read().decode("utf-8")
-        return json.loads(data)
+        return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
 def financial_statement_full_as_reported(
-        self,
+        apikey: str,
+        symbol: str,
         period: str = "annual",
-):
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Financial Statement Full as Reported.
 
@@ -1154,15 +1153,15 @@ def financial_statement_full_as_reported(
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"financial-statement-full-as-reported/{symbol}"
-    period = period
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"financial-statement-full-as-reported/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'period': set_period(value=period)
+    }
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def financial_ratios_ttm(self):
+def financial_ratios_ttm(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     Query FMP API for Financial Ratios TTM.
 
@@ -1230,14 +1229,12 @@ def financial_ratios_ttm(self):
       "priceFairValueTTM" : 28.075194488254336
     } ]
     """
-    __init_url_query_vars()
-    url_path = f"ratios-ttm/{symbol}"
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"ratios-ttm/{symbol}"
+    query_vars = {'apikey': apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def financial_ratios(self, period: str = "annual", limit: int = 120):
+def financial_ratios(apikey: str, symbol: str, period: str = "annual", limit: int = 120) -> typing.List[typing.Dict]:
     """
     Query FMP API for Financial Ratios.
 
@@ -1305,20 +1302,16 @@ def financial_ratios(self, period: str = "annual", limit: int = 120):
       "priceFairValueTTM" : 28.075194488254336
     } ]
     """
-    __init_url_query_vars()
-    url_path = f"ratios/{symbol}"
-    limit = limit
-    period = period
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    path = f"ratios/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+        'period': set_period(value=period)
+    }
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def enterprise_values(
-        self,
-        period: str = "annual",
-        limit: int = 10,
-):
+def enterprise_values(apikey: str, symbol: str, period: str = "annual", limit: int = 120) -> typing.List[typing.Dict]:
     """
     Query FMP API for Enterprise Values.
 
@@ -1346,124 +1339,10 @@ def enterprise_values(
       }, ...
     ]
     """
-    __init_url_query_vars()
-    url_path = f"enterprise-values/{symbol}"
-    period = period
-    limit = limit
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
-
-
-# CALENDARS SECTION
-
-# INSTITUTIONAL FUND SECTION
-
-# STOCK TIME SERIES SECTION
-def historical_stock_dividend(self):
-    """
-    Query FMP API for Historical Stock Dividends
-
-    Example:
-    https://financialmodelingprep.com/api/v3/historical-price-full/stock_dividend/AAPL?apikey=demo
-    {
-      "symbol" : "AAPL",
-      "historical" : [ {
-        "date" : "2020-08-07",
-        "label" : "August 07, 20",
-        "adjDividend" : 0.2050000000,
-        "dividend" : 0.82,
-        "recordDate" : "2020-08-10",
-        "paymentDate" : "2020-08-13",
-        "declarationDate" : "2020-07-30"
-      }, {
-        "date" : "2020-05-08",
-        "label" : "May 08, 20",
-        "adjDividend" : 0.2050000000,
-        "dividend" : 0.82,
-        "recordDate" : "2020-05-11",
-        "paymentDate" : "2020-05-14",
-        "declarationDate" : "2020-04-30"
-      }, {
-        "date" : "2020-02-07",
-        "label" : "February 07, 20",
-        "adjDividend" : 0.1925000000,
-        "dividend" : 0.77,
-        "recordDate" : "2020-02-10",
-        "paymentDate" : "2020-02-13",
-        "declarationDate" : "2020-01-28"
-      }, ... ]
+    path = f"enterprise-values/{symbol}"
+    query_vars = {
+        'apikey': apikey,
+        'limit': limit,
+        'period': set_period(value=period)
     }
-    """
-    __init_url_query_vars()
-    url_path = f"historical-price-full/stock_dividend/{symbol}"
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
-
-
-def historical_stock_split(self):
-    """
-    Query FMP API for Historical Stock Splits
-
-    Example:
-    https://financialmodelingprep.com/api/v3/historical-price-full/stock_split/AAPL?apikey=demo
-    {
-      "symbol" : "AAPL",
-      "historical" : [ {
-        "date" : "2020-08-31",
-        "label" : "August 31, 20",
-        "numerator" : 4.00,
-        "denominator" : 1.00
-      }, {
-        "date" : "2014-06-09",
-        "label" : "June 09, 14",
-        "numerator" : 7.00,
-        "denominator" : 1.00
-      }, {
-        "date" : "2005-02-28",
-        "label" : "February 28, 05",
-        "numerator" : 2.00,
-        "denominator" : 1.00
-      }, {
-        "date" : "2000-06-21",
-        "label" : "June 21, 00",
-        "numerator" : 2.00,
-        "denominator" : 1.00
-      }, {
-        "date" : "1987-06-16",
-        "label" : "June 16, 87",
-        "numerator" : 2.00,
-        "denominator" : 1.00
-      } ]
-    }
-    """
-    __init_url_query_vars()
-    url_path = f"historical-price-full/stock_split/{symbol}"
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
-
-
-# TECHNICAL INDICATORS SECTION
-
-# MARKET INDEXES SECTION
-
-# COMMODITIES SECTION
-
-# ETF SECTION
-
-# MUTUAL FUNDS SECTION
-
-# EURONEXT SECTION
-
-# TSX SECTION
-
-# STOCK MARKET SECTION
-
-# CRYPTOCURRENCIES SECTION
-
-# FOREX (FX) SECTION
-
-# ---------------------- URL Related methods ----------------------
-'''
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
