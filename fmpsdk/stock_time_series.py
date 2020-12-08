@@ -39,7 +39,7 @@ def historical_stock_dividend(apikey: str, symbol: str):
     """
     path = f"historical-price-full/stock_dividend/{symbol}"
     query_vars = {
-        'apikey': apikey,
+        "apikey": apikey,
     }
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
@@ -82,6 +82,6 @@ def historical_stock_split(apikey: str, symbol: str):
     """
     path = f"historical-price-full/stock_split/{symbol}"
     query_vars = {
-        'apikey': apikey,
+        "apikey": apikey,
     }
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)

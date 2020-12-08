@@ -6,8 +6,8 @@ import fmpsdk
 
 # Actual API key is stored in a .env file.  Not good to store API key directly in script.
 load_dotenv()
-apikey = os.environ.get('apikey')
-symbol = 'AAPL'
+apikey = os.environ.get("apikey")
+symbol = "AAPL"
 
 # Access the FMPSDK methods.  Most return a List of Dictionaries.
 """

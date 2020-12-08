@@ -16,13 +16,7 @@ def make_url(base: str, path: str, query_vars: typing.Dict):
     """
     tmp = parse.urlsplit(base)
     url = parse.urlunsplit(
-        (
-            tmp.scheme,
-            tmp.netloc,
-            f"{tmp.path}{path}",
-            parse.urlencode(query_vars),
-            "",
-        )
+        (tmp.scheme, tmp.netloc, f"{tmp.path}{path}", parse.urlencode(query_vars), "",)
     )
     return url
 
