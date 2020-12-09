@@ -108,3 +108,9 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Historical Daily Prices (Batch Mutual Funds): {fmpsdk.historical_price(apikey=apikey, symbol=['JBFRX','BPLEX','VEVRX'])}")
 # print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")
+
+# Technical Indicators
+# print(f"Daily Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='daily')}")
+# print(f"Intraday Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='15min')}")
+
+# Market Indexes

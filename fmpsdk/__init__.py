@@ -70,7 +70,7 @@ __all__ = [
     'exchange_realtime',
     'historical_chart',
     'historical_price',
-
     "historical_stock_dividend",
     "historical_stock_split",
+    'technical_indicators',
 ]

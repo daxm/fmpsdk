@@ -4,7 +4,7 @@ from urllib import parse
 from urllib.request import urlopen
 import logging
 from .settings import BASE_URL, INDUSTRY_VALUES, SECTOR_VALUES, PERIOD_VALUES, EXCHANGE_VALUES, TIME_DELTA_VALUES, \
-    SERIES_TYPE_VALUES
+    SERIES_TYPE_VALUES, STATISTICS_TYPE_VALUES, TECHNICAL_INDICATORS_TIME_DELTA_VALUES
 
 
 def make_url(path: str, query_vars: typing.Dict):
@@ -88,3 +88,20 @@ def set_series_type(value: str) -> str:
         return value
     else:
         logging.error(f"Invalid series_type value.  Valid options: {valid_values}")
+
+
+def set_statistics_type(value: str) -> str:
+    valid_values = STATISTICS_TYPE_VALUES
+    if value in valid_values:
+        return value
+    else:
+        logging.error(f"Invalid statistics_type value.  Valid options: {valid_values}")
+
+
+def set_technical_indicators_time_delta(value: str) -> str:
+    """Exactly like set_time_delta() method but adds 'daily' as an option"""
+    valid_values = TECHNICAL_INDICATORS_TIME_DELTA_VALUES
+    if value in valid_values:
+        return value
+    else:
+        logging.error(f"Invalid time_delta value.  Valid options: {valid_values}")

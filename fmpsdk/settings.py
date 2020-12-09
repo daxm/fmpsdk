@@ -51,8 +51,28 @@ TIME_DELTA_VALUES: typing.List = [
         "1hour",
         "4hour",
 ]
+TECHNICAL_INDICATORS_TIME_DELTA_VALUES: typing.List = [
+        "1min",
+        "5min",
+        "15min",
+        "30min",
+        "1hour",
+        "4hour",
+        "daily",
+]
 SERIES_TYPE_VALUES: typing.List = [
         'line',
+]
+STATISTICS_TYPE_VALUES: typing.List = [
+        'SMA',
+        'EMA',
+        'WMA',
+        'DEMA',
+        'TEMA',
+        'williams',
+        'RSI',
+        'ADX',
+        'standardDeviation',
 ]
 
 FINANCIAL_STATEMENT_FILENAME: str = "financial_statement.zip"
