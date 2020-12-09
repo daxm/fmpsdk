@@ -77,4 +77,3 @@ print(f"Press Releases: {fmpsdk.press_releases(apikey=apikey, symbol=symbol)}")
 print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")
 """
-

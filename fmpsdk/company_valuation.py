@@ -69,7 +69,9 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def quote(apikey: str, symbol: typing.Union[str, typing.List[str]]) -> typing.List[typing.Dict]:
+def quote(
+    apikey: str, symbol: typing.Union[str, typing.List[str]]
+) -> typing.List[typing.Dict]:
     """
     Query FMP Company Quote API
 
@@ -101,7 +103,7 @@ def quote(apikey: str, symbol: typing.Union[str, typing.List[str]]) -> typing.Li
       } ]
     """
     if type(symbol) is list:
-        symbol = ','.join(symbol)
+        symbol = ",".join(symbol)
     path = f"quote/{symbol}"
     query_vars = {"apikey": apikey}
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
@@ -457,9 +459,7 @@ def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
 
 
 def income_statement_growth(
-        apikey: str,
-        symbol: str,
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Income statements growth
@@ -1220,12 +1220,16 @@ def financial_ratios(
       "priceFairValueTTM" : 28.075194488254336
     } ]
     """
-    if period.lower() == 'ttm':
+    if period.lower() == "ttm":
         path = f"ratios-ttm/{symbol}"
         query_vars = {"apikey": apikey}
     else:
         path = f"ratios/{symbol}"
-        query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+        query_vars = {
+            "apikey": apikey,
+            "limit": limit,
+            "period": set_period(value=period),
+        }
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
@@ -1264,7 +1268,9 @@ def enterprise_values(
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def key_metrics(apikey: str, symbol: str, period: str = 'annual', limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def key_metrics(
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Key Metrics TTM.
 
@@ -1331,16 +1337,22 @@ def key_metrics(apikey: str, symbol: str, period: str = 'annual', limit: int = D
       "capexPerShareTTM" : -0.15942222675363302
     } ]
     """
-    if period.lower() == 'ttm':
+    if period.lower() == "ttm":
         path = f"key-metrics-ttm/{symbol}"
         query_vars = {"apikey": apikey, "limit": limit}
     else:
         path = f"key-metrics/{symbol}"
-        query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+        query_vars = {
+            "apikey": apikey,
+            "limit": limit,
+            "period": set_period(value=period),
+        }
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def financial_growth(apikey: str, symbol: str, period: str = 'annual', limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def financial_growth(
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Financial Growth
 
@@ -1422,7 +1434,9 @@ def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def historical_rating(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def historical_rating(
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Historical Company Rating
 
@@ -1472,10 +1486,7 @@ def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def historical_discounted_cash_flow(
-        apikey: str,
-        symbol: str,
-        period: str = 'annual',
-        limit: int = DEFAULT_LIMIT
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
 ) -> typing.List[typing.Dict]:
     """
     Query FMP API for Historical Discounted Cash Flow
@@ -1495,9 +1506,7 @@ def historical_discounted_cash_flow(
 
 
 def historical_daily_discounted_cash_flow(
-        apikey: str,
-        symbol: str,
-        limit: int = DEFAULT_LIMIT
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
 ) -> typing.List[typing.Dict]:
     """
     Query FMP API for Historical Daily Discounted Cash Flow
@@ -1533,7 +1542,9 @@ def market_capitalization(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def historical_market_capitalization(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def historical_market_capitalization(
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Market Capitalization
 
@@ -1651,41 +1662,43 @@ def stock_screener(apikey: str, **kwargs) -> typing.List[typing.Dict]:
     """
     path = f"stock-screener"
     query_vars = {"apikey": apikey}
-    if kwargs.get('market_cap_more_than'):
-        query_vars['marketCapMoreThan'] = kwargs['market_cap_more_than']
-    if kwargs.get('market_cap_lower_than'):
-        query_vars['marketCapLowerThan'] = kwargs['market_cap_lower_than']
-    if kwargs.get('beta_more_than'):
-        query_vars['betaMoreThan'] = kwargs['beta_more_than']
-    if kwargs.get('beta_lower_than'):
-        query_vars['betaLowerThan'] = kwargs['beta_lower_than']
-    if kwargs.get('volume_more_than'):
-        query_vars['volumeMoreThan'] = kwargs['volume_more_than']
-    if kwargs.get('volume_lower_than'):
-        query_vars['volumeLowerThan'] = kwargs['volume_lower_than']
-    if kwargs.get('dividend_more_than'):
-        query_vars['dividendMoreThan'] = kwargs['dividend_more_than']
-    if kwargs.get('dividend_lower_than'):
-        query_vars['dividendLowerThan'] = kwargs['dividend_lower_than']
-    if kwargs.get('sector'):
-        query_vars['sector'] = set_sector(kwargs['sector'])
-    if kwargs.get('industry'):
-        query_vars['industry'] = set_industry(kwargs['industry'])
-    if kwargs.get('limit'):
-        query_vars['limit'] = kwargs['limit']
-    if kwargs.get('exchange'):
-        if type(kwargs['exchange']) is list:
-            for item in kwargs['exchange']:
+    if kwargs.get("market_cap_more_than"):
+        query_vars["marketCapMoreThan"] = kwargs["market_cap_more_than"]
+    if kwargs.get("market_cap_lower_than"):
+        query_vars["marketCapLowerThan"] = kwargs["market_cap_lower_than"]
+    if kwargs.get("beta_more_than"):
+        query_vars["betaMoreThan"] = kwargs["beta_more_than"]
+    if kwargs.get("beta_lower_than"):
+        query_vars["betaLowerThan"] = kwargs["beta_lower_than"]
+    if kwargs.get("volume_more_than"):
+        query_vars["volumeMoreThan"] = kwargs["volume_more_than"]
+    if kwargs.get("volume_lower_than"):
+        query_vars["volumeLowerThan"] = kwargs["volume_lower_than"]
+    if kwargs.get("dividend_more_than"):
+        query_vars["dividendMoreThan"] = kwargs["dividend_more_than"]
+    if kwargs.get("dividend_lower_than"):
+        query_vars["dividendLowerThan"] = kwargs["dividend_lower_than"]
+    if kwargs.get("sector"):
+        query_vars["sector"] = set_sector(kwargs["sector"])
+    if kwargs.get("industry"):
+        query_vars["industry"] = set_industry(kwargs["industry"])
+    if kwargs.get("limit"):
+        query_vars["limit"] = kwargs["limit"]
+    if kwargs.get("exchange"):
+        if type(kwargs["exchange"]) is list:
+            for item in kwargs["exchange"]:
                 if item != set_exchange(item):
                     logging.error("Invalid Exchange value.")
                     exit(1)
-            query_vars['exchange'] = ','.join(kwargs['exchange'])
+            query_vars["exchange"] = ",".join(kwargs["exchange"])
         else:
-            query_vars['exchange'] = set_exchange(kwargs['exchange'])
+            query_vars["exchange"] = set_exchange(kwargs["exchange"])
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def delisted_companies(apikey: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def delisted_companies(
+    apikey: str, limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for a list of Delisted Companies.
 
@@ -1729,7 +1742,11 @@ def delisted_companies(apikey: str, limit: int = DEFAULT_LIMIT) -> typing.List[t
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def stock_news(apikey: str, tickers: typing.Union[str, typing.List] = "", limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def stock_news(
+    apikey: str,
+    tickers: typing.Union[str, typing.List] = "",
+    limit: int = DEFAULT_LIMIT,
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Stock News
 
@@ -1782,8 +1799,8 @@ def stock_news(apikey: str, tickers: typing.Union[str, typing.List] = "", limit:
     query_vars = {"apikey": apikey, "limt": limit}
     if tickers:
         if type(tickers) is list:
-            tickers = ','.join(tickers)
-        query_vars['tickers'] = tickers
+            tickers = ",".join(tickers)
+        query_vars["tickers"] = tickers
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
@@ -1821,7 +1838,9 @@ def earnings_surprises(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def sec_filings(apikey: str, symbol: str, filing_type: str = "", limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def sec_filings(
+    apikey: str, symbol: str, filing_type: str = "", limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for SEC Filings
 
@@ -1859,7 +1878,9 @@ def sec_filings(apikey: str, symbol: str, filing_type: str = "", limit: int = DE
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def press_releases(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def press_releases(
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for Press Releases
 
