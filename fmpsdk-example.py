@@ -94,8 +94,17 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"CIK Search by Company Name: {fmpsdk.cik_search(apikey=apikey, name='Berkshire')}")
 # print(f"CIK Search by CIK: {fmpsdk.cik(apikey=apikey, cik_id='0000913760')}")
 # print(f"Form 13F: {fmpsdk.form_13f(apikey=apikey, cik_id='0000913760', date='2020-06-30')}")
-print(f"CUSIP: {fmpsdk.cusip(apikey=apikey, cik_id='000360206')}")
+# print(f"CUSIP: {fmpsdk.cusip(apikey=apikey, cik_id='000360206')}")
 
 # Stock Time Series Methods
+# print(f"Quote Realtime: {fmpsdk.quote_realtime(apikey=apikey, symbol=symbol)}")
+# print(f"Exchange Realtime: {fmpsdk.exchange_realtime(apikey=apikey, exchange='NYSE')}")
+# print(f"Historical Stock Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta='5min')}")
+# print(f"Historical Daily Prices: {fmpsdk.historical_price(apikey=apikey, symbol=symbol, series_type='line')}")
+# print(f"Historical Daily Prices with Change and Volume: {fmpsdk.historical_price(apikey=apikey, symbol=symbol)}")
+# print(f"Historical Daily Prices with Change and Volume (Interval): {fmpsdk.historical_price(apikey=apikey, symbol=symbol, from_date='2020-12-01', to_date='2020-12-09')}")
+# print(f"Historical Daily Prices with Change and Volume (Time Series): {fmpsdk.historical_price(apikey=apikey, symbol=symbol, time_series=5)}")
+# print(f"Historical Daily Prices (Batch Stocks): {fmpsdk.historical_price(apikey=apikey, symbol=['AAPL', 'CSCO', 'MSFT'])}")
+# print(f"Historical Daily Prices (Batch Mutual Funds): {fmpsdk.historical_price(apikey=apikey, symbol=['JBFRX','BPLEX','VEVRX'])}")
 # print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")

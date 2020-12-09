@@ -3,7 +3,8 @@ import json
 from urllib import parse
 from urllib.request import urlopen
 import logging
-from .settings import BASE_URL, INDUSTRY_VALUES, SECTOR_VALUES, PERIOD_VALUES, EXCHANGE_VALUES
+from .settings import BASE_URL, INDUSTRY_VALUES, SECTOR_VALUES, PERIOD_VALUES, EXCHANGE_VALUES, TIME_DELTA_VALUES, \
+    SERIES_TYPE_VALUES
 
 
 def make_url(path: str, query_vars: typing.Dict):
@@ -64,3 +65,26 @@ def set_industry(value: str) -> str:
         return value
     else:
         logging.error(f"Invalid industry value.  Valid options: {valid_values}")
+
+
+def set_time_delta(value: str) -> str:
+    valid_values = TIME_DELTA_VALUES
+    if value in valid_values:
+        return value
+    else:
+        logging.error(f"Invalid time_delta value.  Valid options: {valid_values}")
+
+
+def set_symbol(value: str) -> str:
+    if type(value) is list:
+        return ','.join(value)
+    else:
+        return value
+
+
+def set_series_type(value: str) -> str:
+    valid_values = SERIES_TYPE_VALUES
+    if value in valid_values:
+        return value
+    else:
+        logging.error(f"Invalid series_type value.  Valid options: {valid_values}")

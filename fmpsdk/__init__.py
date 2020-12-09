@@ -66,6 +66,10 @@ __all__ = [
     'cik',
     'form_13f',
     'cusip',
+    'quote_realtime',
+    'exchange_realtime',
+    'historical_chart',
+    'historical_price',
 
     "historical_stock_dividend",
     "historical_stock_split",

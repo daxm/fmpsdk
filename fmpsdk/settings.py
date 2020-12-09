@@ -43,6 +43,17 @@ EXCHANGE_VALUES: typing.List = [
         "NYSE",
         "EURONEXT",
     ]
+TIME_DELTA_VALUES: typing.List = [
+        "1min",
+        "5min",
+        "15min",
+        "30min",
+        "1hour",
+        "4hour",
+]
+SERIES_TYPE_VALUES: typing.List = [
+        'line',
+]
 
 FINANCIAL_STATEMENT_FILENAME: str = "financial_statement.zip"
 CASH_FLOW_STATEMENT_FILENAME: str = "cash_flow_statement.csv"
