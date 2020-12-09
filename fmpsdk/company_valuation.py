@@ -1603,22 +1603,23 @@ def symbols_list(apikey: str) -> typing.List[typing.Dict]:
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def stock_screener(apikey: str, **kwargs) -> typing.List[typing.Dict]:
+def stock_screener(
+        apikey: str,
+        market_cap_more_than: int = None,
+        market_cap_lower_than: int = None,
+        beta_more_than: int = None,
+        beta_lower_than: int = None,
+        volume_more_than: int = None,
+        volume_lower_than: int = None,
+        dividend_more_than: int = None,
+        dividend_lower_than: int = None,
+        sector: str = None,
+        industry: str = None,
+        exchange: typing.Union[str, typing.List[str]] = None,
+        limit: int = DEFAULT_LIMIT,
+) -> typing.List[typing.Dict]:
     """
     Query FMP API for stocks meeting certain criteria.
-
-    kwargs options:
-        market_cap_lower_than: int
-        beta_more_than: int
-        beta_lower_than: int
-        volume_more_than: int
-        volume_lower_than: int
-        dividend_more_than: int
-        dividend_lower_than: int
-        sector: str
-        industry: str
-        exchange: typing.Union[str, typing.List[str]]
-        limit: int
 
     Example:
     https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=1000000000&betaMoreThan=1&volumeMoreThan=10000&sector=Technology&exchange=NASDAQ&dividendMoreThan=0&limit=100&apikey=demo
@@ -1661,38 +1662,36 @@ def stock_screener(apikey: str, **kwargs) -> typing.List[typing.Dict]:
     ]
     """
     path = f"stock-screener"
-    query_vars = {"apikey": apikey}
-    if kwargs.get("market_cap_more_than"):
-        query_vars["marketCapMoreThan"] = kwargs["market_cap_more_than"]
-    if kwargs.get("market_cap_lower_than"):
-        query_vars["marketCapLowerThan"] = kwargs["market_cap_lower_than"]
-    if kwargs.get("beta_more_than"):
-        query_vars["betaMoreThan"] = kwargs["beta_more_than"]
-    if kwargs.get("beta_lower_than"):
-        query_vars["betaLowerThan"] = kwargs["beta_lower_than"]
-    if kwargs.get("volume_more_than"):
-        query_vars["volumeMoreThan"] = kwargs["volume_more_than"]
-    if kwargs.get("volume_lower_than"):
-        query_vars["volumeLowerThan"] = kwargs["volume_lower_than"]
-    if kwargs.get("dividend_more_than"):
-        query_vars["dividendMoreThan"] = kwargs["dividend_more_than"]
-    if kwargs.get("dividend_lower_than"):
-        query_vars["dividendLowerThan"] = kwargs["dividend_lower_than"]
-    if kwargs.get("sector"):
-        query_vars["sector"] = set_sector(kwargs["sector"])
-    if kwargs.get("industry"):
-        query_vars["industry"] = set_industry(kwargs["industry"])
-    if kwargs.get("limit"):
-        query_vars["limit"] = kwargs["limit"]
-    if kwargs.get("exchange"):
-        if type(kwargs["exchange"]) is list:
-            for item in kwargs["exchange"]:
+    query_vars = {"apikey": apikey, 'limit': limit}
+    if market_cap_more_than:
+        query_vars["marketCapMoreThan"] = market_cap_more_than
+    if market_cap_lower_than:
+        query_vars["marketCapLowerThan"] = market_cap_lower_than
+    if beta_more_than:
+        query_vars["betaMoreThan"] = beta_more_than
+    if beta_lower_than:
+        query_vars["betaLowerThan"] = beta_lower_than
+    if volume_more_than:
+        query_vars["volumeMoreThan"] = volume_more_than
+    if volume_lower_than:
+        query_vars["volumeLowerThan"] = volume_lower_than
+    if dividend_more_than:
+        query_vars["dividendMoreThan"] = dividend_more_than
+    if dividend_lower_than:
+        query_vars["dividendLowerThan"] = dividend_lower_than
+    if sector:
+        query_vars["sector"] = set_sector(sector)
+    if industry:
+        query_vars["industry"] = set_industry(industry)
+    if exchange:
+        if type(exchange) is list:
+            for item in exchange:
                 if item != set_exchange(item):
-                    logging.error("Invalid Exchange value.")
+                    logging.error(f"Invalid Exchange value: {exchange}.")
                     exit(1)
-            query_vars["exchange"] = ",".join(kwargs["exchange"])
+            query_vars["exchange"] = ",".join(exchange)
         else:
-            query_vars["exchange"] = set_exchange(kwargs["exchange"])
+            query_vars["exchange"] = set_exchange(exchange)
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
