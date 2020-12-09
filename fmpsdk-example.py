@@ -12,7 +12,7 @@ symbol = "AAPL"
 # Access the FMPSDK methods.  Most return a List of Dictionaries.
 
 # Company Valuation Methods
-# print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}")
+print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}")
 # print(f"Company Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)}")
 # print(f"Multiple Company Quotes: {fmpsdk.quote(apikey=apikey, symbol=['AAPL', 'CSCO', 'QQQQ'])}")
 # print(f"Key Executives: {fmpsdk.key_executives(apikey=apikey, symbol=symbol)}")
@@ -72,6 +72,10 @@ symbol = "AAPL"
 # print(f"Earnings Surprises: {fmpsdk.earnings_surprises(apikey=apikey, symbol=symbol)}")
 # print(f"SEC Filings: {fmpsdk.sec_filings(apikey=apikey, symbol=symbol, filing_type='10-K')}")
 # print(f"Press Releases: {fmpsdk.press_releases(apikey=apikey, symbol=symbol)}")
+
+# Calendars
+# print(f"Earning Calendar: {fmpsdk.earning_calendar(apikey=apikey)}")
+# print(f"Earning Calendar: {fmpsdk.earning_calendar(apikey=apikey, from_date='2000-06-23', to_date='2010-12-12')}")
 
 # Stock Time Series Methods
 # print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")

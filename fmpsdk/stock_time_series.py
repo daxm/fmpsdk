@@ -1,5 +1,4 @@
-from .settings import BASE_URL
-from .url_methods import *
+from .url_methods import return_response
 
 
 def historical_stock_dividend(apikey: str, symbol: str):
@@ -41,7 +40,7 @@ def historical_stock_dividend(apikey: str, symbol: str):
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+    return return_response(path=path, query_vars=query_vars)
 
 
 def historical_stock_split(apikey: str, symbol: str):
@@ -84,4 +83,4 @@ def historical_stock_split(apikey: str, symbol: str):
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+    return return_response(path=path, query_vars=query_vars)

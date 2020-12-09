@@ -3,35 +3,33 @@ import json
 from urllib import parse
 from urllib.request import urlopen
 import logging
-from .settings import INDUSTRY_VALUES, SECTOR_VALUES, PERIOD_VALUES, EXCHANGE_VALUES
+from .settings import BASE_URL, INDUSTRY_VALUES, SECTOR_VALUES, PERIOD_VALUES, EXCHANGE_VALUES
 
 
-def make_url(base: str, path: str, query_vars: typing.Dict):
+def make_url(path: str, query_vars: typing.Dict):
     """
     Stitch component URL parts together.
 
-    :param base: First part of the URL
     :param path: Path after TLD of URL
     :param query_vars: Dictionary of query values (after "?" of URL)
     :return: JSON response
     """
-    tmp = parse.urlsplit(base)
+    tmp = parse.urlsplit(BASE_URL)
     url = parse.urlunsplit(
         (tmp.scheme, tmp.netloc, f"{tmp.path}{path}", parse.urlencode(query_vars), "",)
     )
     return url
 
 
-def return_response(base: str, path: str, query_vars: typing.Dict):
+def return_response(path: str, query_vars: typing.Dict):
     """
     Query URL for JSON response.
 
-    :param base: First part of the URL
     :param path: Path after TLD of URL
     :param query_vars: Dictionary of query values (after "?" of URL)
     :return: JSON response
     """
-    response = urlopen(make_url(base=base, path=path, query_vars=query_vars))
+    response = urlopen(make_url(path=path, query_vars=query_vars))
     data = response.read().decode("utf-8")
     return json.loads(data)
 

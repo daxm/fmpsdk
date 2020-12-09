@@ -50,6 +50,8 @@ __all__ = [
     "earnings_surprises",
     "sec_filings",
     "press_releases",
+    'earning_calendar',
+
     "historical_stock_dividend",
     "historical_stock_split",
 ]
