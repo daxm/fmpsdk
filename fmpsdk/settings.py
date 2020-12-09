@@ -1,4 +1,5 @@
 BASE_URL: str = "https://financialmodelingprep.com/api/v3/"
+DEFAULT_LIMIT: int = 10
 
 FINANCIAL_STATEMENT_FILENAME: str = "financial_statement.zip"
 CASH_FLOW_STATEMENT_FILENAME: str = "cash_flow_statement.csv"

@@ -1,5 +1,6 @@
 from .settings import (
     BASE_URL,
+    DEFAULT_LIMIT,
     FINANCIAL_STATEMENT_FILENAME,
     CASH_FLOW_STATEMENT_FILENAME,
     INCOME_STATEMENT_FILENAME,
@@ -68,7 +69,7 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def quote(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def quote(apikey: str, symbol: typing.Union[str, typing.List[str]]) -> typing.List[typing.Dict]:
     """
     Query FMP Company Quote API
 
@@ -99,6 +100,8 @@ def quote(apikey: str, symbol: str) -> typing.List[typing.Dict]:
         "timestamp" : 1599435459
       } ]
     """
+    if type(symbol) is list:
+        symbol = ','.join(symbol)
     path = f"quote/{symbol}"
     query_vars = {"apikey": apikey}
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
@@ -137,7 +140,7 @@ def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def search(
-    apikey: str, query: str = "", limit: int = 1, exchange: str = ""
+    apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
 ) -> typing.List[typing.Dict]:
     """
     Query FMP Ticker Search API.  Regex via 'query' var for ticker or company name.
@@ -171,7 +174,7 @@ def search(
 
 
 def search_ticker(
-    apikey: str, query: str = "", limit: int = 1, exchange: str = ""
+    apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
 ) -> typing.List[typing.Dict]:
     """
     Query FMP Ticker Search API.  Regex via 'query' var only for ticker.
@@ -223,7 +226,7 @@ def income_statement(
     apikey: str,
     symbol: str,
     period: str = "annual",
-    limit: int = 120,
+    limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = INCOME_STATEMENT_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
@@ -286,7 +289,7 @@ def balance_sheet_statement(
     apikey: str,
     symbol: str,
     period: str = "annual",
-    limit: int = 120,
+    limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = BALANCE_SHEET_STATEMENT_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
@@ -362,7 +365,7 @@ def cash_flow_statement(
     apikey: str,
     symbol: str,
     period: str = "annual",
-    limit: int = 120,
+    limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = CASH_FLOW_STATEMENT_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
@@ -454,7 +457,9 @@ def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
 
 
 def income_statement_growth(
-    apikey: str, symbol: str, limit: int = 120
+        apikey: str,
+        symbol: str,
+        limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Income statements growth
@@ -503,7 +508,7 @@ def income_statement_growth(
 
 
 def balance_sheet_statement_growth(
-    apikey: str, symbol: str, limit: int = 120
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
 ) -> typing.List[typing.Dict]:
     """
     Balance Sheet statements growth
@@ -552,7 +557,7 @@ def balance_sheet_statement_growth(
 
 
 def cash_flow_statement_growth(
-    apikey: str, symbol: str, limit: int = 120
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
 ) -> typing.List[typing.Dict]:
     """
     Cash Flow statements growth
@@ -604,7 +609,7 @@ def income_statement_as_reported(
     apikey: str,
     symbol: str,
     period: str = "annual",
-    limit: int = 120,
+    limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = INCOME_STATEMENT_AS_REPORTED_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
@@ -660,7 +665,7 @@ def balance_sheet_statement_as_reported(
     apikey: str,
     symbol: str,
     period: str = "annual",
-    limit: int = 120,
+    limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
@@ -722,7 +727,7 @@ def cash_flow_statement_as_reported(
     apikey: str,
     symbol: str,
     period: str = "annual",
-    limit: int = 120,
+    limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
@@ -1145,81 +1150,8 @@ def financial_statement_full_as_reported(
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
-def financial_ratios_ttm(apikey: str, symbol: str) -> typing.List[typing.Dict]:
-    """
-    Query FMP API for Financial Ratios TTM.
-
-    Formulas explained here: https://financialmodelingprep.com/developer/docs/formula/
-
-    Example:
-    https://financialmodelingprep.com/api/v3/ratios-ttm/AAPL?apikey=demo
-    [ {
-      "dividendYielTTM" : 0.006824034334763949,
-      "dividendYielPercentageTTM" : 0.682403433476394900,
-      "peRatioTTM" : 34.73454758318499,
-      "pegRatioTTM" : 53.78668006069268,
-      "payoutRatioTTM" : 0.23702974531014653,
-      "currentRatioTTM" : 1.4694496317589543,
-      "quickRatioTTM" : 1.3124488554103106,
-      "cashRatioTTM" : 0.35022765899410396,
-      "daysOfSalesOutstandingTTM" : 42.74995709439598,
-      "daysOfInventoryOutstandingTTM" : 8.577479515823178,
-      "operatingCycleTTM" : 19.118564826770132,
-      "daysOfPayablesOutstandingTTM" : 76.16879434299995,
-      "cashConversionCycleTTM" : -31.30384229949688,
-      "grossProfitMarginTTM" : 0.3818781334784212,
-      "operatingProfitMarginTTM" : 0.2451571440569348,
-      "pretaxProfitMarginTTM" : 0.24946231062196694,
-      "netProfitMarginTTM" : 0.21333761780783403,
-      "effectiveTaxRateTTM" : 0.1448102229313348,
-      "returnOnAssetsTTM" : 0.1841030553594837,
-      "returnOnEquityTTM" : 0.808278686256606,
-      "returnOnCapitalEmployedTTM" : 0.30769819750839994,
-      "netIncomePerEBTTTM" : 0.8551897770686652,
-      "ebtPerEbitTTM" : 1.0,
-      "ebitPerRevenueTTM" : 0.24946231062196694,
-      "debtRatioTTM" : 0.7722282444287587,
-      "debtEquityRatioTTM" : 3.3903599789712513,
-      "longTermDebtToCapitalizationTTM" : 0.5670699568758985,
-      "totalDebtToCapitalizationTTM" : 0.5942085939166657,
-      "interestCoverageTTM" : 22.406362741882585,
-      "cashFlowToDebtRatioTTM" : 0.1881070254336571,
-      "companyEquityMultiplierTTM" : 4.390359978971252,
-      "receivablesTurnoverTTM" : 8.538020265003897,
-      "payablesTurnoverTTM" : 4.791988676574664,
-      "inventoryTurnoverTTM" : 42.55329311211664,
-      "fixedAssetTurnoverTTM" : 6.245171147750336,
-      "assetTurnoverTTM" : 0.8629657406473732,
-      "operatingCashFlowPerShareTTM" : 1.1429947910208258,
-      "freeCashFlowPerShareTTM" : 0.9835725642671928,
-      "cashPerShareTTM" : 5.3403862599051894,
-      "operatingCashFlowSalesRatioTTM" : 0.07270217668345158,
-      "freeCashFlowOperatingCashFlowRatioTTM" : 0.8605223505775992,
-      "cashFlowCoverageRatiosTTM" : 0.1881070254336571,
-      "shortTermCoverageRatiosTTM" : 1.783091527852409,
-      "capitalExpenditureCoverageRatioTTM" : -7.169607490097227,
-      "dividendPaidAndCapexCoverageRatioTTM" : -7.169607492149744,
-      "priceBookValueRatioTTM" : 28.075194488254336,
-      "priceToBookRatioTTM" : 28.075194488254336,
-      "priceToSalesRatioTTM" : 7.410185637029544,
-      "priceEarningsRatioTTM" : 34.73454758318499,
-      "priceToFreeCashFlowsRatioTTM" : 118.44576011206443,
-      "priceToOperatingCashFlowsRatioTTM" : 101.92522390758413,
-      "priceCashFlowRatioTTM" : 101.92522390758413,
-      "priceEarningsToGrowthRatioTTM" : 53.78668006069268,
-      "priceSalesRatioTTM" : 7.410185637029544,
-      "dividendYieldTTM" : 0.006824034334763949,
-      "enterpriseValueMultipleTTM" : 25.353649718331948,
-      "priceFairValueTTM" : 28.075194488254336
-    } ]
-    """
-    path = f"ratios-ttm/{symbol}"
-    query_vars = {"apikey": apikey}
-    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
-
-
 def financial_ratios(
-    apikey: str, symbol: str, period: str = "annual", limit: int = 120
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
 ) -> typing.List[typing.Dict]:
     """
     Query FMP API for Financial Ratios.
@@ -1288,13 +1220,17 @@ def financial_ratios(
       "priceFairValueTTM" : 28.075194488254336
     } ]
     """
-    path = f"ratios/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+    if period.lower() == 'ttm':
+        path = f"ratios-ttm/{symbol}"
+        query_vars = {"apikey": apikey}
+    else:
+        path = f"ratios/{symbol}"
+        query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
 
 
 def enterprise_values(
-    apikey: str, symbol: str, period: str = "annual", limit: int = 120
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
 ) -> typing.List[typing.Dict]:
     """
     Query FMP API for Enterprise Values.
@@ -1325,4 +1261,628 @@ def enterprise_values(
     """
     path = f"enterprise-values/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def key_metrics(apikey: str, symbol: str, period: str = 'annual', limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Key Metrics TTM.
+
+    Example:
+    https://financialmodelingprep.com/api/v3/key-metrics-ttm/AAPL?limit=40&apikey=demo
+    [ {
+      "revenuePerShareTTM" : 15.721603439708202,
+      "netIncomePerShareTTM" : 3.354009425946797,
+      "operatingCashFlowPerShareTTM" : 1.1429947910208258,
+      "freeCashFlowPerShareTTM" : 0.9835725642671928,
+      "cashPerShareTTM" : 1.916453797521257,
+      "bookValuePerShareTTM" : 4.149570541665863,
+      "tangibleBookValuePerShareTTM" : 18.218108436047864,
+      "shareholdersEquityPerShareTTM" : 4.149570541665863,
+      "interestDebtPerShareTTM" : 6.2513376081682965,
+      "marketCapTTM" : 2029331208000,
+      "enterpriseValueTTM" : 2101792208000,
+      "peRatioTTM" : 34.73454758318499,
+      "priceToSalesRatioTTM" : 7.410185637029544,
+      "pocfratioTTM" : 101.92522390758413,
+      "pfcfRatioTTM" : 118.44576011206443,
+      "pbRatioTTM" : 28.075194488254336,
+      "ptbRatioTTM" : 28.075194488254336,
+      "evToSalesTTM" : 7.674779932592558,
+      "enterpriseValueOverEBITDATTM" : 25.353649718331948,
+      "evToOperatingCashFlowTTM" : 105.56465133098945,
+      "evToFreeCashFlowTTM" : 122.67508363975954,
+      "earningsYieldTTM" : 0.028789780480230016,
+      "freeCashFlowYieldTTM" : 0.0084426829550832,
+      "debtToEquityTTM" : 3.3903599789712513,
+      "debtToAssetsTTM" : 0.7722282444287587,
+      "netDebtToEBITDATTM" : 0.874087745328653,
+      "currentRatioTTM" : 1.4694496317589543,
+      "interestCoverageTTM" : 22.406362741882585,
+      "incomeQualityTTM" : 0.34078460906476793,
+      "dividendYieldTTM" : 0.006824034334763949,
+      "dividendYieldPercentageTTM" : 0.682403433476394900,
+      "payoutRatioTTM" : 0.23702974531014653,
+      "salesGeneralAndAdministrativeToRevenueTTM" : null,
+      "researchAndDevelopementToRevenueTTM" : 0.06530415508823949,
+      "intangiblesToTotalAssetsTTM" : 0.0,
+      "capexToOperatingCashFlowTTM" : -7.169607490097227,
+      "capexToRevenueTTM" : -98.61613251710479,
+      "capexToDepreciationTTM" : -1.1447605329492259,
+      "stockBasedCompensationToRevenueTTM" : 0.005473659610672723,
+      "grahamNumberTTM" : 17.695994489813657,
+      "roicTTM" : 0.30769819750839994,
+      "returnOnTangibleAssetsTTM" : 0.1841030553594837,
+      "grahamNetNetTTM" : -7.232943945836169,
+      "workingCapitalTTM" : 44747000000,
+      "tangibleAssetValueTTM" : null,
+      "netCurrentAssetValueTTM" : -6.0276757444908915,
+      "investedCapitalTTM" : null,
+      "averageReceivablesTTM" : 31376000000,
+      "averagePayablesTTM" : 33873000000,
+      "averageInventoryTTM" : 3656000000,
+      "daysSalesOutstandingTTM" : 10.541085310946954,
+      "daysPayablesOutstandingTTM" : 18.781346550328752,
+      "daysOfInventoryOnHandTTM" : 2.1149949491070847,
+      "receivablesTurnoverTTM" : 8.538020265003897,
+      "payablesTurnoverTTM" : 4.791988676574664,
+      "inventoryTurnoverTTM" : 42.55329311211664,
+      "roeTTM" : 0.808278686256606,
+      "capexPerShareTTM" : -0.15942222675363302
+    } ]
+    """
+    if period.lower() == 'ttm':
+        path = f"key-metrics-ttm/{symbol}"
+        query_vars = {"apikey": apikey, "limit": limit}
+    else:
+        path = f"key-metrics/{symbol}"
+        query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def financial_growth(apikey: str, symbol: str, period: str = 'annual', limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Financial Growth
+
+    Example:
+    https://financialmodelingprep.com/api/v3/financial-growth/AAPL?limit=20&apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2019-09-28",
+        "revenueGrowth" : -0.020410775805267418,
+        "grossProfitGrowth" : -0.03384754367187423,
+        "ebitgrowth" : -0.09828203898558492,
+        "operatingIncomeGrowth" : -0.09828203898558492,
+        "netIncomeGrowth" : -0.07181132519191681,
+        "epsgrowth" : -0.003330557868442893,
+        "epsdilutedGrowth" : -0.001679261125104918,
+        "weightedAverageSharesGrowth" : -0.06811651262860526,
+        "weightedAverageSharesDilutedGrowth" : -0.07023766881881975,
+        "dividendsperShareGrowth" : 0.10494717879684683,
+        "operatingCashFlowGrowth" : -0.10386910142831314,
+        "freeCashFlowGrowth" : -0.08148656446406013,
+        "tenYRevenueGrowthPerShare" : 0.37705704658488165,
+        "fiveYRevenueGrowthPerShare" : 0.8756969392221993,
+        "threeYRevenueGrowthPerShare" : 0.4293898494860345,
+        "tenYOperatingCFGrowthPerShare" : 0.32090963788555116,
+        "fiveYOperatingCFGrowthPerShare" : 0.5314306802951326,
+        "threeYOperatingCFGrowthPerShare" : 0.24891529730845957,
+        "tenYNetIncomeGrowthPerShare" : 0.8733583018768238,
+        "fiveYNetIncomeGrowthPerShare" : 0.8430431420968708,
+        "threeYNetIncomeGrowthPerShare" : 0.43285060206892095,
+        "tenYShareholdersEquityGrowthPerShare" : -0.37126520310083627,
+        "fiveYShareholdersEquityGrowthPerShare" : 0.06904548276422998,
+        "threeYShareholdersEquityGrowthPerShare" : -0.1641061868420529,
+        "tenYDividendperShareGrowthPerShare" : 0.0,
+        "fiveYDividendperShareGrowthPerShare" : 0.6723530656722324,
+        "threeYDividendperShareGrowthPerShare" : 0.3767077879533392,
+        "receivablesGrowth" : -0.011213663417579574,
+        "inventoryGrowth" : 0.037917087967644085,
+        "assetGrowth" : -0.07439742976279992,
+        "bookValueperShareGrowth" : 0.0,
+        "debtGrowth" : -0.004408938830850867,
+        "rdexpenseGrowth" : 0.1391542568137117,
+        "sgaexpensesGrowth" : 0.092187967674349
+      }, ...
+    ]
+    """
+    path = f"financial-growth/{symbol}"
+    query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Company Rating
+
+    Example:
+    https://financialmodelingprep.com/api/v3/rating/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-09-04",
+        "rating" : "S-",
+        "ratingScore" : 5,
+        "ratingRecommendation" : "Strong Buy",
+        "ratingDetailsDCFScore" : 5,
+        "ratingDetailsDCFRecommendation" : "Strong Buy",
+        "ratingDetailsROEScore" : 4,
+        "ratingDetailsROERecommendation" : "Buy",
+        "ratingDetailsROAScore" : 3,
+        "ratingDetailsROARecommendation" : "Neutral",
+        "ratingDetailsDEScore" : 5,
+        "ratingDetailsDERecommendation" : "Strong Buy",
+        "ratingDetailsPEScore" : 5,
+        "ratingDetailsPERecommendation" : "Strong Buy",
+        "ratingDetailsPBScore" : 5,
+        "ratingDetailsPBRecommendation" : "Strong Buy"
+    } ]
+    """
+    path = f"rating/{symbol}"
+    query_vars = {"apikey": apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def historical_rating(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Historical Company Rating
+
+    Example:
+    https://financialmodelingprep.com/api/v3/rating/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-09-04",
+        "rating" : "S-",
+        "ratingScore" : 5,
+        "ratingRecommendation" : "Strong Buy",
+        "ratingDetailsDCFScore" : 5,
+        "ratingDetailsDCFRecommendation" : "Strong Buy",
+        "ratingDetailsROEScore" : 4,
+        "ratingDetailsROERecommendation" : "Buy",
+        "ratingDetailsROAScore" : 3,
+        "ratingDetailsROARecommendation" : "Neutral",
+        "ratingDetailsDEScore" : 5,
+        "ratingDetailsDERecommendation" : "Strong Buy",
+        "ratingDetailsPEScore" : 5,
+        "ratingDetailsPERecommendation" : "Strong Buy",
+        "ratingDetailsPBScore" : 5,
+        "ratingDetailsPBRecommendation" : "Strong Buy"
+    } ]
+    """
+    path = f"financial-growth/{symbol}"
+    query_vars = {"apikey": apikey, "limit": limit}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Discounted Cash Flow
+
+    Example:
+    https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-01-19",
+        "dcf" : 332.10579358634374,
+        "Stock Price" : 310.33
+    } ]
+    """
+    path = f"discounted-cash-flow/{symbol}"
+    query_vars = {"apikey": apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def historical_discounted_cash_flow(
+        apikey: str,
+        symbol: str,
+        period: str = 'annual',
+        limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Historical Discounted Cash Flow
+
+    Example:
+    https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-01-19",
+        "dcf" : 332.10579358634374,
+        "Stock Price" : 310.33
+    } ]
+    """
+    path = f"historical-discounted-cash-flow/{symbol}"
+    query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def historical_daily_discounted_cash_flow(
+        apikey: str,
+        symbol: str,
+        limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Historical Daily Discounted Cash Flow
+
+    Example:
+    https://financialmodelingprep.com/api/v3/company/discounted-cash-flow/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-01-19",
+        "dcf" : 332.10579358634374,
+        "Stock Price" : 310.33
+    } ]
+    """
+    path = f"historical-daily-discounted-cash-flow/{symbol}"
+    query_vars = {"apikey": apikey, "limit": limit}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def market_capitalization(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Market Capitalization
+
+    Example:
+    https://financialmodelingprep.com/api/v3/market-capitalization/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-07-24",
+        "marketCap" : 1641007358213.16797
+    } ]
+    """
+    path = f"market-capitalization/{symbol}"
+    query_vars = {"apikey": apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def historical_market_capitalization(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Market Capitalization
+
+    Example:
+    https://financialmodelingprep.com/api/v3/market-capitalization/AAPL?apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-07-24",
+        "marketCap" : 1641007358213.16797
+    } ]
+    """
+    path = f"market-capitalization/{symbol}"
+    query_vars = {"apikey": apikey, "limit": limit}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def symbols_list(apikey: str) -> typing.List[typing.Dict]:
+    """
+    All Companies ticker symbols available in Financial Modeling Prep
+
+    Example:
+    https://financialmodelingprep.com/api/v3/stock/list?apikey=demo
+    [ {
+        "symbol" : "SPY",
+        "name" : "SPDR S&P 500",
+        "price" : 342.57,
+        "exchange" : "NYSE Arca"
+      },
+      {
+        "symbol" : "CMCSA",
+        "name" : "Comcast Corp",
+        "price" : 44.43,
+        "exchange" : "Nasdaq Global Select"
+      }, {
+        "symbol" : "KMI",
+        "name" : "Kinder Morgan Inc",
+        "price" : 13.52,
+        "exchange" : "New York Stock Exchange"
+      },
+      {
+        "symbol" : "INTC",
+        "name" : "Intel Corp",
+        "price" : 50.08,
+        "exchange" : "Nasdaq Global Select"
+      },
+      {
+        "symbol" : "MU",
+        "name" : "Micron Technology Inc",
+        "price" : 46.48,
+        "exchange" : "Nasdaq Global Select"
+      }, ...
+    ]
+    """
+    path = f"stock/list"
+    query_vars = {"apikey": apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def stock_screener(apikey: str, **kwargs) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for stocks meeting certain criteria.
+
+    kwargs options:
+        market_cap_lower_than: int
+        beta_more_than: int
+        beta_lower_than: int
+        volume_more_than: int
+        volume_lower_than: int
+        dividend_more_than: int
+        dividend_lower_than: int
+        sector: str
+        industry: str
+        exchange: typing.Union[str, typing.List[str]]
+        limit: int
+
+    Example:
+    https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=1000000000&betaMoreThan=1&volumeMoreThan=10000&sector=Technology&exchange=NASDAQ&dividendMoreThan=0&limit=100&apikey=demo
+    [ {
+        "symbol" : "MSFT",
+        "companyName" : "Microsoft Corporation",
+        "marketCap" : 1391637040000,
+        "sector" : "Technology",
+        "beta" : 1.2310280000000000111270992420031689107418060302734375,
+        "price" : 183.509999999999990905052982270717620849609375,
+        "lastAnnualDividend" : 1.939999999999999946709294817992486059665679931640625,
+        "volume" : 54536583,
+        "exchange" : "Nasdaq Global Select",
+        "exchangeShortName" : "NASDAQ"
+      },
+      {
+        "symbol" : "AAPL",
+        "companyName" : "Apple Inc.",
+        "marketCap" : 1382174560000,
+        "sector" : "Technology",
+        "beta" : 1.2284990000000000076596506914938800036907196044921875,
+        "price" : 318.8899999999999863575794734060764312744140625,
+        "lastAnnualDividend" : 3.0800000000000000710542735760100185871124267578125,
+        "volume" : 51500795,
+        "exchange" : "Nasdaq Global Select",
+        "exchangeShortName" : "NASDAQ"
+      },
+      {
+        "symbol" : "AMZN",
+        "companyName" : "Amazon.com Inc.",
+        "marketCap" : 1215457260000,
+        "sector" : "Technology",
+        "beta" : 1.5168630000000000723758830645238049328327178955078125,
+        "price" : 2436.8800000000001091393642127513885498046875,
+        "lastAnnualDividend" : 0,
+        "volume" : 6105985,
+        "exchange" : "Nasdaq Global Select",
+        "exchangeShortName" : "NASDAQ"
+      }, ...
+    ]
+    """
+    path = f"stock-screener"
+    query_vars = {"apikey": apikey}
+    if kwargs.get('market_cap_more_than'):
+        query_vars['marketCapMoreThan'] = kwargs['market_cap_more_than']
+    if kwargs.get('market_cap_lower_than'):
+        query_vars['marketCapLowerThan'] = kwargs['market_cap_lower_than']
+    if kwargs.get('beta_more_than'):
+        query_vars['betaMoreThan'] = kwargs['beta_more_than']
+    if kwargs.get('beta_lower_than'):
+        query_vars['betaLowerThan'] = kwargs['beta_lower_than']
+    if kwargs.get('volume_more_than'):
+        query_vars['volumeMoreThan'] = kwargs['volume_more_than']
+    if kwargs.get('volume_lower_than'):
+        query_vars['volumeLowerThan'] = kwargs['volume_lower_than']
+    if kwargs.get('dividend_more_than'):
+        query_vars['dividendMoreThan'] = kwargs['dividend_more_than']
+    if kwargs.get('dividend_lower_than'):
+        query_vars['dividendLowerThan'] = kwargs['dividend_lower_than']
+    if kwargs.get('sector'):
+        query_vars['sector'] = set_sector(kwargs['sector'])
+    if kwargs.get('industry'):
+        query_vars['industry'] = set_industry(kwargs['industry'])
+    if kwargs.get('limit'):
+        query_vars['limit'] = kwargs['limit']
+    if kwargs.get('exchange'):
+        if type(kwargs['exchange']) is list:
+            for item in kwargs['exchange']:
+                if item != set_exchange(item):
+                    logging.error("Invalid Exchange value.")
+                    exit(1)
+            query_vars['exchange'] = ','.join(kwargs['exchange'])
+        else:
+            query_vars['exchange'] = set_exchange(kwargs['exchange'])
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def delisted_companies(apikey: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for a list of Delisted Companies.
+
+    Example:
+    https://financialmodelingprep.com/api/v3/delisted-companies?limit=100&apikey=demo
+    [ {
+        "symbol" : "AA-W",
+        "companyName" : "Alcoa Corporation When Issued",
+        "exchange" : "NYSE",
+        "ipoDate" : "2016-10-18",
+        "delistedDate" : "2016-11-08"
+      }, {
+        "symbol" : "AAAP",
+        "companyName" : "Advanced Accelerator Applications SA",
+        "exchange" : "NASDAQ",
+        "ipoDate" : "2015-11-11",
+        "delistedDate" : "2018-02-20"
+      }, {
+        "symbol" : "AABA",
+        "companyName" : "Altaba Inc",
+        "exchange" : "NASDAQ",
+        "ipoDate" : "1996-04-12",
+        "delistedDate" : "2019-11-06"
+      }, {
+        "symbol" : "AAC",
+        "companyName" : "American Addiction Centers",
+        "exchange" : "NYSE",
+        "ipoDate" : "2014-10-02",
+        "delistedDate" : "2019-11-04"
+      }, {
+        "symbol" : "AACC",
+        "companyName" : "Asset Acceptance Capital Corp",
+        "exchange" : "NASDAQ",
+        "ipoDate" : "2004-02-05",
+        "delistedDate" : "2013-10-17"
+      }, ...
+    ]
+    """
+    path = f"delisted-companies"
+    query_vars = {"apikey": apikey, "limt": limit}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def stock_news(apikey: str, tickers: typing.Union[str, typing.List] = "", limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Stock News
+
+    Example:
+    https://financialmodelingprep.com/api/v3/stock_news?tickers=AAPL,FB,GOOG,AMZN&limit=50&apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "publishedDate" : "2020-09-08 09:25:00",
+        "title" : "This Is Not 1999",
+        "image" : "https://static.seekingalpha.com/uploads/2020/9/4/33552555-1599243045230633_origin.png",
+        "site" : "seekingalpha.com",
+        "text" : "Investors compare 2020 to 1999 because it's the easy answer. Humans like easy answers - patterns - because it helps them assert control and make sense of the world.",
+        "url" : "https://seekingalpha.com/article/4372707-this-is-not-1999"
+      }, {
+        "symbol" : "FB",
+        "publishedDate" : "2020-09-08 09:00:00",
+        "title" : "Facebook: 25% Upside As It Climbs To The Trillion Mark",
+        "image" : "https://static3.seekingalpha.com/uploads/2020/9/5/12629971-15993371256494496.png",
+        "site" : "seekingalpha.com",
+        "text" : "FB is still a buy as 1/3rd of the global population uses its platforms, there is zero long-term debt on the balance sheet and FB continuously delivers significant growth.",
+        "url" : "https://seekingalpha.com/article/4372906-facebook-25-upside-climbs-to-trillion-mark"
+      }, {
+        "symbol" : "AAPL",
+        "publishedDate" : "2020-09-08 08:30:00",
+        "title" : "Where Fundamentals Meet Technicals",
+        "image" : "https://static1.seekingalpha.com/uploads/2020/9/5/saupload_full-7eadbf4ba925753fe35d3e2ab4b8c1ba798e4255.png",
+        "site" : "seekingalpha.com",
+        "text" : "Despite the recent dip, the S&P 500 doesn't have a great intermediate-term risk/reward profile, based on valuations or technicals.",
+        "url" : "https://seekingalpha.com/article/4372997-where-fundamentals-meet-technicals"
+      }, {
+        "symbol" : "AMZN",
+        "publishedDate" : "2020-09-08 07:50:05",
+        "title" : "Amazon's Profits, AWS, And Advertising",
+        "image" : "https://static2.seekingalpha.com/uploads/2020/9/8/saupload_Misc_slides.001.png",
+        "site" : "seekingalpha.com",
+        "text" : "The company’s sales keep going up, and it takes a larger and larger share of US retail every year (7-8% in 2019), but it never seems to make any money.",
+        "url" : "https://seekingalpha.com/article/4372990-amazons-profits-aws-and-advertising"
+      }, {
+        "symbol" : "GOOG",
+        "publishedDate" : "2020-09-08 07:42:01",
+        "title" : "Tracking Gardner Russo & Gardner Portfolio - Q2 2020 Update",
+        "image" : "https://static2.seekingalpha.com/uploads/2020/9/8/106657-15995594451753187.jpg",
+        "site" : "seekingalpha.com",
+        "text" : "Gardner Russo & Gardner’s 13F portfolio value decreased from $9.89B to $9.84B. Russo dropped The Swatch Group AG and reduced JCDecaux SX during the quarter.",
+        "url" : "https://seekingalpha.com/article/4372989-tracking-gardner-russo-gardner-portfolio-q2-2020-update"
+      }, ...
+    ]
+    """
+    path = f"stock_news"
+    query_vars = {"apikey": apikey, "limt": limit}
+    if tickers:
+        if type(tickers) is list:
+            tickers = ','.join(tickers)
+        query_vars['tickers'] = tickers
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def earnings_surprises(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Earnings Surprises
+
+    Example:
+    https://financialmodelingprep.com/api/v3/earnings-surpises/AAPL?apikey=demo
+    [ {
+        "date" : "2020-06-30",
+        "symbol" : "AAPL",
+        "actualEarningResult" : 0.645,
+        "estimatedEarning" : 0.5211078
+      }, {
+        "date" : "2020-03-31",
+        "symbol" : "AAPL",
+        "actualEarningResult" : 0.6375,
+        "estimatedEarning" : 0.5765856
+      }, {
+        "date" : "2019-12-31",
+        "symbol" : "AAPL",
+        "actualEarningResult" : 1.2475,
+        "estimatedEarning" : 1.159587
+      }, {
+        "date" : "2019-09-30",
+        "symbol" : "AAPL",
+        "actualEarningResult" : 0.7575,
+        "estimatedEarning" : 0.7240368
+      }, ...
+    ]
+    """
+    path = f"earnings-surpises/{symbol}"
+    query_vars = {"apikey": apikey}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def sec_filings(apikey: str, symbol: str, filing_type: str = "", limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for SEC Filings
+
+    Example:
+    https://financialmodelingprep.com/api/v3/sec_filings/AAPL?limit=500&apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "fillingDate" : "2020-10-05 00:00:00",
+        "acceptedDate" : "2020-10-05 18:33:56",
+        "cik" : "0000320193",
+        "type" : "4",
+        "link" : "https://www.sec.gov/Archives/edgar/data/320193/000032019320000084/0000320193-20-000084-index.htm",
+        "finalLink" : "https://www.sec.gov/Archives/edgar/data/320193/000032019320000084/xslF345X03/wf-form4_160193720275669.xml"
+      }, {
+        "symbol" : "AAPL",
+        "fillingDate" : "2020-10-05 00:00:00",
+        "acceptedDate" : "2020-10-05 18:32:48",
+        "cik" : "0000320193",
+        "type" : "4",
+        "link" : "https://www.sec.gov/Archives/edgar/data/320193/000032019320000083/0000320193-20-000083-index.htm",
+        "finalLink" : "https://www.sec.gov/Archives/edgar/data/320193/000032019320000083/xslF345X03/wf-form4_160193715587800.xml"
+      }, {
+        "symbol" : "AAPL",
+        "fillingDate" : "2020-10-05 00:00:00",
+        "acceptedDate" : "2020-10-05 18:30:48",
+        "cik" : "0000320193",
+        "type" : "4",
+        "link" : "https://www.sec.gov/Archives/edgar/data/320193/000032019320000082/0000320193-20-000082-index.htm",
+        "finalLink" : "https://www.sec.gov/Archives/edgar/data/320193/000032019320000082/xslF345X03/wf-form4_160193701297920.xml"
+      }, ...
+    ]
+    """
+    path = f"sec_filings/{symbol}"
+    query_vars = {"apikey": apikey, "type": filing_type, "limit": limit}
+    return return_response(base=BASE_URL, path=path, query_vars=query_vars)
+
+
+def press_releases(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Press Releases
+
+    Example:
+    https://financialmodelingprep.com/api/v3/press-releases/AAPL?limit=100&apikey=demo
+    [ {
+        "symbol" : "AAPL",
+        "date" : "2020-09-15 16:30:00",
+        "title" : "Apple Inc Says New iPad Air Will Be Priced Starting At $599",
+        "text" : "APPLE INC ANNOUNCES IPAD 8TH GENERATION STARTING WITH A12 BIONIC.APPLE INC SAYS PRICES OF NEW IPADS START AT $299 FOR EDUCATION CUSTOMERS.APPLE INC SAYS NEW IPAD AIR WILL BE PRICED AT BEGINNING $599.APPLE SAYS WILL RELEASE MAJOR IOS UPDATES ON WEDNESDAY."
+      }, {
+        "symbol" : "AAPL",
+        "date" : "2020-09-08 17:30:00",
+        "title" : "Apple Inc Files Counterclaims Against Epic, Seeks Damages",
+        "text" : "APPLE INC FILES COUNTERCLAIMS AGAINST EPIC, AND IS SEEKING DAMAGES AND DISGORGEMENT OF EARNINGS, PROFIT COMPENSATION.APPLE INC COUNTERCOMPLAINT SEEKS A PERMANENT INJUNCTION AGAINST CONTINUED OPERATION OF EPIC'S "UNAUTHORIZED" PAYMENT MECHANISM."
+      }, {
+        "symbol" : "AAPL",
+        "date" : "2020-09-04 01:30:00",
+        "title" : "Apple Commits To Freedom Of Speech After Criticism Of China Censorship - FT",
+        "text" : "APPLE COMMITS TO FREEDOM OF SPEECH AFTER CRITICISM OF CHINA CENSORSHIP - FT.APPLE IS “COMMITTED TO RESPECTING THE HUMAN RIGHTS OF EVERYONE WHOSE LIVES WE TOUCH  INCLUDING OUR EMPLOYEES, SUPPLIERS, CONTRACTORS AND CUSTOMERS” - FT, CITING DOCUMENT."
+      }, ...
+    ]
+    """
+    path = f"press-releases/{symbol}"
+    query_vars = {"apikey": apikey, "limit": limit}
     return return_response(base=BASE_URL, path=path, query_vars=query_vars)
