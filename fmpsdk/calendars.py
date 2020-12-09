@@ -1,8 +1,9 @@
 from .settings import DEFAULT_LIMIT
 from .url_methods import return_response
+import typing
 
 
-def earning_calendar(apikey: str, from_date: str = None, to_date: str = None):
+def earning_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
     """
     Query FMP API for Earning Calendar
 
@@ -45,7 +46,7 @@ def earning_calendar(apikey: str, from_date: str = None, to_date: str = None):
     return return_response(path=path, query_vars=query_vars)
 
 
-def historical_earning_calendar(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT):
+def historical_earning_calendar(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
     """
     Query FMP API for Historical Earning Calendar
 
@@ -86,7 +87,7 @@ def historical_earning_calendar(apikey: str, symbol: str, limit: int = DEFAULT_L
     return return_response(path=path, query_vars=query_vars)
 
 
-def ipo_calendar(apikey: str, from_date: str = None, to_date: str = None):
+def ipo_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
     """
     Query FMP API for IPO Calendar
 
@@ -133,7 +134,7 @@ def ipo_calendar(apikey: str, from_date: str = None, to_date: str = None):
     return return_response(path=path, query_vars=query_vars)
 
 
-def stock_split_calendar(apikey: str, from_date: str = None, to_date: str = None):
+def stock_split_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
     """
     Query FMP API for Stock Split Calendar
 
@@ -177,7 +178,7 @@ def stock_split_calendar(apikey: str, from_date: str = None, to_date: str = None
     return return_response(path=path, query_vars=query_vars)
 
 
-def dividend_calendar(apikey: str, from_date: str = None, to_date: str = None):
+def dividend_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
     """
     Query FMP API for Dividend Calendar
 
@@ -217,7 +218,7 @@ def dividend_calendar(apikey: str, from_date: str = None, to_date: str = None):
     return return_response(path=path, query_vars=query_vars)
 
 
-def economic_calendar(apikey: str, from_date: str = None, to_date: str = None):
+def economic_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
     """
     Query FMP API for Economic Calendar
 
