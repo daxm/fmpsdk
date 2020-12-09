@@ -3,6 +3,7 @@ import json
 from urllib import parse
 from urllib.request import urlopen
 import logging
+from .settings import INDUSTRY_VALUES, SECTOR_VALUES, PERIOD_VALUES, EXCHANGE_VALUES
 
 
 def make_url(base: str, path: str, query_vars: typing.Dict):
@@ -36,19 +37,7 @@ def return_response(base: str, path: str, query_vars: typing.Dict):
 
 
 def set_exchange(value: str) -> str:
-    valid_values = [
-        "ETF",
-        "MUTUAL_FUND",
-        "COMMODITY",
-        "INDEX",
-        "CRYPTO",
-        "FOREX",
-        "TSX",
-        "AMEX",
-        "NASDAQ",
-        "NYSE",
-        "EURONEXT",
-    ]
+    valid_values = EXCHANGE_VALUES
     if value in valid_values:
         return value
     else:
@@ -56,7 +45,7 @@ def set_exchange(value: str) -> str:
 
 
 def set_period(value: str) -> str:
-    valid_values = ["annual", "quarter"]
+    valid_values = PERIOD_VALUES
     if value in valid_values:
         return value
     else:
@@ -64,22 +53,7 @@ def set_period(value: str) -> str:
 
 
 def set_sector(value: str) -> str:
-    valid_values = [
-        "Consumer Cyclical",
-        "Energy",
-        "Technology",
-        "Industrials",
-        "Financial Services",
-        "Basic Materials",
-        "Communication Services",
-        "Consumer Defensive",
-        "Healthcare",
-        "Real Estate",
-        "Utilities",
-        "Industrial Goods",
-        "Financial Services",
-        "Conglomerates",
-    ]
+    valid_values = SECTOR_VALUES
     if value in valid_values:
         return value
     else:
@@ -87,16 +61,7 @@ def set_sector(value: str) -> str:
 
 
 def set_industry(value: str) -> str:
-    valid_values = [
-        "Autos",
-        "Banks",
-        "Banks Diversified",
-        "Software",
-        "Banks Regional",
-        "Beverages Alcoholic",
-        "Beverages Brewers",
-        "Beverages Non - Alcoholic",
-    ]
+    valid_values = INDUSTRY_VALUES
     if value in valid_values:
         return value
     else:
