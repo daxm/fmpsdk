@@ -51,6 +51,11 @@ __all__ = [
     "sec_filings",
     "press_releases",
     'earning_calendar',
+    'historical_earning_calendar',
+    'ipo_calendar',
+    'stock_split_calendar',
+    'dividend_calendar',
+    'economic_calendar',
 
     "historical_stock_dividend",
     "historical_stock_split",

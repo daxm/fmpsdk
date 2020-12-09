@@ -76,6 +76,11 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # Calendars
 # print(f"Earning Calendar: {fmpsdk.earning_calendar(apikey=apikey)}")
 # print(f"Earning Calendar: {fmpsdk.earning_calendar(apikey=apikey, from_date='2000-06-23', to_date='2010-12-12')}")
+# print(f"Historical Earning Calendar: {fmpsdk.historical_earning_calendar(apikey=apikey, symbol=symbol, limit=25)}")
+# print(f"IPO Calendar: {fmpsdk.ipo_calendar(apikey=apikey, from_date='2000-06-23', to_date='2010-12-12')}")
+# print(f"Stock Split Calendar: {fmpsdk.stock_split_calendar(apikey=apikey, from_date='2000-06-23', to_date='2010-12-12')}")
+# print(f"Dividend Calendar: {fmpsdk.dividend_calendar(apikey=apikey, from_date='2000-06-23', to_date='2010-12-12')}")
+# print(f"Economic Calendar: {fmpsdk.economic_calendar(apikey=apikey, from_date='2020-09-23', to_date='2020-12-12')}")
 
 # Stock Time Series Methods
 # print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
