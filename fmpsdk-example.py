@@ -82,6 +82,20 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Dividend Calendar: {fmpsdk.dividend_calendar(apikey=apikey, from_date='2000-06-23', to_date='2010-12-12')}")
 # print(f"Economic Calendar: {fmpsdk.economic_calendar(apikey=apikey, from_date='2020-09-23', to_date='2020-12-12')}")
 
+# Institutional Fund
+# print(f"Institutional Holders: {fmpsdk.institutional_holders(apikey=apikey, symbol=symbol)}")
+# print(f"Mutual Fund Holders: {fmpsdk.mutual_fund_holders(apikey=apikey, symbol=symbol)}")
+# print(f"ETF Holders: {fmpsdk.etf_holders(apikey=apikey, symbol='SPY')}")
+# print(f"ETF Sector Weightings: {fmpsdk.etf_sector_weightings(apikey=apikey, symbol='SPY')}")
+# print(f"ETF Country Weightings: {fmpsdk.etf_country_weightings(apikey=apikey, symbol='SPY')}")
+# print(f"SEC RSS Feeds: {fmpsdk.sec_rss_feeds(apikey=apikey)}")
+# print(f"SEC RSS Feeds: {fmpsdk.sec_rss_feeds(apikey=apikey, download=True)}")
+# print(f"Form 13F List: {fmpsdk.form_13f_list(apikey=apikey)}")
+# print(f"CIK Search by Company Name: {fmpsdk.cik_search(apikey=apikey, name='Berkshire')}")
+# print(f"CIK Search by CIK: {fmpsdk.cik(apikey=apikey, cik_id='0000913760')}")
+# print(f"Form 13F: {fmpsdk.form_13f(apikey=apikey, cik_id='0000913760', date='2020-06-30')}")
+print(f"CUSIP: {fmpsdk.cusip(apikey=apikey, cik_id='000360206')}")
+
 # Stock Time Series Methods
 # print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")

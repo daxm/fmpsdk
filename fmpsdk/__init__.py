@@ -1,4 +1,3 @@
-from .settings import *
 from .company_valuation import *
 from .calendars import *
 from .institutional_fund import *
@@ -56,6 +55,17 @@ __all__ = [
     'stock_split_calendar',
     'dividend_calendar',
     'economic_calendar',
+    'institutional_holders',
+    'mutual_fund_holders',
+    'etf_holders',
+    'etf_sector_weightings',
+    'etf_country_weightings',
+    'sec_rss_feeds',
+    'form_13f_list',
+    'cik_search',
+    'cik',
+    'form_13f',
+    'cusip',
 
     "historical_stock_dividend",
     "historical_stock_split",
