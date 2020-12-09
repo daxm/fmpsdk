@@ -61,3 +61,43 @@ def set_period(value: str) -> str:
         return value
     else:
         logging.error(f"Invalid period value.  Valid options: {valid_values}")
+
+
+def set_sector(value: str) -> str:
+    valid_values = [
+        'Consumer Cyclical',
+        'Energy',
+        'Technology',
+        'Industrials',
+        'Financial Services',
+        'Basic Materials',
+        'Communication Services',
+        'Consumer Defensive',
+        'Healthcare',
+        'Real Estate',
+        'Utilities',
+        'Industrial Goods',
+        'Financial Services',
+        'Conglomerates',
+    ]
+    if value in valid_values:
+        return value
+    else:
+        logging.error(f"Invalid sector value.  Valid options: {valid_values}")
+
+
+def set_industry(value: str) -> str:
+    valid_values = [
+        'Autos',
+        'Banks',
+        'Banks Diversified',
+        'Software',
+        'Banks Regional',
+        'Beverages Alcoholic',
+        'Beverages Brewers',
+        'Beverages Non - Alcoholic',
+    ]
+    if value in valid_values:
+        return value
+    else:
+        logging.error(f"Invalid industry value.  Valid options: {valid_values}")
