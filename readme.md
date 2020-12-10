@@ -3,12 +3,15 @@ The idea behind this project is to provide a 'one-stop-shop' to the API endpoint
 [Financial Model Prep](http://financialmodelingprep.com) website.
 
 ## Breaking Change Update!!!
-I know this project is brand new but I've decided to "flatten" the structure.  Instead of using a Class object with 
+Use version 20201208.5 or larger!
+
+I know this project is brand new, but I've decided to "flatten" the structure.  Instead of using a Class object with 
 methods inside it for each API endpoint I decided to just have regular methods.  So, instead of instantiating an 
 "FMP" object you can just call each method directly.  The only main "con" to this new methodology is that you have 
 to pass the 'apikey' and 'symbol' (when needed) to each method.  I felt the tradeoff was worth it though.
 
-Example code:
+## Example code
+Most of these methods will return a dictionary.  It is up to you to parse out the information you are looking for.
 ```python
 #!/usr/bin/env python3
 
@@ -61,5 +64,3 @@ print(f"Quarterly Enterprise Values: {fmpsdk.enterprise_values(apikey=apikey, sy
 print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")
 ```
-
-Most of these methods will return a dictionary.  It is up to you to parse out the information you are looking for.
