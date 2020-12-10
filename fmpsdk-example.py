@@ -125,3 +125,6 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Historical DOWJONES Contituent: {fmpsdk.historical_dowjones_constituent(apikey=apikey)}")
 # print(f"Available Indexes: {fmpsdk.available_indexes(apikey=apikey)}")
 # print(f"Intraday Historical Stock Prices: {fmpsdk.historical_stock_prices(apikey=apikey, index='^SSEC', time_delta='15min')}")
+# print(f"Historical Market Index: {fmpsdk.historical_index(apikey=apikey, index='^VIX')}")
+
+# Commodities

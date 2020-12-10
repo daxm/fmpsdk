@@ -83,4 +83,5 @@ __all__ = [
     'historical_dowjones_constituent',
     'available_indexes',
     'historical_stock_prices',
+    'historical_index',
 ]

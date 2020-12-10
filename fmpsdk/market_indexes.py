@@ -468,3 +468,18 @@ def historical_stock_prices(
     path = f"historical-chart/{set_time_delta(time_delta)}/{index}"
     query_vars = {"apikey": apikey}
     return return_json(path=path, query_vars=query_vars)
+
+
+def historical_index(apikey: str, index: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP API for Historical an Index.
+
+    Example:
+
+    :param apikey: String of your API Key
+    :param index: String of Market Index
+    :return: List of Dictionaries
+   """
+    path = f"historical-price-full/{index}"
+    query_vars = {"apikey": apikey}
+    return return_json(path=path, query_vars=query_vars)
