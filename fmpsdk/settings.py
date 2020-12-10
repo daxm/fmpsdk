@@ -64,14 +64,14 @@ SERIES_TYPE_VALUES: typing.List = [
         'line',
 ]
 STATISTICS_TYPE_VALUES: typing.List = [
-        'SMA',
-        'EMA',
-        'WMA',
-        'DEMA',
-        'TEMA',
+        'sma',
+        'ema',
+        'wma',
+        'dema',
+        'tema',
         'williams',
-        'RSI',
-        'ADX',
+        'rsa',
+        'adx',
         'standardDeviation',
 ]
 
@@ -83,3 +83,6 @@ INCOME_STATEMENT_AS_REPORTED_FILENAME: str = "income_statement_as_reported.csv"
 BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME: str = "balance_sheet_as_reported.csv"
 CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME: str = "cash_flow_as_reported.csv"
 SEC_RSS_FEEDS_FILENAME: str = "sec_rss_feeds.csv"
+SP500_CONSTITUENTS_FILENAME: str = "sp500_constituents.csv"
+NASDAQ_CONSTITUENTS_FILENAME: str = "nasdaq_constituents.csv"
+DOWJONES_CONSTITUENTS_FILENAME: str = "dowjones_constituents.csv"

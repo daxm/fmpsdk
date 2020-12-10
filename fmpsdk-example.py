@@ -9,8 +9,6 @@ load_dotenv()
 apikey = os.environ.get("apikey")
 symbol = "AAPL"
 
-# Access the FMPSDK methods.  Most return a List of Dictionaries.
-
 # Company Valuation Methods
 print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}")
 # print(f"Company Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)}")
@@ -114,3 +112,16 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Intraday Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='15min')}")
 
 # Market Indexes
+# print(f"List Market Indexes: {fmpsdk.market_indexes(apikey=apikey)}")
+# print(f"Index: {fmpsdk.index_quote(apikey=apikey, index='IMOEX.ME')}")
+# print(f"SP500 Contituent: {fmpsdk.sp500_constituent(apikey=apikey)}")
+# fmpsdk.sp500_constituent(apikey=apikey, download=True)
+# print(f"Historical SP500 Contituent: {fmpsdk.historical_sp500_constituent(apikey=apikey)}")
+# print(f"NASDAQ Contituent: {fmpsdk.nasdaq_constituent(apikey=apikey)}")
+# fmpsdk.nasdaq_constituent(apikey=apikey, download=True)
+# print(f"Historical NASDAQ Contituent: {fmpsdk.historical_nasdaq_constituent(apikey=apikey)}")
+# print(f"DOWJONES Contituent: {fmpsdk.dowjones_constituent(apikey=apikey)}")
+# fmpsdk.dowjones_constituent(apikey=apikey, download=True)
+# print(f"Historical DOWJONES Contituent: {fmpsdk.historical_dowjones_constituent(apikey=apikey)}")
+# print(f"Available Indexes: {fmpsdk.available_indexes(apikey=apikey)}")
+# print(f"Intraday Historical Stock Prices: {fmpsdk.historical_stock_prices(apikey=apikey, index='^SSEC', time_delta='15min')}")

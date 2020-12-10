@@ -1,4 +1,5 @@
 from .settings import (
+    BASE_URL,
     DEFAULT_LIMIT,
     FINANCIAL_STATEMENT_FILENAME,
     CASH_FLOW_STATEMENT_FILENAME,
@@ -8,9 +9,8 @@ from .settings import (
     BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
     CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
 )
-import shutil
-from .url_methods import return_response, set_sector, set_period, set_industry, set_exchange, make_url
-from urllib.request import urlopen
+from .url_methods import return_json, set_sector, set_period, set_industry, set_exchange
+import requests
 import typing
 import logging
 
@@ -67,7 +67,7 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
    """
     path = f"profile/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def quote(
@@ -107,7 +107,7 @@ def quote(
         symbol = ",".join(symbol)
     path = f"quote/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -139,7 +139,7 @@ def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"key-executives/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def search(
@@ -173,7 +173,7 @@ def search(
         "query": query,
         "exchange": set_exchange(value=exchange),
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def search_ticker(
@@ -207,7 +207,7 @@ def search_ticker(
         "query": query,
         "exchange": set_exchange(value=exchange),
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def financial_statement(
@@ -219,10 +219,9 @@ def financial_statement(
         "apikey": apikey,
         "datatype": "zip",  # Only ZIP format is supported.
     }
-    url = make_url(path=path, query_vars=query_vars)
-    with urlopen(url) as response, open(filename, "wb") as out_file:
-        logging.info(f"Saving {symbol} financial statement as {filename}.")
-        shutil.copyfileobj(response, out_file)
+    response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+    open(filename, 'wb').write(response.content)
+    logging.info(f"Saving {symbol} financial statement as {filename}.")
 
 
 def income_statement(
@@ -280,12 +279,11 @@ def income_statement(
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        url = make_url(path=path, query_vars=query_vars)
-        with urlopen(url) as response, open(filename, "wb") as out_file:
-            logging.info(f"Saving {symbol} financial statement as {filename}.")
-            shutil.copyfileobj(response, out_file)
+        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+        open(filename, 'wb').write(response.content)
+        logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
-        return return_response(path=path, query_vars=query_vars)
+        return return_json(path=path, query_vars=query_vars)
 
 
 def balance_sheet_statement(
@@ -356,12 +354,11 @@ def balance_sheet_statement(
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        url = make_url(path=path, query_vars=query_vars)
-        with urlopen(url) as response, open(filename, "wb") as out_file:
-            logging.info(f"Saving {symbol} financial statement as {filename}.")
-            shutil.copyfileobj(response, out_file)
+        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+        open(filename, 'wb').write(response.content)
+        logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
-        return return_response(path=path, query_vars=query_vars)
+        return return_json(path=path, query_vars=query_vars)
 
 
 def cash_flow_statement(
@@ -423,12 +420,11 @@ def cash_flow_statement(
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        url = make_url(path=path, query_vars=query_vars)
-        with urlopen(url) as response, open(filename, "wb") as out_file:
-            logging.info(f"Saving {symbol} financial statement as {filename}.")
-            shutil.copyfileobj(response, out_file)
+        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+        open(filename, 'wb').write(response.content)
+        logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
-        return return_response(path=path, query_vars=query_vars)
+        return return_json(path=path, query_vars=query_vars)
 
 
 def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
@@ -456,7 +452,7 @@ def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"financial-statement-symbol-lists"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def income_statement_growth(
@@ -505,7 +501,7 @@ def income_statement_growth(
         "apikey": apikey,
         "limit": limit,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def balance_sheet_statement_growth(
@@ -554,7 +550,7 @@ def balance_sheet_statement_growth(
         "apikey": apikey,
         "limit": limit,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def cash_flow_statement_growth(
@@ -603,7 +599,7 @@ def cash_flow_statement_growth(
         "apikey": apikey,
         "limit": limit,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def income_statement_as_reported(
@@ -654,12 +650,11 @@ def income_statement_as_reported(
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        url = make_url(path=path, query_vars=query_vars)
-        with urlopen(url) as response, open(filename, "wb") as out_file:
-            logging.info(f"Saving {symbol} financial statement as {filename}.")
-            shutil.copyfileobj(response, out_file)
+        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+        open(filename, 'wb').write(response.content)
+        logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
-        return return_response(path=path, query_vars=query_vars)
+        return return_json(path=path, query_vars=query_vars)
 
 
 def balance_sheet_statement_as_reported(
@@ -716,12 +711,11 @@ def balance_sheet_statement_as_reported(
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        url = make_url(path=path, query_vars=query_vars)
-        with urlopen(url) as response, open(filename, "wb") as out_file:
-            logging.info(f"Saving {symbol} financial statement as {filename}.")
-            shutil.copyfileobj(response, out_file)
+        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+        open(filename, 'wb').write(response.content)
+        logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
-        return return_response(path=path, query_vars=query_vars)
+        return return_json(path=path, query_vars=query_vars)
 
 
 def cash_flow_statement_as_reported(
@@ -783,12 +777,11 @@ def cash_flow_statement_as_reported(
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        url = make_url(path=path, query_vars=query_vars)
-        with urlopen(url) as response, open(filename, "wb") as out_file:
-            logging.info(f"Saving {symbol} financial statement as {filename}.")
-            shutil.copyfileobj(response, out_file)
+        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
+        open(filename, 'wb').write(response.content)
+        logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
-        return return_response(path=path, query_vars=query_vars)
+        return return_json(path=path, query_vars=query_vars)
 
 
 def financial_statement_full_as_reported(
@@ -1148,7 +1141,7 @@ def financial_statement_full_as_reported(
     """
     path = f"financial-statement-full-as-reported/{symbol}"
     query_vars = {"apikey": apikey, "period": set_period(value=period)}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def financial_ratios(
@@ -1231,7 +1224,7 @@ def financial_ratios(
             "limit": limit,
             "period": set_period(value=period),
         }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def enterprise_values(
@@ -1266,7 +1259,7 @@ def enterprise_values(
     """
     path = f"enterprise-values/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def key_metrics(
@@ -1348,7 +1341,7 @@ def key_metrics(
             "limit": limit,
             "period": set_period(value=period),
         }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def financial_growth(
@@ -1401,7 +1394,7 @@ def financial_growth(
     """
     path = f"financial-growth/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -1432,7 +1425,7 @@ def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"rating/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_rating(
@@ -1465,7 +1458,7 @@ def historical_rating(
     """
     path = f"financial-growth/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -1483,7 +1476,7 @@ def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"discounted-cash-flow/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_discounted_cash_flow(
@@ -1503,7 +1496,7 @@ def historical_discounted_cash_flow(
     """
     path = f"historical-discounted-cash-flow/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit, "period": set_period(value=period)}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_daily_discounted_cash_flow(
@@ -1523,7 +1516,7 @@ def historical_daily_discounted_cash_flow(
     """
     path = f"historical-daily-discounted-cash-flow/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def market_capitalization(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -1540,7 +1533,7 @@ def market_capitalization(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"market-capitalization/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_market_capitalization(
@@ -1559,7 +1552,7 @@ def historical_market_capitalization(
     """
     path = f"market-capitalization/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def symbols_list(apikey: str) -> typing.List[typing.Dict]:
@@ -1601,7 +1594,7 @@ def symbols_list(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"stock/list"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def stock_screener(
@@ -1693,7 +1686,7 @@ def stock_screener(
             query_vars["exchange"] = ",".join(exchange)
         else:
             query_vars["exchange"] = set_exchange(exchange)
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def delisted_companies(
@@ -1739,7 +1732,7 @@ def delisted_companies(
     """
     path = f"delisted-companies"
     query_vars = {"apikey": apikey, "limt": limit}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def stock_news(
@@ -1801,7 +1794,7 @@ def stock_news(
         if type(tickers) is list:
             tickers = ",".join(tickers)
         query_vars["tickers"] = tickers
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def earnings_surprises(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -1835,7 +1828,7 @@ def earnings_surprises(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"earnings-surpises/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def sec_filings(
@@ -1875,7 +1868,7 @@ def sec_filings(
     """
     path = f"sec_filings/{symbol}"
     query_vars = {"apikey": apikey, "type": filing_type, "limit": limit}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def press_releases(
@@ -1906,4 +1899,4 @@ def press_releases(
     """
     path = f"press-releases/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit}
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)

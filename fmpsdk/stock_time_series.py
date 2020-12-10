@@ -1,4 +1,4 @@
-from .url_methods import return_response, set_exchange, set_time_delta, set_symbol, set_series_type
+from .url_methods import return_json, set_exchange, set_time_delta, set_symbol, set_series_type
 import typing
 
 
@@ -18,7 +18,7 @@ def quote_realtime(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def exchange_realtime(apikey: str, exchange: str) -> typing.List[typing.Dict]:
@@ -37,7 +37,7 @@ def exchange_realtime(apikey: str, exchange: str) -> typing.List[typing.Dict]:
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_chart(apikey: str, symbol: str, time_delta: str) -> typing.List[typing.Dict]:
@@ -88,7 +88,7 @@ def historical_chart(apikey: str, symbol: str, time_delta: str) -> typing.List[t
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_price(
@@ -161,7 +161,7 @@ def historical_price(
         query_vars['from'] = from_date
     if to_date:
         query_vars['to'] = to_date
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_stock_dividend(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -203,7 +203,7 @@ def historical_stock_dividend(apikey: str, symbol: str) -> typing.List[typing.Di
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
 
 
 def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -246,4 +246,4 @@ def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]
     query_vars = {
         "apikey": apikey,
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)

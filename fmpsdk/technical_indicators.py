@@ -1,4 +1,4 @@
-from .url_methods import return_response, set_statistics_type, set_technical_indicators_time_delta
+from .url_methods import return_json, set_statistics_type, set_technical_indicators_time_delta
 import typing
 
 
@@ -45,6 +45,6 @@ def technical_indicators(
     query_vars = {
         "apikey": apikey,
         "period": period,
-        "type": statistics_type,
+        "type": set_statistics_type(statistics_type),
     }
-    return return_response(path=path, query_vars=query_vars)
+    return return_json(path=path, query_vars=query_vars)
