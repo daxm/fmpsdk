@@ -128,3 +128,5 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Historical Market Index: {fmpsdk.historical_index(apikey=apikey, index='^VIX')}")
 
 # Commodities
+# print(f"Available Commodities': {fmpsdk.available_commodities(apikey=apikey)}")
+print(f"Commodities': {fmpsdk.commodities(apikey=apikey)}")
