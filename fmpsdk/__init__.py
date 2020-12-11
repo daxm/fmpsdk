@@ -91,4 +91,10 @@ __all__ = [
     "commodity_quote",
     "historical_commodity_price",
     "historical_commodity_price_full",
+    'available_efts',
+    'etf_list',
+    'etf_quote',
+    'historical_etf_price',
+    'historical_etf_price_full',
+
 ]
