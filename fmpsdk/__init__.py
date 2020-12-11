@@ -88,5 +88,6 @@ __all__ = [
     'historical_index',
     'historical_index_full',
     'available_commodities',
-    'commodities',
+    'commodities_list',
+    'commodity_quote',
 ]

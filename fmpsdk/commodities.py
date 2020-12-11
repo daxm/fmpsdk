@@ -1,126 +1,78 @@
 from .url_methods import __return_json
+from .general_methods import __quotes, __quote, __historical_chart, __historical_price_full
 import typing
 
 
 def available_commodities(apikey: str) -> typing.List[typing.Dict]:
     """
-    Query FMP for Commodities available symbols for quotes and historical prices query.
+    Query FMP /available-commodities/ API
 
-    Example:
-        https://financialmodelingprep.com/api/v3/quote/ZGUSD,CLUSD,HGUSD?apikey=demo
-        [ {
-            "symbol" : "CLUSD",
-            "price" : 59.12000000,
-            "changesPercentage" : -0.74000000,
-            "change" : -0.44000000,
-            "dayLow" : 58.85000000,
-            "dayHigh" : 59.78000000,
-            "yearHigh" : 65.48000000,
-            "yearLow" : 0E-8,
-            "marketCap" : null,
-            "priceAvg50" : 59.56000000,
-            "priceAvg200" : 58.34536700,
-            "volume" : 553817,
-            "avgVolume" : 157504928,
-            "exhange" : "COMMODITY"
-          }, {
-            "symbol" : "ZGUSD",
-            "price" : 1566.00000000,
-            "changesPercentage" : 0.38000000,
-            "change" : 5.90000000,
-            "dayLow" : 1566.00000000,
-            "dayHigh" : 1566.00000000,
-            "yearHigh" : 1566.00000000,
-            "yearLow" : 1452.00000000,
-            "marketCap" : null,
-            "priceAvg50" : 1560.10000000,
-            "priceAvg200" : 1521.67500000,
-            "volume" : 0,
-            "avgVolume" : 1,
-            "exhange" : "COMMODITY"
-          }, {
-            "symbol" : "HGUSD",
-            "price" : 2.81000000,
-            "changesPercentage" : 0.29000000,
-            "change" : 0.00800000,
-            "dayLow" : 2.79550000,
-            "dayHigh" : 2.83600000,
-            "yearHigh" : 2.83600000,
-            "yearLow" : 2.75950000,
-            "marketCap" : null,
-            "priceAvg50" : 2.80200000,
-            "priceAvg200" : 2.79850000,
-            "volume" : 58820,
-            "avgVolume" : 23833272,
-            "exhange" : "COMMODITY"
-          }, ...
-        ]
-
-    :param apikey: Your API Key
-    :return: List of Dictionaries
-   """
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
     path = f"available-commodities"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
 
-def commodities(apikey: str) -> typing.List[typing.Dict]:
+def commodities_list(apikey: str) -> typing.List[typing.Dict]:
     """
-    Query FMP for All Real-time Commodities Prices.
+    Query FMP /quotes/commodity/ API
 
-    Example:
-        https://financialmodelingprep.com/api/v3/quote/ZGUSD,CLUSD,HGUSD?apikey=demo
-        [ {
-            "symbol" : "CLUSD",
-            "price" : 59.12000000,
-            "changesPercentage" : -0.74000000,
-            "change" : -0.44000000,
-            "dayLow" : 58.85000000,
-            "dayHigh" : 59.78000000,
-            "yearHigh" : 65.48000000,
-            "yearLow" : 0E-8,
-            "marketCap" : null,
-            "priceAvg50" : 59.56000000,
-            "priceAvg200" : 58.34536700,
-            "volume" : 553817,
-            "avgVolume" : 157504928,
-            "exhange" : "COMMODITY"
-          }, {
-            "symbol" : "ZGUSD",
-            "price" : 1566.00000000,
-            "changesPercentage" : 0.38000000,
-            "change" : 5.90000000,
-            "dayLow" : 1566.00000000,
-            "dayHigh" : 1566.00000000,
-            "yearHigh" : 1566.00000000,
-            "yearLow" : 1452.00000000,
-            "marketCap" : null,
-            "priceAvg50" : 1560.10000000,
-            "priceAvg200" : 1521.67500000,
-            "volume" : 0,
-            "avgVolume" : 1,
-            "exhange" : "COMMODITY"
-          }, {
-            "symbol" : "HGUSD",
-            "price" : 2.81000000,
-            "changesPercentage" : 0.29000000,
-            "change" : 0.00800000,
-            "dayLow" : 2.79550000,
-            "dayHigh" : 2.83600000,
-            "yearHigh" : 2.83600000,
-            "yearLow" : 2.75950000,
-            "marketCap" : null,
-            "priceAvg50" : 2.80200000,
-            "priceAvg200" : 2.79850000,
-            "volume" : 58820,
-            "avgVolume" : 23833272,
-            "exhange" : "COMMODITY"
-          }, ...
-        ]
-
-    :param apikey: Your API Key
-    :return: List of Dictionaries
-   """
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
     path = f"quotes/commodity"
-    query_vars = {"apikey": apikey}
-    return __return_json(path=path, query_vars=query_vars)
+    return __quotes(apikey=apikey, value=path)
+
+
+def commodity_quote(apikey: str, symbol: typing.Union[str, typing.List]) -> typing.List[typing.Dict]:
+    """
+    Query FMP /quote/ API
+
+    :param apikey: Your API key.
+    :param symbol: Commodity ticker
+    :return: A list of dictionaries.
+    """
+    return __quote(apikey=apikey, value=symbol)
+
+
+def historical_commodity_price(apikey: str, symbol: str, time_delta: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /historical-chart/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Commodity ticker.
+    :param time_delta: The string value of time from now to go historical "1min" - "4hour".
+    :return: A list of dictionaries.
+    """
+    return __historical_chart(apikey=apikey, value=symbol, time_delta=time_delta)
+
+
+def historical_commodity_price_full(
+        apikey: str,
+        symbol: typing.Union[str, typing.List],
+        time_series: int = None,
+        series_type: str = None,
+        from_date: str = None,
+        to_date: str = None,
+) -> typing.List[typing.Dict]:
+    """
+    Query FMP /historical-price-full/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param time_series: Not sure what this is.  5 is my only example.
+    :param series_type: Not sure what this is.  'line' is my only example.
+    :param from_date: 'YYYY-MM-DD'
+    :param to_date: 'YYYY-MM-DD'
+    :return: A list of dictionaries.
+    """
+    return __historical_price_full(
+        apikey=apikey,
+        value=symbol,
+        time_series=time_series,
+        series_type=series_type,
+        from_date=from_date,
+        to_date=to_date
+    )

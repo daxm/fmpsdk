@@ -127,8 +127,11 @@ symbol = "AAPL"
 # print(f"Intraday Historical Stock Prices: {fmpsdk.historical_index(apikey=apikey, index='^SSEC', time_delta='15min')}")
 # print(f"Historical Market Index: {fmpsdk.historical_index_full(apikey=apikey, index='^VIX')}")
 
-"""
 # Commodities
 # print(f"Available Commodities': {fmpsdk.available_commodities(apikey=apikey)}")
-# print(f"Commodities': {fmpsdk.commodities(apikey=apikey)}")
-"""
+# print(f"Commodities': {fmpsdk.commodities_list(apikey=apikey)}")
+# print(f"Commodity Quote': {fmpsdk.commodity_quote(apikey=apikey, symbol=['ZGUSD', 'CLUSD', 'HGUSD'])}")
+# print(f"Historical Commodity Prices: {fmpsdk.historical_stock_price(apikey=apikey, symbol='ZGUSD', time_delta='5min')}")
+# print(f"Historical Daily Commodity Prices: {fmpsdk.historical_stock_price_full(apikey=apikey, symbol='ZGUSD')}")
+
+# ETF
