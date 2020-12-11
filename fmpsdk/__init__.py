@@ -1,4 +1,3 @@
-from .general_methods import *
 from .company_valuation import *
 from .calendars import *
 from .institutional_fund import *
@@ -90,4 +89,6 @@ __all__ = [
     'available_commodities',
     'commodities_list',
     'commodity_quote',
+    'historical_commodity_price',
+    'historical_commodity_price_full',
 ]
