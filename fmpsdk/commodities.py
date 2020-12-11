@@ -10,12 +10,12 @@ import typing
 
 def available_commodities(apikey: str) -> typing.List[typing.Dict]:
     """
-    Query FMP /available-commodities/ API
+    Query FMP /symbol//available-commodities/ API
 
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"available-commodities"
+    path = f"/symbol/available-commodities"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
