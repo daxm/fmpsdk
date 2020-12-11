@@ -31,6 +31,7 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 def company_quote(apikey: str, symbol: typing.Union[str, typing.List]) -> typing.List[typing.Dict]:
     """
+    Query FMP /quote/ API
 
     :param apikey: Your API key
     :param symbol: Company ticker or tickers
