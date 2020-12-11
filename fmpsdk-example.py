@@ -104,7 +104,7 @@ symbol = "AAPL"
 # print(f"Historical Daily Prices with Change and Volume (Time Series): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=symbol, time_series=5)}")
 # print(f"Historical Daily Prices (Batch Stocks): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=['AAPL', 'CSCO', 'MSFT'])}")
 # print(f"Historical Daily Prices (Batch Mutual Funds): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=['JBFRX','BPLEX','VEVRX'])}")
-# print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
+print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")
 
 # Technical Indicators

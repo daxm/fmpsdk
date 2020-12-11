@@ -80,9 +80,9 @@ def historical_stock_dividend(apikey: str, symbol: str) -> typing.List[typing.Di
     :param symbol: Company ticker.
     :return: A list of dictionaries.
     """
-    return __historical_price_full(
-        apikey=apikey, value=f"historical-price-full/stock_dividend/{symbol}",
-    )
+    path = f"historical-price-full/stock_dividend/{symbol}"
+    query_vars = {'apikey': apikey}
+    return __return_json(path=f"historical-price-full/stock_dividend/{symbol}", query_vars=query_vars)
 
 
 def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -93,6 +93,6 @@ def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]
     :param symbol: Company ticker.
     :return: A list of dictionaries.
     """
-    return __historical_price_full(
-        apikey=apikey, value=f"historical-price-full/stock_split/{symbol}",
-    )
+    path = f"historical-price-full/stock_split/{symbol}"
+    query_vars = {'apikey': apikey}
+    return __return_json(path=f"historical-price-full/stock_dividend/{symbol}", query_vars=query_vars)
