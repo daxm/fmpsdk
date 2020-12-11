@@ -7,6 +7,7 @@ def earning_calendar(apikey: str, from_date: str = None, to_date: str = None) ->
     """
     Query FMP /earning_calendar/ API.
 
+    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param from_date: 'YYYY:MM:DD'
     :param to_date: 'YYYY:MM:DD'
@@ -27,6 +28,7 @@ def historical_earning_calendar(apikey: str, symbol: str, limit: int = DEFAULT_L
     """
     Query FMP /historical/earning_calendar/ API.
 
+    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
@@ -45,6 +47,7 @@ def ipo_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typ
     """
     Query FMP /ipo_calendar/ API.
 
+    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param from_date: 'YYYY:MM:DD'
     :param to_date: 'YYYY:MM:DD'
@@ -65,6 +68,7 @@ def stock_split_calendar(apikey: str, from_date: str = None, to_date: str = None
     """
     Query FMP /stock_split_calendar/ API.
 
+    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param from_date: 'YYYY:MM:DD'
     :param to_date: 'YYYY:MM:DD'
@@ -85,6 +89,7 @@ def dividend_calendar(apikey: str, from_date: str = None, to_date: str = None) -
     """
     Query FMP /stock_dividend_calendar/ API.
 
+    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param from_date: 'YYYY:MM:DD'
     :param to_date: 'YYYY:MM:DD'
@@ -105,6 +110,7 @@ def economic_calendar(apikey: str, from_date: str = None, to_date: str = None) -
     """
     Query FMP /economic_calendar/ API.
 
+    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param from_date: 'YYYY:MM:DD'
     :param to_date: 'YYYY:MM:DD'
