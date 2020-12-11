@@ -1,6 +1,6 @@
 from .settings import BASE_URL, SP500_CONSTITUENTS_FILENAME, NASDAQ_CONSTITUENTS_FILENAME, \
     DOWJONES_CONSTITUENTS_FILENAME
-from .url_methods import return_json, set_time_delta
+from .url_methods import __return_json, __validate_time_delta
 import requests
 import logging
 import typing
@@ -63,7 +63,7 @@ def market_indexes(apikey: str) -> typing.List[typing.Dict]:
    """
     path = f"quotes/index"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def index_quote(apikey: str, index: str) -> typing.List[typing.Dict]:
@@ -123,7 +123,7 @@ def index_quote(apikey: str, index: str) -> typing.List[typing.Dict]:
    """
     path = f"quote/{index}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def sp500_constituent(
@@ -176,7 +176,7 @@ def sp500_constituent(
         open(filename, 'wb').write(response.content)
         logging.info(f"Saving SP500 Constituents as {filename}.")
     else:
-        return return_json(path=path, query_vars=query_vars)
+        return __return_json(path=path, query_vars=query_vars)
 
 
 def historical_sp500_constituent(apikey: str) -> typing.List[typing.Dict]:
@@ -218,7 +218,7 @@ def historical_sp500_constituent(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"historical/sp500_constituent"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def nasdaq_constituent(
@@ -260,7 +260,7 @@ def nasdaq_constituent(
         open(filename, 'wb').write(response.content)
         logging.info(f"Saving NASDAQ Constituents as {filename}.")
     else:
-        return return_json(path=path, query_vars=query_vars)
+        return __return_json(path=path, query_vars=query_vars)
 
 
 def historical_nasdaq_constituent(apikey: str) -> typing.List[typing.Dict]:
@@ -290,7 +290,7 @@ def historical_nasdaq_constituent(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"historical/nasdaq_constituent"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def dowjones_constituent(
@@ -332,7 +332,7 @@ def dowjones_constituent(
         open(filename, 'wb').write(response.content)
         logging.info(f"Saving DOWJONES Constituents as {filename}.")
     else:
-        return return_json(path=path, query_vars=query_vars)
+        return __return_json(path=path, query_vars=query_vars)
 
 
 def historical_dowjones_constituent(apikey: str) -> typing.List[typing.Dict]:
@@ -362,7 +362,7 @@ def historical_dowjones_constituent(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"historical/dowjones_constituent"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def available_indexes(apikey: str) -> typing.List[typing.Dict]:
@@ -409,7 +409,7 @@ def available_indexes(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"symbol/available-indexes"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def historical_stock_prices(
@@ -465,9 +465,9 @@ def historical_stock_prices(
     :param time_delta: String of time to query.  Valid values are in  TIME_DELTA_VALUES var.
     :return: List of Dictionaries
    """
-    path = f"historical-chart/{set_time_delta(time_delta)}/{index}"
+    path = f"historical-chart/{__validate_time_delta(time_delta)}/{index}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def historical_index(apikey: str, index: str) -> typing.List[typing.Dict]:
@@ -482,4 +482,4 @@ def historical_index(apikey: str, index: str) -> typing.List[typing.Dict]:
    """
     path = f"historical-price-full/{index}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)

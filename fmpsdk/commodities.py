@@ -1,4 +1,4 @@
-from .url_methods import return_json
+from .url_methods import __return_json
 import typing
 
 
@@ -61,7 +61,7 @@ def available_commodities(apikey: str) -> typing.List[typing.Dict]:
    """
     path = f"available-commodities"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def commodities(apikey: str) -> typing.List[typing.Dict]:
@@ -123,4 +123,4 @@ def commodities(apikey: str) -> typing.List[typing.Dict]:
    """
     path = f"quotes/commodity"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)

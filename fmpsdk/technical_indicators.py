@@ -1,4 +1,4 @@
-from .url_methods import return_json, set_statistics_type, set_technical_indicators_time_delta
+from .url_methods import __return_json, __validate_statistics_type, __validate_technical_indicators_time_delta
 import typing
 
 
@@ -41,10 +41,10 @@ def technical_indicators(
       }, ...
     ]
    """
-    path = f"technical_indicator/{set_technical_indicators_time_delta(time_delta)}/{symbol}"
+    path = f"technical_indicator/{__validate_technical_indicators_time_delta(time_delta)}/{symbol}"
     query_vars = {
         "apikey": apikey,
         "period": period,
-        "type": set_statistics_type(statistics_type),
+        "type": __validate_statistics_type(statistics_type),
     }
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)

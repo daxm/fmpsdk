@@ -1,5 +1,5 @@
 from .settings import BASE_URL, DEFAULT_LIMIT, SEC_RSS_FEEDS_FILENAME
-from .url_methods import return_json
+from .url_methods import __return_json
 import requests
 import typing
 import logging
@@ -15,7 +15,7 @@ def institutional_holders(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"institutional-holder/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def mutual_fund_holders(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -28,7 +28,7 @@ def mutual_fund_holders(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"mutual-fund-holder/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def etf_holders(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -41,7 +41,7 @@ def etf_holders(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"etf-holder/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def etf_sector_weightings(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -54,7 +54,7 @@ def etf_sector_weightings(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     """
     path = f"etf-sector-weightings/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def etf_country_weightings(apikey: str, symbol: str) -> typing.List[typing.Dict]:
@@ -67,7 +67,7 @@ def etf_country_weightings(apikey: str, symbol: str) -> typing.List[typing.Dict]
     """
     path = f"etf-country-weightings/{symbol}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def sec_rss_feeds(
@@ -94,7 +94,7 @@ def sec_rss_feeds(
         logging.info(f"Saving SEC RSS Feeds as {filename}.")
     else:
         query_vars["limit"] = limit
-        return return_json(path=path, query_vars=query_vars)
+        return __return_json(path=path, query_vars=query_vars)
 
 
 def cik_list(apikey: str) -> typing.List[typing.Dict]:
@@ -107,7 +107,7 @@ def cik_list(apikey: str) -> typing.List[typing.Dict]:
     """
     path = f"cik_list"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def cik_search(apikey: str, name: str) -> typing.List[typing.Dict]:
@@ -121,7 +121,7 @@ def cik_search(apikey: str, name: str) -> typing.List[typing.Dict]:
     """
     path = f"cik-search/{name}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def cik(apikey: str, cik_id: str) -> typing.List[typing.Dict]:
@@ -135,7 +135,7 @@ def cik(apikey: str, cik_id: str) -> typing.List[typing.Dict]:
     """
     path = f"cik/{cik_id}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def form_13f(apikey: str, cik_id: str, date: str = None) -> typing.List[typing.Dict]:
@@ -153,7 +153,7 @@ def form_13f(apikey: str, cik_id: str, date: str = None) -> typing.List[typing.D
     query_vars = {"apikey": apikey}
     if date:
         query_vars["date"] = date
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)
 
 
 def cusip(apikey: str, cik_id: str) -> typing.List[typing.Dict]:
@@ -167,4 +167,4 @@ def cusip(apikey: str, cik_id: str) -> typing.List[typing.Dict]:
     """
     path = f"cusip/{cik_id}"
     query_vars = {"apikey": apikey}
-    return return_json(path=path, query_vars=query_vars)
+    return __return_json(path=path, query_vars=query_vars)

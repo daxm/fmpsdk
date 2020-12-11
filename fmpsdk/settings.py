@@ -29,7 +29,10 @@ SECTOR_VALUES: typing.List = [
         "Financial Services",
         "Conglomerates",
     ]
-PERIOD_VALUES: typing.List = ["annual", "quarter"]
+PERIOD_VALUES: typing.List = [
+        "annual",
+        "quarter",
+]
 EXCHANGE_VALUES: typing.List = [
         "ETF",
         "MUTUAL_FUND",

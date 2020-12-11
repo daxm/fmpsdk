@@ -10,9 +10,9 @@ apikey = os.environ.get("apikey")
 symbol = "AAPL"
 
 # Company Valuation Methods
-print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}")
-# print(f"Company Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)}")
-# print(f"Multiple Company Quotes: {fmpsdk.quote(apikey=apikey, symbol=['AAPL', 'CSCO', 'QQQQ'])}")
+# print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}")
+# print(f"Company Quote: {fmpsdk.company_quote(apikey=apikey, symbol=symbol)}")
+# print(f"Multiple Company Quotes: {fmpsdk.company_quote(apikey=apikey, symbol=['AAPL', 'CSCO', 'QQQQ'])}")
 # print(f"Key Executives: {fmpsdk.key_executives(apikey=apikey, symbol=symbol)}")
 # print(f"Search: {fmpsdk.search(apikey=apikey, query='AA', exchange='NYSE', limit=10)}")
 # print(f"Ticker Search: {fmpsdk.search_ticker(apikey=apikey, query='AA', exchange='NYSE', limit=5)}")
@@ -41,12 +41,12 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # fmpsdk.cash_flow_statement_as_reported(apikey=apikey, symbol=symbol, download=True)
 # print(f"Annual Full Financial Statement as Reported : {fmpsdk.financial_statement_full_as_reported(apikey=apikey, symbol=symbol)}")
 # print(f"Quarterly Full Financial Statement as Reported: {fmpsdk.financial_statement_full_as_reported(apikey=apikey, symbol=symbol, period='quarter')}")
-# print(f"Financial Ratios (TTM): {fmpsdk.financial_ratios(apikey=apikey, symbol=symbol, period='ttm')}")
+# print(f"Financial Ratios (TTM): {fmpsdk.financial_ratios_ttm(apikey=apikey, symbol=symbol)}")
 # print(f"Annual Financial Ratios: {fmpsdk.financial_ratios(apikey=apikey, symbol=symbol, period='annual')}")
 # print(f"Quarterly Financial Ratios: {fmpsdk.financial_ratios(apikey=apikey, symbol=symbol, period='quarter')}")
 # print(f"Annual Enterprise Values: {fmpsdk.enterprise_values(apikey=apikey, symbol=symbol)}")
 # print(f"Quarterly Enterprise Values: {fmpsdk.enterprise_values(apikey=apikey, symbol=symbol, period='quarter')}")
-# print(f"Key Metrics (TTM): {fmpsdk.key_metrics(apikey=apikey, symbol=symbol, period='ttm')}")
+# print(f"Key Metrics (TTM): {fmpsdk.key_metrics_ttm(apikey=apikey, symbol=symbol)}")
 # print(f"Annual Key Metrics: {fmpsdk.key_metrics(apikey=apikey, symbol=symbol, period='annual')}")
 # print(f"Quarterly Key Metrics: {fmpsdk.key_metrics(apikey=apikey, symbol=symbol, period='quarter')}")
 # print(f"Annual Financial Growth: {fmpsdk.financial_growth(apikey=apikey, symbol=symbol, period='annual')}")
@@ -61,8 +61,8 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Historical Market Capitalization: {fmpsdk.historical_market_capitalization(apikey=apikey, symbol=symbol, limit=10)}")
 # print(f"Symbols List: {fmpsdk.symbols_list(apikey=apikey)}")
 # print(f"Stock Screener: {fmpsdk.stock_screener(apikey=apikey, market_cap_more_than=1000000000, beta_more_than=1, volume_more_than=10000, sector='Technology', exchange='NASDAQ', dividend_more_than=0, limit=100)}")
-# print(f"Stock Screener: {fmpsdk.stock_screener(apikey=apikey, market_cap_more_than=1000000000, beta_more_than=1, volume_more_than=10000, sector='Technology', industry='Software', exchange='NASDAQ', dividend_more_than=0, limit=100)}")
-# print(f"Stock Screener: {fmpsdk.stock_screener(apikey=apikey, market_cap_more_than=10000000000, beta_more_than=1, volume_more_than=100, exchange=['NYSE', 'NASDAQ'])}")
+# print(f"Stock Screener (Industry Example): {fmpsdk.stock_screener(apikey=apikey, market_cap_more_than=1000000000, beta_more_than=1, volume_more_than=10000, sector='Technology', industry='Software', exchange='NASDAQ', dividend_more_than=0, limit=100)}")
+# print(f"Stock Screener (Multiple Exchanges Example): {fmpsdk.stock_screener(apikey=apikey, market_cap_more_than=10000000000, beta_more_than=1, volume_more_than=100, exchange=['NYSE', 'NASDAQ'])}")
 # print(f"Delisted Companies: {fmpsdk.delisted_companies(apikey=apikey, limit=10)}")
 # print(f"Stock News (Single): {fmpsdk.stock_news(apikey=apikey, tickers=symbol)}")
 # print(f"Stock News (Multiple): {fmpsdk.stock_news(apikey=apikey, tickers=['AAPL', 'CSCO', 'QQQQ'])}")
@@ -88,22 +88,22 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"ETF Country Weightings: {fmpsdk.etf_country_weightings(apikey=apikey, symbol='SPY')}")
 # print(f"SEC RSS Feeds: {fmpsdk.sec_rss_feeds(apikey=apikey)}")
 # print(f"SEC RSS Feeds: {fmpsdk.sec_rss_feeds(apikey=apikey, download=True)}")
-# print(f"Form 13F List: {fmpsdk.form_13f_list(apikey=apikey)}")
+# print(f"Form 13F List: {fmpsdk.cik_list(apikey=apikey)}")
 # print(f"CIK Search by Company Name: {fmpsdk.cik_search(apikey=apikey, name='Berkshire')}")
 # print(f"CIK Search by CIK: {fmpsdk.cik(apikey=apikey, cik_id='0000913760')}")
 # print(f"Form 13F: {fmpsdk.form_13f(apikey=apikey, cik_id='0000913760', date='2020-06-30')}")
 # print(f"CUSIP: {fmpsdk.cusip(apikey=apikey, cik_id='000360206')}")
 
 # Stock Time Series Methods
-# print(f"Quote Realtime: {fmpsdk.quote_realtime(apikey=apikey, symbol=symbol)}")
+# print(f"Quote Realtime: {fmpsdk.quote_short(apikey=apikey, symbol=symbol)}")
 # print(f"Exchange Realtime: {fmpsdk.exchange_realtime(apikey=apikey, exchange='NYSE')}")
-# print(f"Historical Stock Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta='5min')}")
-# print(f"Historical Daily Prices: {fmpsdk.historical_price(apikey=apikey, symbol=symbol, series_type='line')}")
-# print(f"Historical Daily Prices with Change and Volume: {fmpsdk.historical_price(apikey=apikey, symbol=symbol)}")
-# print(f"Historical Daily Prices with Change and Volume (Interval): {fmpsdk.historical_price(apikey=apikey, symbol=symbol, from_date='2020-12-01', to_date='2020-12-09')}")
-# print(f"Historical Daily Prices with Change and Volume (Time Series): {fmpsdk.historical_price(apikey=apikey, symbol=symbol, time_series=5)}")
-# print(f"Historical Daily Prices (Batch Stocks): {fmpsdk.historical_price(apikey=apikey, symbol=['AAPL', 'CSCO', 'MSFT'])}")
-# print(f"Historical Daily Prices (Batch Mutual Funds): {fmpsdk.historical_price(apikey=apikey, symbol=['JBFRX','BPLEX','VEVRX'])}")
+# print(f"Historical Stock Prices: {fmpsdk.historical_stock_price(apikey=apikey, symbol=symbol, time_delta='5min')}")
+# print(f"Historical Daily Prices: {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=symbol, series_type='line')}")
+# print(f"Historical Daily Prices with Change and Volume: {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=symbol)}")
+# print(f"Historical Daily Prices with Change and Volume (Interval): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=symbol, from_date='2020-12-01', to_date='2020-12-09')}")
+# print(f"Historical Daily Prices with Change and Volume (Time Series): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=symbol, time_series=5)}")
+# print(f"Historical Daily Prices (Batch Stocks): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=['AAPL', 'CSCO', 'MSFT'])}")
+# print(f"Historical Daily Prices (Batch Mutual Funds): {fmpsdk.historical_stock_price_full(apikey=apikey, symbol=['JBFRX','BPLEX','VEVRX'])}")
 # print(f"Historical Dividends: {fmpsdk.historical_stock_dividend(apikey=apikey, symbol=symbol)}")
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)}")
 
@@ -111,6 +111,7 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 # print(f"Daily Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='daily')}")
 # print(f"Intraday Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='15min')}")
 
+"""
 # Market Indexes
 # print(f"List Market Indexes: {fmpsdk.market_indexes(apikey=apikey)}")
 # print(f"Index: {fmpsdk.index_quote(apikey=apikey, index='IMOEX.ME')}")
@@ -129,4 +130,5 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}"
 
 # Commodities
 # print(f"Available Commodities': {fmpsdk.available_commodities(apikey=apikey)}")
-print(f"Commodities': {fmpsdk.commodities(apikey=apikey)}")
+# print(f"Commodities': {fmpsdk.commodities(apikey=apikey)}")
+"""

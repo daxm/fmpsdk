@@ -1,3 +1,4 @@
+from .general_methods import *
 from .company_valuation import *
 from .calendars import *
 from .institutional_fund import *
@@ -15,7 +16,7 @@ from .forex import *
 
 __all__ = [
     "company_profile",
-    "quote",
+    "company_quote",
     "key_executives",
     "search",
     "search_ticker",
@@ -31,8 +32,10 @@ __all__ = [
     "balance_sheet_statement_as_reported",
     "cash_flow_statement_as_reported",
     "financial_statement_full_as_reported",
+    "financial_ratios_ttm",
     "financial_ratios",
     "enterprise_values",
+    "key_metrics_ttm",
     "key_metrics",
     "financial_growth",
     "rating",
@@ -61,15 +64,15 @@ __all__ = [
     'etf_sector_weightings',
     'etf_country_weightings',
     'sec_rss_feeds',
-    'form_13f_list',
+    'cik_list',
     'cik_search',
     'cik',
     'form_13f',
     'cusip',
-    'quote_realtime',
+    'quote_short',
     'exchange_realtime',
-    'historical_chart',
-    'historical_price',
+    'historical_stock_price',
+    'historical_stock_price_full',
     "historical_stock_dividend",
     "historical_stock_split",
     'technical_indicators',
