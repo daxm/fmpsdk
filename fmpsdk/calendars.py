@@ -3,7 +3,9 @@ from .url_methods import __return_json
 import typing
 
 
-def earning_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
+def earning_calendar(
+    apikey: str, from_date: str = None, to_date: str = None
+) -> typing.List[typing.Dict]:
     """
     Query FMP /earning_calendar/ API.
 
@@ -18,13 +20,15 @@ def earning_calendar(apikey: str, from_date: str = None, to_date: str = None) ->
         "apikey": apikey,
     }
     if from_date:
-        query_vars['from'] = from_date
+        query_vars["from"] = from_date
     if to_date:
-        query_vars['to'] = to_date
+        query_vars["to"] = to_date
     return __return_json(path=path, query_vars=query_vars)
 
 
-def historical_earning_calendar(apikey: str, symbol: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+def historical_earning_calendar(
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+) -> typing.List[typing.Dict]:
     """
     Query FMP /historical/earning_calendar/ API.
 
@@ -43,7 +47,9 @@ def historical_earning_calendar(apikey: str, symbol: str, limit: int = DEFAULT_L
     return __return_json(path=path, query_vars=query_vars)
 
 
-def ipo_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
+def ipo_calendar(
+    apikey: str, from_date: str = None, to_date: str = None
+) -> typing.List[typing.Dict]:
     """
     Query FMP /ipo_calendar/ API.
 
@@ -58,13 +64,15 @@ def ipo_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typ
         "apikey": apikey,
     }
     if from_date:
-        query_vars['from'] = from_date
+        query_vars["from"] = from_date
     if to_date:
-        query_vars['to'] = to_date
+        query_vars["to"] = to_date
     return __return_json(path=path, query_vars=query_vars)
 
 
-def stock_split_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
+def stock_split_calendar(
+    apikey: str, from_date: str = None, to_date: str = None
+) -> typing.List[typing.Dict]:
     """
     Query FMP /stock_split_calendar/ API.
 
@@ -79,13 +87,15 @@ def stock_split_calendar(apikey: str, from_date: str = None, to_date: str = None
         "apikey": apikey,
     }
     if from_date:
-        query_vars['from'] = from_date
+        query_vars["from"] = from_date
     if to_date:
-        query_vars['to'] = to_date
+        query_vars["to"] = to_date
     return __return_json(path=path, query_vars=query_vars)
 
 
-def dividend_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
+def dividend_calendar(
+    apikey: str, from_date: str = None, to_date: str = None
+) -> typing.List[typing.Dict]:
     """
     Query FMP /stock_dividend_calendar/ API.
 
@@ -100,13 +110,15 @@ def dividend_calendar(apikey: str, from_date: str = None, to_date: str = None) -
         "apikey": apikey,
     }
     if from_date:
-        query_vars['from'] = from_date
+        query_vars["from"] = from_date
     if to_date:
-        query_vars['to'] = to_date
+        query_vars["to"] = to_date
     return __return_json(path=path, query_vars=query_vars)
 
 
-def economic_calendar(apikey: str, from_date: str = None, to_date: str = None) -> typing.List[typing.Dict]:
+def economic_calendar(
+    apikey: str, from_date: str = None, to_date: str = None
+) -> typing.List[typing.Dict]:
     """
     Query FMP /economic_calendar/ API.
 
@@ -121,7 +133,7 @@ def economic_calendar(apikey: str, from_date: str = None, to_date: str = None) -
         "apikey": apikey,
     }
     if from_date:
-        query_vars['from'] = from_date
+        query_vars["from"] = from_date
     if to_date:
-        query_vars['to'] = to_date
+        query_vars["to"] = to_date
     return __return_json(path=path, query_vars=query_vars)

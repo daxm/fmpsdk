@@ -1,5 +1,10 @@
 from .url_methods import __return_json
-from .general_methods import __quotes, __quote, __historical_chart, __historical_price_full
+from .general_methods import (
+    __quotes,
+    __quote,
+    __historical_chart,
+    __historical_price_full,
+)
 import typing
 
 
@@ -26,7 +31,9 @@ def commodities_list(apikey: str) -> typing.List[typing.Dict]:
     return __quotes(apikey=apikey, value=path)
 
 
-def commodity_quote(apikey: str, symbol: typing.Union[str, typing.List]) -> typing.List[typing.Dict]:
+def commodity_quote(
+    apikey: str, symbol: typing.Union[str, typing.List]
+) -> typing.List[typing.Dict]:
     """
     Query FMP /quote/ API
 
@@ -37,7 +44,9 @@ def commodity_quote(apikey: str, symbol: typing.Union[str, typing.List]) -> typi
     return __quote(apikey=apikey, value=symbol)
 
 
-def historical_commodity_price(apikey: str, symbol: str, time_delta: str) -> typing.List[typing.Dict]:
+def historical_commodity_price(
+    apikey: str, symbol: str, time_delta: str
+) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-chart/ API.
 
@@ -50,12 +59,12 @@ def historical_commodity_price(apikey: str, symbol: str, time_delta: str) -> typ
 
 
 def historical_commodity_price_full(
-        apikey: str,
-        symbol: typing.Union[str, typing.List],
-        time_series: int = None,
-        series_type: str = None,
-        from_date: str = None,
-        to_date: str = None,
+    apikey: str,
+    symbol: typing.Union[str, typing.List],
+    time_series: int = None,
+    series_type: str = None,
+    from_date: str = None,
+    to_date: str = None,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-price-full/ API.
@@ -74,5 +83,5 @@ def historical_commodity_price_full(
         time_series=time_series,
         series_type=series_type,
         from_date=from_date,
-        to_date=to_date
+        to_date=to_date,
     )

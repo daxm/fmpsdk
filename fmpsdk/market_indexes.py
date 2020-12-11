@@ -1,7 +1,16 @@
-from .settings import BASE_URL, SP500_CONSTITUENTS_FILENAME, NASDAQ_CONSTITUENTS_FILENAME, \
-    DOWJONES_CONSTITUENTS_FILENAME
+from .settings import (
+    BASE_URL,
+    SP500_CONSTITUENTS_FILENAME,
+    NASDAQ_CONSTITUENTS_FILENAME,
+    DOWJONES_CONSTITUENTS_FILENAME,
+)
 from .url_methods import __return_json
-from .general_methods import __quotes, __quote, __historical_chart, __historical_price_full
+from .general_methods import (
+    __quotes,
+    __quote,
+    __historical_chart,
+    __historical_price_full,
+)
 import requests
 import logging
 import typing
@@ -31,9 +40,7 @@ def index_quote(apikey: str, index: str) -> typing.List[typing.Dict]:
 
 
 def sp500_constituent(
-        apikey: str,
-        download: bool = False,
-        filename: str = SP500_CONSTITUENTS_FILENAME,
+    apikey: str, download: bool = False, filename: str = SP500_CONSTITUENTS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /sp500_constituent/ API
@@ -47,8 +54,8 @@ def sp500_constituent(
     query_vars = {"apikey": apikey}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving SP500 Constituents as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -67,9 +74,7 @@ def historical_sp500_constituent(apikey: str) -> typing.List[typing.Dict]:
 
 
 def nasdaq_constituent(
-        apikey: str,
-        download: bool = False,
-        filename: str = NASDAQ_CONSTITUENTS_FILENAME,
+    apikey: str, download: bool = False, filename: str = NASDAQ_CONSTITUENTS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /nasdaq_constituent/ API
@@ -83,8 +88,8 @@ def nasdaq_constituent(
     query_vars = {"apikey": apikey}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving NASDAQ Constituents as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -103,9 +108,7 @@ def historical_nasdaq_constituent(apikey: str) -> typing.List[typing.Dict]:
 
 
 def dowjones_constituent(
-        apikey: str,
-        download: bool = False,
-        filename: str = DOWJONES_CONSTITUENTS_FILENAME,
+    apikey: str, download: bool = False, filename: str = DOWJONES_CONSTITUENTS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /dowjones_constituent/ API
@@ -119,8 +122,8 @@ def dowjones_constituent(
     query_vars = {"apikey": apikey}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving DOWJONES Constituents as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -151,9 +154,7 @@ def available_indexes(apikey: str) -> typing.List[typing.Dict]:
 
 
 def historical_index(
-        apikey: str,
-        index: str,
-        time_delta: str = '4hour',
+    apikey: str, index: str, time_delta: str = "4hour",
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-chart/ API

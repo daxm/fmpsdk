@@ -1,13 +1,17 @@
-from .url_methods import __return_json, __validate_statistics_type, __validate_technical_indicators_time_delta
+from .url_methods import (
+    __return_json,
+    __validate_statistics_type,
+    __validate_technical_indicators_time_delta,
+)
 import typing
 
 
 def technical_indicators(
-        apikey: str,
-        symbol: str,
-        period: int = 10,
-        statistics_type: str = 'SMA',
-        time_delta: str = 'daily',
+    apikey: str,
+    symbol: str,
+    period: int = 10,
+    statistics_type: str = "SMA",
+    time_delta: str = "daily",
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /technical_indicator/ API.

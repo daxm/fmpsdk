@@ -10,7 +10,13 @@ from .settings import (
     CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
 )
 from .general_methods import __quote
-from .url_methods import __return_json, __validate_sector, __validate_period, __validate_industry, __validate_exchange
+from .url_methods import (
+    __return_json,
+    __validate_sector,
+    __validate_period,
+    __validate_industry,
+    __validate_exchange,
+)
 import requests
 import typing
 import logging
@@ -29,7 +35,9 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return __return_json(path=path, query_vars=query_vars)
 
 
-def company_quote(apikey: str, symbol: typing.Union[str, typing.List]) -> typing.List[typing.Dict]:
+def company_quote(
+    apikey: str, symbol: typing.Union[str, typing.List]
+) -> typing.List[typing.Dict]:
     """
     Query FMP /quote/ API
 
@@ -55,10 +63,7 @@ def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def search(
-        apikey: str,
-        query: str = "",
-        limit: int = DEFAULT_LIMIT,
-        exchange: str = ""
+    apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /search/ API.
@@ -120,8 +125,8 @@ def financial_statement(
         "apikey": apikey,
         "datatype": "zip",  # Only ZIP format is supported.
     }
-    response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-    open(filename, 'wb').write(response.content)
+    response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+    open(filename, "wb").write(response.content)
     logging.info(f"Saving {symbol} financial statement as {filename}.")
 
 
@@ -149,8 +154,8 @@ def income_statement(
     query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -180,8 +185,8 @@ def balance_sheet_statement(
     query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -211,8 +216,8 @@ def cash_flow_statement(
     query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -312,11 +317,15 @@ def income_statement_as_reported(
     :return: A list of dictionaries.
     """
     path = f"income-statement-as-reported/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(value=period)}
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+        "period": __validate_period(value=period),
+    }
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -343,11 +352,15 @@ def balance_sheet_statement_as_reported(
     :return: A list of dictionaries.
     """
     path = f"balance-sheet-statement-as-reported/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(value=period)}
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+        "period": __validate_period(value=period),
+    }
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -374,11 +387,15 @@ def cash_flow_statement_as_reported(
     :return: A list of dictionaries.
     """
     path = f"cash-flow-statement-as-reported/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(value=period)}
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+        "period": __validate_period(value=period),
+    }
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving {symbol} financial statement as {filename}.")
     else:
         return __return_json(path=path, query_vars=query_vars)
@@ -415,10 +432,7 @@ def financial_ratios_ttm(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def financial_ratios(
-        apikey: str,
-        symbol: str,
-        period: str = "annual",
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FmP /ratios/ API.
@@ -439,10 +453,7 @@ def financial_ratios(
 
 
 def enterprise_values(
-        apikey: str,
-        symbol: str,
-        period: str = "annual",
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /enterprise-values/ API.
@@ -454,14 +465,16 @@ def enterprise_values(
     :return: A list of dictionaries.
     """
     path = f"enterprise-values/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(value=period)}
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+        "period": __validate_period(value=period),
+    }
     return __return_json(path=path, query_vars=query_vars)
 
 
 def key_metrics_ttm(
-        apikey: str,
-        symbol: str,
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /key-metrics-ttm/ API
@@ -477,10 +490,7 @@ def key_metrics_ttm(
 
 
 def key_metrics(
-        apikey: str,
-        symbol: str,
-        period: str = "annual",
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /key-metrics/ API
@@ -501,10 +511,7 @@ def key_metrics(
 
 
 def financial_growth(
-        apikey: str,
-        symbol: str,
-        period: str = "annual",
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /financial-growth/ API.
@@ -516,7 +523,11 @@ def financial_growth(
     :return: A list of dictionaries.
     """
     path = f"financial-growth/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(value=period)}
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+        "period": __validate_period(value=period),
+    }
     return __return_json(path=path, query_vars=query_vars)
 
 
@@ -534,9 +545,7 @@ def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def historical_rating(
-        apikey: str,
-        symbol: str,
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /financial-growth/ API.
@@ -565,10 +574,7 @@ def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def historical_discounted_cash_flow(
-        apikey: str,
-        symbol: str,
-        period: str = "annual",
-        limit: int = DEFAULT_LIMIT,
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-discounted-cash-flow/ API.
@@ -580,7 +586,11 @@ def historical_discounted_cash_flow(
     :return: A list of dictionaries.
     """
     path = f"historical-discounted-cash-flow/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(value=period)}
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+        "period": __validate_period(value=period),
+    }
     return __return_json(path=path, query_vars=query_vars)
 
 
@@ -642,19 +652,19 @@ def symbols_list(apikey: str) -> typing.List[typing.Dict]:
 
 
 def stock_screener(
-        apikey: str,
-        market_cap_more_than: int = None,
-        market_cap_lower_than: int = None,
-        beta_more_than: int = None,
-        beta_lower_than: int = None,
-        volume_more_than: int = None,
-        volume_lower_than: int = None,
-        dividend_more_than: int = None,
-        dividend_lower_than: int = None,
-        sector: str = None,
-        industry: str = None,
-        exchange: typing.Union[str, typing.List[str]] = None,
-        limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    market_cap_more_than: int = None,
+    market_cap_lower_than: int = None,
+    beta_more_than: int = None,
+    beta_lower_than: int = None,
+    volume_more_than: int = None,
+    volume_lower_than: int = None,
+    dividend_more_than: int = None,
+    dividend_lower_than: int = None,
+    sector: str = None,
+    industry: str = None,
+    exchange: typing.Union[str, typing.List[str]] = None,
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /stock-screener/ API.
@@ -675,7 +685,7 @@ def stock_screener(
     :return: A list of dicitonaries.
     """
     path = f"stock-screener"
-    query_vars = {"apikey": apikey, 'limit': limit}
+    query_vars = {"apikey": apikey, "limit": limit}
     if market_cap_more_than:
         query_vars["marketCapMoreThan"] = market_cap_more_than
     if market_cap_lower_than:

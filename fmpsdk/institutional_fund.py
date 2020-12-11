@@ -71,10 +71,10 @@ def etf_country_weightings(apikey: str, symbol: str) -> typing.List[typing.Dict]
 
 
 def sec_rss_feeds(
-        apikey: str,
-        limit: int = DEFAULT_LIMIT,
-        download: bool = False,
-        filename: str = SEC_RSS_FEEDS_FILENAME,
+    apikey: str,
+    limit: int = DEFAULT_LIMIT,
+    download: bool = False,
+    filename: str = SEC_RSS_FEEDS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /rss_feed/ API.
@@ -89,8 +89,8 @@ def sec_rss_feeds(
     query_vars = {"apikey": apikey}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
-        response = requests.get(f'{BASE_URL}{path}', params=query_vars)
-        open(filename, 'wb').write(response.content)
+        response = requests.get(f"{BASE_URL}{path}", params=query_vars)
+        open(filename, "wb").write(response.content)
         logging.info(f"Saving SEC RSS Feeds as {filename}.")
     else:
         query_vars["limit"] = limit

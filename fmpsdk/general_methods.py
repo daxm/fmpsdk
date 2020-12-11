@@ -2,7 +2,9 @@ import typing
 from .url_methods import __return_json, __validate_time_delta, __validate_series_type
 
 
-def __quote(apikey: str, value: typing.Union[str, typing.List[str]]) -> typing.List[typing.Dict]:
+def __quote(
+    apikey: str, value: typing.Union[str, typing.List[str]]
+) -> typing.List[typing.Dict]:
     """
     Query FMP Quote API.
 
@@ -33,7 +35,9 @@ def __quotes(apikey: str, value: str) -> typing.List[typing.Dict]:
     return __return_json(path=path, query_vars=query_vars)
 
 
-def __historical_chart(apikey: str, value: str, time_delta: str) -> typing.List[typing.Dict]:
+def __historical_chart(
+    apikey: str, value: str, time_delta: str
+) -> typing.List[typing.Dict]:
     """
     Query FMP Historical Chart API.
 
@@ -50,12 +54,12 @@ def __historical_chart(apikey: str, value: str, time_delta: str) -> typing.List[
 
 
 def __historical_price_full(
-        apikey: str,
-        value: typing.Union[str, typing.List],
-        time_series: int = None,
-        series_type: str = None,
-        from_date: str = None,
-        to_date: str = None,
+    apikey: str,
+    value: typing.Union[str, typing.List],
+    time_series: int = None,
+    series_type: str = None,
+    from_date: str = None,
+    to_date: str = None,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP Historical Price Full API.
@@ -77,11 +81,11 @@ def __historical_price_full(
         "apikey": apikey,
     }
     if time_series:
-        query_vars['timeseries'] = time_series
+        query_vars["timeseries"] = time_series
     if series_type:
-        query_vars['serietype'] = __validate_series_type(series_type)
+        query_vars["serietype"] = __validate_series_type(series_type)
     if from_date:
-        query_vars['from'] = from_date
+        query_vars["from"] = from_date
     if to_date:
-        query_vars['to'] = to_date
+        query_vars["to"] = to_date
     return __return_json(path=path, query_vars=query_vars)

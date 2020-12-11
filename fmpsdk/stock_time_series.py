@@ -29,7 +29,9 @@ def exchange_realtime(apikey: str, exchange: str) -> typing.List[typing.Dict]:
     return __quotes(apikey=apikey, value=__validate_exchange(exchange))
 
 
-def historical_stock_price(apikey: str, symbol: str, time_delta: str) -> typing.List[typing.Dict]:
+def historical_stock_price(
+    apikey: str, symbol: str, time_delta: str
+) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-chart/ API.
 
@@ -42,12 +44,12 @@ def historical_stock_price(apikey: str, symbol: str, time_delta: str) -> typing.
 
 
 def historical_stock_price_full(
-        apikey: str,
-        symbol: typing.Union[str, typing.List],
-        time_series: int = None,
-        series_type: str = None,
-        from_date: str = None,
-        to_date: str = None,
+    apikey: str,
+    symbol: typing.Union[str, typing.List],
+    time_series: int = None,
+    series_type: str = None,
+    from_date: str = None,
+    to_date: str = None,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-price-full/ API.
@@ -66,7 +68,7 @@ def historical_stock_price_full(
         time_series=time_series,
         series_type=series_type,
         from_date=from_date,
-        to_date=to_date
+        to_date=to_date,
     )
 
 
@@ -79,8 +81,7 @@ def historical_stock_dividend(apikey: str, symbol: str) -> typing.List[typing.Di
     :return: A list of dictionaries.
     """
     return __historical_price_full(
-        apikey=apikey,
-        value=f"historical-price-full/stock_dividend/{symbol}",
+        apikey=apikey, value=f"historical-price-full/stock_dividend/{symbol}",
     )
 
 
@@ -93,6 +94,5 @@ def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]
     :return: A list of dictionaries.
     """
     return __historical_price_full(
-        apikey=apikey,
-        value=f"historical-price-full/stock_split/{symbol}",
+        apikey=apikey, value=f"historical-price-full/stock_split/{symbol}",
     )
