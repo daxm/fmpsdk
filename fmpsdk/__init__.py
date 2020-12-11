@@ -76,7 +76,7 @@ __all__ = [
     "historical_stock_dividend",
     "historical_stock_split",
     'technical_indicators',
-    'market_indexes',
+    'indexes',
     'index_quote',
     'sp500_constituent',
     'historical_sp500_constituent',
@@ -85,8 +85,8 @@ __all__ = [
     'dowjones_constituent',
     'historical_dowjones_constituent',
     'available_indexes',
-    'historical_stock_prices',
     'historical_index',
+    'historical_index_full',
     'available_commodities',
     'commodities',
 ]

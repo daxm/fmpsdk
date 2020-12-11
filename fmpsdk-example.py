@@ -111,9 +111,8 @@ symbol = "AAPL"
 # print(f"Daily Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='daily')}")
 # print(f"Intraday Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=10, statistics_type='sma', time_delta='15min')}")
 
-"""
 # Market Indexes
-# print(f"List Market Indexes: {fmpsdk.market_indexes(apikey=apikey)}")
+# print(f"List Market Indexes: {fmpsdk.indexes(apikey=apikey)}")
 # print(f"Index: {fmpsdk.index_quote(apikey=apikey, index='IMOEX.ME')}")
 # print(f"SP500 Contituent: {fmpsdk.sp500_constituent(apikey=apikey)}")
 # fmpsdk.sp500_constituent(apikey=apikey, download=True)
@@ -125,9 +124,10 @@ symbol = "AAPL"
 # fmpsdk.dowjones_constituent(apikey=apikey, download=True)
 # print(f"Historical DOWJONES Contituent: {fmpsdk.historical_dowjones_constituent(apikey=apikey)}")
 # print(f"Available Indexes: {fmpsdk.available_indexes(apikey=apikey)}")
-# print(f"Intraday Historical Stock Prices: {fmpsdk.historical_stock_prices(apikey=apikey, index='^SSEC', time_delta='15min')}")
-# print(f"Historical Market Index: {fmpsdk.historical_index(apikey=apikey, index='^VIX')}")
+# print(f"Intraday Historical Stock Prices: {fmpsdk.historical_index(apikey=apikey, index='^SSEC', time_delta='15min')}")
+# print(f"Historical Market Index: {fmpsdk.historical_index_full(apikey=apikey, index='^VIX')}")
 
+"""
 # Commodities
 # print(f"Available Commodities': {fmpsdk.available_commodities(apikey=apikey)}")
 # print(f"Commodities': {fmpsdk.commodities(apikey=apikey)}")
