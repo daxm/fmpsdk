@@ -9,6 +9,7 @@ from .settings import (
     BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
     CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
 )
+from .general_methods import __quote
 from .url_methods import return_json, set_sector, set_period, set_industry, set_exchange
 import requests
 import typing
@@ -26,6 +27,16 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     path = f"profile/{symbol}"
     query_vars = {"apikey": apikey}
     return return_json(path=path, query_vars=query_vars)
+
+
+def company_quote(apikey: str, symbol: typing.Union[str, typing.List]) -> typing.List[typing.Dict]:
+    """
+
+    :param apikey: Your API key
+    :param symbol: Company ticker or tickers
+    :return: A list of dictionaries.
+    """
+    return __quote(apikey=apikey, value=symbol)
 
 
 def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
