@@ -238,3 +238,11 @@ time_delta_5min: str = '5min'
 # print(f"Historical Daily Cryptocurrencies Prices: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
 
 # FOREX (FX)
+symbol: str = 'JPYUSD'
+time_delta_5min: str = '5min'
+# print(f"Currency Exchange Rates: {fmpsdk.forex(apikey=apikey)}")
+# print(f"Forex: {fmpsdk.forex_list(apikey=apikey)=}")
+# print(f"Forex Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")
+# print(f"Available Forex Currency Pairs: {fmpsdk.available_cryptocurrencies(apikey=apikey)=}")
+# print(f"Historical Forex Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta_5min)=}")
+# print(f"Historical Daily Forex Prices: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
