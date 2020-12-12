@@ -12,10 +12,10 @@ from .tsx import *
 from .stock_market import *
 from .cryptocurrencies import *
 from .forex import *
+from .general_methods import historical_chart, historical_price_full, quote
 
 __all__ = [
     "company_profile",
-    "company_quote",
     "key_executives",
     "search",
     "search_ticker",
@@ -70,13 +70,10 @@ __all__ = [
     "cusip",
     "quote_short",
     "exchange_realtime",
-    "historical_stock_price",
-    "historical_stock_price_full",
     "historical_stock_dividend",
     "historical_stock_split",
     "technical_indicators",
     "indexes",
-    "index_quote",
     "sp500_constituent",
     "historical_sp500_constituent",
     "nasdaq_constituent",
@@ -84,17 +81,14 @@ __all__ = [
     "dowjones_constituent",
     "historical_dowjones_constituent",
     "available_indexes",
-    "historical_index",
-    "historical_index_full",
     "available_commodities",
     "commodities_list",
-    "commodity_quote",
-    "historical_commodity_price",
-    "historical_commodity_price_full",
     'available_efts',
     'etf_list',
-    'etf_quote',
-    'historical_etf_price',
-    'historical_etf_price_full',
+    'available_mutual_funds',
+    'mutual_fund_list',
 
+    'quote',
+    'historical_chart',
+    'historical_price_full',
 ]

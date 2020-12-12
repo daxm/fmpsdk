@@ -2,8 +2,8 @@ import typing
 from .url_methods import __return_json, __validate_time_delta, __validate_series_type
 
 
-def __quote(
-    apikey: str, value: typing.Union[str, typing.List[str]]
+def quote(
+    apikey: str, symbol: typing.Union[str, typing.List[str]]
 ) -> typing.List[typing.Dict]:
     """
     Query FMP Quote API.
@@ -11,12 +11,12 @@ def __quote(
     This API endpoint is a multifunction tool!
 
     :param apikey: Your API key
-    :param value: The Ticker(s), Index(es), Commodity(ies), etc. symbol to query for.
+    :param symbol: The Ticker(s), Index(es), Commodity(ies), etc. symbol to query for.
     :return: A list of dictionaries.
     """
-    if type(value) is list:
-        value = ",".join(value)
-    path = f"quote/{value}"
+    if type(symbol) is list:
+        symbol = ",".join(symbol)
+    path = f"quote/{symbol}"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -35,8 +35,8 @@ def __quotes(apikey: str, value: str) -> typing.List[typing.Dict]:
     return __return_json(path=path, query_vars=query_vars)
 
 
-def __historical_chart(
-    apikey: str, value: str, time_delta: str
+def historical_chart(
+    apikey: str, symbol: str, time_delta: str
 ) -> typing.List[typing.Dict]:
     """
     Query FMP Historical Chart API.
@@ -44,18 +44,18 @@ def __historical_chart(
     This API endpoint is a multifunction tool!
 
     :param apikey: Your API key
-    :param value: The Ticker, Index, Commodity, etc. symbol to query for.
+    :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param time_delta: The string value of time from now to go historical "1min" - "4hour".
     :return: A list of dictionaries.
     """
-    path = f"historical-chart/{__validate_time_delta(time_delta)}/{value}"
+    path = f"historical-chart/{__validate_time_delta(time_delta)}/{symbol}"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
 
-def __historical_price_full(
+def historical_price_full(
     apikey: str,
-    value: typing.Union[str, typing.List],
+    symbol: typing.Union[str, typing.List],
     time_series: int = None,
     series_type: str = None,
     from_date: str = None,
@@ -67,16 +67,16 @@ def __historical_price_full(
     This API endpoint is a multifunction tool!
 
     :param apikey: Your API Key
-    :param value: The Ticker, Index, Commodity, etc. symbol to query for.
+    :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param time_series: Not sure what this is.  5 is the only value I've seen used.
     :param series_type: Not sure what this is.  "line" is the only option I've seen used.
     :param from_date: 'YYYY-MM-DD' format
     :param to_date: 'YYYY-MM-DD' format
     :return: A list of dictionaries.
     """
-    if type(value) is list:
-        value = ",".join(value)
-    path = f"historical-price-full/{value}"
+    if type(symbol) is list:
+        symbol = ",".join(symbol)
+    path = f"historical-price-full/{symbol}"
     query_vars = {
         "apikey": apikey,
     }
