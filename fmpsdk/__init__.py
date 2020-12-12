@@ -1468,15 +1468,78 @@ def mutual_fund_list(apikey: str) -> typing.List[typing.Dict]:
 
 
 # # # # # # # # # # # # # # # # # EuroNext Functions # # # # # # # # # # # # # # # # #
+def available_euronext(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /symbol/available-euronext/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"/symbol/available-euronext"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def euronext_list(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /quotes/euronext/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"euronext"
+    return __quotes(apikey=apikey, value=path)
 
 
 # # # # # # # # # # # # # # # # # TSX Functions # # # # # # # # # # # # # # # # #
+def available_tsx(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /symbol/available-tsx/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"/symbol/available-tsx"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def tsx_list(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /quotes/tsx/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"tsx"
+    return __quotes(apikey=apikey, value=path)
 
 
 # # # # # # # # # # # # # # # # # Stock Market Functions # # # # # # # # # # # # # # # # #
 
 
 # # # # # # # # # # # # # # # # # Cryptocurrencies Functions # # # # # # # # # # # # # # # # #
+def available_cryptocurrencies(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /symbol/available-cryptocurrencies/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"/symbol/available-tsx"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def cryptocurrencies_list(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /quotes/crypto/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"crypto"
+    return __quotes(apikey=apikey, value=path)
 
 
 # # # # # # # # # # # # # # # # # FOREX (FX) Functions # # # # # # # # # # # # # # # # #
