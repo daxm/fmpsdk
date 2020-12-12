@@ -11,20 +11,20 @@ apikey = os.environ.get("apikey")
 
 # Company Valuation Methods
 symbol: str = "AAPL"
-symbols: typing.List[str] = ['AAPL', 'CSCO', 'QQQQ']
-exchange: str = 'NYSE'
-exchanges: typing.List[str] = ['NYSE', 'NASDAQ']
-query: str = 'AA'
+symbols: typing.List[str] = ["AAPL", "CSCO", "QQQQ"]
+exchange: str = "NYSE"
+exchanges: typing.List[str] = ["NYSE", "NASDAQ"]
+query: str = "AA"
 limit: int = 3
-period: str = 'quarter'
+period: str = "quarter"
 download: bool = True
 market_cap_more_than: int = 1000000000
 beta_more_than: int = 1
 volume_more_than: int = 10000
-sector: str = 'Technology'
+sector: str = "Technology"
 dividend_more_than: int = 0
-industry: str = 'Software'
-filing_type: str = '10-K'
+industry: str = "Software"
+filing_type: str = "10-K"
 print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}")
 # print(f"Company Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")
 # print(f"Multiple Company Quotes: {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
@@ -87,9 +87,9 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}
 # print(f"Press Releases: {fmpsdk.press_releases(apikey=apikey, symbol=symbol)=}")
 
 # Calendars
-from_date: str = '2020-04-26'
-to_date: str = '2020-07-26'
-symbol: str = 'CSCO'
+from_date: str = "2020-04-26"
+to_date: str = "2020-07-26"
+symbol: str = "CSCO"
 limit: int = 3
 # print(f"Earning Calendar: {fmpsdk.earning_calendar(apikey=apikey)=}")
 # print(f"Earning Calendar: {fmpsdk.earning_calendar(apikey=apikey, from_date=from_date, to_date=to_date)=}")
@@ -100,11 +100,11 @@ limit: int = 3
 # print(f"Economic Calendar: {fmpsdk.economic_calendar(apikey=apikey, from_date=from_date, to_date=to_date)=}")
 
 # Institutional Fund
-symbol: str = 'SPY'
+symbol: str = "SPY"
 download: bool = True
-name: str = 'Berkshire'
-cik_id: str = '0000913760'
-date: str = '2020-06-30'
+name: str = "Berkshire"
+cik_id: str = "0000913760"
+date: str = "2020-06-30"
 # print(f"Institutional Holders: {fmpsdk.institutional_holders(apikey=apikey, symbol=symbol)=}")
 # print(f"Mutual Fund Holders: {fmpsdk.mutual_fund_holders(apikey=apikey, symbol=symbol)=}")
 # print(f"ETF Holders: {fmpsdk.etf_holders(apikey=apikey, symbol=symbol)=}")
@@ -119,15 +119,15 @@ date: str = '2020-06-30'
 # print(f"CUSIP: {fmpsdk.cusip(apikey=apikey, cik_id=cik_id)=}")
 
 # Stock Time Series Methods
-symbol: str = 'MSFT'
-exchange: str = 'NYSE'
-time_delta: str = '5min'
-series_type: str = 'line'
-from_date: str = '2020-04-26'
-to_date: str = '2020-07-26'
+symbol: str = "MSFT"
+exchange: str = "NYSE"
+time_delta: str = "5min"
+series_type: str = "line"
+from_date: str = "2020-04-26"
+to_date: str = "2020-07-26"
 time_series: int = 5
-symbols: typing.List[str] = ['AAPL', 'CSCO', 'QQQQ']
-mutual_funds: typing.List[str] = ['JBFRX','BPLEX','VEVRX']
+symbols: typing.List[str] = ["AAPL", "CSCO", "QQQQ"]
+mutual_funds: typing.List[str] = ["JBFRX", "BPLEX", "VEVRX"]
 # print(f"Quote Realtime: {fmpsdk.quote_short(apikey=apikey, symbol=symbol)=}")
 # print(f"Exchange Realtime: {fmpsdk.exchange_realtime(apikey=apikey, exchange=exchange)=}")
 # print(f"Historical Stock Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta)=}")
@@ -141,18 +141,18 @@ mutual_funds: typing.List[str] = ['JBFRX','BPLEX','VEVRX']
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)=}")
 
 # Technical Indicators
-symbol: str = 'AAPL'
+symbol: str = "AAPL"
 period: int = 10
-statistics_type: str = 'sma'
-time_delta_daily: str = 'daily'
-time_delta_15min: str = '15min'
+statistics_type: str = "sma"
+time_delta_daily: str = "daily"
+time_delta_15min: str = "15min"
 # print(f"Daily Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=period, statistics_type=statistics_type, time_delta=time_delta_daily)=}")
 # print(f"Intraday Technical Indicators: {fmpsdk.technical_indicators(apikey=apikey, symbol=symbol, period=period, statistics_type=statistics_type, time_delta=time_delta_15min)=}")
 
 # Market Indexes
-symbol: str = '^RUITR'
+symbol: str = "^RUITR"
 download: bool = True
-time_delta_15min: str = '15min'
+time_delta_15min: str = "15min"
 # print(f"List Market Indexes: {fmpsdk.indexes(apikey=apikey)=}")
 # print(f"Index Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")
 # print(f"SP500 Contituent: {fmpsdk.sp500_constituent(apikey=apikey)=}")
@@ -169,9 +169,9 @@ time_delta_15min: str = '15min'
 # print(f"Historical Market Index: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
 
 # Commodities
-symbol: str = 'ZGUSD'
-symbols: typing.List[str] = ['ZGUSD', 'CLUSD', 'HGUSD']
-time_delta_15min: str = '15min'
+symbol: str = "ZGUSD"
+symbols: typing.List[str] = ["ZGUSD", "CLUSD", "HGUSD"]
+time_delta_15min: str = "15min"
 # print(f"Available Commodities': {fmpsdk.available_commodities(apikey=apikey)=}")
 # print(f"Commodities': {fmpsdk.commodities_list(apikey=apikey)=}")
 # print(f"Commodity Quote': {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
@@ -179,9 +179,9 @@ time_delta_15min: str = '15min'
 # print(f"Historical Daily Commodity Prices: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
 
 # ETF
-symbol = 'PRNT'
-symbols = ['PRNT', 'DFVS', 'VQT']
-time_delta_5min: str = '5min'
+symbol = "PRNT"
+symbols = ["PRNT", "DFVS", "VQT"]
+time_delta_5min: str = "5min"
 # print(f"Available ETFs': {fmpsdk.available_efts(apikey=apikey)=}")
 # print(f"ETFs': {fmpsdk.etf_list(apikey=apikey)=}")
 # print(f"ETF Quote': {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
@@ -191,9 +191,9 @@ time_delta_5min: str = '5min'
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)=}")
 
 # Mutual Funds
-symbol: str = 'JMCRX'
-symbols: typing.List[str] = ['JMCRX', 'JSMTX', 'JUESX']
-time_delta_5min: str = '5min'
+symbol: str = "JMCRX"
+symbols: typing.List[str] = ["JMCRX", "JSMTX", "JUESX"]
+time_delta_5min: str = "5min"
 # print(f"Available Mutual Funds: {fmpsdk.available_mutual_funds(apikey=apikey)=}")
 # print(f"Mutual Funds: {fmpsdk.mutual_fund_list(apikey=apikey)=}")
 # print(f"Mutual Fund Quote: {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
@@ -203,9 +203,9 @@ time_delta_5min: str = '5min'
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)=}")
 
 # EuroNext
-symbol: str = 'KIN.BR'
-symbols: typing.List[str] = ['EDF.PA', 'KIN.BR', 'SCB.LS']
-time_delta_5min: str = '5min'
+symbol: str = "KIN.BR"
+symbols: typing.List[str] = ["EDF.PA", "KIN.BR", "SCB.LS"]
+time_delta_5min: str = "5min"
 # print(f"Available EuroNext: {fmpsdk.available_euronext(apikey=apikey)=}")
 # print(f"EuroNext: {fmpsdk.euronext_list(apikey=apikey)=}")
 # print(f"EuroNext Quote: {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
@@ -215,9 +215,9 @@ time_delta_5min: str = '5min'
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)=}")
 
 # TSX
-symbol: str = 'FNV.TO'
-symbols: typing.List[str] = ['FNV.TO', 'XAW.TO', 'DR.TO']
-time_delta_5min: str = '5min'
+symbol: str = "FNV.TO"
+symbols: typing.List[str] = ["FNV.TO", "XAW.TO", "DR.TO"]
+time_delta_5min: str = "5min"
 # print(f"Available TSX: {fmpsdk.available_tsx(apikey=apikey)=}")
 # print(f"TSX: {fmpsdk.tsx_list(apikey=apikey)=}")
 # print(f"TSX Quote: {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
@@ -236,8 +236,8 @@ limit: int = 3
 
 
 # Cryptocurrencies
-symbol: str = 'BTCUSD'
-time_delta_5min: str = '5min'
+symbol: str = "BTCUSD"
+time_delta_5min: str = "5min"
 # print(f"Cryptocurrencies: {fmpsdk.cryptocurrencies_list(apikey=apikey)=}")
 # print(f"Cryptocurrencies Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")
 # print(f"Available Cryptocurrencies: {fmpsdk.available_cryptocurrencies(apikey=apikey)=}")
@@ -245,8 +245,8 @@ time_delta_5min: str = '5min'
 # print(f"Historical Daily Cryptocurrencies Prices: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
 
 # FOREX (FX)
-symbol: str = 'JPYUSD'
-time_delta_5min: str = '5min'
+symbol: str = "JPYUSD"
+time_delta_5min: str = "5min"
 # print(f"Currency Exchange Rates: {fmpsdk.forex(apikey=apikey)}")
 # print(f"Forex: {fmpsdk.forex_list(apikey=apikey)=}")
 # print(f"Forex Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")

@@ -6,7 +6,7 @@ __license__ = "BSD"
 
 setup(
     name="fmpsdk",
-    version="20201211.1",
+    version="20201212.0",
     description="SDK for interacting with FMP's APIs.",
     long_description="""Interact with Financial Modeling Prep's APIs.""",
     url="https://github.com/daxm/fmpsdk",
