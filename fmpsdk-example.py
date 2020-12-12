@@ -12,7 +12,7 @@ symbol = "AAPL"
 # Company Valuation Methods
 # print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}")
 # print(f"Company Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")
-# print(f"Multiple Company Quotes: {fmpsdk.company_quote(apikey=apikey, symbol=['AAPL', 'CSCO', 'QQQQ'])=}")
+# print(f"Multiple Company Quotes: {fmpsdk.quote(apikey=apikey, symbol=['AAPL', 'CSCO', 'QQQQ'])=}")
 # print(f"Key Executives: {fmpsdk.key_executives(apikey=apikey, symbol=symbol)=}")
 # print(f"Search: {fmpsdk.search(apikey=apikey, query='AA', exchange='NYSE', limit=10)=}")
 # print(f"Ticker Search: {fmpsdk.search_ticker(apikey=apikey, query='AA', exchange='NYSE', limit=5)=}")
