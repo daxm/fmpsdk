@@ -25,7 +25,7 @@ sector: str = 'Technology'
 dividend_more_than: int = 0
 industry: str = 'Software'
 filing_type: str = '10-K'
-# print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}")
+print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}")
 # print(f"Company Quote: {fmpsdk.quote(apikey=apikey, symbol=symbol)=}")
 # print(f"Multiple Company Quotes: {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
 # print(f"Key Executives: {fmpsdk.key_executives(apikey=apikey, symbol=symbol)=}")
@@ -227,6 +227,13 @@ time_delta_5min: str = '5min'
 # print(f"Historical Stock Split: {fmpsdk.historical_stock_split(apikey=apikey, symbol=symbol)=}")
 
 # Stock Market
+limit: int = 3
+# print(f"Active Stock in Market: {fmpsdk.actives(apikey=apikey)=}")
+# print(f"Stock in Market Gainers: {fmpsdk.gainers(apikey=apikey)=}")
+# print(f"Active Stock in Market Losers: {fmpsdk.losers(apikey=apikey)=}")
+# print(f"Market Hours: {fmpsdk.market_hours(apikey=apikey)=}")
+# print(f"Sector's Performance: {fmpsdk.sectors_performance(apikey=apikey, limit=limit)=}")
+
 
 # Cryptocurrencies
 symbol: str = 'BTCUSD'

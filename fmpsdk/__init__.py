@@ -1403,7 +1403,7 @@ def available_commodities(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-commodities"
+    path = f"symbol/available-commodities"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1427,7 +1427,7 @@ def available_efts(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-etfs"
+    path = f"symbol/available-etfs"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1451,7 +1451,7 @@ def available_mutual_funds(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-mutual-funds"
+    path = f"symbol/available-mutual-funds"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1475,7 +1475,7 @@ def available_euronext(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-euronext"
+    path = f"symbol/available-euronext"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1499,7 +1499,7 @@ def available_tsx(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-tsx"
+    path = f"symbol/available-tsx"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1516,6 +1516,65 @@ def tsx_list(apikey: str) -> typing.List[typing.Dict]:
 
 
 # # # # # # # # # # # # # # # # # Stock Market Functions # # # # # # # # # # # # # # # # #
+def actives(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /actives/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"actives"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def gainers(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /gainers/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"gainers"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def losers(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /losers/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"losers"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def market_hours(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /market-hours/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"market-hours"
+    query_vars = {"apikey": apikey}
+    return __return_json(path=path, query_vars=query_vars)
+
+
+def sectors_performance(apikey: str, limit: int = DEFAULT_LIMIT) -> typing.List[typing.Dict]:
+    """
+    Query FMP /sectors_performance/ API
+
+    :param apikey: Your API key.
+    :param limit: Number of rows to return
+    :return: A list of dictionaries.
+    """
+    path = f"sectors-performance"
+    query_vars = {"apikey": apikey, 'limit': limit}
+    return __return_json(path=path, query_vars=query_vars)
 
 
 # # # # # # # # # # # # # # # # # Cryptocurrencies Functions # # # # # # # # # # # # # # # # #
@@ -1526,7 +1585,7 @@ def available_cryptocurrencies(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-tsx"
+    path = f"symbol/available-tsx"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1550,7 +1609,7 @@ def forex(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/fx"
+    path = f"fx"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
@@ -1573,6 +1632,6 @@ def available_forex(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"/symbol/available-forex-currency-pairs"
+    path = f"symbol/available-forex-currency-pairs"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
