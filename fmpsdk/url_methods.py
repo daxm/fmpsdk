@@ -1,5 +1,4 @@
 import typing
-import json
 import requests
 import logging
 from .settings import (
@@ -14,6 +13,9 @@ from .settings import (
     TECHNICAL_INDICATORS_TIME_DELTA_VALUES,
 )
 
+CONNECT_TIMEOUT = 5
+READ_TIMEOUT = 30
+
 
 def __return_json(path: str, query_vars: typing.Dict) -> typing.List:
     """
@@ -23,12 +25,25 @@ def __return_json(path: str, query_vars: typing.Dict) -> typing.List:
     :param query_vars: Dictionary of query values (after "?" of URL)
     :return: JSON response
     """
-    response = requests.get(f"{BASE_URL}{path}", params=query_vars)
-    if response.text:
-        return json.loads(response.text)
-    else:
-        logging.error("Response appears to have no data.  Returning empty List.")
-        return []
+    url = f"{BASE_URL}{path}"
+    return_var = None
+    try:
+        response = requests.get(url, params=query_vars, timeout=(CONNECT_TIMEOUT, READ_TIMEOUT))
+        if len(response.content) > 0:
+            return_var = response.json()
+        else:
+            logging.warning("Response appears to have no data.  Returning empty List.")
+    except requests.Timeout:
+        logging.error(f"Connection to {url} timed out.")
+    except requests.ConnectionError:
+        logging.error(f"Connection to {url} failed:  DNS failure, refused connection or some other connection related "
+                      f"issue.")
+    except requests.TooManyRedirects:
+        logging.error(f"Request to {url} exceeds the maximum number of predefined redirections.")
+    except Exception as e:
+        logging.error(f"A requests exception has occurred that we have not yet detailed an 'except' clause for.  "
+                      f"Error: {e}")
+    return return_var
 
 
 def __validate_exchange(value: str) -> str:
