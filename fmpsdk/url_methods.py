@@ -1,5 +1,6 @@
 import typing
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import logging
 from .settings import (
     BASE_URL,
@@ -15,6 +16,9 @@ from .settings import (
 
 CONNECT_TIMEOUT = 5
 READ_TIMEOUT = 30
+
+# Disable annoying HTTP warnings
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def __return_json(path: str, query_vars: typing.Dict) -> typing.List:
