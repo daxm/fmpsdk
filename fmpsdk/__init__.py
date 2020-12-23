@@ -28,6 +28,9 @@ import requests
 import typing
 import logging
 
+attribution: str = "Data provided by Financial Modeling Prep"
+logging.info(attribution)
+
 
 # # # # # # # # # # # # # # # # # General Functions # # # # # # # # # # # # # # # # #
 def __quotes(apikey: str, value: str) -> typing.List[typing.Dict]:
