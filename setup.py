@@ -6,7 +6,7 @@ __license__ = "BSD"
 
 setup(
     name="fmpsdk",
-    version="20201220.1",
+    version="20201224.0",
     description="SDK for interacting with FMP's APIs.",
     long_description="""Interact with Financial Modeling Prep's APIs.""",
     url="https://github.com/daxm/fmpsdk",
@@ -29,7 +29,7 @@ setup(
     ],
     keywords="fmpsdk financial stock valuation",
     packages=find_packages(exclude=["docs", "tests*"]),
-    install_requires=["python-dotenv"],
+    install_requires=["python-dotenv", "requests"],
     python_requires=">=3.6",
     package_data={},
     data_files=None,
