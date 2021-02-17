@@ -751,6 +751,8 @@ def stock_screener(
     dividend_lower_than: typing.Union[float, int] = None,
     price_more_than: typing.Union[float, int] = None,
     price_lower_than: typing.Union[float, int] = None,
+    is_ETF: bool = None,
+    is_actively_trading: bool = None,
     sector: str = None,
     industry: str = None,
     exchange: typing.Union[str, typing.List[str]] = None,
@@ -770,6 +772,8 @@ def stock_screener(
     :param dividend_lower_than:  Numeric Value
     :price_more_than: typing.Union[float, int] = None,
     :price_lower_than: typing.Union[float, int] = None,
+    :is_ETF: bool = None,
+    :is_actively_trading: bool = None,
     :param sector: Valid sector name.
     :param industry: Valid industry name.
     :param exchange: Stock exchange symbol.
@@ -798,6 +802,10 @@ def stock_screener(
         query_vars["priceMoreThan"] = price_more_than
     if price_lower_than:
         query_vars["priceLowerThan"] = price_lower_than
+    if is_ETF:
+        query_vars["isEtf"] = is_ETF
+    if is_actively_trading:
+        query_vars["isActivelyTrading"] = is_actively_trading
     if sector:
         query_vars["sector"] = __validate_sector(sector)
     if industry:
