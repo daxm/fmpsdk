@@ -749,6 +749,8 @@ def stock_screener(
     volume_lower_than: typing.Union[float, int] = None,
     dividend_more_than: typing.Union[float, int] = None,
     dividend_lower_than: typing.Union[float, int] = None,
+    price_more_than: typing.Union[float, int] = None,
+    price_lower_than: typing.Union[float, int] = None,
     sector: str = None,
     industry: str = None,
     exchange: typing.Union[str, typing.List[str]] = None,
@@ -766,6 +768,8 @@ def stock_screener(
     :param volume_lower_than:  Numeric Value
     :param dividend_more_than:  Numeric Value
     :param dividend_lower_than:  Numeric Value
+    :price_more_than: typing.Union[float, int] = None,
+    :price_lower_than: typing.Union[float, int] = None,
     :param sector: Valid sector name.
     :param industry: Valid industry name.
     :param exchange: Stock exchange symbol.
@@ -790,6 +794,10 @@ def stock_screener(
         query_vars["dividendMoreThan"] = dividend_more_than
     if dividend_lower_than:
         query_vars["dividendLowerThan"] = dividend_lower_than
+    if price_more_than:
+        query_vars["priceMoreThan"] = price_more_than
+    if price_lower_than:
+        query_vars["priceLowerThan"] = price_lower_than
     if sector:
         query_vars["sector"] = __validate_sector(sector)
     if industry:
