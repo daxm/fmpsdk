@@ -770,10 +770,10 @@ def stock_screener(
     :param volume_lower_than:  Numeric Value
     :param dividend_more_than:  Numeric Value
     :param dividend_lower_than:  Numeric Value
-    :price_more_than: typing.Union[float, int] = None,
-    :price_lower_than: typing.Union[float, int] = None,
-    :is_ETF: bool = None,
-    :is_actively_trading: bool = None,
+    :price_more_than: Numeric Value
+    :price_lower_than: Numeric Value
+    :is_ETF: bool
+    :is_actively_trading: bool
     :param sector: Valid sector name.
     :param industry: Valid industry name.
     :param exchange: Stock exchange symbol.
