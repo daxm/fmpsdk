@@ -1,0 +1,26 @@
+# Run black in --check mode on pull requests and pushes to master.
+# This workflow should fail on any black violations.
+name:
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        set -xe
+        python -VV
+        python -m site
+        python -m pip install --upgrade pip
+        pip install black
+    - name: Run black
+      run: |
+        black fmpsdk --check --exclude "venv|build"
