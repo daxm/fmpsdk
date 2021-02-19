@@ -130,7 +130,7 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     Gather this company's information.
     :param apikey: Your API key.
     :param symbol: Ticker of Company.
-   """
+    """
     path = f"profile/{symbol}"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
@@ -325,7 +325,9 @@ def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
 
 
 def income_statement_growth(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /income-statement-growth/ API.
@@ -490,7 +492,9 @@ def cash_flow_statement_as_reported(
 
 
 def financial_statement_full_as_reported(
-    apikey: str, symbol: str, period: str = "annual",
+    apikey: str,
+    symbol: str,
+    period: str = "annual",
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /financial-statement-full-as-reported/ API.
@@ -520,7 +524,10 @@ def financial_ratios_ttm(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def financial_ratios(
-    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    period: str = "annual",
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FmP /ratios/ API.
@@ -541,7 +548,10 @@ def financial_ratios(
 
 
 def enterprise_values(
-    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    period: str = "annual",
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /enterprise-values/ API.
@@ -562,7 +572,9 @@ def enterprise_values(
 
 
 def key_metrics_ttm(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /key-metrics-ttm/ API
@@ -578,7 +590,10 @@ def key_metrics_ttm(
 
 
 def key_metrics(
-    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    period: str = "annual",
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /key-metrics/ API
@@ -599,7 +614,10 @@ def key_metrics(
 
 
 def financial_growth(
-    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    period: str = "annual",
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /financial-growth/ API.
@@ -633,7 +651,9 @@ def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def historical_rating(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /financial-growth/ API.
@@ -662,7 +682,10 @@ def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 
 def historical_discounted_cash_flow(
-    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT,
+    apikey: str,
+    symbol: str,
+    period: str = "annual",
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-discounted-cash-flow/ API.
@@ -1301,7 +1324,9 @@ def indexes(apikey: str) -> typing.List[typing.Dict]:
 
 
 def sp500_constituent(
-    apikey: str, download: bool = False, filename: str = SP500_CONSTITUENTS_FILENAME,
+    apikey: str,
+    download: bool = False,
+    filename: str = SP500_CONSTITUENTS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /sp500_constituent/ API
@@ -1335,7 +1360,9 @@ def historical_sp500_constituent(apikey: str) -> typing.List[typing.Dict]:
 
 
 def nasdaq_constituent(
-    apikey: str, download: bool = False, filename: str = NASDAQ_CONSTITUENTS_FILENAME,
+    apikey: str,
+    download: bool = False,
+    filename: str = NASDAQ_CONSTITUENTS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /nasdaq_constituent/ API
@@ -1369,7 +1396,9 @@ def historical_nasdaq_constituent(apikey: str) -> typing.List[typing.Dict]:
 
 
 def dowjones_constituent(
-    apikey: str, download: bool = False, filename: str = DOWJONES_CONSTITUENTS_FILENAME,
+    apikey: str,
+    download: bool = False,
+    filename: str = DOWJONES_CONSTITUENTS_FILENAME,
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /dowjones_constituent/ API
