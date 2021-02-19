@@ -1,8 +1,8 @@
 # Run black in --check mode on pull requests and pushes to master.
 # This workflow should fail on any black violations.
-# name:
+name:
 
-# on: [push, pull_request]
+on: [push, pull_request]
 
 # jobs:
 #   tests:
