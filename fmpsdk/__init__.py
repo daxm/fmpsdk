@@ -1606,7 +1606,7 @@ def available_cryptocurrencies(apikey: str) -> typing.List[typing.Dict]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"symbol/available-tsx"
+    path = f"symbol/available-cryptocurrencies"
     query_vars = {"apikey": apikey}
     return __return_json(path=path, query_vars=query_vars)
 
