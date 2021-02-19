@@ -21,6 +21,6 @@ jobs:
         python -m site
         python -m pip install --upgrade pip
         pip install black
-#     - name: Run black
-#       run: |
-#         black fmpsdk --check --exclude "venv|build"
+     - name: Run black
+       run: |
+         black fmpsdk --check --exclude "venv|build"
