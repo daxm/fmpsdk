@@ -92,6 +92,11 @@ from .insider_trading import (
     mapper_cik_company,
     insider_trading_rss_feed,
 )
+from .alternative_data import (
+    commitment_of_traders_report_list,
+    commitment_of_traders_report,
+    commitment_of_traders_report_analysis,
+)
 
 import logging
 
@@ -195,4 +200,7 @@ __all__ = [
     "mapper_cik_name",
     "mapper_cik_company",
     "insider_trading_rss_feed",
+    "commitment_of_traders_report_list",
+    "commitment_of_traders_report_analysis",
+    "commitment_of_traders_report",
 ]
