@@ -84,6 +84,12 @@ from .tsx import available_tsx, tsx_list
 from .stock_market import actives, gainers, losers, market_hours, sectors_performance
 from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list
 from .forex import forex, forex_list, available_forex
+from .insider_trading import (
+    insider_trading,
+    mapper_cik_name,
+    mapper_cik_company,
+    insider_trading_rss_feed,
+)
 
 import logging
 
@@ -181,4 +187,8 @@ __all__ = [
     "forex_list",
     "available_forex",
     "historical_survivorship_bias_free_eod",
+    "insider_trading",
+    "mapper_cik_name",
+    "mapper_cik_company",
+    "insider_trading_rss_feed",
 ]
