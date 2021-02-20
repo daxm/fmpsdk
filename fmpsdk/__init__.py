@@ -30,6 +30,8 @@ from .company_valuation import (
     market_capitalization,
     historical_market_capitalization,
     symbols_list,
+    etf_list,
+    available_traded_list,
     stock_screener,
     delisted_companies,
     stock_news,
@@ -77,7 +79,7 @@ from .market_indexes import (
     available_indexes,
 )
 from .commodities import available_commodities, commodities_list
-from .etf import available_efts, etf_list
+from .etf import available_efts, etf_price_realtime
 from .mutual_funds import available_mutual_funds, mutual_fund_list
 from .euronext import available_euronext, euronext_list
 from .tsx import available_tsx, tsx_list
@@ -130,6 +132,8 @@ __all__ = [
     "market_capitalization",
     "historical_market_capitalization",
     "symbols_list",
+    "etf_list",
+    "available_traded_list",
     "stock_screener",
     "delisted_companies",
     "stock_news",
@@ -169,7 +173,7 @@ __all__ = [
     "available_commodities",
     "commodities_list",
     "available_efts",
-    "etf_list",
+    "etf_price_realtime",
     "available_mutual_funds",
     "mutual_fund_list",
     "available_euronext",

@@ -661,6 +661,34 @@ def symbols_list(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
+def etf_list(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /etf/list/ API
+
+    All ETF symbols
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"etf/list"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def available_traded_list(apikey: str) -> typing.List[typing.Dict]:
+    """
+    Query FMP /available-traded/list/ API
+
+    All tradable symbols
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"available-traded/list"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
 def stock_screener(
     apikey: str,
     market_cap_more_than: typing.Union[float, int] = None,
@@ -673,10 +701,11 @@ def stock_screener(
     dividend_lower_than: typing.Union[float, int] = None,
     price_more_than: typing.Union[float, int] = None,
     price_lower_than: typing.Union[float, int] = None,
-    is_ETF: bool = None,
+    is_etf: bool = None,
     is_actively_trading: bool = None,
     sector: str = None,
     industry: str = None,
+    country: str = None,
     exchange: typing.Union[str, typing.List[str]] = None,
     limit: int = DEFAULT_LIMIT,
 ) -> typing.List[typing.Dict]:
@@ -696,10 +725,11 @@ def stock_screener(
     :param price_lower_than: Numeric Value
     :param price_more_than: Numeric Value
     :param price_lower_than: Numeric Value
-    :param is_ETF: bool
+    :param is_etf: bool
     :param is_actively_trading: bool
     :param sector: Valid sector name.
     :param industry: Valid industry name.
+    :param country: 2 digit country code as string.
     :param exchange: Stock exchange symbol.
     :param limit: Number of rows to return.
     :return: A list of dicitonaries.
@@ -726,14 +756,16 @@ def stock_screener(
         query_vars["priceMoreThan"] = price_more_than
     if price_lower_than:
         query_vars["priceLowerThan"] = price_lower_than
-    if is_ETF:
-        query_vars["isEtf"] = is_ETF
+    if is_etf:
+        query_vars["isEtf"] = is_etf
     if is_actively_trading:
         query_vars["isActivelyTrading"] = is_actively_trading
     if sector:
         query_vars["sector"] = __validate_sector(sector)
     if industry:
         query_vars["industry"] = __validate_industry(industry)
+    if country:
+        query_vars["country"] = country
     if exchange:
         if type(exchange) is list:
             for item in exchange:

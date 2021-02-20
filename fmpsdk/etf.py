@@ -16,9 +16,11 @@ def available_efts(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def etf_list(apikey: str) -> typing.List[typing.Dict]:
+def etf_price_realtime(apikey: str) -> typing.List[typing.Dict]:
     """
     Query FMP /quotes/etf/ API
+
+    All Real-time ETF Prices.
 
     :param apikey: Your API key.
     :return: A list of dictionaries.
