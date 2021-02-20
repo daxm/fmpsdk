@@ -1,6 +1,7 @@
 import typing
 
-BASE_URL: str = "https://financialmodelingprep.com/api/v3/"
+BASE_URL_v3: str = "https://financialmodelingprep.com/api/v3/"
+BASE_URL_v4: str = "https://financialmodelingprep.com/api/v4/"
 
 DEFAULT_LIMIT: int = 10
 INDUSTRY_VALUES: typing.List = [
