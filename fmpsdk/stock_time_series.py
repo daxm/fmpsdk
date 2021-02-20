@@ -61,7 +61,9 @@ def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_survivorship_bias_free_eod(apikey: str, symbol: str, date: str) -> typing.List[typing.Dict]:
+def historical_survivorship_bias_free_eod(
+    apikey: str, symbol: str, date: str
+) -> typing.List[typing.Dict]:
     """
     Query FMP /historical-price-full/<ticker>/<date> API
 
