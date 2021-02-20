@@ -29,6 +29,7 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     Gather this company's information.
     :param apikey: Your API key.
     :param symbol: Ticker of Company.
+    :return: A list of dictionaries.
     """
     path = f"profile/{symbol}"
     query_vars = {"apikey": apikey}
