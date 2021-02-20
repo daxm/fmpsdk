@@ -2,6 +2,8 @@
 The idea behind this project is to provide a 'one-stop-shop' to the API endpoints provided by 
 [Financial Model Prep](http://financialmodelingprep.com) website.
 
+**Note: fmpsdk should be synced with FMP's API changelog as of 20210220.  Changes thereafter are not yet included.**
+
 ## How to Use
 1. Install the package: `pip install fmpsdk`
 1. Create a .env file and put your apikey in it.  Inside .env: `apikey='blah'`
