@@ -63,6 +63,7 @@ from .stock_time_series import (
     exchange_realtime,
     historical_stock_dividend,
     historical_stock_split,
+    historical_survivorship_bias_free_eod,
 )
 from .technical_indicators import technical_indicators
 from .market_indexes import (
@@ -179,4 +180,5 @@ __all__ = [
     "forex",
     "forex_list",
     "available_forex",
+    "historical_survivorship_bias_free_eod",
 ]
