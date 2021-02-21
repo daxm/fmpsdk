@@ -34,10 +34,9 @@ def insider_trading(
     path = f"insider-trading/"
     query_vars = {"apikey": apikey, "limit": limit}
     if not sum(i is not None for i in [reporting_cik, company_cik, symbol]) == 1:
-        logging.error(
-            "Do not combine symbol, reporting_cik or company_cik parameters. Only provide one."
-        )
-        exit(1)
+        msg = "Do not combine symbol, reporting_cik or company_cik parameters. Only provide one."
+        logging.error(msg)
+        raise ValueError(msg)
     if reporting_cik:
         query_vars["reportingCik"] = reporting_cik
     if company_cik:
