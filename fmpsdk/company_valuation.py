@@ -771,8 +771,9 @@ def stock_screener(
         if type(exchange) is list:
             for item in exchange:
                 if item != __validate_exchange(item):
-                    logging.error(f"Invalid Exchange value: {exchange}.")
-                    exit(1)
+                    msg = f"Invalid Exchange value: {exchange}."
+                    logging.error(msg)
+                    raise ValueError(msg)
             query_vars["exchange"] = ",".join(exchange)
         else:
             query_vars["exchange"] = __validate_exchange(exchange)
