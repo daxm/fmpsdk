@@ -32,5 +32,5 @@ print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}
 ## Attribution
 Special thanks to the following people who have pitched in on this project!  Open source works thanks to people who 
 jump in and help!  These are this project's stars.  Thank you.
-  - [ipl31](https://github.com/ipl31)
+  - [Ken Caruso](https://github.com/ipl31)
   - [iforgotmypass](https://github.com/iforgotmypass)
