@@ -791,7 +791,7 @@ def delisted_companies(
     :return: A list of dictionaries.
     """
     path = f"delisted-companies"
-    query_vars = {"apikey": apikey, "limt": limit}
+    query_vars = {"apikey": apikey, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
@@ -809,7 +809,7 @@ def stock_news(
     :return: A list of dictionaries.
     """
     path = f"stock_news"
-    query_vars = {"apikey": apikey, "limt": limit}
+    query_vars = {"apikey": apikey, "limit": limit}
     if tickers:
         if type(tickers) is list:
             tickers = ",".join(tickers)
