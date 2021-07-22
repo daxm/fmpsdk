@@ -26,7 +26,7 @@ apikey = os.environ.get("apikey")
 
 # Company Valuation Methods
 symbol: str = "AAPL"
-print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)=}")
+print(f"Company Profile: {fmpsdk.company_profile(apikey=apikey, symbol=symbol)}")
 ```
 
 ## Attribution
