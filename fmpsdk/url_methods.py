@@ -24,7 +24,7 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
-def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.List:
+def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.Optional[typing.List]:
     """
     Query URL for JSON response for v3 of FMP API.
 
@@ -67,7 +67,7 @@ def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.List:
     return return_var
 
 
-def __return_json_v4(path: str, query_vars: typing.Dict) -> typing.List:
+def __return_json_v4(path: str, query_vars: typing.Dict) -> typing.Optional[typing.List]:
     """
     Query URL for JSON response for v4 of FMP API.
 

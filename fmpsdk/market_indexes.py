@@ -13,7 +13,7 @@ from .settings import (
 from .url_methods import __return_json_v3
 
 
-def indexes(apikey: str) -> typing.List[typing.Dict]:
+def indexes(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/index/ API.
 
@@ -48,7 +48,7 @@ def sp500_constituent(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_sp500_constituent(apikey: str) -> typing.List[typing.Dict]:
+def historical_sp500_constituent(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/sp500_constitnuet/ API.
 
@@ -84,7 +84,7 @@ def nasdaq_constituent(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_nasdaq_constituent(apikey: str) -> typing.List[typing.Dict]:
+def historical_nasdaq_constituent(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/nasdaq_constitnuet/ API.
 
@@ -120,7 +120,7 @@ def dowjones_constituent(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_dowjones_constituent(apikey: str) -> typing.List[typing.Dict]:
+def historical_dowjones_constituent(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/dowjones_constitnuet/ API.
 
@@ -132,7 +132,7 @@ def historical_dowjones_constituent(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def available_indexes(apikey: str) -> typing.List[typing.Dict]:
+def available_indexes(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /symbol/available-indexes/ API
 

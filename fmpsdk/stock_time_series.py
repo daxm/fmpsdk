@@ -4,7 +4,7 @@ from .general import __quotes
 from .url_methods import __return_json_v3, __return_json_v4, __validate_exchange
 
 
-def quote_short(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def quote_short(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quote-short/ API.
 
@@ -19,7 +19,7 @@ def quote_short(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def exchange_realtime(apikey: str, exchange: str) -> typing.List[typing.Dict]:
+def exchange_realtime(apikey: str, exchange: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/ API.
 
@@ -30,7 +30,7 @@ def exchange_realtime(apikey: str, exchange: str) -> typing.List[typing.Dict]:
     return __quotes(apikey=apikey, value=__validate_exchange(exchange))
 
 
-def historical_stock_dividend(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def historical_stock_dividend(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-price-full/stock_divident/ API
 
@@ -43,7 +43,7 @@ def historical_stock_dividend(apikey: str, symbol: str) -> typing.List[typing.Di
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def historical_stock_split(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-price-full/stock_divident/ API
 
@@ -58,7 +58,7 @@ def historical_stock_split(apikey: str, symbol: str) -> typing.List[typing.Dict]
 
 def historical_survivorship_bias_free_eod(
     apikey: str, symbol: str, date: str
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-price-full/<ticker>/<date> API
 

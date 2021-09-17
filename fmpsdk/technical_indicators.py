@@ -13,7 +13,7 @@ def technical_indicators(
     period: int = 10,
     statistics_type: str = "SMA",
     time_delta: str = "daily",
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /technical_indicator/ API.
 

@@ -4,7 +4,7 @@ from .general import __quotes
 from .url_methods import __return_json_v3
 
 
-def available_efts(apikey: str) -> typing.List[typing.Dict]:
+def available_efts(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /symbol/available-etfs/ API
 
@@ -16,7 +16,7 @@ def available_efts(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def etf_price_realtime(apikey: str) -> typing.List[typing.Dict]:
+def etf_price_realtime(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/etf/ API
 

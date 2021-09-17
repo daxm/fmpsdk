@@ -23,7 +23,7 @@ from .url_methods import (
 )
 
 
-def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def company_profile(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /profile/ API.
 
@@ -37,7 +37,7 @@ def company_profile(apikey: str, symbol: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def key_executives(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /key-executives/ API.
 
@@ -53,7 +53,7 @@ def key_executives(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 def search(
     apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /search/ API.
 
@@ -76,7 +76,7 @@ def search(
 
 def search_ticker(
     apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /search-ticker/ API.
 
@@ -212,7 +212,7 @@ def cash_flow_statement(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_statement_symbol_lists(apikey: str) -> typing.List[typing.Dict]:
+def financial_statement_symbol_lists(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-statement-symbol-lists/ API.
 
@@ -229,7 +229,7 @@ def income_statement_growth(
     apikey: str,
     symbol: str,
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /income-statement-growth/ API.
 
@@ -249,7 +249,7 @@ def income_statement_growth(
 
 def balance_sheet_statement_growth(
     apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /balance-sheet-statement-growth/ API.
 
@@ -269,7 +269,7 @@ def balance_sheet_statement_growth(
 
 def cash_flow_statement_growth(
     apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /cash-flow-statement-growth/ API.
 
@@ -396,7 +396,7 @@ def financial_statement_full_as_reported(
     apikey: str,
     symbol: str,
     period: str = "annual",
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-statement-full-as-reported/ API.
 
@@ -411,7 +411,7 @@ def financial_statement_full_as_reported(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_ratios_ttm(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def financial_ratios_ttm(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FmP /ratios-ttm/ API.
 
@@ -429,7 +429,7 @@ def financial_ratios(
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FmP /ratios/ API.
 
@@ -453,7 +453,7 @@ def enterprise_values(
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /enterprise-values/ API.
 
@@ -476,7 +476,7 @@ def key_metrics_ttm(
     apikey: str,
     symbol: str,
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /key-metrics-ttm/ API
 
@@ -495,7 +495,7 @@ def key_metrics(
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /key-metrics/ API
 
@@ -519,7 +519,7 @@ def financial_growth(
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-growth/ API.
 
@@ -538,7 +538,7 @@ def financial_growth(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def rating(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def rating(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /rating/ API.
 
@@ -555,7 +555,7 @@ def historical_rating(
     apikey: str,
     symbol: str,
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-growth/ API.
 
@@ -569,7 +569,7 @@ def historical_rating(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def discounted_cash_flow(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def discounted_cash_flow(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /discounted-cash-flow/ API.
 
@@ -587,7 +587,7 @@ def historical_discounted_cash_flow(
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-discounted-cash-flow/ API.
 
@@ -608,7 +608,7 @@ def historical_discounted_cash_flow(
 
 def historical_daily_discounted_cash_flow(
     apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-daily-discounted-cash-flow/ API.
 
@@ -622,7 +622,7 @@ def historical_daily_discounted_cash_flow(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def market_capitalization(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def market_capitalization(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /market-capitalization/ API.
 
@@ -637,7 +637,7 @@ def market_capitalization(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 def historical_market_capitalization(
     apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-market-capitalization/ API.
 
@@ -651,7 +651,7 @@ def historical_market_capitalization(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def symbols_list(apikey: str) -> typing.List[typing.Dict]:
+def symbols_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock/list/ API
 
@@ -663,7 +663,7 @@ def symbols_list(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def etf_list(apikey: str) -> typing.List[typing.Dict]:
+def etf_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /etf/list/ API
 
@@ -677,7 +677,7 @@ def etf_list(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def available_traded_list(apikey: str) -> typing.List[typing.Dict]:
+def available_traded_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /available-traded/list/ API
 
@@ -710,7 +710,7 @@ def stock_screener(
     country: str = None,
     exchange: typing.Union[str, typing.List[str]] = None,
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock-screener/ API.
 
@@ -783,7 +783,7 @@ def stock_screener(
 
 def delisted_companies(
     apikey: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /delisted-companies/ API.
 
@@ -800,7 +800,7 @@ def stock_news(
     apikey: str,
     tickers: typing.Union[str, typing.List] = "",
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_news/ API.
 
@@ -818,7 +818,7 @@ def stock_news(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def earnings_surprises(apikey: str, symbol: str) -> typing.List[typing.Dict]:
+def earnings_surprises(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /earnings-surprises/ API.
 
@@ -833,7 +833,7 @@ def earnings_surprises(apikey: str, symbol: str) -> typing.List[typing.Dict]:
 
 def sec_filings(
     apikey: str, symbol: str, filing_type: str = "", limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /sec_filings/ API.
 
@@ -850,7 +850,7 @@ def sec_filings(
 
 def press_releases(
     apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /press-releases/ API.
 
