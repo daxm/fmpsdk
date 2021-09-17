@@ -1,18 +1,16 @@
-from .general import __quotes
-
-from .settings import (
-    BASE_URL_v3,
-    SP500_CONSTITUENTS_FILENAME,
-    NASDAQ_CONSTITUENTS_FILENAME,
-    DOWJONES_CONSTITUENTS_FILENAME,
-)
-from .url_methods import (
-    __return_json_v3,
-)
+import logging
+import typing
 
 import requests
-import typing
-import logging
+
+from .general import __quotes
+from .settings import (
+    DOWJONES_CONSTITUENTS_FILENAME,
+    NASDAQ_CONSTITUENTS_FILENAME,
+    SP500_CONSTITUENTS_FILENAME,
+    BASE_URL_v3,
+)
+from .url_methods import __return_json_v3
 
 
 def indexes(apikey: str) -> typing.List[typing.Dict]:

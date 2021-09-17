@@ -1,10 +1,8 @@
-from .url_methods import (
-    __return_json_v4,
-)
-from .settings import DEFAULT_LIMIT
-
 import logging
 import typing
+
+from .settings import DEFAULT_LIMIT
+from .url_methods import __return_json_v4
 
 
 def insider_trading(

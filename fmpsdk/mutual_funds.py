@@ -1,7 +1,7 @@
+import typing
+
 from .general import __quotes
 from .url_methods import __return_json_v3
-
-import typing
 
 
 def available_mutual_funds(apikey: str) -> typing.List[typing.Dict]:

@@ -1,7 +1,7 @@
+import typing
+
 from .settings import DEFAULT_LIMIT
 from .url_methods import __return_json_v3
-
-import typing
 
 
 def actives(apikey: str) -> typing.List[typing.Dict]:

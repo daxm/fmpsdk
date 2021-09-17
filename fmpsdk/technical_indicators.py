@@ -1,9 +1,10 @@
+import typing
+
 from .url_methods import (
     __return_json_v3,
     __validate_statistics_type,
     __validate_technical_indicators_time_delta,
 )
-import typing
 
 
 def technical_indicators(

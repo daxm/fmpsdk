@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 __author__ = "Dax Mickelson"
 __author_email = "fmp@daxm.net"

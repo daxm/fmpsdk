@@ -1,13 +1,10 @@
-from .settings import (
-    BASE_URL_v3,
-    DEFAULT_LIMIT,
-    SEC_RSS_FEEDS_FILENAME,
-)
-from .url_methods import __return_json_v3
+import logging
+import typing
 
 import requests
-import typing
-import logging
+
+from .settings import DEFAULT_LIMIT, SEC_RSS_FEEDS_FILENAME, BASE_URL_v3
+from .url_methods import __return_json_v3
 
 
 def institutional_holders(apikey: str, symbol: str) -> typing.List[typing.Dict]:

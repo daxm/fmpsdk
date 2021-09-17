@@ -1,17 +1,19 @@
-import typing
-import requests
 import logging
+import typing
+
+import requests
+
 from .settings import (
-    BASE_URL_v3,
-    BASE_URL_v4,
-    INDUSTRY_VALUES,
-    SECTOR_VALUES,
-    PERIOD_VALUES,
     EXCHANGE_VALUES,
-    TIME_DELTA_VALUES,
+    INDUSTRY_VALUES,
+    PERIOD_VALUES,
+    SECTOR_VALUES,
     SERIES_TYPE_VALUES,
     STATISTICS_TYPE_VALUES,
     TECHNICAL_INDICATORS_TIME_DELTA_VALUES,
+    TIME_DELTA_VALUES,
+    BASE_URL_v3,
+    BASE_URL_v4,
 )
 
 CONNECT_TIMEOUT = 5
@@ -39,7 +41,9 @@ def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.List:
         if len(response.content) > 0:
             return_var = response.json()
 
-        if len(response.content) == 0 or (isinstance(return_var, dict) and len(return_var.keys()) == 0):
+        if len(response.content) == 0 or (
+            isinstance(return_var, dict) and len(return_var.keys()) == 0
+        ):
             logging.warning("Response appears to have no data.  Returning empty List.")
             return_var = []
 
@@ -80,7 +84,9 @@ def __return_json_v4(path: str, query_vars: typing.Dict) -> typing.List:
         if len(response.content) > 0:
             return_var = response.json()
 
-        if len(response.content) == 0 or (isinstance(return_var, dict) and len(return_var.keys()) == 0):
+        if len(response.content) == 0 or (
+            isinstance(return_var, dict) and len(return_var.keys()) == 0
+        ):
             logging.warning("Response appears to have no data.  Returning empty List.")
             return_var = []
 

@@ -1,12 +1,7 @@
-from .general import __quotes
-
-from .url_methods import (
-    __return_json_v3,
-    __return_json_v4,
-    __validate_exchange,
-)
-
 import typing
+
+from .general import __quotes
+from .url_methods import __return_json_v3, __return_json_v4, __validate_exchange
 
 
 def quote_short(apikey: str, symbol: str) -> typing.List[typing.Dict]:

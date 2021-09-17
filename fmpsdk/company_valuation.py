@@ -1,24 +1,25 @@
-import typing
 import logging
+import typing
+
 import requests
 
 from .settings import (
-    BASE_URL_v3,
+    BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
+    BALANCE_SHEET_STATEMENT_FILENAME,
+    CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
+    CASH_FLOW_STATEMENT_FILENAME,
     DEFAULT_LIMIT,
     FINANCIAL_STATEMENT_FILENAME,
-    CASH_FLOW_STATEMENT_FILENAME,
-    INCOME_STATEMENT_FILENAME,
-    BALANCE_SHEET_STATEMENT_FILENAME,
     INCOME_STATEMENT_AS_REPORTED_FILENAME,
-    BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
-    CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
+    INCOME_STATEMENT_FILENAME,
+    BASE_URL_v3,
 )
 from .url_methods import (
     __return_json_v3,
-    __validate_sector,
-    __validate_period,
-    __validate_industry,
     __validate_exchange,
+    __validate_industry,
+    __validate_period,
+    __validate_sector,
 )
 
 

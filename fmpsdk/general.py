@@ -1,6 +1,6 @@
 import typing
 
-from .url_methods import __return_json_v3, __validate_time_delta, __validate_series_type
+from .url_methods import __return_json_v3, __validate_series_type, __validate_time_delta
 
 
 def __quotes(apikey: str, value: str) -> typing.List[typing.Dict]:
