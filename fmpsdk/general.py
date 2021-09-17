@@ -89,4 +89,8 @@ def historical_price_full(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+
+    res = __return_json_v3(path=path, query_vars=query_vars)
+    if res is None or len(res) == 0:
+        return res
+    return res["historical"]

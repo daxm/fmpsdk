@@ -7,7 +7,9 @@ from .settings import DEFAULT_LIMIT, SEC_RSS_FEEDS_FILENAME, BASE_URL_v3
 from .url_methods import __return_json_v3
 
 
-def institutional_holders(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def institutional_holders(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /institutional-holder/ API.
 
@@ -20,7 +22,9 @@ def institutional_holders(apikey: str, symbol: str) -> typing.Optional[typing.Li
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def mutual_fund_holders(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def mutual_fund_holders(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /mutual-fund-holder/ API.
 
@@ -46,7 +50,9 @@ def etf_holders(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def etf_sector_weightings(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def etf_sector_weightings(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /etf-sector-weightings/ API.
 
@@ -59,7 +65,9 @@ def etf_sector_weightings(apikey: str, symbol: str) -> typing.Optional[typing.Li
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def etf_country_weightings(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def etf_country_weightings(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /etf-country-weightings/ API.
 
@@ -140,7 +148,9 @@ def cik(apikey: str, cik_id: str) -> typing.Optional[typing.List[typing.Dict]]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def form_13f(apikey: str, cik_id: str, date: str = None) -> typing.Optional[typing.List[typing.Dict]]:
+def form_13f(
+    apikey: str, cik_id: str, date: str = None
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /form-thirteen/ API.
 

@@ -48,7 +48,9 @@ def sp500_constituent(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_sp500_constituent(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_sp500_constituent(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/sp500_constitnuet/ API.
 
@@ -84,7 +86,9 @@ def nasdaq_constituent(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_nasdaq_constituent(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_nasdaq_constituent(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/nasdaq_constitnuet/ API.
 
@@ -120,7 +124,9 @@ def dowjones_constituent(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_dowjones_constituent(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_dowjones_constituent(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/dowjones_constitnuet/ API.
 

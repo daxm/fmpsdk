@@ -3,7 +3,9 @@ import typing
 from .url_methods import __return_json_v4
 
 
-def commitment_of_traders_report_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def commitment_of_traders_report_list(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /commitment_of_traders_report/list API.
 

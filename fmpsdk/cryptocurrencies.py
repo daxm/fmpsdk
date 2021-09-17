@@ -4,7 +4,9 @@ from .general import __quotes
 from .url_methods import __return_json_v3
 
 
-def available_cryptocurrencies(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def available_cryptocurrencies(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /symbol/available-cryptocurrencies/ API
 

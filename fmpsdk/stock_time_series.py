@@ -19,7 +19,9 @@ def quote_short(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def exchange_realtime(apikey: str, exchange: str) -> typing.Optional[typing.List[typing.Dict]]:
+def exchange_realtime(
+    apikey: str, exchange: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/ API.
 
@@ -30,7 +32,9 @@ def exchange_realtime(apikey: str, exchange: str) -> typing.Optional[typing.List
     return __quotes(apikey=apikey, value=__validate_exchange(exchange))
 
 
-def historical_stock_dividend(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_stock_dividend(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-price-full/stock_divident/ API
 
@@ -43,7 +47,9 @@ def historical_stock_dividend(apikey: str, symbol: str) -> typing.Optional[typin
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_stock_split(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_stock_split(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-price-full/stock_divident/ API
 
