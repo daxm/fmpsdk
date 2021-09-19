@@ -1,10 +1,8 @@
-from .url_methods import (
-    __return_json_v4,
-)
-from .settings import DEFAULT_LIMIT
-
 import logging
 import typing
+
+from .settings import DEFAULT_LIMIT
+from .url_methods import __return_json_v4
 
 
 def insider_trading(
@@ -13,7 +11,7 @@ def insider_trading(
     reporting_cik: int = None,
     company_cik: int = None,
     limit: int = DEFAULT_LIMIT,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /insider-trading/ API.
 
@@ -49,7 +47,7 @@ def insider_trading(
 def mapper_cik_name(
     apikey: str,
     name: str,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /mapper-cik-name/ API.
 
@@ -69,7 +67,7 @@ def mapper_cik_name(
 def mapper_cik_company(
     apikey: str,
     ticker: str,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /mapper-cik-company/ API.
 
@@ -86,7 +84,7 @@ def mapper_cik_company(
 
 def insider_trading_rss_feed(
     apikey: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /insider-trading-rss-feed/ API.
 

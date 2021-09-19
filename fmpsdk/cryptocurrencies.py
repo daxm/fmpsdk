@@ -1,10 +1,12 @@
+import typing
+
 from .general import __quotes
 from .url_methods import __return_json_v3
 
-import typing
 
-
-def available_cryptocurrencies(apikey: str) -> typing.List[typing.Dict]:
+def available_cryptocurrencies(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /symbol/available-cryptocurrencies/ API
 
@@ -16,7 +18,7 @@ def available_cryptocurrencies(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def cryptocurrencies_list(apikey: str) -> typing.List[typing.Dict]:
+def cryptocurrencies_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/crypto/ API
 

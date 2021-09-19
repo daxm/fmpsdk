@@ -1,17 +1,19 @@
-import typing
-import requests
 import logging
+import typing
+
+import requests
+
 from .settings import (
-    BASE_URL_v3,
-    BASE_URL_v4,
-    INDUSTRY_VALUES,
-    SECTOR_VALUES,
-    PERIOD_VALUES,
     EXCHANGE_VALUES,
-    TIME_DELTA_VALUES,
+    INDUSTRY_VALUES,
+    PERIOD_VALUES,
+    SECTOR_VALUES,
     SERIES_TYPE_VALUES,
     STATISTICS_TYPE_VALUES,
     TECHNICAL_INDICATORS_TIME_DELTA_VALUES,
+    TIME_DELTA_VALUES,
+    BASE_URL_v3,
+    BASE_URL_v4,
 )
 
 CONNECT_TIMEOUT = 5
@@ -22,7 +24,9 @@ logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
-def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.List:
+def __return_json_v3(
+    path: str, query_vars: typing.Dict
+) -> typing.Optional[typing.List]:
     """
     Query URL for JSON response for v3 of FMP API.
 
@@ -38,8 +42,13 @@ def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.List:
         )
         if len(response.content) > 0:
             return_var = response.json()
-        else:
+
+        if len(response.content) == 0 or (
+            isinstance(return_var, dict) and len(return_var.keys()) == 0
+        ):
             logging.warning("Response appears to have no data.  Returning empty List.")
+            return_var = []
+
     except requests.Timeout:
         logging.error(f"Connection to {url} timed out.")
     except requests.ConnectionError:
@@ -56,10 +65,13 @@ def __return_json_v3(path: str, query_vars: typing.Dict) -> typing.List:
             f"A requests exception has occurred that we have not yet detailed an 'except' clause for.  "
             f"Error: {e}"
         )
+
     return return_var
 
 
-def __return_json_v4(path: str, query_vars: typing.Dict) -> typing.List:
+def __return_json_v4(
+    path: str, query_vars: typing.Dict
+) -> typing.Optional[typing.List]:
     """
     Query URL for JSON response for v4 of FMP API.
 
@@ -75,8 +87,13 @@ def __return_json_v4(path: str, query_vars: typing.Dict) -> typing.List:
         )
         if len(response.content) > 0:
             return_var = response.json()
-        else:
+
+        if len(response.content) == 0 or (
+            isinstance(return_var, dict) and len(return_var.keys()) == 0
+        ):
             logging.warning("Response appears to have no data.  Returning empty List.")
+            return_var = []
+
     except requests.Timeout:
         logging.error(f"Connection to {url} timed out.")
     except requests.ConnectionError:

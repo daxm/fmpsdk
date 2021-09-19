@@ -6,7 +6,7 @@ from .url_methods import __return_json_v3
 
 def earning_calendar(
     apikey: str, from_date: str = None, to_date: str = None
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /earning_calendar/ API.
 
@@ -29,7 +29,7 @@ def earning_calendar(
 
 def historical_earning_calendar(
     apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/earning_calendar/ API.
 
@@ -50,7 +50,7 @@ def historical_earning_calendar(
 
 def ipo_calendar(
     apikey: str, from_date: str = None, to_date: str = None
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /ipo_calendar/ API.
 
@@ -73,7 +73,7 @@ def ipo_calendar(
 
 def stock_split_calendar(
     apikey: str, from_date: str = None, to_date: str = None
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_split_calendar/ API.
 
@@ -96,7 +96,7 @@ def stock_split_calendar(
 
 def dividend_calendar(
     apikey: str, from_date: str = None, to_date: str = None
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_dividend_calendar/ API.
 
@@ -119,7 +119,7 @@ def dividend_calendar(
 
 def economic_calendar(
     apikey: str, from_date: str = None, to_date: str = None
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /economic_calendar/ API.
 

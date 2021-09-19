@@ -1,10 +1,10 @@
+import typing
+
 from .general import __quotes
 from .url_methods import __return_json_v3
 
-import typing
 
-
-def available_euronext(apikey: str) -> typing.List[typing.Dict]:
+def available_euronext(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /symbol/available-euronext/ API
 
@@ -16,7 +16,7 @@ def available_euronext(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def euronext_list(apikey: str) -> typing.List[typing.Dict]:
+def euronext_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/euronext/ API
 

@@ -1,10 +1,10 @@
+import typing
+
 from .general import __quotes
 from .url_methods import __return_json_v3
 
-import typing
 
-
-def forex(apikey: str) -> typing.List[typing.Dict]:
+def forex(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /fx/ API
 
@@ -16,7 +16,7 @@ def forex(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def forex_list(apikey: str) -> typing.List[typing.Dict]:
+def forex_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/forex/ API
 
@@ -27,7 +27,7 @@ def forex_list(apikey: str) -> typing.List[typing.Dict]:
     return __quotes(apikey=apikey, value=path)
 
 
-def available_forex(apikey: str) -> typing.List[typing.Dict]:
+def available_forex(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /symbol/available-forex-currency-pairs/ API
 

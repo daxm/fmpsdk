@@ -3,7 +3,9 @@ import typing
 from .url_methods import __return_json_v4
 
 
-def commitment_of_traders_report_list(apikey: str) -> typing.List[typing.Dict]:
+def commitment_of_traders_report_list(
+    apikey: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /commitment_of_traders_report/list API.
 
@@ -22,7 +24,7 @@ def commitment_of_traders_report(
     symbol: str,
     from_date: str,
     to_date: str,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /commitment_of_traders_report API.
 
@@ -56,7 +58,7 @@ def commitment_of_traders_report_analysis(
     symbol: str,
     from_date: str,
     to_date: str,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /commitment_of_traders_report_analysis API.
 

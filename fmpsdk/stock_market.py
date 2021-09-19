@@ -1,10 +1,10 @@
+import typing
+
 from .settings import DEFAULT_LIMIT
 from .url_methods import __return_json_v3
 
-import typing
 
-
-def actives(apikey: str) -> typing.List[typing.Dict]:
+def actives(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /actives/ API
 
@@ -16,7 +16,7 @@ def actives(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def gainers(apikey: str) -> typing.List[typing.Dict]:
+def gainers(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /gainers/ API
 
@@ -28,7 +28,7 @@ def gainers(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def losers(apikey: str) -> typing.List[typing.Dict]:
+def losers(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /losers/ API
 
@@ -40,7 +40,7 @@ def losers(apikey: str) -> typing.List[typing.Dict]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def market_hours(apikey: str) -> typing.List[typing.Dict]:
+def market_hours(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /market-hours/ API
 
@@ -54,7 +54,7 @@ def market_hours(apikey: str) -> typing.List[typing.Dict]:
 
 def sectors_performance(
     apikey: str, limit: int = DEFAULT_LIMIT
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /sectors_performance/ API
 

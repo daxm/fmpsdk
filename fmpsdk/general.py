@@ -1,9 +1,9 @@
 import typing
 
-from .url_methods import __return_json_v3, __validate_time_delta, __validate_series_type
+from .url_methods import __return_json_v3, __validate_series_type, __validate_time_delta
 
 
-def __quotes(apikey: str, value: str) -> typing.List[typing.Dict]:
+def __quotes(apikey: str, value: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/ API.
 
@@ -19,7 +19,7 @@ def __quotes(apikey: str, value: str) -> typing.List[typing.Dict]:
 
 def quote(
     apikey: str, symbol: typing.Union[str, typing.List[str]]
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Quote API.
 
@@ -38,7 +38,7 @@ def quote(
 
 def historical_chart(
     apikey: str, symbol: str, time_delta: str
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Historical Chart API.
 
@@ -61,7 +61,7 @@ def historical_price_full(
     series_type: str = None,
     from_date: str = None,
     to_date: str = None,
-) -> typing.List[typing.Dict]:
+) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Historical Price Full API.
 
@@ -89,4 +89,8 @@ def historical_price_full(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+
+    res = __return_json_v3(path=path, query_vars=query_vars)
+    if res is None or len(res) == 0:
+        return res
+    return res["historical"]

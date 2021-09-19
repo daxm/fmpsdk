@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 import os
-from dotenv import load_dotenv
 import typing
+
+from dotenv import load_dotenv
+
 import fmpsdk
 
 # Actual API key is stored in a .env file.  Not good to store API key directly in script.
