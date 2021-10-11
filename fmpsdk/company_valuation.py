@@ -20,6 +20,7 @@ from .url_methods import (
     __validate_industry,
     __validate_period,
     __validate_sector,
+    __return_json_v4,
 )
 
 
@@ -843,6 +844,54 @@ def earnings_surprises(
     path = f"earnings-surprises/{symbol}"
     query_vars = {"apikey": apikey}
     return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def earning_call_transcript(
+    apikey: str, symbol: str, year: int, quarter: int
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /earning_call_transcript/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param year: Year of the transcripts
+    :param quarter: Quarter of the transcripts
+    :return: A list of dictionaries.
+    """
+    path = f"earning_call_transcript/{symbol}"
+    query_vars = {"apikey": apikey, "year": year, "quarter": quarter}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def batch_earning_call_transcript(
+    apikey: str, symbol: str, year: int
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /batch_earning_call_transcript/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param year: Year of the transcripts
+    :return: A list of dictionaries.
+    """
+    path = f"batch_earning_call_transcript/{symbol}"
+    query_vars = {"apikey": apikey, "year": year}
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
+def earning_call_transcripts_available_dates(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.List]]:
+    """
+    Query FMP /earning_call_transcript/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of lists.
+    """
+    path = f"earning_call_transcript"
+    query_vars = {"apikey": apikey, "symbol": symbol}
+    return __return_json_v4(path=path, query_vars=query_vars)
 
 
 def sec_filings(
