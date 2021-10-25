@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 echo "Building a new release of fmpsdk!"
 echo
