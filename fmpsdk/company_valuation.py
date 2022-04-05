@@ -926,9 +926,8 @@ def press_releases(
     query_vars = {"apikey": apikey, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
-def stock_peers(
-        apikey: str, symbol: str
-) -> typing.Optional[typing.List[typing.Dict]]:
+
+def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_peers/ API
     :param apikey: Your API key
