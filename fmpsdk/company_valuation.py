@@ -937,3 +937,4 @@ def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.
     path = f"stock_peers"
     query_vars = {"apikey": apikey, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)
+
