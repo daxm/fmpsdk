@@ -89,6 +89,12 @@ from .market_indexes import (
     sp500_constituent,
 )
 from .mutual_funds import available_mutual_funds, mutual_fund_list
+from .senate import (
+    senate_trading_rss,
+    senate_trading_symbol,
+    senate_disclosure_rss,
+    senate_disclosure_symbol,
+)
 from .stock_market import actives, gainers, losers, market_hours, sectors_performance
 from .stock_time_series import (
     exchange_realtime,
@@ -203,4 +209,8 @@ __all__ = [
     "commitment_of_traders_report_list",
     "commitment_of_traders_report_analysis",
     "commitment_of_traders_report",
+    "senate_trading_rss",
+    "senate_trading_symbol",
+    "senate_disclosure_rss",
+    "senate_discloure_symbol",
 ]
