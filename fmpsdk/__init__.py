@@ -90,10 +90,10 @@ from .market_indexes import (
 )
 from .mutual_funds import available_mutual_funds, mutual_fund_list
 from .senate import (
-    senate_trading_rss,
-    senate_trading_symbol,
     senate_disclosure_rss,
     senate_disclosure_symbol,
+    senate_trading_rss,
+    senate_trading_symbol,
 )
 from .stock_market import actives, gainers, losers, market_hours, sectors_performance
 from .stock_time_series import (

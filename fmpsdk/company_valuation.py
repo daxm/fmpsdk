@@ -16,11 +16,11 @@ from .settings import (
 )
 from .url_methods import (
     __return_json_v3,
+    __return_json_v4,
     __validate_exchange,
     __validate_industry,
     __validate_period,
     __validate_sector,
-    __return_json_v4,
 )
 
 
