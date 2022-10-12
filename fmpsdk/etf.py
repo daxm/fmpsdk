@@ -1,7 +1,7 @@
 import typing
 
 from .general import __quotes
-from .url_methods import __return_json_v3
+from .url_methods import __return_json_v3, __return_json_v4
 
 
 def available_efts(apikey: str):
@@ -41,3 +41,18 @@ def etf_price_realtime(apikey: str) -> typing.Optional[typing.List[typing.Dict]]
     """
     path = f"etf"
     return __quotes(apikey=apikey, value=path)
+
+
+def etf_info(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /etf-info/ API
+
+    All Real-time ETF Prices.
+
+    :param apikey: Your API key.
+    :param symbol: ETF ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"etf-info"
+    query_vars = {"symbol": symbol, "apikey": apikey}
+    return __return_json_v4(path=path, query_vars=query_vars)
