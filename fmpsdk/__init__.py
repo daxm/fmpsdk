@@ -55,7 +55,7 @@ from .company_valuation import (
     symbols_list,
 )
 from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list
-from .etf import available_etfs, etf_price_realtime, available_efts
+from .etf import available_efts, available_etfs, etf_price_realtime
 from .euronext import available_euronext, euronext_list
 from .forex import available_forex, forex, forex_list
 from .general import historical_chart, historical_price_full, quote
