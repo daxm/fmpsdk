@@ -566,14 +566,14 @@ def historical_rating(
     limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /financial-growth/ API.
+    Query FMP /historical-rating/ API.
 
     :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
     :return: A list of dictionaries.
     """
-    path = f"financial-growth/{symbol}"
+    path = f"historical-rating/{symbol}"
     query_vars = {"apikey": apikey, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
