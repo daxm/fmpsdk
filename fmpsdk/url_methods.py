@@ -4,7 +4,6 @@ import typing
 import requests
 
 from .settings import (
-    EXCHANGE_VALUES,
     INDUSTRY_VALUES,
     PERIOD_VALUES,
     SECTOR_VALUES,
@@ -111,21 +110,6 @@ def __return_json_v4(
             f"Error: {e}"
         )
     return return_var
-
-
-def __validate_exchange(value: str) -> str:
-    """
-    Check to see if passed string is in the list of possible Exchanges.
-    :param value: Exchange name.
-    :return: Passed value or No Return
-    """
-    valid_values = EXCHANGE_VALUES
-    if value in valid_values:
-        return value
-    else:
-        logging.error(
-            f"Invalid exchange value: {value}.  Valid options: {valid_values}"
-        )
 
 
 def __validate_period(value: str) -> str:

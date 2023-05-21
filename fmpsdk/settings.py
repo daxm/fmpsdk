@@ -281,19 +281,6 @@ PERIOD_VALUES: typing.List = [
     "annual",
     "quarter",
 ]
-EXCHANGE_VALUES: typing.List = [
-    "ETF",
-    "MUTUAL_FUND",
-    "COMMODITY",
-    "INDEX",
-    "CRYPTO",
-    "FOREX",
-    "TSX",
-    "AMEX",
-    "NASDAQ",
-    "NYSE",
-    "EURONEXT",
-]
 TIME_DELTA_VALUES: typing.List = [
     "1min",
     "5min",

@@ -1,7 +1,7 @@
 import typing
 
 from .general import __quotes
-from .url_methods import __return_json_v3, __return_json_v4, __validate_exchange
+from .url_methods import __return_json_v3, __return_json_v4
 
 
 def quote_short(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
@@ -29,7 +29,7 @@ def exchange_realtime(
     :param exchange: Exchange symbol.
     :return: A list of dictionaries.
     """
-    return __quotes(apikey=apikey, value=__validate_exchange(exchange))
+    return __quotes(apikey=apikey, value=exchange)
 
 
 def historical_stock_dividend(
