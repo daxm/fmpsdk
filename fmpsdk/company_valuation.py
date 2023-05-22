@@ -17,7 +17,6 @@ from .settings import (
 from .url_methods import (
     __return_json_v3,
     __return_json_v4,
-    __validate_exchange,
     __validate_industry,
     __validate_period,
     __validate_sector,
@@ -74,7 +73,7 @@ def search(
         "apikey": apikey,
         "limit": limit,
         "query": query,
-        "exchange": __validate_exchange(value=exchange),
+        "exchange": exchange,
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
@@ -97,7 +96,7 @@ def search_ticker(
         "apikey": apikey,
         "limit": limit,
         "query": query,
-        "exchange": __validate_exchange(value=exchange),
+        "exchange": exchange,
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
@@ -771,9 +770,9 @@ def stock_screener(
         query_vars["priceMoreThan"] = price_more_than
     if price_lower_than:
         query_vars["priceLowerThan"] = price_lower_than
-    if is_etf:
+    if is_etf is not None:
         query_vars["isEtf"] = is_etf
-    if is_actively_trading:
+    if is_actively_trading is not None:
         query_vars["isActivelyTrading"] = is_actively_trading
     if sector:
         query_vars["sector"] = __validate_sector(sector)
@@ -783,14 +782,9 @@ def stock_screener(
         query_vars["country"] = country
     if exchange:
         if type(exchange) is list:
-            for item in exchange:
-                if item != __validate_exchange(item):
-                    msg = f"Invalid Exchange value: {exchange}."
-                    logging.error(msg)
-                    raise ValueError(msg)
             query_vars["exchange"] = ",".join(exchange)
         else:
-            query_vars["exchange"] = __validate_exchange(exchange)
+            query_vars["exchange"] = exchange
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
