@@ -770,9 +770,9 @@ def stock_screener(
         query_vars["priceMoreThan"] = price_more_than
     if price_lower_than:
         query_vars["priceLowerThan"] = price_lower_than
-    if is_etf:
+    if is_etf is not None:
         query_vars["isEtf"] = is_etf
-    if is_actively_trading:
+    if is_actively_trading is not None:
         query_vars["isActivelyTrading"] = is_actively_trading
     if sector:
         query_vars["sector"] = __validate_sector(sector)
