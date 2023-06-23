@@ -91,6 +91,5 @@ def historical_price_full(
         query_vars["to"] = to_date
 
     res = __return_json_v3(path=path, query_vars=query_vars)
-    if res is None or len(res) == 0:
-        return res
-    return res["historical"]
+
+    return res.get("historicalStockList", res.get('historical', None))
