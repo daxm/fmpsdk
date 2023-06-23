@@ -1,19 +1,16 @@
-[tool.black]
-skip-string-normalization = true
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+[tool.poetry]
+name = "fmpsdk"
+version = "0.1.0"
+description = ""
+authors = ["Dax Mickelson <dmickelson@zscaler.com>"]
+readme = "README.md"
 
-[tool.isort]
-profile = "black"
+[tool.poetry.dependencies]
+python = "^3.11"
+python-dotenv = "*"
+requests = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
