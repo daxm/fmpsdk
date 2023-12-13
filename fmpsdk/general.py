@@ -1,5 +1,5 @@
 import typing
-import settings
+from .settings import DEFAULT_LINE_PARAMETER
 
 from .url_methods import __return_json_v3, __validate_series_type, __validate_time_delta
 
@@ -38,7 +38,7 @@ def quote(
 
 
 def historical_chart(
-    apikey: str, symbol: str, time_delta: str, from_date: str, to_date: str, time_series: str = settings.DEFAULT_LINE_PARAMETER
+    apikey: str, symbol: str, time_delta: str, from_date: str, to_date: str, time_series: str = DEFAULT_LINE_PARAMETER
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Historical Chart API.
