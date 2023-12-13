@@ -1,4 +1,5 @@
 import typing
+import settings
 
 from .url_methods import __return_json_v3, __validate_series_type, __validate_time_delta
 
@@ -37,7 +38,7 @@ def quote(
 
 
 def historical_chart(
-    apikey: str, symbol: str, time_delta: str
+    apikey: str, symbol: str, time_delta: str, from_date: str, to_date: str, time_series: str = settings.DEFAULT_LINE_PARAMETER
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Historical Chart API.
@@ -47,18 +48,29 @@ def historical_chart(
     :param apikey: Your API key
     :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param time_delta: The string value of time from now to go historical "1min" - "4hour".
+    :param from_date: The starting time for the API ("yyyy-mm-dd")
+    :param to_date: The starting time for the API ("yyyy-mm-dd")
+    :param time_series: line as default
+
     :return: A list of dictionaries.
     """
     path = f"historical-chart/{__validate_time_delta(time_delta)}/{symbol}"
     query_vars = {"apikey": apikey}
+    query_vars = {
+        "apikey": apikey,
+    }
+    if time_series:
+        query_vars["timeseries"] = time_series
+    if from_date:
+        query_vars["from"] = from_date
+    if to_date:
+        query_vars["to"] = to_date
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def historical_price_full(
     apikey: str,
     symbol: typing.Union[str, typing.List],
-    time_series: int = None,
-    series_type: str = None,
     from_date: str = None,
     to_date: str = None,
 ) -> typing.Optional[typing.List[typing.Dict]]:
@@ -69,8 +81,6 @@ def historical_price_full(
 
     :param apikey: Your API Key
     :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
-    :param time_series: Not sure what this is.  5 is the only value I've seen used.
-    :param series_type: Not sure what this is.  "line" is the only option I've seen used.
     :param from_date: 'YYYY-MM-DD' format
     :param to_date: 'YYYY-MM-DD' format
     :return: A list of dictionaries.
@@ -81,10 +91,7 @@ def historical_price_full(
     query_vars = {
         "apikey": apikey,
     }
-    if time_series:
-        query_vars["timeseries"] = time_series
-    if series_type:
-        query_vars["serietype"] = __validate_series_type(series_type)
+
     if from_date:
         query_vars["from"] = from_date
     if to_date:
