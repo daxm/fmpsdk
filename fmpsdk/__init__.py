@@ -105,7 +105,7 @@ from .stock_time_series import (
 )
 from .technical_indicators import technical_indicators
 from .tsx import available_tsx, tsx_list
-from .shares_float import shares_float, shares_float_all
+from .shares_float import shares_float
 
 attribution: str = "Data provided by Financial Modeling Prep"
 logging.info(attribution)
@@ -215,5 +215,4 @@ __all__ = [
     "senate_disclosure_rss",
     "senate_disclosure_symbol",
     "shares_float",
-    "shares_float_all"
 ]
