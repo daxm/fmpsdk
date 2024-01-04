@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-__version__ = "20230623.0"
+__version__ = "20240104.0"
 __author__ = "Dax Mickelson"
 __author_email__ = "fmp@daxm.net"
 __license__ = "BSD"

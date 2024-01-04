@@ -24,6 +24,7 @@ then
         echo "Make a new build"
         python3 setup.py bdist_wheel
         python3 setup.py sdist
+        echo "Username is now __token__ and then the password is the API token."
         twine upload dist/*
     fi
 fi
