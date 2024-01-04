@@ -1,6 +1,6 @@
 import typing
-from .settings import DEFAULT_LINE_PARAMETER
 
+from .settings import DEFAULT_LINE_PARAMETER
 from .url_methods import __return_json_v3, __validate_series_type, __validate_time_delta
 
 
@@ -38,7 +38,12 @@ def quote(
 
 
 def historical_chart(
-    apikey: str, symbol: str, time_delta: str, from_date: str, to_date: str, time_series: str = DEFAULT_LINE_PARAMETER
+    apikey: str,
+    symbol: str,
+    time_delta: str,
+    from_date: str,
+    to_date: str,
+    time_series: str = DEFAULT_LINE_PARAMETER,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Historical Chart API.
@@ -99,4 +104,4 @@ def historical_price_full(
 
     res = __return_json_v3(path=path, query_vars=query_vars)
 
-    return res.get("historicalStockList", res.get('historical', None))
+    return res.get("historicalStockList", res.get("historical", None))

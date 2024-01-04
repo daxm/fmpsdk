@@ -167,7 +167,7 @@ time_delta_15min: str = "15min"
 # fmpsdk.dowjones_constituent(apikey=apikey, download=download)
 # print(f"Historical DOWJONES Contituent: {fmpsdk.historical_dowjones_constituent(apikey=apikey)=}")
 # print(f"Available Indexes: {fmpsdk.available_indexes(apikey=apikey)=}")
-#print(f"Intraday Historical Index Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta_15min, from_date=from_date, to_date=to_date))=}")
+# print(f"Intraday Historical Index Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta_15min, from_date=from_date, to_date=to_date))=}")
 # print(f"Historical Market Index: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
 
 # Commodities
@@ -177,7 +177,7 @@ time_delta_15min: str = "15min"
 # print(f"Available Commodities': {fmpsdk.available_commodities(apikey=apikey)=}")
 # print(f"Commodities': {fmpsdk.commodities_list(apikey=apikey)=}")
 # print(f"Commodity Quote': {fmpsdk.quote(apikey=apikey, symbol=symbols)=}")
-#print(f"Historical Commodity Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta, from_date=from_date, to_date=to_date)=}")
+# print(f"Historical Commodity Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta, from_date=from_date, to_date=to_date)=}")
 # print(f"Historical Daily Commodity Prices: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
 
 # ETF

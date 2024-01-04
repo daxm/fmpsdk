@@ -95,6 +95,7 @@ from .senate import (
     senate_trading_rss,
     senate_trading_symbol,
 )
+from .shares_float import shares_float
 from .stock_market import actives, gainers, losers, market_hours, sectors_performance
 from .stock_time_series import (
     exchange_realtime,
@@ -105,7 +106,6 @@ from .stock_time_series import (
 )
 from .technical_indicators import technical_indicators
 from .tsx import available_tsx, tsx_list
-from .shares_float import shares_float
 
 attribution: str = "Data provided by Financial Modeling Prep"
 logging.info(attribution)
