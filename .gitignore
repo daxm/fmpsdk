@@ -143,3 +143,4 @@ dmypy.json
 cython_debug/
 /._.DS_Store
 /._requirements.txt
+/poetry.lock
