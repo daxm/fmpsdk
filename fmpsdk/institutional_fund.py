@@ -4,7 +4,7 @@ import typing
 import requests
 
 from .settings import DEFAULT_LIMIT, SEC_RSS_FEEDS_FILENAME, BASE_URL_v3
-from .url_methods import __return_json_v3
+from .url_methods import __return_json_v3, __return_json_v4
 
 
 def institutional_holders(
@@ -180,3 +180,28 @@ def cusip(apikey: str, cik_id: str) -> typing.Optional[typing.List[typing.Dict]]
     path = f"cusip/{cik_id}"
     query_vars = {"apikey": apikey}
     return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def institutional_symbol_ownership(
+    apikey: str,
+    symbol: str,
+    limit: int,
+    includeCurrentQuarter: bool = False,
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /institutional-ownership/symbol-ownership API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param limit: up to how many quarterly reports to return.
+    :param includeCurrentQuarter: Whether to include any available data in the current quarter.
+    :return: A list of dictionaries.
+    """
+    path = f"institutional-ownership/symbol-ownership"
+    query_vars = {
+        "symbol": symbol,
+        "apikey": apikey,
+        "includeCurrentQuarter": includeCurrentQuarter,
+        "limit": limit,
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
