@@ -934,15 +934,11 @@ def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.
 
 
 def analyst_estimates(
-    apikey: str, 
-    symbol: str, 
-    period: str = "annual",
-    limit: int = DEFAULT_LIMIT
+    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /analyst-estimates/ API.
 
-    Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
