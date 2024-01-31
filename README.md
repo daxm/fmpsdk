@@ -34,3 +34,4 @@ Special thanks to the following people who have pitched in on this project!  Ope
 jump in and help!  These are this project's stars.  Thank you.
   - [Ken Caruso](https://github.com/ipl31)
   - [iforgotmypass](https://github.com/iforgotmypass)
+  - [Ivelin Ivanov](https://github.com/ivelin)
