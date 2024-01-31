@@ -141,6 +141,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-/._.DS_Store
+
+.DS_Store
 /._requirements.txt
 /poetry.lock
