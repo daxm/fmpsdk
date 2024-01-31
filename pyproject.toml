@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fmpsdk"
-version = "20240115.0"
+version = "20240131.0"
 description = ""
 authors = ["Dax Mickelson <github@daxm.net>"]
 readme = "README.md"
@@ -9,7 +9,6 @@ readme = "README.md"
 python = "^3.11"
 python-dotenv = "*"
 requests = "*"
-
 
 [build-system]
 requires = ["poetry-core"]
