@@ -308,7 +308,7 @@ STATISTICS_TYPE_VALUES: typing.List = [
     "dema",
     "tema",
     "williams",
-    "rsa",
+    "rsi",
     "adx",
     "standardDeviation",
 ]
