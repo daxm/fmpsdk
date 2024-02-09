@@ -1,6 +1,7 @@
 """
    https://site.financialmodelingprep.com/developer/docs/#Senate-trading
 """
+
 import typing
 
 from .url_methods import __return_json_v4
