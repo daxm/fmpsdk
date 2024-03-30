@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fmpsdk"
-version = "20240209.0"
+version = "20240330.0"
 description = ""
 authors = ["Dax Mickelson <github@daxm.net>"]
 readme = "README.md"
