@@ -716,6 +716,7 @@ def stock_screener(
     price_more_than: typing.Union[float, int] = None,
     price_lower_than: typing.Union[float, int] = None,
     is_etf: bool = None,
+    is_fund: bool = None,
     is_actively_trading: bool = None,
     sector: str = None,
     industry: str = None,
@@ -740,6 +741,7 @@ def stock_screener(
     :param price_more_than: Numeric Value
     :param price_lower_than: Numeric Value
     :param is_etf: bool
+    :param is_fund: bool
     :param is_actively_trading: bool
     :param sector: Valid sector name.
     :param industry: Valid industry name.
@@ -772,6 +774,8 @@ def stock_screener(
         query_vars["priceLowerThan"] = price_lower_than
     if is_etf is not None:
         query_vars["isEtf"] = is_etf
+    if is_fund is not None:
+        query_vars["isFund"] = is_fund
     if is_actively_trading is not None:
         query_vars["isActivelyTrading"] = is_actively_trading
     if sector:
