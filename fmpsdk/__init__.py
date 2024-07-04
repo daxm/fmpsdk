@@ -53,6 +53,9 @@ from .company_valuation import (
     stock_news,
     stock_screener,
     symbols_list,
+
+    # mod
+    historical_employee_count,
 )
 from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list
 from .etf import available_efts, available_etfs, etf_price_realtime
