@@ -1,44 +1,43 @@
 import typing
+import os
 
 from .settings import DEFAULT_LINE_PARAMETER
 from .url_methods import __return_json_v3, __validate_series_type, __validate_time_delta
 
+API_KEY = os.getenv('FMP_API_KEY')
 
-def __quotes(apikey: str, value: str) -> typing.Optional[typing.List[typing.Dict]]:
+def __quotes(value: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /quotes/ API.
 
     This API endpoint is a multifunction tool!
-    :param apikey: Your API key
     :param value: The Ticker(s), Index(es), Commodity(ies), etc. symbol to query for.
     :return: A list of dictionaries.
     """
     path = f"quotes/{value}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def quote(
-    apikey: str, symbol: typing.Union[str, typing.List[str]]
+    symbol: typing.Union[str, typing.List[str]]
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP Quote API.
 
     This API endpoint is a multifunction tool!
 
-    :param apikey: Your API key
     :param symbol: The Ticker(s), Index(es), Commodity(ies), etc. symbol to query for.
     :return: A list of dictionaries.
     """
     if type(symbol) is list:
         symbol = ",".join(symbol)
     path = f"quote/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def historical_chart(
-    apikey: str,
     symbol: str,
     time_delta: str,
     from_date: str,
@@ -50,7 +49,6 @@ def historical_chart(
 
     This API endpoint is a multifunction tool!
 
-    :param apikey: Your API key
     :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param time_delta: The string value of time from now to go historical "1min" - "4hour".
     :param from_date: The starting time for the API ("yyyy-mm-dd")
@@ -60,9 +58,9 @@ def historical_chart(
     :return: A list of dictionaries.
     """
     path = f"historical-chart/{__validate_time_delta(time_delta)}/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": API_KEY}
     query_vars = {
-        "apikey": apikey,
+        "apikey": API_KEY,
     }
     if time_series:
         query_vars["timeseries"] = time_series
@@ -74,7 +72,6 @@ def historical_chart(
 
 
 def historical_price_full(
-    apikey: str,
     symbol: typing.Union[str, typing.List],
     from_date: str = None,
     to_date: str = None,
@@ -84,7 +81,6 @@ def historical_price_full(
 
     This API endpoint is a multifunction tool!
 
-    :param apikey: Your API Key
     :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param from_date: 'YYYY-MM-DD' format
     :param to_date: 'YYYY-MM-DD' format
@@ -94,7 +90,7 @@ def historical_price_full(
         symbol = ",".join(symbol)
     path = f"historical-price-full/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": API_KEY,
     }
 
     if from_date:

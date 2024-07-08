@@ -1,4 +1,5 @@
 import typing
+import os
 
 from .url_methods import (
     __return_json_v3,
@@ -6,9 +7,9 @@ from .url_methods import (
     __validate_technical_indicators_time_delta,
 )
 
+API_KEY = os.getenv('FMP_API_KEY')
 
 def technical_indicators(
-    apikey: str,
     symbol: str,
     period: int = 10,
     statistics_type: str = "SMA",
@@ -17,7 +18,6 @@ def technical_indicators(
     """
     Query FMP /technical_indicator/ API.
 
-    :param apikey: Your API key
     :param symbol: Company ticker
     :param period: I don't know.  10 is my only example.
     :param statistics_type: Not sure what this is.
@@ -26,7 +26,7 @@ def technical_indicators(
     """
     path = f"technical_indicator/{__validate_technical_indicators_time_delta(time_delta)}/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": API_KEY,
         "period": period,
         "type": __validate_statistics_type(statistics_type),
     }
