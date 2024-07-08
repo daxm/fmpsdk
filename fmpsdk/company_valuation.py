@@ -1,6 +1,6 @@
 import logging
 import typing
-
+import os
 import requests
 
 from .settings import (
@@ -22,55 +22,50 @@ from .url_methods import (
     __validate_sector,
 )
 
+API_KEY = os.getenv('FMP_API_KEY')
 
-def company_profile(
-    apikey: str, symbol: str
-) -> typing.Optional[typing.List[typing.Dict]]:
+def company_profile(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /profile/ API.
 
     Gather this company's information.
-    :param apikey: Your API key.
     :param symbol: Ticker of Company.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"profile/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey} if apikey else {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def key_executives(
-    apikey: str, symbol: str
-) -> typing.Optional[typing.List[typing.Dict]]:
+def key_executives(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /key-executives/ API.
 
     Gather info about company's key executives.
-    :param apikey: Your API Key.
     :param symbol: Ticker of company.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"key-executives/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey} if apikey else {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def search(
-    apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
-) -> typing.Optional[typing.List[typing.Dict]]:
+def search(query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = "", apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /search/ API.
 
     Search via ticker and company name.
-    :param apikey: Your API key.
     :param query: Whole or fragment of Ticker or Name of company.
     :param limit: Number of rows to return.
     :param exchange: Stock exchange to search.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"search/"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "query": query,
         "exchange": exchange,
@@ -78,22 +73,20 @@ def search(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def search_ticker(
-    apikey: str, query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = ""
-) -> typing.Optional[typing.List[typing.Dict]]:
+def search_ticker(query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = "", apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /search-ticker/ API.
 
     Search only via ticker.
-    :param apikey: Your API key.
     :param query: Whole or fragment of Ticker.
     :param limit: Number of rows to return.
     :param exchange:Stock exchange to search.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"search-ticker/"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "query": query,
         "exchange": exchange,
@@ -101,21 +94,19 @@ def search_ticker(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_statement(
-    apikey: str, symbol: str, filename: str = FINANCIAL_STATEMENT_FILENAME
-) -> None:
+def financial_statement(symbol: str, filename: str = FINANCIAL_STATEMENT_FILENAME, apikey: str = None) -> None:
     """
     Query FMP /financial-statements/ API.
 
     Download company's financial statement.
-    :param apikey: Your API key.
     :param symbol: Ticker of company.
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"financial-statements/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "datatype": "zip",  # Only ZIP format is supported.
     }
     response = requests.get(f"{BASE_URL_v3}{path}", params=query_vars)
@@ -124,27 +115,27 @@ def financial_statement(
 
 
 def income_statement(
-    apikey: str,
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = INCOME_STATEMENT_FILENAME,
+    apikey: str = None
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /income-statement/ API.
 
     Display or download company's income statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'quarter' or 'annual'.
     :param limit: Number of rows to return.
     :param download: True/False
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"income-statement/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(period)}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit, "period": __validate_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
         response = requests.get(f"{BASE_URL_v3}{path}", params=query_vars)
@@ -155,27 +146,27 @@ def income_statement(
 
 
 def balance_sheet_statement(
-    apikey: str,
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = BALANCE_SHEET_STATEMENT_FILENAME,
+    apikey: str = None
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /balance-sheet-statement/ API.
 
     Display or download company's balance sheet statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'quarter' or 'annual'.
     :param limit: Number of rows to return.
     :param download: True/False
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"balance-sheet-statement/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(period)}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit, "period": __validate_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
         response = requests.get(f"{BASE_URL_v3}{path}", params=query_vars)
@@ -186,27 +177,27 @@ def balance_sheet_statement(
 
 
 def cash_flow_statement(
-    apikey: str,
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = CASH_FLOW_STATEMENT_FILENAME,
+    apikey: str = None
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /cash-flow-statement/ API.
 
     Display or download company's cash flow statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'quarter' or 'annual'.
     :param limit: Number of rows to return.
     :param download: True/False
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"cash-flow-statement/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit, "period": __validate_period(period)}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit, "period": __validate_period(period)}
     if download:
         query_vars["datatype"] = "csv"  # Only CSV is supported.
         response = requests.get(f"{BASE_URL_v3}{path}", params=query_vars)
@@ -216,106 +207,96 @@ def cash_flow_statement(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_statement_symbol_lists(
-    apikey: str,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def financial_statement_symbol_lists(apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-statement-symbol-lists/ API.
 
     List of symbols that have financial statements.
-    :param apikey: Your API key.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"financial-statement-symbol-lists"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def income_statement_growth(
-    apikey: str,
-    symbol: str,
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def income_statement_growth(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /income-statement-growth/ API.
 
     Growth stats for company's income statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"income-statement-growth/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def balance_sheet_statement_growth(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.Optional[typing.List[typing.Dict]]:
+def balance_sheet_statement_growth(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /balance-sheet-statement-growth/ API.
 
     Growth stats for company's balance sheet statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"balance-sheet-statement-growth/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def cash_flow_statement_growth(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.Optional[typing.List[typing.Dict]]:
+def cash_flow_statement_growth(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /cash-flow-statement-growth/ API.
 
     Growth stats for company's cash flow statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"cash-flow-statement-growth/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def income_statement_as_reported(
-    apikey: str,
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = INCOME_STATEMENT_AS_REPORTED_FILENAME,
+    apikey: str = None
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /income-statement-as-reported/ API.
 
     Company's "as reported" income statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
     :param download: True/False
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"income-statement-as-reported/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
@@ -329,28 +310,28 @@ def income_statement_as_reported(
 
 
 def balance_sheet_statement_as_reported(
-    apikey: str,
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME,
+    apikey: str = None
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /balance-sheet-statement-as-reported/ API.
 
     Company's "as reported" balance sheet statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
     :param download: True/False
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"balance-sheet-statement-as-reported/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
@@ -364,28 +345,28 @@ def balance_sheet_statement_as_reported(
 
 
 def cash_flow_statement_as_reported(
-    apikey: str,
     symbol: str,
     period: str = "annual",
     limit: int = DEFAULT_LIMIT,
     download: bool = False,
     filename: str = CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME,
+    apikey: str = None
 ) -> typing.Union[typing.List[typing.Dict], None]:
     """
     Query FMP /cash-flow-statement-as-reported/ API.
 
     Company's "as reported" cash flow statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
     :param download: True/False
     :param filename: Name of saved file.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"cash-flow-statement-as-reported/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
@@ -398,313 +379,265 @@ def cash_flow_statement_as_reported(
         return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_statement_full_as_reported(
-    apikey: str,
-    symbol: str,
-    period: str = "annual",
-) -> typing.Optional[typing.List[typing.Dict]]:
+def financial_statement_full_as_reported(symbol: str, period: str = "annual", apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-statement-full-as-reported/ API.
 
     Company's "as reported" full income statement.
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"financial-statement-full-as-reported/{symbol}"
-    query_vars = {"apikey": apikey, "period": __validate_period(value=period)}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "period": __validate_period(value=period)}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_ratios_ttm(
-    apikey: str, symbol: str
-) -> typing.Optional[typing.List[typing.Dict]]:
+def financial_ratios_ttm(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FmP /ratios-ttm/ API.
 
-    :param apikey: Your API key
     :param symbol: Company ticker
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"ratios-ttm/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_ratios(
-    apikey: str,
-    symbol: str,
-    period: str = "annual",
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def financial_ratios(symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FmP /ratios/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"ratios/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def enterprise_values(
-    apikey: str,
-    symbol: str,
-    period: str = "annual",
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def enterprise_values(symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /enterprise-values/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"enterprise-values/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def key_metrics_ttm(
-    apikey: str,
-    symbol: str,
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def key_metrics_ttm(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /key-metrics-ttm/ API
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"key-metrics-ttm/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def key_metrics(
-    apikey: str,
-    symbol: str,
-    period: str = "annual",
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def key_metrics(symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /key-metrics/ API
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"key-metrics/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def financial_growth(
-    apikey: str,
-    symbol: str,
-    period: str = "annual",
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def financial_growth(symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /financial-growth/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"financial-growth/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def rating(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def rating(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /rating/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"rating/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_rating(
-    apikey: str,
-    symbol: str,
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_rating(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-rating/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"historical-rating/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def discounted_cash_flow(
-    apikey: str, symbol: str
-) -> typing.Optional[typing.List[typing.Dict]]:
+def discounted_cash_flow(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /discounted-cash-flow/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"discounted-cash-flow/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_discounted_cash_flow(
-    apikey: str,
-    symbol: str,
-    period: str = "annual",
-    limit: int = DEFAULT_LIMIT,
-) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_discounted_cash_flow(symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-discounted-cash-flow/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"historical-discounted-cash-flow/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "limit": limit,
         "period": __validate_period(value=period),
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_daily_discounted_cash_flow(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_daily_discounted_cash_flow(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-daily-discounted-cash-flow/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"historical-daily-discounted-cash-flow/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def market_capitalization(
-    apikey: str, symbol: str
-) -> typing.Optional[typing.List[typing.Dict]]:
+def market_capitalization(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /market-capitalization/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"market-capitalization/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def historical_market_capitalization(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
-) -> typing.Optional[typing.List[typing.Dict]]:
+def historical_market_capitalization(symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-market-capitalization/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"historical-market-capitalization/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def symbols_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def symbols_list(apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock/list/ API
 
-    :param apikey: Your API key.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"stock/list"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def etf_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def etf_list(apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /etf/list/ API
 
     All ETF symbols
 
-    :param apikey: Your API key.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"etf/list"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def available_traded_list(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+def available_traded_list(apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /available-traded/list/ API
 
     All tradable symbols
 
-    :param apikey: Your API key.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"available-traded/list"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def stock_screener(
-    apikey: str,
     market_cap_more_than: typing.Union[float, int] = None,
     market_cap_lower_than: typing.Union[float, int] = None,
     beta_more_than: typing.Union[float, int] = None,
@@ -723,11 +656,11 @@ def stock_screener(
     country: str = None,
     exchange: typing.Union[str, typing.List[str]] = None,
     limit: int = DEFAULT_LIMIT,
+    apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock-screener/ API.
 
-    :param apikey: Your API key.
     :param market_cap_more_than: Numeric Value
     :param market_cap_lower_than: Numeric Value
     :param beta_more_than:  Numeric Value
@@ -748,10 +681,11 @@ def stock_screener(
     :param country: 2 digit country code as string.
     :param exchange: Stock exchange symbol.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dicitonaries.
     """
     path = f"stock-screener"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     if market_cap_more_than:
         query_vars["marketCapMoreThan"] = market_cap_more_than
     if market_cap_lower_than:
@@ -792,36 +726,32 @@ def stock_screener(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def delisted_companies(
-    apikey: str, limit: int = DEFAULT_LIMIT
-) -> typing.Optional[typing.List[typing.Dict]]:
+def delisted_companies(limit: int = DEFAULT_LIMIT, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /delisted-companies/ API.
 
-    :param apikey: Your API key.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"delisted-companies"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def stock_news(
-    apikey: str,
-    tickers: typing.Union[str, typing.List] = "",
-    limit: int = DEFAULT_LIMIT,
+    tickers: typing.Union[str, typing.List] = "", limit: int = DEFAULT_LIMIT, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_news/ API.
 
-    :param apikey: Your API key.
     :param tickers: List of ticker symbols.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"stock_news"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     if tickers:
         if type(tickers) is list:
             tickers = ",".join(tickers)
@@ -830,128 +760,128 @@ def stock_news(
 
 
 def earnings_surprises(
-    apikey: str, symbol: str
+    symbol: str, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /earnings-surprises/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"earnings-surprises/{symbol}"
-    query_vars = {"apikey": apikey}
+    query_vars = {"apikey": apikey if apikey else API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def earning_call_transcript(
-    apikey: str, symbol: str, year: int, quarter: int
+    symbol: str, year: int, quarter: int, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /earning_call_transcript/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param year: Year of the transcripts
     :param quarter: Quarter of the transcripts
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"earning_call_transcript/{symbol}"
-    query_vars = {"apikey": apikey, "year": year, "quarter": quarter}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "year": year, "quarter": quarter}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def batch_earning_call_transcript(
-    apikey: str, symbol: str, year: int
+    symbol: str, year: int, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /batch_earning_call_transcript/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param year: Year of the transcripts
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"batch_earning_call_transcript/{symbol}"
-    query_vars = {"apikey": apikey, "year": year}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "year": year}
     return __return_json_v4(path=path, query_vars=query_vars)
 
 
 def earning_call_transcripts_available_dates(
-    apikey: str, symbol: str
+    symbol: str, apikey: str = None
 ) -> typing.Optional[typing.List[typing.List]]:
     """
     Query FMP /earning_call_transcript/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of lists.
     """
     path = f"earning_call_transcript"
-    query_vars = {"apikey": apikey, "symbol": symbol}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)
 
 
 def sec_filings(
-    apikey: str, symbol: str, filing_type: str = "", limit: int = DEFAULT_LIMIT
+    symbol: str, filing_type: str = "", limit: int = DEFAULT_LIMIT, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /sec_filings/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param filing_type: Name of filing.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"sec_filings/{symbol}"
-    query_vars = {"apikey": apikey, "type": filing_type, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "type": filing_type, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def press_releases(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+    symbol: str, limit: int = DEFAULT_LIMIT, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /press-releases/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"press-releases/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
-def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+def stock_peers(symbol: str, apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_peers/ API
-    :param apikey: Your API key
     :param symbol: Company ticker
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries
     """
     path = f"stock_peers"
-    query_vars = {"apikey": apikey, "symbol": symbol}
+    query_vars = {"apikey": apikey if apikey else API_KEY, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)
 
 
 def analyst_estimates(
-    apikey: str, symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT
+    symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT, apikey: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /analyst-estimates/ API.
 
-    :param apikey: Your API key.
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'
     :param limit: Number of rows to return.
+    :param apikey: Your API key. If not provided, the function will use the API_KEY from environment variables.
     :return: A list of dictionaries.
     """
     path = f"/analyst-estimates/{symbol}"
     query_vars = {
-        "apikey": apikey,
+        "apikey": apikey if apikey else API_KEY,
         "symbol": symbol,
         "period": __validate_period(value=period),
         "limit": limit,
