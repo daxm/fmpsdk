@@ -14,6 +14,7 @@ from .calendar import (
     stock_split_calendar,
 )
 from .commodities import available_commodities, commodities_list
+from .company_profile import company_profile, key_executives
 from .company_valuation import (
     advanced_discounted_cash_flow,
     all_countries,
@@ -23,17 +24,10 @@ from .company_valuation import (
     available_industries,
     available_sectors,
     available_traded_list,
-    balance_sheet_statement,
-    balance_sheet_statement_as_reported,
-    balance_sheet_statement_growth,
     batch_earning_call_transcript,
-    cash_flow_statement,
-    cash_flow_statement_as_reported,
-    cash_flow_statement_growth,
     company_core_information,
     company_notes,
     company_outlook,
-    company_profile,
     compensation_benchmark,
     delisted_companies,
     discounted_cash_flow,
@@ -45,48 +39,58 @@ from .company_valuation import (
     esg_score,
     etf_list,
     executive_compensation,
-    financial_growth,
-    financial_ratios,
-    financial_ratios_ttm,
     financial_score,
-    financial_statement,
-    financial_statement_full_as_reported,
     financial_statement_symbol_lists,
     historical_daily_discounted_cash_flow,
     historical_discounted_cash_flow,
     historical_employee_count,
-    historical_market_capitalization,
     historical_rating,
-    income_statement,
-    income_statement_as_reported,
-    income_statement_growth,
     is_market_open,
-    key_executives,
     key_metrics,
     key_metrics_ttm,
-    market_capitalization,
     mergers_acquisitions_rss_feed,
     owner_earnings,
     press_releases,
     rating,
     revenue_geographic_segmentation,
     sales_revenue_by_segments,
-    search,
     search_mergers_acquisitions,
-    search_ticker,
     sec_filings,
     stock_grade,
     stock_peers,
-    stock_screener,
     symbols_list,
     upgrades_downgrades,
     upgrades_downgrades_by_company,
     upgrades_downgrades_consensus,
     upgrades_downgrades_rss_feed,
 )
+from .crowdfunding import crowdfunding_by_cik, crowdfunding_rss_feed, crowdfunding_search
 from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list
+from .economics import (
+    economic_indicators,
+    market_risk_premium,
+    treasury_rates,
+)
 from .etf import available_efts, available_etfs, etf_price_realtime
 from .euronext import available_euronext, euronext_list
+from .financial_growth_ratios import (
+    balance_sheet_statement_growth,
+    cash_flow_statement_growth,
+    financial_growth,
+    financial_ratios,
+    financial_ratios_ttm,
+    income_statement_growth,
+)
+from .financial_statements import (
+    balance_sheet_statement,
+    balance_sheet_statement_as_reported,
+    cash_flow_statement,
+    cash_flow_statement_as_reported,
+    financial_statement,
+    financial_statement_full_as_reported,
+    income_statement,
+    income_statement_as_reported,
+)
 from .forex import (
     available_forex,
     forex,
@@ -125,25 +129,40 @@ from .market_indexes import (
 )
 from .mutual_funds import available_mutual_funds, mutual_fund_list
 from .news import fmp_articles, general_news, stock_news
+from .price_target import (
+    price_target_by_analyst_name,
+    price_target_by_company,
+    price_target_consensus,
+    price_target_rss_feed,
+    price_target_summary,
+    price_targets,
+)
+from .search_functions import search, search_ticker
 from .senate import (
     senate_disclosure_rss,
     senate_disclosure_symbol,
     senate_trading_rss,
     senate_trading_symbol,
 )
-from .shares_float import shares_float, historical_share_float
+from .shares_float import historical_share_float, shares_float
+from .social_sentiment import (
+    historical_social_sentiment,
+    social_sentiment_changes,
+    trending_social_sentiment,
+)
 from .stock_market import (
     actives,
+    batch_eod_prices,
+    fail_to_deliver,
     gainers,
+    industry_pe_ratio,
     losers,
     market_hours,
-    sectors_performance,
-    fail_to_deliver,
-    sector_pe_ratio,
-    industry_pe_ratio,
-    batch_eod_prices,
     multiple_company_prices,
+    sector_pe_ratio,
+    sectors_performance,
 )
+from .stock_screener import stock_screener
 from .stock_time_series import (
     exchange_realtime,
     historical_stock_dividend,
@@ -153,25 +172,14 @@ from .stock_time_series import (
 )
 from .technical_indicators import technical_indicators
 from .tsx import available_tsx, tsx_list
-from .price_target import (
-    price_targets,
-    price_target_summary,
-    price_target_by_analyst_name,
-    price_target_by_company,
-    price_target_consensus,
-    price_target_rss_feed,
+from .valuation_metrics import (
+    discounted_cash_flow,
+    advanced_discounted_cash_flow,
+    historical_daily_discounted_cash_flow,
+    historical_discounted_cash_flow,
+    market_capitalization,
+    historical_market_capitalization,
 )
-from .social_sentiment import (
-    historical_social_sentiment,
-    trending_social_sentiment,
-    social_sentiment_changes,
-)
-from .economics import (
-    treasury_rates,
-    economic_indicators,
-    market_risk_premium,
-)
-from .crowdfunding import crowdfunding_rss_feed, crowdfunding_search, crowdfunding_by_cik
 
 attribution: str = "Data provided by Financial Modeling Prep"
 logging.info(attribution)
@@ -180,7 +188,6 @@ __all__ = [
     "actives",
     "advanced_discounted_cash_flow",
     "all_countries",
-    "all_shares_float",
     "analyst_estimates",
     "analyst_recommendation",
     "available_commodities",
@@ -214,7 +221,6 @@ __all__ = [
     "company_notes",
     "company_outlook",
     "company_profile",
-    "company_share_float",
     "compensation_benchmark",
     "crowdfunding_by_cik",
     "crowdfunding_offerings",
