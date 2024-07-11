@@ -19,10 +19,21 @@ def technical_indicators(
     Query FMP /technical_indicator/ API.
 
     :param symbol: Company ticker
-    :param period: I don't know.  10 is my only example.
-    :param statistics_type: Not sure what this is.
-    :param time_delta: 'daily' or intraday: '1min' - '4hour'
-    :return:
+    :param period: Number of data points used to calculate the technical indicator
+    :param statistics_type: Type of technical indicator. Available options:
+        - SMA (Simple Moving Average)
+        - EMA (Exponential Moving Average)
+        - WMA (Weighted Moving Average)
+        - DEMA (Double Exponential Moving Average)
+        - TEMA (Triple Exponential Moving Average)
+        - williams (Williams %R)
+        - RSI (Relative Strength Index)
+        - ADX (Average Directional Index)
+        - standardDeviation
+    :param time_delta: Time interval for data points. Options:
+        - 'daily' for daily data
+        - Intraday options: '1min', '5min', '15min', '30min', '1hour', '4hour'
+    :return: List of dictionaries containing technical indicator data
     """
     path = f"technical_indicator/{__validate_technical_indicators_time_delta(time_delta)}/{symbol}"
     query_vars = {

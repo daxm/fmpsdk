@@ -19,8 +19,8 @@ def commitment_of_traders_report_list() -> typing.Optional[typing.List[typing.Di
 
 def commitment_of_traders_report(
     symbol: str,
-    from_date: str,
-    to_date: str,
+    from_date: str = None,
+    to_date: str = None,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /commitment_of_traders_report API.
@@ -30,18 +30,13 @@ def commitment_of_traders_report(
     each Tuesday's open interest for futures and options on futures markets in which 20 or more traders hold
     positions equal to or above the reporting levels established by the CFTC.
 
-    Generally, the data in the COT reports is from Tuesday and released Friday. The CFTC receives the data from the
-    reporting firms on Wednesday morning and then corrects and verifies the data for release by Friday afternoon.
-
-    :param symbol: COT symbol.
-    :param from_date: YYYY-MM-DD string.
-    :param to_date: YYYY-MM-DD string.
-    :return: A list of dictionaries.
+    :param symbol: COT symbol (required).
+    :param from_date: Optional. Start date in YYYY-MM-DD format.
+    :param to_date: Optional. End date in YYYY-MM-DD format.
+    :return: A list of dictionaries containing COT report data.
     """
-    path = f"commitment_of_traders_report"
+    path = f"commitment_of_traders_report/{symbol}"
     query_vars = {"apikey": API_KEY}
-    if symbol:
-        path = f"{path}/{symbol}"
     if from_date:
         query_vars["from"] = from_date
     if to_date:

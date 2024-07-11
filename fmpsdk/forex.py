@@ -36,3 +36,14 @@ def available_forex() -> typing.Optional[typing.List[typing.Dict]]:
     path = f"symbol/available-forex-currency-pairs"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
+
+def fx_price_quote(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /fx/{symbol} API for the latest bid and ask prices of a currency pair.
+
+    :param symbol: Currency pair symbol (e.g., 'EURUSD')
+    :return: A list containing a dictionary with bid and ask prices.
+    """
+    path = f"fx/{symbol}"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)

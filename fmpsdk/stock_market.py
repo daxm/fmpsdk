@@ -1,7 +1,9 @@
 import typing
 import os
 from .settings import DEFAULT_LIMIT
-from .url_methods import __return_json_v3
+from .url_methods import __return_json_v3, __return_json_v4
+from datetime import date
+from .url_methods import __return_json_v4
 
 API_KEY = os.getenv('FMP_API_KEY')
 
@@ -60,4 +62,74 @@ def sectors_performance(
     """
     path = f"sectors-performance"
     query_vars = {"apikey": API_KEY, "limit": limit}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+def fail_to_deliver(symbol: str, page: int = 0) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /fail_to_deliver API for fail to deliver data.
+
+    :param symbol: Company ticker symbol
+    :param page: Page number for pagination (default is 0)
+    :return: A list of dictionaries containing fail to deliver data
+    """
+    path = "fail_to_deliver"
+    query_vars = {
+        "apikey": API_KEY,
+        "symbol": symbol,
+        "page": page
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def sector_pe_ratio(date: date, exchange: str = "NYSE") -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /sector_price_earning_ratio API
+
+    :param date: The date for which to retrieve the sector PE ratios
+    :param exchange: The stock exchange (default is NYSE)
+    :return: A list of dictionaries containing sector PE ratios
+    """
+    path = f"sector_price_earning_ratio"
+    query_vars = {
+        "date": date.strftime("%Y-%m-%d"),
+        "exchange": exchange,
+        "apikey": API_KEY
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def industry_pe_ratio(date: date, exchange: str = "NYSE") -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /industry_price_earning_ratio API
+
+    :param date: The date for which to retrieve the industry PE ratios
+    :param exchange: The stock exchange (default is NYSE)
+    :return: A list of dictionaries containing industry PE ratios
+    """
+    path = f"industry_price_earning_ratio"
+    query_vars = {
+        "date": date.strftime("%Y-%m-%d"),
+        "exchange": exchange,
+        "apikey": API_KEY
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def batch_eod_prices(date: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Get batch request that contains all end of day prices for a specific date.
+
+    :param date: The date in format YYYY-MM-DD
+    :return: A list of dictionaries containing EOD prices for multiple stocks
+    """
+    path = "batch-request-end-of-day-prices"
+    query_vars = {"apikey": API_KEY, "date": date}
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def multiple_company_prices(symbols: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Get multiple company prices at once.
+
+    :param symbols: Comma-separated list of stock symbols (e.g., "AAPL,MSFT")
+    :return: A list of dictionaries containing price information for the requested symbols
+    """
+    path = f"quote/{symbols}"
+    query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)

@@ -25,3 +25,14 @@ def shares_float(
         path = f"shares_float?symbol={symbol}"
     query_vars = {"apikey": API_KEY}
     return __return_json_v4(path=path, query_vars=query_vars)
+
+def historical_share_float(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /historical/shares_float API.
+
+    Get historical data on the number of shares that are publicly traded for a given company.
+    
+    :param symbol: Ticker symbol of the company.
+    :return: A list of dictionaries containing historical share float data.
+    """
+    return __return_json_v4("historical/shares_float", {"symbol": symbol})
