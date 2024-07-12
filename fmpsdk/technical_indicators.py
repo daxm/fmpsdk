@@ -21,15 +21,15 @@ def technical_indicators(
     :param symbol: Company ticker.
     :param period: Number of data points used to calculate the technical indicator.
     :param statistics_type: Type of technical indicator. Available options:
-        - SMA (Simple Moving Average)
-        - EMA (Exponential Moving Average)
-        - WMA (Weighted Moving Average)
-        - DEMA (Double Exponential Moving Average)
-        - TEMA (Triple Exponential Moving Average)
-        - williams (Williams %R)
-        - RSI (Relative Strength Index)
-        - ADX (Average Directional Index)
-        - standardDeviation
+        - sma (simple moving average)
+        - ema (exponential moving average)
+        - wma (weighted moving average)
+        - dema (double exponential moving average)
+        - tema (triple exponential moving average)
+        - williams (williams %r)
+        - rsi (relative strength index)
+        - adx (average directional index)
+        - standarddeviation
     :param time_delta: Time interval for data points. Options:
         - 'daily' for daily data
         - Intraday options: '1min', '5min', '15min', '30min', '1hour', '4hour'

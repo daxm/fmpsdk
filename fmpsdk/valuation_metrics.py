@@ -31,25 +31,6 @@ def advanced_discounted_cash_flow(symbol: str) -> typing.Optional[typing.List[ty
     query_vars = {"apikey": API_KEY, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)
 
-def historical_discounted_cash_flow(symbol: str, period: str = "annual", limit: int = DEFAULT_LIMIT) -> typing.Optional[typing.List[typing.Dict]]:
-    """
-    Query FMP /historical-discounted-cash-flow/ API for historical DCF valuation.
-
-    :param symbol: Company ticker.
-    :param period: 'annual' or 'quarter'. Default is 'annual'.
-    :param limit: Number of rows to return. Default is DEFAULT_LIMIT.
-    :return: List of dictionaries with historical DCF valuation data or None if request fails.
-    :example: historical_discounted_cash_flow('AAPL', period='quarter', limit=5)
-    :endpoint: https://financialmodelingprep.com/api/v3/historical-discounted-cash-flow/{symbol}
-    """
-    path = f"historical-discounted-cash-flow/{symbol}"
-    query_vars = {
-        "apikey": API_KEY,
-        "limit": limit,
-        "period": __validate_period(value=period),
-    }
-    return __return_json_v3(path=path, query_vars=query_vars)
-
 def historical_daily_discounted_cash_flow(symbol: str, limit: int = DEFAULT_LIMIT) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-daily-discounted-cash-flow/ API for daily historical DCF valuation.

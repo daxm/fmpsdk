@@ -139,3 +139,21 @@ def multiple_company_prices(symbols: str) -> typing.Optional[typing.List[typing.
     path = f"quote/{symbols}"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
+
+def historical_sectors_performance(from_date: str, to_date: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /historical-sectors-performance API for historical data on sector performance.
+
+    :param from_date: Start date in format YYYY-MM-DD.
+    :param to_date: End date in format YYYY-MM-DD.
+    :return: A list of dictionaries containing historical sector performance data.
+    :example: historical_sectors_performance('2024-01-01', '2024-03-01')
+    :endpoint: https://financialmodelingprep.com/api/v3/historical-sectors-performance?from={from_date}&to={to_date}
+    """
+    path = "historical-sectors-performance"
+    query_vars = {
+        "apikey": API_KEY,
+        "from": from_date,
+        "to": to_date
+    }
+    return __return_json_v3(path=path, query_vars=query_vars)

@@ -17,25 +17,6 @@ from .url_methods import __return_json_v3, __validate_period
 
 API_KEY = os.getenv('FMP_API_KEY')
 
-def financial_statement(symbol: str, filename: str = FINANCIAL_STATEMENT_FILENAME) -> None:
-    """
-    Query FMP /financial-statements/ API for company's financial statement.
-
-    :param symbol: Company ticker.
-    :param filename: Name of saved file. Default is FINANCIAL_STATEMENT_FILENAME.
-    :return: None
-    :example: financial_statement('AAPL', 'AAPL_financial_statement.zip')
-    :endpoint: https://financialmodelingprep.com/api/v3/financial-statements/{symbol}
-    """
-    path = f"financial-statements/{symbol}"
-    query_vars = {
-        "apikey": API_KEY,
-        "datatype": "zip",  # Only ZIP format is supported.
-    }
-    response = requests.get(f"{BASE_URL_v3}{path}", params=query_vars)
-    open(filename, "wb").write(response.content)
-    logging.info(f"Saving {symbol} financial statement as {filename}.")
-
 
 def income_statement(
     symbol: str,

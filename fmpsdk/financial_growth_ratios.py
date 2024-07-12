@@ -81,7 +81,7 @@ def financial_ratios(
 
     :param symbol: Company ticker.
     :param period: 'annual' or 'quarter'. Default is 'annual'.
-    :param limit: Number of records to retrieve. Default is DEFAULT_LIMIT.
+    :param limit: Number of rows to return. Default is DEFAULT_LIMIT.
     :return: List of dictionaries with financial ratios data.
     :example: financial_ratios('AAPL', period='quarter', limit=5)
     :endpoint: https://financialmodelingprep.com/api/v3/ratios/{symbol}

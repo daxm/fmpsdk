@@ -21,9 +21,6 @@ def price_targets(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
 
     Endpoint:
     https://financialmodelingprep.com/api/v4/price-target?symbol={symbol}
-
-    API Documentation:
-    https://site.financialmodelingprep.com/developer/docs/price-target-api
     """
     path = "price-target"
     query_vars = {"apikey": API_KEY, "symbol": symbol}
@@ -46,9 +43,6 @@ def price_target_summary(symbol: str) -> typing.Optional[typing.List[typing.Dict
 
     Endpoint:
     https://financialmodelingprep.com/api/v4/price-target-summary?symbol={symbol}
-
-    API Documentation:
-    https://site.financialmodelingprep.com/developer/docs/price-target-summary-api
     """
     path = "price-target-summary"
     query_vars = {"apikey": API_KEY, "symbol": symbol}
@@ -67,24 +61,26 @@ def price_target_by_analyst_name(name: str) -> typing.Optional[typing.List[typin
 
 def price_target_by_company(company: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /price-target-analyst-company/ API for price targets from a specific company.
+    Query FMP /price-target-analyst-company/ API for price targets from a specific analyst company.
 
-    Get the price targets for all companies in a specific industry or sector. This can be useful if you want to compare the price targets of different companies in the same industry.
-
-    :param company: The name of the company (e.g., 'Barclays').
-    :return: A list of dictionaries containing price target information for the specified company.
+    :param company: The name of the analyst company (e.g., 'Goldman Sachs').
+    :return: A list of dictionaries containing price target information issued by the specified company.
 
     Example:
-    >>> price_target_by_company('Barclays')
-    [{'symbol': 'AAPL', 'priceTarget': 150.0, 'analyst': 'Barclays', 'date': '2023-10-01', ...}, ...]
-
-    Users can get price targets for many different companies by providing the appropriate company name.
+    >>> price_target_by_company('Goldman Sachs')
+    [
+        {
+            'symbol': 'AAPL',
+            'publishedDate': '2023-06-02',
+            'priceTarget': 209.0,
+            'analystName': 'Rod Hall',
+            'analystCompany': 'Goldman Sachs'
+        },
+        ...
+    ]
 
     Endpoint:
     https://financialmodelingprep.com/api/v4/price-target-analyst-company?company={company}
-
-    API Documentation:
-    https://site.financialmodelingprep.com/developer/docs/price-target-by-analyst-company-api
     """
     path = "price-target-analyst-company"
     query_vars = {"apikey": API_KEY, "company": company}
@@ -107,9 +103,6 @@ def price_target_consensus(symbol: str) -> typing.Optional[typing.List[typing.Di
 
     Endpoint:
     https://financialmodelingprep.com/api/v4/price-target-consensus?symbol={symbol}
-
-    API Documentation:
-    https://site.financialmodelingprep.com/developer/docs/price-target-consensus-api
     """
     path = "price-target-consensus"
     query_vars = {"apikey": API_KEY, "symbol": symbol}
@@ -132,9 +125,6 @@ def price_target_rss_feed(page: int = 0) -> typing.Optional[typing.List[typing.D
 
     Endpoint:
     https://financialmodelingprep.com/api/v4/price-target-rss-feed?page={page}
-
-    API Documentation:
-    https://site.financialmodelingprep.com/developer/docs/price-target-rss-feed-api
     """
     path = "price-target-rss-feed"
     query_vars = {"apikey": API_KEY, "page": page}

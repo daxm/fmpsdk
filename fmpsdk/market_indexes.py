@@ -17,12 +17,18 @@ API_KEY = os.getenv('FMP_API_KEY')
 
 def indexes() -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /quotes/index/ API.
+    Query FMP /quotes/index API for major stock market indices.
 
-    :return: A list of dictionaries.
+    Retrieves a list of all major stock market indices, such as the S&P 500, 
+    the Dow Jones Industrial Average, and the Nasdaq Composite Index.
+
+    :return: A list of dictionaries containing index data.
+    :example: indexes()
+    :endpoint: https://financialmodelingprep.com/api/v3/quotes/index
     """
-    path = f"index"
-    return __quotes(apikey=API_KEY, value=path)
+    path = "quotes/index"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def sp500_constituent(

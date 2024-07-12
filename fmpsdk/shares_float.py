@@ -34,5 +34,9 @@ def historical_share_float(symbol: str) -> typing.Optional[typing.List[typing.Di
     
     :param symbol: Ticker symbol of the company.
     :return: A list of dictionaries containing historical share float data.
+    :example: historical_share_float('AAPL')
+    :endpoint: https://financialmodelingprep.com/api/v4/historical/shares_float
     """
-    return __return_json_v4("historical/shares_float", {"symbol": symbol})
+    path = "historical/shares_float"
+    query_vars = {"apikey": API_KEY, "symbol": symbol}
+    return __return_json_v4(path=path, query_vars=query_vars)

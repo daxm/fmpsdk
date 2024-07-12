@@ -13,7 +13,7 @@ from .calendar import (
     ipo_calendar,
     stock_split_calendar,
 )
-from .commodities import available_commodities, commodities_list
+from .commodities import available_commodities, commodities_list, commodity_price
 from .company_profile import company_profile, key_executives
 from .company_valuation import (
     advanced_discounted_cash_flow,
@@ -42,7 +42,6 @@ from .company_valuation import (
     financial_score,
     financial_statement_symbol_lists,
     historical_daily_discounted_cash_flow,
-    historical_discounted_cash_flow,
     historical_employee_count,
     historical_rating,
     is_market_open,
@@ -65,14 +64,14 @@ from .company_valuation import (
     upgrades_downgrades_rss_feed,
 )
 from .crowdfunding import crowdfunding_by_cik, crowdfunding_rss_feed, crowdfunding_search
-from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list
+from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list, cryptocurrency_quote
 from .economics import (
     economic_indicators,
     market_risk_premium,
     treasury_rates,
 )
-from .etf import available_efts, available_etfs, etf_price_realtime
-from .euronext import available_euronext, euronext_list
+from .etf import available_etfs
+from .euronext import available_euronext
 from .financial_growth_ratios import (
     balance_sheet_statement_growth,
     cash_flow_statement_growth,
@@ -86,7 +85,6 @@ from .financial_statements import (
     balance_sheet_statement_as_reported,
     cash_flow_statement,
     cash_flow_statement_as_reported,
-    financial_statement,
     financial_statement_full_as_reported,
     income_statement,
     income_statement_as_reported,
@@ -95,7 +93,8 @@ from .forex import (
     available_forex,
     forex,
     forex_list,
-    fx_price_quote
+    forex_quote,
+    forex_historical,
 )
 from .general import historical_chart, historical_price_full, quote
 from .insider_trading import (
@@ -155,6 +154,7 @@ from .stock_market import (
     batch_eod_prices,
     fail_to_deliver,
     gainers,
+    historical_sectors_performance,
     industry_pe_ratio,
     losers,
     market_hours,
@@ -167,7 +167,6 @@ from .stock_time_series import (
     exchange_realtime,
     historical_stock_dividend,
     historical_stock_split,
-    historical_survivorship_bias_free_eod,
     quote_short,
 )
 from .technical_indicators import technical_indicators
@@ -176,7 +175,6 @@ from .valuation_metrics import (
     discounted_cash_flow,
     advanced_discounted_cash_flow,
     historical_daily_discounted_cash_flow,
-    historical_discounted_cash_flow,
     market_capitalization,
     historical_market_capitalization,
 )
@@ -217,6 +215,7 @@ __all__ = [
     "commitment_of_traders_report_analysis",
     "commitment_of_traders_report_list",
     "commodities_list",
+    "commodity_price",
     "company_core_information",
     "company_notes",
     "company_outlook",
@@ -227,6 +226,7 @@ __all__ = [
     "crowdfunding_rss_feed",
     "crowdfunding_search",
     "cryptocurrencies_list",
+    "cryptocurrency_quote",
     "cusip",
     "delisted_companies",
     "discounted_cash_flow",
@@ -244,9 +244,7 @@ __all__ = [
     "etf_country_weightings",
     "etf_holders",
     "etf_list",
-    "etf_price_realtime",
     "etf_sector_weightings",
-    "euronext_list",
     "exchange_realtime",
     "executive_compensation",
     "fail_to_deliver",
@@ -254,14 +252,14 @@ __all__ = [
     "financial_ratios",
     "financial_ratios_ttm",
     "financial_score",
-    "financial_statement",
     "financial_statement_full_as_reported",
     "financial_statement_symbol_lists",
     "fmp_articles",
     "form_13f",
     "forex",
     "forex_list",
-    "fx_price_quote",
+    "forex_quote",
+    "forex_historical",
     "gainers",
     "general_news",
     "historical_chart",
@@ -274,12 +272,12 @@ __all__ = [
     "historical_nasdaq_constituent",
     "historical_price_full",
     "historical_rating",
+    "historical_sectors_performance",
     "historical_share_float",
     "historical_social_sentiment",
     "historical_sp500_constituent",
     "historical_stock_dividend",
     "historical_stock_split",
-    "historical_survivorship_bias_free_eod",
     "income_statement",
     "income_statement_as_reported",
     "income_statement_growth",

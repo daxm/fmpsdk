@@ -16,18 +16,13 @@ def insider_trading(
     """
     Query FMP /insider-trading/ API.
 
-    The federal securities laws require certain individuals (such as officers, directors, and those that hold more
-    than 10% of any class of a company's securities, together we'll call, "insiders") to report purchases, sales,
-    and holdings of their company's securities by filing Forms 3, 4, and 5.
-
-    This API can be queried with your choice of symbol, company_cik or reporting_cik. Only one of these parameters
-    will be accepted.
+    Get insider trading data for a company or individual. Only one of symbol, company_cik, or reporting_cik should be provided.
 
     :param symbol: Company ticker.
-    :param reporting_cik: String of CIK
-    :param company_cik: String of CIK
+    :param reporting_cik: CIK of the reporting insider.
+    :param company_cik: CIK of the company.
     :param limit: Number of records to return.
-    :return: A list of dictionaries.
+    :return: A list of dictionaries containing insider trading data.
     """
     path = f"insider-trading/"
     query_vars = {"apikey": API_KEY, "limit": limit}

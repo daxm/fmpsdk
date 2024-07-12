@@ -55,17 +55,3 @@ def historical_stock_split(symbol: str) -> typing.Optional[typing.List[typing.Di
     path = f"historical-price-full/stock_split/{symbol}"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
-
-def historical_survivorship_bias_free_eod(symbol: str, date: str) -> typing.Optional[typing.List[typing.Dict]]:
-    """
-    Query FMP /historical-price-full/<ticker>/<date> API.
-
-    :param symbol: Company ticker.
-    :param date: str YYYY-MM-DD
-    :return: A list of dictionaries containing historical stock data.
-    :example: historical_survivorship_bias_free_eod('AAPL', '2023-01-01')
-    :endpoint: https://financialmodelingprep.com/api/v3/historical-price-full/{symbol}/{date}
-    """
-    path = f"historical-price-full/{symbol}/{date}"
-    query_vars = {"apikey": API_KEY}
-    return __return_json_v4(path=path, query_vars=query_vars)

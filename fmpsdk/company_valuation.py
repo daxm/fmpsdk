@@ -22,7 +22,7 @@ def financial_statement_symbol_lists() -> typing.Optional[typing.List[typing.Dic
     :example: financial_statement_symbol_lists()
     :endpoint: https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists
     """
-    path = f"financial-statement-symbol-lists"
+    path = "financial-statement-symbol-lists"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
@@ -184,7 +184,7 @@ def etf_list() -> typing.Optional[typing.List[typing.Dict]]:
     :example: etf_list()
     :endpoint: https://financialmodelingprep.com/api/v3/etf/list
     """
-    path = f"etf/list"
+    path = "etf/list"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
@@ -196,7 +196,7 @@ def available_traded_list() -> typing.Optional[typing.List[typing.Dict]]:
     :example: available_traded_list()
     :endpoint: https://financialmodelingprep.com/api/v3/available-traded/list
     """
-    path = f"available-traded/list"
+    path = "available-traded/list"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
@@ -209,8 +209,8 @@ def delisted_companies(limit: int = DEFAULT_LIMIT) -> typing.Optional[typing.Lis
     :example: delisted_companies(limit=10)
     :endpoint: https://financialmodelingprep.com/api/v3/delisted-companies
     """
-    path = f"delisted-companies"
-    query_vars = {"apikey": API_KEY, "limit": limit}
+    path = "delisted-companies"
+    query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 def earnings_surprises(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
@@ -509,7 +509,9 @@ def executive_compensation(symbol: str) -> typing.Optional[typing.List[typing.Di
     :example: executive_compensation('AAPL')
     :endpoint: https://financialmodelingprep.com/api/v4/governance/executive_compensation?symbol={symbol}
     """
-    return __return_json_v4("governance/executive_compensation", {"symbol": symbol})
+    path = "governance/executive_compensation"
+    query_vars = {"apikey": API_KEY, "symbol": symbol}
+    return __return_json_v4(path=path, query_vars=query_vars)
 
 def compensation_benchmark(year: int) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -520,7 +522,9 @@ def compensation_benchmark(year: int) -> typing.Optional[typing.List[typing.Dict
     :example: compensation_benchmark(2023)
     :endpoint: https://financialmodelingprep.com/api/v4/executive-compensation-benchmark?year={year}
     """
-    return __return_json_v4("executive-compensation-benchmark", {"year": year})
+    path = "executive-compensation-benchmark"
+    query_vars = {"apikey": API_KEY, "year": year}
+    return __return_json_v4(path=path, query_vars=query_vars)
 
 def company_notes(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -557,7 +561,9 @@ def employee_count(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     :example: employee_count('AAPL')
     :endpoint: https://financialmodelingprep.com/api/v4/employee_count?symbol={symbol}
     """
-    return __return_json_v4("employee_count", {"symbol": symbol})
+    path = "employee_count"
+    query_vars = {"apikey": API_KEY, "symbol": symbol}
+    return __return_json_v4(path=path, query_vars=query_vars)
 
 def company_core_information(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -580,7 +586,9 @@ def all_countries() -> typing.Optional[typing.List[str]]:
     :example: all_countries()
     :endpoint: https://financialmodelingprep.com/api/v3/get-all-countries
     """
-    return __return_json_v3("get-all-countries")
+    path = "get-all-countries"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 def analyst_recommendation(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -604,7 +612,9 @@ def is_market_open(exchange: str = "NASDAQ") -> typing.Optional[typing.Dict]:
     :example: is_market_open('NYSE')
     :endpoint: https://financialmodelingprep.com/api/v3/is-the-market-open?exchange={exchange}
     """
-    return __return_json_v3("is-the-market-open", {"exchange": exchange})
+    path = "is-the-market-open"
+    query_vars = {"apikey": API_KEY, "exchange": exchange}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 def available_sectors() -> typing.Optional[typing.List[str]]:
     """
@@ -614,7 +624,9 @@ def available_sectors() -> typing.Optional[typing.List[str]]:
     :example: available_sectors()
     :endpoint: https://financialmodelingprep.com/api/v3/sectors-list
     """
-    return __return_json_v3("sectors-list")
+    path = "sectors-list"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 def available_industries() -> typing.Optional[typing.List[str]]:
     """
@@ -624,7 +636,9 @@ def available_industries() -> typing.Optional[typing.List[str]]:
     :example: available_industries()
     :endpoint: https://financialmodelingprep.com/api/v3/industries-list
     """
-    return __return_json_v3("industries-list")
+    path = "industries-list"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 def available_exchanges() -> typing.Optional[typing.List[str]]:
     """
@@ -634,7 +648,9 @@ def available_exchanges() -> typing.Optional[typing.List[str]]:
     :example: available_exchanges()
     :endpoint: https://financialmodelingprep.com/api/v3/exchanges-list
     """
-    return __return_json_v3("exchanges-list")
+    path = "exchanges-list"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 def company_outlook(symbol: str) -> typing.Optional[typing.Dict]:
     """

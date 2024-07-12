@@ -23,5 +23,6 @@ def mutual_fund_list() -> typing.Optional[typing.List[typing.Dict]]:
 
     :return: A list of dictionaries.
     """
-    path = f"mutual_fund"
-    return __quotes(apikey=API_KEY, value=path)
+    path = "quotes/mutual_fund"
+    query_vars = {"apikey": API_KEY}
+    return __return_json_v3(path=path, query_vars=query_vars)
