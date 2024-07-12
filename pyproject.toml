@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "fmpsdk"
-version = "20240330.0"
+version = "20240711"
 description = ""
 authors = ["Dax Mickelson <github@daxm.net>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 python-dotenv = "*"
 requests = "*"
 

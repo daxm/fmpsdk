@@ -55,10 +55,12 @@ def sectors_performance(
     limit: int = DEFAULT_LIMIT
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /sectors_performance/ API
+    Query FMP /sectors-performance/ API.
 
-    :param limit: Number of rows to return
-    :return: A list of dictionaries.
+    :param limit: Number of rows to return.
+    :return: A list of dictionaries containing sector performance data.
+    :example: sectors_performance(limit=5)
+    :endpoint: https://financialmodelingprep.com/api/v3/sectors-performance
     """
     path = f"sectors-performance"
     query_vars = {"apikey": API_KEY, "limit": limit}
@@ -68,9 +70,11 @@ def fail_to_deliver(symbol: str, page: int = 0) -> typing.Optional[typing.List[t
     """
     Query FMP /fail_to_deliver API for fail to deliver data.
 
-    :param symbol: Company ticker symbol
-    :param page: Page number for pagination (default is 0)
-    :return: A list of dictionaries containing fail to deliver data
+    :param symbol: Company ticker symbol.
+    :param page: Page number for pagination (default is 0).
+    :return: A list of dictionaries containing fail to deliver data.
+    :example: fail_to_deliver('AAPL', page=1)
+    :endpoint: https://financialmodelingprep.com/api/v4/fail_to_deliver?symbol={symbol}&page={page}
     """
     path = "fail_to_deliver"
     query_vars = {
@@ -82,11 +86,13 @@ def fail_to_deliver(symbol: str, page: int = 0) -> typing.Optional[typing.List[t
 
 def sector_pe_ratio(date: date, exchange: str = "NYSE") -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /sector_price_earning_ratio API
+    Query FMP /sector_price_earning_ratio API.
 
-    :param date: The date for which to retrieve the sector PE ratios
-    :param exchange: The stock exchange (default is NYSE)
-    :return: A list of dictionaries containing sector PE ratios
+    :param date: The date for which to retrieve the sector PE ratios.
+    :param exchange: The stock exchange (default is NYSE).
+    :return: A list of dictionaries containing sector PE ratios.
+    :example: sector_pe_ratio('2023-01-01', exchange='NASDAQ')
+    :endpoint: https://financialmodelingprep.com/api/v4/sector_price_earning_ratio?date={date}&exchange={exchange}
     """
     path = f"sector_price_earning_ratio"
     query_vars = {

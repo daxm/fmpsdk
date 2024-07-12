@@ -11,45 +11,46 @@ def available_efts():
     Trying to avoid a breaking change.
     This method is misspelled so moving to a correct spelling method and deprecating this one.
     Use available_etfs() instead.
-    :return:
+    :return: None
     """
     print(
         "WARNING!  This is a deprecated method.  Use available_etfs() instead.  This will go away 20240101."
     )
     available_etfs()
 
-
 def available_etfs() -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /symbol/available-etfs/ API
+    Query FMP /symbol/available-etfs/ API.
 
-    :return: A list of dictionaries.
+    :return: A list of dictionaries containing available ETFs.
+    :example: available_etfs()
+    :endpoint: https://financialmodelingprep.com/api/v3/symbol/available-etfs
     """
     path = f"symbol/available-etfs"
     query_vars = {"apikey": API_KEY}
     return __return_json_v3(path=path, query_vars=query_vars)
 
-
 def etf_price_realtime() -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /quotes/etf/ API
+    Query FMP /quotes/etf/ API.
 
     All Real-time ETF Prices.
 
-    :return: A list of dictionaries.
+    :return: A list of dictionaries containing real-time ETF prices.
+    :example: etf_price_realtime()
+    :endpoint: https://financialmodelingprep.com/api/v3/quotes/etf
     """
     path = f"etf"
-    return __quotes(apikey=API_KEY, value=path)
-
+    return __quotes(value=path)
 
 def etf_info(symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /etf-info/ API
-
-    All Real-time ETF Prices.
+    Query FMP /etf-info/ API.
 
     :param symbol: ETF ticker.
-    :return: A list of dictionaries.
+    :return: A list of dictionaries containing ETF information.
+    :example: etf_info('SPY')
+    :endpoint: https://financialmodelingprep.com/api/v4/etf-info?symbol={symbol}
     """
     path = f"etf-info"
     query_vars = {"symbol": symbol, "apikey": API_KEY}
