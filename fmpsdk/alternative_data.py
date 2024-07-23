@@ -6,7 +6,7 @@ from .url_methods import __return_json_v4
 # Read API key from environment variable
 API_KEY = os.environ.get('FMP_API_KEY')
 
-def commitment_of_traders_report_list(apikey: str = None) -> typing.Optional[typing.List[typing.Dict]]:
+def commitment_of_traders_report_list(apikey: typing.Optional[str] = None) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /commitment_of_traders_report/list API.
 
