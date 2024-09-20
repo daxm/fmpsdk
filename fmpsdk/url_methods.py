@@ -1,5 +1,7 @@
 import logging
 import typing
+import csv
+import io
 
 import requests
 
@@ -85,7 +87,16 @@ def __return_json_v4(
             url, params=query_vars, timeout=(CONNECT_TIMEOUT, READ_TIMEOUT)
         )
         if len(response.content) > 0:
-            return_var = response.json()
+            try:
+                return response.json()
+            except Exception as e:
+                # check if response.content is csv, convert csv to json format
+                content = response.content.decode("utf-8")
+                try:
+                    reader = csv.DictReader(io.StringIO(content))
+                    return [row for row in reader]
+                except csv.Error:
+                    raise e
 
         if len(response.content) == 0 or (
             isinstance(return_var, dict) and len(return_var.keys()) == 0

@@ -255,3 +255,11 @@ time_delta_5min: str = "5min"
 # print(f"Available Forex Currency Pairs: {fmpsdk.available_cryptocurrencies(apikey=apikey)=}")
 # print(f"Historical Forex Prices: {fmpsdk.historical_chart(apikey=apikey, symbol=symbol, time_delta=time_delta_5min, from_date=from_date, to_date=to_date))=}")
 # print(f"Historical Daily Forex Prices: {fmpsdk.historical_price_full(apikey=apikey, symbol=symbol)=}")
+
+### Bulk Requests
+#bulkEods = fmpsdk.bulk_historical_eod(apikey=apikey, date="2021-05-18")
+#bulkEodsDf = pd.DataFrame(bulkEods)
+#print(bulkEodsDf)
+#bulkProfiles = fmpsdk.bulk_profiles(apikey=apikey)
+#bulkProfilesDf = pd.DataFrame(bulkProfiles)
+#print(bulkProfilesDf)

@@ -110,6 +110,12 @@ from .stock_time_series import (
 from .technical_indicators import technical_indicators
 from .tsx import available_tsx, tsx_list
 
+
+from .bulk import (
+    bulk_historical_eod, 
+    bulk_profiles,
+)
+
 attribution: str = "Data provided by Financial Modeling Prep"
 logging.info(attribution)
 
@@ -147,6 +153,7 @@ __all__ = [
     "market_capitalization",
     "historical_market_capitalization",
     "symbols_list",
+    "historical_employee_count",
     "etf_list",
     "available_traded_list",
     "stock_screener",
@@ -218,4 +225,8 @@ __all__ = [
     "senate_disclosure_rss",
     "senate_disclosure_symbol",
     "shares_float",
+
+    #bulk apis
+    "bulk_historical_eod",
+    "bulk_profiles",
 ]
