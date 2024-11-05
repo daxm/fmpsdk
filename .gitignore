@@ -145,4 +145,4 @@ cython_debug/
 .DS_Store
 /._requirements.txt
 /poetry.lock
-fmpsdk/example.ipynb
+# fmpsdk/example.ipynb

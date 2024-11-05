@@ -1,15 +1,42 @@
 [tool.poetry]
 name = "fmpsdk"
-version = "20240711"
-description = ""
-authors = ["Dax Mickelson <github@daxm.net>"]
+version = "20240827"
+description = "A Python SDK for the Financial Modeling Prep API"
+authors = ["Dax Mickelson <github@daxm.net>", "David Rodriguez <github@drodriguez.com>"]
 readme = "README.md"
+license = "MIT"
+repository = "https://github.com/daxm/fmpsdk"
+keywords = ["finance", "api", "sdk", "financial modeling prep"]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 python-dotenv = "*"
 requests = "*"
+typing-extensions = "^4.0.0"
+beautifulsoup4 = "^4.9.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0"
+black = "^23.0"
+isort = "^5.0"
+flake8 = "^6.0"
+mypy = "^1.0"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+target-version = ['py312']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+ignore_missing_imports = true
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
