@@ -288,6 +288,10 @@ TIME_DELTA_VALUES: typing.List = [
     "30min",
     "1hour",
     "4hour",
+    "1day",
+    "1week",
+    "1month",
+    "1year",
 ]
 TECHNICAL_INDICATORS_TIME_DELTA_VALUES: typing.List = [
     "1min",
@@ -296,7 +300,10 @@ TECHNICAL_INDICATORS_TIME_DELTA_VALUES: typing.List = [
     "30min",
     "1hour",
     "4hour",
-    "daily",
+    "1day",
+    "1week",
+    "1month",
+    "1year",
 ]
 SERIES_TYPE_VALUES: typing.List = [
     "line",

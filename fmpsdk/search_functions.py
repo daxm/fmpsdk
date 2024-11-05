@@ -13,14 +13,17 @@ API_KEY = os.getenv('FMP_API_KEY')
 
 def search(query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = "") -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /search/ API for ticker symbols and companies by name or ticker symbol.
+    Search for companies, stocks, ETFs, and other financial instruments.
+    NOTE: This is NOT a general search function. It is only for financial instruments.
 
-    :param query: Whole or fragment of Ticker or Name of company (e.g., 'Apple' or 'AAPL').
-    :param limit: Number of rows to return. Default is DEFAULT_LIMIT.
-    :param exchange: Stock exchange to search (e.g., 'NASDAQ', 'NYSE'). If empty, searches across all exchanges.
-    :return: List of dictionaries containing search results or None if the request fails.
+    Supports over 85,000 symbols including stocks, ETFs, cryptocurrencies,
+    forex, and indexes. Results include company name, ticker, and exchange.
+
+    :param query: Full or partial name/ticker (e.g., 'Apple' or 'AAPL')
+    :param limit: Number of results to return (default: DEFAULT_LIMIT)
+    :param exchange: Filter by exchange (e.g., 'NASDAQ', 'NYSE')
+    :return: List of dicts with search results or None if request fails
     :example: search('Apple', limit=10, exchange='NASDAQ')
-    :endpoint: https://financialmodelingprep.com/api/v3/search?query={query}&limit={limit}&exchange={exchange}
     """
     path = f"search/"
     query_vars = {
@@ -34,14 +37,17 @@ def search(query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = "") -> t
 
 def search_ticker(query: str = "", limit: int = DEFAULT_LIMIT, exchange: str = "") -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /search-ticker/ API for ticker symbols by company name or ticker symbol.
+    Search for ticker symbols, company names, and exchange details.
 
-    :param query: Whole or fragment of Ticker or Name of company (e.g., 'AAPL' or 'Apple').
-    :param limit: Number of rows to return. Default is DEFAULT_LIMIT.
-    :param exchange: Stock exchange to search (e.g., 'NASDAQ', 'NYSE'). If empty, searches across all exchanges.
-    :return: List of dictionaries containing search results or None if the request fails.
+    Retrieves information for equity securities and ETFs listed on various
+    exchanges. Useful for finding specific assets when the symbol or name
+    is known.
+
+    :param query: Full or partial ticker/company name (e.g., 'AAPL' or 'Apple')
+    :param limit: Number of results to return (default: 10)
+    :param exchange: Filter by exchange (e.g., 'NASDAQ', 'NYSE')
+    :return: List of dicts with search results or None if request fails
     :example: search_ticker('AAPL', limit=10, exchange='NASDAQ')
-    :endpoint: https://financialmodelingprep.com/api/v3/search-ticker?query={query}&limit={limit}&exchange={exchange}
     """
     path = f"search-ticker/"
     query_vars = {

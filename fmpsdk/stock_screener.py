@@ -26,29 +26,28 @@ def stock_screener(
     limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /stock-screener/ API for stocks based on various filters.
+    Screen stocks based on financial and market criteria.
 
-    :param market_cap_more_than: Min market cap.
-    :param market_cap_lower_than: Max market cap.
-    :param beta_more_than: Min beta.
-    :param beta_lower_than: Max beta.
-    :param volume_more_than: Min volume.
-    :param volume_lower_than: Max volume.
-    :param dividend_more_than: Min dividend yield.
-    :param dividend_lower_than: Max dividend yield.
-    :param price_more_than: Min price.
-    :param price_lower_than: Max price.
-    :param is_etf: Filter ETFs.
-    :param is_fund: Filter mutual funds.
-    :param is_actively_trading: Filter active stocks.
-    :param sector: Filter by sector.
-    :param industry: Filter by industry.
-    :param country: Filter by country.
-    :param exchange: Filter by exchange(s).
-    :param limit: Number of results. Default is DEFAULT_LIMIT.
-    :return: List of dicts with stock data or None if request fails.
-    :example: stock_screener(market_cap_more_than=1000000000, limit=10)
-    :endpoint: https://financialmodelingprep.com/api/v3/stock-screener
+    Args:
+        market_cap_more_than, market_cap_lower_than: Market cap range (USD)
+        beta_more_than, beta_lower_than: Beta range
+        volume_more_than, volume_lower_than: Volume range
+        dividend_more_than, dividend_lower_than: Dividend yield range (%)
+        price_more_than, price_lower_than: Price range (USD)
+        is_etf: Include (True) or exclude (False) ETFs
+        is_fund: Include (True) or exclude (False) funds
+        is_actively_trading: Filter for actively traded stocks
+        sector: Filter by sector (e.g., "Technology")
+        industry: Filter by industry (e.g., "Software")
+        country: Filter by country (e.g., "US")
+        exchange: Filter by exchange(s) (str or list)
+        limit: Max results (default: DEFAULT_LIMIT)
+
+    Returns:
+        List of dicts with stock data or None if request fails
+
+    Example:
+        stock_screener(market_cap_more_than=1e9, sector='Technology', limit=10)
     """
     path = "stock-screener"
     query_vars = {"apikey": API_KEY, "limit": limit}

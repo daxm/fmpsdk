@@ -1,11 +1,33 @@
 import logging
 
+from .available_data import (
+    financial_statement_symbol_lists,
+    symbols_list,
+    etf_list,
+    available_traded_list,
+    delisted_companies,
+    available_mutual_funds,
+    available_tsx,
+    available_forex,
+    available_indexes,
+    available_industries,
+    available_sectors,
+    available_exchanges,
+    all_countries,
+    available_commodities,
+    available_cryptocurrencies,
+    available_etfs,
+    available_euronext,
+    available_mutual_funds,
+    cryptocurrencies_list
+)
+
 from .alternative_data import (
     commitment_of_traders_report,
     commitment_of_traders_report_analysis,
     commitment_of_traders_report_list,
 )
-from .calendar import (
+from .calendar_data import (
     dividend_calendar,
     earning_calendar,
     economic_calendar,
@@ -13,65 +35,48 @@ from .calendar import (
     ipo_calendar,
     stock_split_calendar,
 )
-from .commodities import available_commodities, commodities_list, commodity_price
-from .company_profile import company_profile, key_executives
-from .company_valuation import (
-    advanced_discounted_cash_flow,
-    all_countries,
-    analyst_estimates,
-    analyst_recommendation,
-    available_exchanges,
-    available_industries,
-    available_sectors,
-    available_traded_list,
-    batch_earning_call_transcript,
-    company_core_information,
-    company_notes,
-    company_outlook,
-    compensation_benchmark,
-    delisted_companies,
-    discounted_cash_flow,
-    earning_call_transcript,
-    earning_call_transcripts_available_dates,
-    earnings_surprises,
-    employee_count,
-    enterprise_values,
-    esg_score,
-    etf_list,
-    executive_compensation,
-    financial_score,
-    financial_statement_symbol_lists,
-    historical_daily_discounted_cash_flow,
-    historical_employee_count,
-    historical_rating,
-    is_market_open,
-    key_metrics,
+from .company_profile import (
+    company_profile, 
+    key_executives, 
+    company_core_information, 
+    enterprise_values, 
     key_metrics_ttm,
-    mergers_acquisitions_rss_feed,
-    owner_earnings,
-    press_releases,
-    rating,
-    revenue_geographic_segmentation,
-    sales_revenue_by_segments,
-    search_mergers_acquisitions,
-    sec_filings,
-    stock_grade,
-    stock_peers,
-    symbols_list,
-    upgrades_downgrades,
-    upgrades_downgrades_by_company,
-    upgrades_downgrades_consensus,
-    upgrades_downgrades_rss_feed,
+    key_metrics,
+    company_outlook
 )
-from .crowdfunding import crowdfunding_by_cik, crowdfunding_rss_feed, crowdfunding_search
-from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list, cryptocurrency_quote
+
+from .company_valuation import (
+    rating,
+    historical_rating,
+    stock_peers,
+    analyst_estimates,
+    sales_revenue_by_segments,
+    revenue_geographic_segmentation,
+    esg_score,
+    stock_grade,
+    financial_score,
+    owner_earnings,
+    upgrades_downgrades_consensus,
+    upgrades_downgrades_by_company,
+    search_mergers_acquisitions,
+    executive_compensation,
+    compensation_benchmark,
+    company_notes,
+    historical_employee_count,
+    employee_count,
+    analyst_recommendation,
+)
+
+from .crowdfunding import (
+    crowdfunding_by_cik, 
+    crowdfunding_rss_feed, 
+    crowdfunding_search
+)
 from .economics import (
     economic_indicators,
     market_risk_premium,
     treasury_rates,
 )
-from .etf import available_etfs
-from .euronext import available_euronext
 from .financial_growth_ratios import (
     balance_sheet_statement_growth,
     cash_flow_statement_growth,
@@ -81,27 +86,25 @@ from .financial_growth_ratios import (
     income_statement_growth,
 )
 from .financial_statements import (
+    income_statement,
     balance_sheet_statement,
-    balance_sheet_statement_as_reported,
     cash_flow_statement,
+    income_statement_as_reported,
+    balance_sheet_statement_as_reported,
     cash_flow_statement_as_reported,
     financial_statement_full_as_reported,
-    income_statement,
-    income_statement_as_reported,
+    earnings_surprises,
+    earning_call_transcript,
+    batch_earning_call_transcript,
+    earning_call_transcripts_available_dates,
+    sec_filings,
+    sec_filings_data,
 )
-from .forex import (
-    available_forex,
-    forex,
-    forex_list,
-    forex_quote,
-    forex_historical,
-)
-from .general import historical_chart, historical_price_full, quote
 from .insider_trading import (
-    insider_trading,
+    insider_trading, 
     insider_trading_rss_feed,
-    mapper_cik_company,
     mapper_cik_name,
+    mapper_cik_company
 )
 from .institutional_fund import (
     cik,
@@ -117,7 +120,6 @@ from .institutional_fund import (
     sec_rss_feeds,
 )
 from .market_indexes import (
-    available_indexes,
     dowjones_constituent,
     historical_dowjones_constituent,
     historical_nasdaq_constituent,
@@ -126,8 +128,15 @@ from .market_indexes import (
     nasdaq_constituent,
     sp500_constituent,
 )
-from .mutual_funds import available_mutual_funds, mutual_fund_list
-from .news import fmp_articles, general_news, stock_news
+from .news import (
+    fmp_articles, 
+    general_news, 
+    stock_news,
+    mergers_acquisitions_rss_feed,
+    upgrades_downgrades_rss_feed, 
+    upgrades_downgrades,
+    press_releases
+)
 from .price_target import (
     price_target_by_analyst_name,
     price_target_by_company,
@@ -135,6 +144,23 @@ from .price_target import (
     price_target_rss_feed,
     price_target_summary,
     price_targets,
+)
+
+from .quote import (
+    exchange_realtime,
+    cryptocurrency_quote,
+    commodity_price,
+    commodities_list,
+    mutual_fund_list,
+    quote,
+    is_market_open,
+    tsx_list,
+    forex,
+    forex_historical,
+    forex_list,
+    forex_quote,
+    historical_chart,
+    historical_price_full,
 )
 from .search_functions import search, search_ticker
 from .senate import (
@@ -151,32 +177,33 @@ from .social_sentiment import (
 )
 from .stock_market import (
     actives,
-    batch_eod_prices,
-    fail_to_deliver,
     gainers,
-    historical_sectors_performance,
-    industry_pe_ratio,
     losers,
     market_hours,
-    multiple_company_prices,
-    sector_pe_ratio,
     sectors_performance,
+    fail_to_deliver,
+    sector_pe_ratio,
+    industry_pe_ratio,
+    batch_eod_prices,
+    multiple_company_prices,
+    historical_sectors_performance,
 )
 from .stock_screener import stock_screener
 from .stock_time_series import (
-    exchange_realtime,
     historical_stock_dividend,
     historical_stock_split,
     quote_short,
 )
 from .technical_indicators import technical_indicators
-from .tsx import available_tsx, tsx_list
 from .valuation_metrics import (
     discounted_cash_flow,
     advanced_discounted_cash_flow,
     historical_daily_discounted_cash_flow,
     market_capitalization,
     historical_market_capitalization,
+    discounted_cash_flow,
+    advanced_discounted_cash_flow,
+    historical_daily_discounted_cash_flow,
 )
 
 attribution: str = "Data provided by Financial Modeling Prep"
@@ -264,7 +291,6 @@ __all__ = [
     "general_news",
     "historical_chart",
     "historical_daily_discounted_cash_flow",
-    "historical_discounted_cash_flow",
     "historical_dowjones_constituent",
     "historical_earning_calendar",
     "historical_employee_count",
@@ -319,6 +345,7 @@ __all__ = [
     "search_mergers_acquisitions",
     "search_ticker",
     "sec_filings",
+    "sec_filings_data",
     "sec_rss_feeds",
     "sector_pe_ratio",
     "sectors_performance",
