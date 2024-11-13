@@ -809,20 +809,20 @@ def delisted_companies(
 
 def stock_news(
     apikey: str,
-    page: int = 0,
     tickers: typing.Union[str, typing.List] = "",
     from_date: str = None,
     to_date: str = None,
+    page: int = 0,
     limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_news/ API.
 
     :param apikey: Your API key.
-    :param page: Page number.
     :param tickers: List of ticker symbols.
     :param from_date: The starting time for the API ("yyyy-mm-dd").
     :param to_date: The ending time for the API ("yyyy-mm-dd")
+    :param page: Page number.
     :param limit: Number of rows to return.
     :return: A list of dictionaries.
     """
