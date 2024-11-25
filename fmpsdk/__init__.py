@@ -109,7 +109,19 @@ from .stock_time_series import (
 )
 from .technical_indicators import technical_indicators
 from .tsx import available_tsx, tsx_list
-
+from .statistics import ( 
+    social_sentiment, 
+    trending_social_sentiment, 
+    change_social_sentiment, 
+    stock_grade
+)
+from .price_target import (
+    price_target,
+    price_target_consensus,
+    price_target_summary,
+    price_target_analyst_company,
+    price_target_analyst_name,
+)
 
 from .bulk import (
     bulk_historical_eod, 
@@ -225,6 +237,15 @@ __all__ = [
     "senate_disclosure_rss",
     "senate_disclosure_symbol",
     "shares_float",
+    "social_sentiment",
+    "trending_social_sentiment",
+    "change_social_sentiment",
+    "stock_grade",
+    "price_target",
+    "price_target_consensus",
+    "price_target_summary",
+    "price_target_analyst_company",
+    "price_target_analyst_name",
 
     #bulk apis
     "bulk_historical_eod",

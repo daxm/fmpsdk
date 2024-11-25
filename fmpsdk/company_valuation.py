@@ -648,7 +648,7 @@ def market_capitalization(
 
 
 def historical_market_capitalization(
-    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT, from_date: str = None, to_date: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical-market-capitalization/ API.
@@ -659,7 +659,7 @@ def historical_market_capitalization(
     :return: A list of dictionaries.
     """
     path = f"historical-market-capitalization/{symbol}"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey, "limit": limit, "from": from_date, "to": to_date}
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
