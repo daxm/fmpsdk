@@ -59,7 +59,7 @@ def market_open(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"is-the-market-open-all?"
+    path = f"is-the-market-open-all"
     query_vars = {"apikey": apikey}
     return __return_json_v3(path=path, query_vars=query_vars)
 
