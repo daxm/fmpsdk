@@ -52,6 +52,18 @@ def market_hours(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
+def market_open(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /is-the-market-open-all/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries.
+    """
+    path = f"is-the-market-open-all?"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
 def sectors_performance(
     apikey: str, limit: int = DEFAULT_LIMIT
 ) -> typing.Optional[typing.List[typing.Dict]]:
