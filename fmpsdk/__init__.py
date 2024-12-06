@@ -99,7 +99,7 @@ from .senate import (
     senate_trading_symbol,
 )
 from .shares_float import shares_float
-from .stock_market import actives, gainers, losers, market_hours, sectors_performance
+from .stock_market import actives, gainers, losers, market_hours, market_open, sectors_performance
 from .stock_time_series import (
     exchange_realtime,
     historical_stock_dividend,
