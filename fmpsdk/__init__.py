@@ -50,6 +50,7 @@ from .company_valuation import (
     search,
     search_ticker,
     sec_filings,
+    social_sentiments,
     stock_news,
     stock_screener,
     symbols_list,
@@ -57,10 +58,10 @@ from .company_valuation import (
     # mod
     historical_employee_count,
 )
-from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list
+from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list, crypto_news
 from .etf import available_efts, available_etfs, etf_price_realtime
 from .euronext import available_euronext, euronext_list
-from .forex import available_forex, forex, forex_list
+from .forex import available_forex, forex, forex_list, forex_news
 from .general import historical_chart, historical_price_full, quote
 from .insider_trading import (
     insider_trading,
@@ -92,6 +93,13 @@ from .market_indexes import (
     sp500_constituent,
 )
 from .mutual_funds import available_mutual_funds, mutual_fund_list
+from .news import (
+    fmp_articles,
+    general_news,
+    news_sentiment_rss,
+    sentiment_change,
+    trending_sentiment
+)
 from .senate import (
     senate_disclosure_rss,
     senate_disclosure_symbol,
@@ -159,6 +167,7 @@ __all__ = [
     "stock_screener",
     "delisted_companies",
     "stock_news",
+    "social_sentiments"
     "earnings_surprises",
     "sec_filings",
     "press_releases",
@@ -209,9 +218,11 @@ __all__ = [
     "sectors_performance",
     "available_cryptocurrencies",
     "cryptocurrencies_list",
+    "crypto_news",
     "forex",
     "forex_list",
     "available_forex",
+    "forex_news",
     "historical_survivorship_bias_free_eod",
     "insider_trading",
     "mapper_cik_name",
@@ -225,6 +236,11 @@ __all__ = [
     "senate_disclosure_rss",
     "senate_disclosure_symbol",
     "shares_float",
+    "fmp_articles",
+    "general_news",
+    "news_sentiment_rss",
+    "sentiment_change",
+    "trending_sentiment"
 
     #bulk apis
     "bulk_historical_eod",

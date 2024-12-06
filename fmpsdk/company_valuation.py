@@ -810,6 +810,9 @@ def delisted_companies(
 def stock_news(
     apikey: str,
     tickers: typing.Union[str, typing.List] = "",
+    from_date: str = None,
+    to_date: str = None,
+    page: int = 0,
     limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -817,15 +820,23 @@ def stock_news(
 
     :param apikey: Your API key.
     :param tickers: List of ticker symbols.
+    :param from_date: The starting time for the API ("yyyy-mm-dd").
+    :param to_date: The ending time for the API ("yyyy-mm-dd")
+    :param page: Page number.
     :param limit: Number of rows to return.
     :return: A list of dictionaries.
     """
     path = f"stock_news"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey, "limit": limit, "page": page}
     if tickers:
         if type(tickers) is list:
             tickers = ",".join(tickers)
         query_vars["tickers"] = tickers
+    if from_date:
+        query_vars["from"] = from_date
+    if to_date:
+        query_vars["to"] = to_date
+
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
@@ -924,6 +935,21 @@ def press_releases(
     query_vars = {"apikey": apikey, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
+def social_sentiments(
+    apikey: str, symbol: str, page: int = 0
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /historical/social-sentiment/ API
+    
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param page: Page number.
+    :return: A list of dictionaries.
+    """
+    path = f"historical/social-sentiment"
+    query_vars = {"apikey": apikey, "symbol": symbol, "page": page}
+    return __return_json_v4(path=path, query_vars=query_vars)
+    
 
 def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """

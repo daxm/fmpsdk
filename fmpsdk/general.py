@@ -54,7 +54,7 @@ def historical_chart(
     :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param time_delta: The string value of time from now to go historical "1min" - "4hour".
     :param from_date: The starting time for the API ("yyyy-mm-dd")
-    :param to_date: The starting time for the API ("yyyy-mm-dd")
+    :param to_date: The ending time for the API ("yyyy-mm-dd")
     :param time_series: line as default
 
     :return: A list of dictionaries.
