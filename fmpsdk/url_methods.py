@@ -1,7 +1,7 @@
-import logging
-import typing
 import csv
 import io
+import logging
+import typing
 
 import requests
 

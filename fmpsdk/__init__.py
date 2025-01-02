@@ -5,6 +5,7 @@ from .alternative_data import (
     commitment_of_traders_report_analysis,
     commitment_of_traders_report_list,
 )
+from .bulk import bulk_historical_eod, bulk_profiles
 from .calendar import (
     dividend_calendar,
     earning_calendar,
@@ -15,7 +16,7 @@ from .calendar import (
 )
 from .commodities import available_commodities, commodities_list
 from .company_valuation import (
-    available_traded_list,
+    available_traded_list,  # mod
     balance_sheet_statement,
     balance_sheet_statement_as_reported,
     balance_sheet_statement_growth,
@@ -36,6 +37,7 @@ from .company_valuation import (
     financial_statement_symbol_lists,
     historical_daily_discounted_cash_flow,
     historical_discounted_cash_flow,
+    historical_employee_count,
     historical_market_capitalization,
     historical_rating,
     income_statement,
@@ -54,11 +56,12 @@ from .company_valuation import (
     stock_news,
     stock_screener,
     symbols_list,
-
-    # mod
-    historical_employee_count,
 )
-from .cryptocurrencies import available_cryptocurrencies, cryptocurrencies_list, crypto_news
+from .cryptocurrencies import (
+    available_cryptocurrencies,
+    crypto_news,
+    cryptocurrencies_list,
+)
 from .etf import available_efts, available_etfs, etf_price_realtime
 from .euronext import available_euronext, euronext_list
 from .forex import available_forex, forex, forex_list, forex_news
@@ -98,7 +101,7 @@ from .news import (
     general_news,
     news_sentiment_rss,
     sentiment_change,
-    trending_sentiment
+    trending_sentiment,
 )
 from .senate import (
     senate_disclosure_rss,
@@ -107,7 +110,14 @@ from .senate import (
     senate_trading_symbol,
 )
 from .shares_float import shares_float
-from .stock_market import actives, gainers, losers, market_hours, market_open, sectors_performance
+from .stock_market import (
+    actives,
+    gainers,
+    losers,
+    market_hours,
+    market_open,
+    sectors_performance,
+)
 from .stock_time_series import (
     exchange_realtime,
     historical_stock_dividend,
@@ -117,12 +127,6 @@ from .stock_time_series import (
 )
 from .technical_indicators import technical_indicators
 from .tsx import available_tsx, tsx_list
-
-
-from .bulk import (
-    bulk_historical_eod, 
-    bulk_profiles,
-)
 
 attribution: str = "Data provided by Financial Modeling Prep"
 logging.info(attribution)
@@ -167,8 +171,7 @@ __all__ = [
     "stock_screener",
     "delisted_companies",
     "stock_news",
-    "social_sentiments"
-    "earnings_surprises",
+    "social_sentiments" "earnings_surprises",
     "sec_filings",
     "press_releases",
     "earning_calendar",
@@ -241,8 +244,7 @@ __all__ = [
     "news_sentiment_rss",
     "sentiment_change",
     "trending_sentiment"
-
-    #bulk apis
+    # bulk apis
     "bulk_historical_eod",
     "bulk_profiles",
 ]

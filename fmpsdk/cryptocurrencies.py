@@ -1,10 +1,9 @@
 import typing
 
 from .general import __quotes
-from .url_methods import __return_json_v3
-from .url_methods import __return_json_v4
+from .settings import DEFAULT_LIMIT
+from .url_methods import __return_json_v3, __return_json_v4
 
-from .settings import (DEFAULT_LIMIT)
 
 def available_cryptocurrencies(
     apikey: str,
@@ -30,13 +29,14 @@ def cryptocurrencies_list(apikey: str) -> typing.Optional[typing.List[typing.Dic
     path = f"crypto"
     return __quotes(apikey=apikey, value=path)
 
+
 def crypto_news(
     apikey: str,
     symbol: str = None,
     from_date: str = None,
     to_date: str = None,
     page: int = 0,
-    limit: int = DEFAULT_LIMIT
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /crypto_news/ API.
@@ -50,7 +50,7 @@ def crypto_news(
     :return: A list of dictionaries.
     """
     path = f"crypto_news"
-    query_vars = {"apikey": apikey, "page":page, "limit": limit}
+    query_vars = {"apikey": apikey, "page": page, "limit": limit}
     if symbol:
         query_vars["symbol"] = symbol
     if from_date:

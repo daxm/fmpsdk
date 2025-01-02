@@ -1,10 +1,9 @@
 import typing
 
 from .general import __quotes
-from .url_methods import __return_json_v3
-from .url_methods import __return_json_v4
+from .settings import DEFAULT_LIMIT
+from .url_methods import __return_json_v3, __return_json_v4
 
-from .settings import (DEFAULT_LIMIT)
 
 def forex(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -40,13 +39,14 @@ def available_forex(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     query_vars = {"apikey": apikey}
     return __return_json_v3(path=path, query_vars=query_vars)
 
+
 def forex_news(
     apikey: str,
     symbol: str = None,
     from_date: str = None,
     to_date: str = None,
     page: int = 0,
-    limit: int = DEFAULT_LIMIT
+    limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_news/ API.
@@ -60,7 +60,7 @@ def forex_news(
     :return: A list of dictionaries.
     """
     path = f"forex_news"
-    query_vars = {"apikey": apikey, "page":page, "limit": limit}
+    query_vars = {"apikey": apikey, "page": page, "limit": limit}
     if symbol:
         query_vars["symbol"] = symbol
     if from_date:

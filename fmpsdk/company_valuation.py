@@ -935,12 +935,13 @@ def press_releases(
     query_vars = {"apikey": apikey, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
 
+
 def social_sentiments(
     apikey: str, symbol: str, page: int = 0
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /historical/social-sentiment/ API
-    
+
     :param apikey: Your API key.
     :param symbol: Company ticker.
     :param page: Page number.
@@ -949,7 +950,7 @@ def social_sentiments(
     path = f"historical/social-sentiment"
     query_vars = {"apikey": apikey, "symbol": symbol, "page": page}
     return __return_json_v4(path=path, query_vars=query_vars)
-    
+
 
 def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -989,7 +990,7 @@ def historical_employee_count(
     apikey: str, symbol: str
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-      historical_employee_count  
+    historical_employee_count
     """
     path = f"historical/employee_count"
     query_vars = {"apikey": apikey, "symbol": symbol}
