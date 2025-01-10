@@ -56,6 +56,9 @@ from .company_valuation import (
     stock_news,
     stock_screener,
     symbols_list,
+    analyst_estimates,
+    analyst_recommendations,
+    upgrades_downgrades
 )
 from .cryptocurrencies import (
     available_cryptocurrencies,
@@ -243,7 +246,11 @@ __all__ = [
     "general_news",
     "news_sentiment_rss",
     "sentiment_change",
-    "trending_sentiment"
+    "trending_sentiment",
+    "analyst_estimates",
+    "analyst_recommendations",
+    "upgrades_downgrades",
+    
     # bulk apis
     "bulk_historical_eod",
     "bulk_profiles",
