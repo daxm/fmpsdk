@@ -995,3 +995,50 @@ def historical_employee_count(
     path = f"historical/employee_count"
     query_vars = {"apikey": apikey, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)
+
+
+def available_industries(apikey: str) -> typing.Optional[typing.List[str]]:
+    """
+    Query FMP /available-industries/ API.
+
+    Get a list of all available industries.
+    :param apikey: Your API key.
+    :return: A list of industry names.
+    """
+    path = "available-industries"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def upgrades_downgrades_consensus(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /upgrades-downgrades-consensus/ API.
+
+    Get analyst upgrades and downgrades consensus for a specific company.
+
+    https://site.financialmodelingprep.com/developer/docs#upgrades-downgrades-consensus
+
+    Endpoint:
+        https://financialmodelingprep.com/api/v4/upgrades-downgrades-consensus?symbol=AAPL
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker symbol.
+    :return: A list of dictionaries containing analyst consensus data with fields:
+             - symbol: The stock symbol
+             - date: The date of the consensus
+             - gradingCompany: The company providing the rating
+             - previousGrade: The previous rating
+             - newGrade: The new rating
+             - action: The type of action (upgrade/downgrade)
+             - consensusType: The type of consensus
+             - text: Additional commentary or notes
+    """
+    if not symbol:
+        logging.warning("No symbol provided for upgrades & downgrades consensus request.")
+        return None
+    
+    path = "upgrades-downgrades-consensus"
+    query_vars = {"apikey": apikey, "symbol": symbol}
+    return __return_json_v4(path=path, query_vars=query_vars)

@@ -77,3 +77,39 @@ def sectors_performance(
     path = f"sectors-performance"
     query_vars = {"apikey": apikey, "limit": limit}
     return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def biggest_gainers(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /biggest-gainers/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries containing information about the biggest gainers.
+    """
+    path = f"biggest-gainers"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def biggest_losers(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /biggest-losers/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries containing information about the biggest losers.
+    """
+    path = f"biggest-losers"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def most_actives(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /most-actives/ API
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries containing information about the most active stocks.
+    """
+    path = f"most-actives"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)

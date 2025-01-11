@@ -1,4 +1,5 @@
 import typing
+import logging
 
 from .settings import DEFAULT_LIMIT
 from .url_methods import __return_json_v3, __return_json_v4
@@ -77,4 +78,39 @@ def sentiment_change(
     """
     path = "social-sentiments/change"
     query_vars = {"apikey": apikey, "type": type, "source": source}
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
+def mergers_acquisitions_rss_feed(
+    apikey: str,
+    page: int = 0,
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /mergers-acquisitions-rss-feed API.
+
+    Get the latest mergers and acquisitions news and announcements.
+
+    https://site.financialmodelingprep.com/developer/docs#mergers-acquisitions-rss-feed
+
+    Endpoint:
+        https://financialmodelingprep.com/api/v4/mergers-acquisitions-rss-feed
+
+    :param apikey: Your API key.
+    :param page: Page number (default: 0).
+    :return: A list of dictionaries containing M&A news data with fields:
+             - title: The title of the news article
+             - link: URL to the full article
+             - pubDate: Publication date
+             - description: Article description/summary
+             - guid: Unique identifier
+             - symbol: Related stock symbol(s)
+             - source: News source
+             - sentiment: Sentiment analysis score
+    """
+    if page < 0:
+        logging.warning("Page number must be non-negative.")
+        return None
+    
+    path = "mergers-acquisitions-rss-feed"
+    query_vars = {"apikey": apikey, "page": page}
     return __return_json_v4(path=path, query_vars=query_vars)
