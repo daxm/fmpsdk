@@ -1020,6 +1020,41 @@ def upgrades_downgrades(
     }
     return __return_json_v4(path=path, query_vars=query_vars)
 
+def price_target(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /price-target/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/price-target"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def price_target_consensus(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /price-target-consensus/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/price-target-consensus"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
 
 def historical_employee_count(
     apikey: str, symbol: str

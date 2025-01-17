@@ -58,7 +58,9 @@ from .company_valuation import (
     symbols_list,
     analyst_estimates,
     analyst_recommendations,
-    upgrades_downgrades
+    upgrades_downgrades,
+    price_target,
+    price_target_consensus
 )
 from .cryptocurrencies import (
     available_cryptocurrencies,
@@ -250,6 +252,8 @@ __all__ = [
     "analyst_estimates",
     "analyst_recommendations",
     "upgrades_downgrades",
+    "price_target",
+    "price_target_consensus",
     
     # bulk apis
     "bulk_historical_eod",
