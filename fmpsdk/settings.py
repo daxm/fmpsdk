@@ -2,6 +2,7 @@ import typing
 
 BASE_URL_v3: str = "https://financialmodelingprep.com/api/v3/"
 BASE_URL_v4: str = "https://financialmodelingprep.com/api/v4/"
+BASE_URL_STABLE: str = "https://financialmodelingprep.com/stable/"
 DEFAULT_LINE_PARAMETER = "line"
 DEFAULT_LIMIT: int = 10
 INDUSTRY_VALUES: typing.List = [
@@ -324,3 +325,28 @@ SEC_RSS_FEEDS_FILENAME: str = "sec_rss_feeds.csv"
 SP500_CONSTITUENTS_FILENAME: str = "sp500_constituents.csv"
 NASDAQ_CONSTITUENTS_FILENAME: str = "nasdaq_constituents.csv"
 DOWJONES_CONSTITUENTS_FILENAME: str = "dowjones_constituents.csv"
+ECONOMIC_INDICATOR_VALUES: typing.List = [
+    "GDP",
+    "realGDP",
+    "nominalPotentialGDP",
+    "realGDPPerCapita",
+    "federalFunds",
+    "CPI",
+    "inflationRate",
+    "inflation",
+    "retailSales",
+    "consumerSentiment",
+    "durableGoods",
+    "unemploymentRate",
+    "totalNonfarmPayroll",
+    "initialClaims",
+    "industrialProductionTotalIndex",
+    "newPrivatelyOwnedHousingUnitsStartedTotalUnits",
+    "totalVehicleSales",
+    "retailMoneyFunds",
+    "smoothedUSRecessionProbabilities",
+    "3MonthOr90DayRatesAndYieldsCertificatesOfDeposit",
+    "commercialBankInterestRateOnCreditCardPlansAllAccounts",
+    "30YearFixedRateMortgageAverage",
+    "15YearFixedRateMortgageAverage"
+]

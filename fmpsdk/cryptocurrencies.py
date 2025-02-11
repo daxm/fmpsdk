@@ -1,4 +1,5 @@
 import typing
+import logging
 
 from .general import __quotes
 from .settings import DEFAULT_LIMIT
@@ -58,4 +59,32 @@ def crypto_news(
     if to_date:
         query_vars["to"] = to_date
 
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
+def last_crypto_price(apikey: str, symbol: str) -> typing.Optional[typing.Dict]:
+    """
+    Query FMP /crypto/last/ API.
+
+    Get the latest price for a cryptocurrency.
+
+    https://site.financialmodelingprep.com/developer/docs#crypto-last-price
+
+    Endpoint:
+        https://financialmodelingprep.com/api/v4/crypto/last/{symbol}
+
+    :param apikey: Your API key.
+    :param symbol: Cryptocurrency symbol (e.g., BTCUSD).
+    :return: A dictionary containing the latest price data with fields:
+             - symbol: The cryptocurrency symbol
+             - price: The current price
+             - volume: The trading volume
+             - timestamp: The timestamp of the price
+    """
+    if not symbol:
+        logging.warning("No symbol provided for last crypto price request.")
+        return None
+    
+    path = f"crypto/last/{symbol}"
+    query_vars = {"apikey": apikey}
     return __return_json_v4(path=path, query_vars=query_vars)
