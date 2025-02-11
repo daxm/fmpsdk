@@ -985,6 +985,76 @@ def analyst_estimates(
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
+def analyst_recommendations(
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /analyst-stock-recommendations/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param limit: Number of rows to return.
+    :return: A list of dictionaries.
+    """
+    path = f"/analyst-stock-recommendations/{symbol}"
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+    }
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+def upgrades_downgrades(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /upgrades-downgrades/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/upgrades-downgrades"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def price_target(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /price-target/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/price-target"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def price_target_consensus(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /price-target-consensus/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/price-target-consensus"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
 
 def historical_employee_count(
     apikey: str, symbol: str
