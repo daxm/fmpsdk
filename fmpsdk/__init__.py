@@ -60,6 +60,11 @@ from .company_valuation import (
     stock_screener,
     symbols_list,
     upgrades_downgrades_consensus,
+    analyst_estimates,
+    analyst_recommendations,
+    upgrades_downgrades,
+    price_target,
+    price_target_consensus,
 )
 from .cryptocurrencies import (
     available_cryptocurrencies,
@@ -274,6 +279,11 @@ __all__ = [
     "sentiment_change",
     "trending_sentiment",
     "mergers_acquisitions_rss_feed",
+    "analyst_estimates",
+    "analyst_recommendations",
+    "upgrades_downgrades",
+    "price_target",
+    "price_target_consensus",
     # bulk apis
     "bulk_historical_eod",
     "bulk_profiles",
