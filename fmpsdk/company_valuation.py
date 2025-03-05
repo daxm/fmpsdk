@@ -810,6 +810,9 @@ def delisted_companies(
 def stock_news(
     apikey: str,
     tickers: typing.Union[str, typing.List] = "",
+    from_date: str = None,
+    to_date: str = None,
+    page: int = 0,
     limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
@@ -817,15 +820,23 @@ def stock_news(
 
     :param apikey: Your API key.
     :param tickers: List of ticker symbols.
+    :param from_date: The starting time for the API ("yyyy-mm-dd").
+    :param to_date: The ending time for the API ("yyyy-mm-dd")
+    :param page: Page number.
     :param limit: Number of rows to return.
     :return: A list of dictionaries.
     """
     path = f"stock_news"
-    query_vars = {"apikey": apikey, "limit": limit}
+    query_vars = {"apikey": apikey, "limit": limit, "page": page}
     if tickers:
         if type(tickers) is list:
             tickers = ",".join(tickers)
         query_vars["tickers"] = tickers
+    if from_date:
+        query_vars["from"] = from_date
+    if to_date:
+        query_vars["to"] = to_date
+
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
@@ -925,6 +936,22 @@ def press_releases(
     return __return_json_v3(path=path, query_vars=query_vars)
 
 
+def social_sentiments(
+    apikey: str, symbol: str, page: int = 0
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /historical/social-sentiment/ API
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param page: Page number.
+    :return: A list of dictionaries.
+    """
+    path = f"historical/social-sentiment"
+    query_vars = {"apikey": apikey, "symbol": symbol, "page": page}
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
 def stock_peers(apikey: str, symbol: str) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /stock_peers/ API
@@ -958,13 +985,130 @@ def analyst_estimates(
     }
     return __return_json_v3(path=path, query_vars=query_vars)
 
+def analyst_recommendations(
+    apikey: str, symbol: str, limit: int = DEFAULT_LIMIT
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /analyst-stock-recommendations/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :param limit: Number of rows to return.
+    :return: A list of dictionaries.
+    """
+    path = f"/analyst-stock-recommendations/{symbol}"
+    query_vars = {
+        "apikey": apikey,
+        "limit": limit,
+    }
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+def upgrades_downgrades(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /upgrades-downgrades/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/upgrades-downgrades"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def price_target(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /price-target/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/price-target"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+def price_target_consensus(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /price-target-consensus/ API.
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker.
+    :return: A list of dictionaries.
+    """
+    path = f"/price-target-consensus"
+    query_vars = {
+        "apikey": apikey,
+        "symbol": symbol
+    }
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
 
 def historical_employee_count(
     apikey: str, symbol: str
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-      historical_employee_count  
+    historical_employee_count
     """
     path = f"historical/employee_count"
+    query_vars = {"apikey": apikey, "symbol": symbol}
+    return __return_json_v4(path=path, query_vars=query_vars)
+
+
+def available_industries(apikey: str) -> typing.Optional[typing.List[str]]:
+    """
+    Query FMP /available-industries/ API.
+
+    Get a list of all available industries.
+    :param apikey: Your API key.
+    :return: A list of industry names.
+    """
+    path = "available-industries"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def upgrades_downgrades_consensus(
+    apikey: str, symbol: str
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /upgrades-downgrades-consensus/ API.
+
+    Get analyst upgrades and downgrades consensus for a specific company.
+
+    https://site.financialmodelingprep.com/developer/docs#upgrades-downgrades-consensus
+
+    Endpoint:
+        https://financialmodelingprep.com/api/v4/upgrades-downgrades-consensus?symbol=AAPL
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker symbol.
+    :return: A list of dictionaries containing analyst consensus data with fields:
+             - symbol: The stock symbol
+             - date: The date of the consensus
+             - gradingCompany: The company providing the rating
+             - previousGrade: The previous rating
+             - newGrade: The new rating
+             - action: The type of action (upgrade/downgrade)
+             - consensusType: The type of consensus
+             - text: Additional commentary or notes
+    """
+    if not symbol:
+        logging.warning("No symbol provided for upgrades & downgrades consensus request.")
+        return None
+    
+    path = "upgrades-downgrades-consensus"
     query_vars = {"apikey": apikey, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)

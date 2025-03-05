@@ -2,45 +2,69 @@ import logging
 import typing
 
 from .settings import DEFAULT_LIMIT
-from .url_methods import __return_json_v4
+from .url_methods import __return_json_v3, __return_json_v4
 
 
 def insider_trading(
     apikey: str,
     symbol: str = None,
-    reporting_cik: int = None,
-    company_cik: int = None,
+    reporting_name: str = None,
     limit: int = DEFAULT_LIMIT,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /insider-trading/ API.
 
-    The federal securities laws require certain individuals (such as officers, directors, and those that hold more
-    than 10% of any class of a company’s securities, together we’ll call, “insiders”) to report purchases, sales,
-    and holdings of their company’s securities by filing Forms 3, 4, and 5.
-
-    This API can be queried with your choice of symbol, company_cik or reporting_cik. Only one of these parameters
-    will be accepted.
-
     :param apikey: Your API key.
     :param symbol: Company ticker.
-    :param reporting_cik: String of CIK
-    :param company_cik: String of CIK
-    :param limit: Number of records to return.
+    :param reporting_name: Name of reporting person.
+    :param limit: Number of rows to return.
     :return: A list of dictionaries.
     """
-    path = f"insider-trading/"
+    path = f"insider-trading"
     query_vars = {"apikey": apikey, "limit": limit}
-    if not sum(i is not None for i in [reporting_cik, company_cik, symbol]) == 1:
-        msg = "Do not combine symbol, reporting_cik or company_cik parameters. Only provide one."
-        logging.error(msg)
-        raise ValueError(msg)
-    if reporting_cik:
-        query_vars["reportingCik"] = reporting_cik
-    if company_cik:
-        query_vars["companyCik"] = company_cik
     if symbol:
         query_vars["symbol"] = symbol
+    if reporting_name:
+        query_vars["reportingName"] = reporting_name
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def insider_trade_statistics(
+    apikey: str,
+    symbol: str,
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /insider-roaster-statistic API.
+
+    Get insider trading statistics for a specific company.
+
+    https://site.financialmodelingprep.com/developer/docs#insider-trade-statistics
+
+    Endpoint:
+        https://financialmodelingprep.com/api/v4/insider-roaster-statistic?symbol=AAPL
+
+    :param apikey: Your API key.
+    :param symbol: Company ticker symbol.
+    :return: A list of dictionaries containing insider trading statistics with fields:
+             - symbol: The stock symbol
+             - name: Name of the insider
+             - position: Position in the company
+             - totalBuy: Total number of buy transactions
+             - totalBuyAmount: Total amount spent on buys
+             - totalSell: Total number of sell transactions
+             - totalSellAmount: Total amount from sells
+             - totalTransactions: Total number of transactions
+             - lastDate: Date of last transaction
+             - lastPrice: Price of last transaction
+             - lastAmount: Amount of last transaction
+             - lastType: Type of last transaction (buy/sell)
+    """
+    if not symbol:
+        logging.warning("Symbol is required for insider trade statistics request.")
+        return None
+    
+    path = "insider-roaster-statistic"
+    query_vars = {"apikey": apikey, "symbol": symbol}
     return __return_json_v4(path=path, query_vars=query_vars)
 
 

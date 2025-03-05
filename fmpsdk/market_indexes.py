@@ -9,8 +9,9 @@ from .settings import (
     NASDAQ_CONSTITUENTS_FILENAME,
     SP500_CONSTITUENTS_FILENAME,
     BASE_URL_v3,
+    DEFAULT_LIMIT,
 )
-from .url_methods import __return_json_v3
+from .url_methods import __return_json_v3, __return_json_v4
 
 
 def indexes(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
@@ -20,8 +21,9 @@ def indexes(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     :param apikey: Your API key.
     :return: A list of dictionaries.
     """
-    path = f"index"
-    return __quotes(apikey=apikey, value=path)
+    path = f"quotes/index"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
 
 
 def sp500_constituent(
@@ -146,5 +148,81 @@ def available_indexes(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
     :return: A list of dictionaries.
     """
     path = f"symbol/available-indexes"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def available_sectors(apikey: str) -> typing.Optional[typing.List[str]]:
+    """
+    Query FMP /sectors-list API to get all available sectors.
+
+    :param apikey: Your API key
+    :return: A list of sector names.
+    """
+    path = f"sectors-list"
+    query_vars = {"apikey": apikey}
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def historical_sectors_performance(
+    apikey: str,
+    from_date: str,
+    to_date: str,
+    limit: int = DEFAULT_LIMIT,
+) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /historical-sectors-performance API.
+
+    Get historical performance data for different market sectors.
+
+    https://site.financialmodelingprep.com/developer/docs#sector-historical
+
+    Endpoint:
+        https://financialmodelingprep.com/api/v3/historical-sectors-performance
+
+    :param apikey: Your API key.
+    :param from_date: The start date in "YYYY-MM-DD" format.
+    :param to_date: The end date in "YYYY-MM-DD" format.
+    :param limit: Number of records to return.
+    :return: A list of dictionaries containing sector performance data with fields:
+             - date: The date of the performance data
+             - utilitiesChangesPercentage: Utilities sector performance
+             - basicMaterialsChangesPercentage: Basic Materials sector performance
+             - communicationServicesChangesPercentage: Communication Services sector performance
+             - conglomeratesChangesPercentage: Conglomerates sector performance
+             - consumerCyclicalChangesPercentage: Consumer Cyclical sector performance
+             - consumerDefensiveChangesPercentage: Consumer Defensive sector performance
+             - energyChangesPercentage: Energy sector performance
+             - financialChangesPercentage: Financial sector performance
+             - financialServicesChangesPercentage: Financial Services sector performance
+             - healthcareChangesPercentage: Healthcare sector performance
+             - industrialGoodsChangesPercentage: Industrial Goods sector performance
+             - industrialsChangesPercentage: Industrials sector performance
+             - realEstateChangesPercentage: Real Estate sector performance
+             - servicesChangesPercentage: Services sector performance
+             - technologyChangesPercentage: Technology sector performance
+    """
+    if not from_date or not to_date:
+        logging.warning("Both from_date and to_date are required for historical sectors performance request.")
+        return None
+    
+    path = "historical-sectors-performance"
+    query_vars = {
+        "apikey": apikey,
+        "from": from_date,
+        "to": to_date,
+        "limit": limit
+    }
+    return __return_json_v3(path=path, query_vars=query_vars)
+
+
+def all_exchange_market_hours(apikey: str) -> typing.Optional[typing.List[typing.Dict]]:
+    """
+    Query FMP /all-exchange-market-hours API to get market hours for all exchanges.
+
+    :param apikey: Your API key.
+    :return: A list of dictionaries containing market hours information for all exchanges.
+    """
+    path = "all-exchange-market-hours"
     query_vars = {"apikey": apikey}
     return __return_json_v3(path=path, query_vars=query_vars)

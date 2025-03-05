@@ -1,7 +1,7 @@
-import logging
-import typing
 import csv
 import io
+import logging
+import typing
 
 import requests
 
@@ -15,6 +15,8 @@ from .settings import (
     TIME_DELTA_VALUES,
     BASE_URL_v3,
     BASE_URL_v4,
+    BASE_URL_STABLE,
+    ECONOMIC_INDICATOR_VALUES,
 )
 
 CONNECT_TIMEOUT = 5
@@ -42,7 +44,16 @@ def __return_json_v3(
             url, params=query_vars, timeout=(CONNECT_TIMEOUT, READ_TIMEOUT)
         )
         if len(response.content) > 0:
-            return_var = response.json()
+            if query_vars.get('datatype') == 'csv':
+                content = response.content.decode("utf-8")
+                try:
+                    reader = csv.DictReader(io.StringIO(content))
+                    return_var = [row for row in reader]
+                except csv.Error as e:
+                    logging.error(f"Failed to parse CSV response: {e}")
+                    raise e
+            else:
+                return_var = response.json()
 
         if len(response.content) == 0 or (
             isinstance(return_var, dict) and len(return_var.keys()) == 0
@@ -87,16 +98,70 @@ def __return_json_v4(
             url, params=query_vars, timeout=(CONNECT_TIMEOUT, READ_TIMEOUT)
         )
         if len(response.content) > 0:
-            try:
-                return response.json()
-            except Exception as e:
-                # check if response.content is csv, convert csv to json format
+            if query_vars.get('datatype') == 'csv':
                 content = response.content.decode("utf-8")
                 try:
                     reader = csv.DictReader(io.StringIO(content))
-                    return [row for row in reader]
-                except csv.Error:
+                    return_var = [row for row in reader]
+                except csv.Error as e:
+                    logging.error(f"Failed to parse CSV response: {e}")
                     raise e
+            else:
+                return_var = response.json()
+
+        if len(response.content) == 0 or (
+            isinstance(return_var, dict) and len(return_var.keys()) == 0
+        ):
+            logging.warning("Response appears to have no data.  Returning empty List.")
+            return_var = []
+
+    except requests.Timeout:
+        logging.error(f"Connection to {url} timed out.")
+    except requests.ConnectionError:
+        logging.error(
+            f"Connection to {url} failed:  DNS failure, refused connection or some other connection related "
+            f"issue."
+        )
+    except requests.TooManyRedirects:
+        logging.error(
+            f"Request to {url} exceeds the maximum number of predefined redirections."
+        )
+    except Exception as e:
+        logging.error(
+            f"A requests exception has occurred that we have not yet detailed an 'except' clause for.  "
+            f"Error: {e}"
+        )
+    return return_var
+
+
+def __return_json_stable(
+    path: str, query_vars: typing.Dict
+) -> typing.Optional[typing.List]:
+    """
+    Query URL for JSON response for stable version of FMP API.
+
+    :param path: Path after TLD of URL
+    :param query_vars: Dictionary of query values (after "?" of URL)
+    :return: JSON response
+    """
+    
+    url = f"{BASE_URL_STABLE}{path}"
+    return_var = None
+    try:
+        response = requests.get(
+            url, params=query_vars, timeout=(CONNECT_TIMEOUT, READ_TIMEOUT)
+        )
+        if len(response.content) > 0:
+            if query_vars.get('datatype') == 'csv':
+                content = response.content.decode("utf-8")
+                try:
+                    reader = csv.DictReader(io.StringIO(content))
+                    return_var = [row for row in reader]
+                except csv.Error as e:
+                    logging.error(f"Failed to parse CSV response: {e}")
+                    raise e
+            else:
+                return_var = response.json()
 
         if len(response.content) == 0 or (
             isinstance(return_var, dict) and len(return_var.keys()) == 0
@@ -221,3 +286,17 @@ def __validate_technical_indicators_time_delta(value: str) -> str:
         logging.error(
             f"Invalid time_delta value: {value}.  Valid options: {valid_values}"
         )
+
+
+def __validate_economic_indicator(value: str) -> str:
+    """
+    Validate economic indicator value.
+
+    :param value: Value to validate
+    :return: Validated value
+    """
+    if value not in ECONOMIC_INDICATOR_VALUES:
+        raise ValueError(
+            f"'{value}' not in {ECONOMIC_INDICATOR_VALUES}"
+        )
+    return value

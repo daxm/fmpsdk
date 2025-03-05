@@ -32,9 +32,7 @@ def quote(
     """
     if type(symbol) is list:
         symbol = ",".join(symbol)
-    path = f"quote/{symbol}"
-    query_vars = {"apikey": apikey}
-    return __return_json_v3(path=path, query_vars=query_vars)
+    return __quotes(apikey=apikey, value=symbol)
 
 
 def historical_chart(
@@ -54,7 +52,7 @@ def historical_chart(
     :param symbol: The Ticker, Index, Commodity, etc. symbol to query for.
     :param time_delta: The string value of time from now to go historical "1min" - "4hour".
     :param from_date: The starting time for the API ("yyyy-mm-dd")
-    :param to_date: The starting time for the API ("yyyy-mm-dd")
+    :param to_date: The ending time for the API ("yyyy-mm-dd")
     :param time_series: line as default
 
     :return: A list of dictionaries.
