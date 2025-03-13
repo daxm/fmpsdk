@@ -17,6 +17,7 @@ from .settings import (
 from .url_methods import (
     __return_json_v3,
     __return_json_v4,
+    __return_json_stable,
     __validate_industry,
     __validate_period,
     __validate_sector,
@@ -1077,7 +1078,7 @@ def available_industries(apikey: str) -> typing.Optional[typing.List[str]]:
     """
     path = "available-industries"
     query_vars = {"apikey": apikey}
-    return __return_json_v3(path=path, query_vars=query_vars)
+    return __return_json_stable(path=path, query_vars=query_vars)
 
 
 def upgrades_downgrades_consensus(
