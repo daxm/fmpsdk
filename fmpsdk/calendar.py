@@ -2,22 +2,22 @@ import typing
 import logging
 
 from .settings import DEFAULT_LIMIT
-from .url_methods import __return_json_v3, __return_json_v4
+from .url_methods import __return_json_v3, __return_json_v4, __return_json_stable
 
 
 def earning_calendar(
     apikey: str, from_date: str = None, to_date: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /earning_calendar/ API.
+    Query FMP /earnings-calendar/ API.
 
     Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
-    :param from_date: 'YYYY:MM:DD'
-    :param to_date: 'YYYY:MM:DD'
+    :param from_date: 'YYYY-MM-DD'
+    :param to_date: 'YYYY-MM-DD'
     :return: A list of dictionaries.
     """
-    path = f"earning_calendar"
+    path = f"earnings-calendar"
     query_vars = {
         "apikey": apikey,
     }
@@ -25,7 +25,7 @@ def earning_calendar(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+    return __return_json_stable(path=path, query_vars=query_vars)
 
 
 def historical_earning_calendar(
