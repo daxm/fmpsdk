@@ -53,15 +53,15 @@ def ipo_calendar(
     apikey: str, from_date: str = None, to_date: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /ipo_calendar/ API.
+    Query FMP /ipos-calendar/ API.
 
     Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
-    :param from_date: 'YYYY:MM:DD'
-    :param to_date: 'YYYY:MM:DD'
+    :param from_date: 'YYYY-MM-DD'
+    :param to_date: 'YYYY-MM-DD'
     :return: A list of dictionaries.
     """
-    path = f"ipo_calendar"
+    path = f"ipos-calendar"
     query_vars = {
         "apikey": apikey,
     }
@@ -69,22 +69,22 @@ def ipo_calendar(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+    return __return_json_stable(path=path, query_vars=query_vars)
 
 
 def stock_split_calendar(
     apikey: str, from_date: str = None, to_date: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /stock_split_calendar/ API.
+    Query FMP /splits-calendar/ API.
 
     Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
-    :param from_date: 'YYYY:MM:DD'
-    :param to_date: 'YYYY:MM:DD'
+    :param from_date: 'YYYY-MM-DD'
+    :param to_date: 'YYYY-MM-DD'
     :return: A list of dictionaries.
     """
-    path = f"stock_split_calendar"
+    path = f"splits-calendar"
     query_vars = {
         "apikey": apikey,
     }
@@ -92,22 +92,22 @@ def stock_split_calendar(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+    return __return_json_stable(path=path, query_vars=query_vars)
 
 
 def dividend_calendar(
     apikey: str, from_date: str = None, to_date: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /stock_dividend_calendar/ API.
+    Query FMP /dividends-calendar/ API.
 
     Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
-    :param from_date: 'YYYY:MM:DD'
-    :param to_date: 'YYYY:MM:DD'
+    :param from_date: 'YYYY-MM-DD'
+    :param to_date: 'YYYY-MM-DD'
     :return: A list of dictionaries.
     """
-    path = f"stock_dividend_calendar"
+    path = f"dividends-calendar"
     query_vars = {
         "apikey": apikey,
     }
@@ -115,22 +115,23 @@ def dividend_calendar(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+
+    return __return_json_stable(path=path, query_vars=query_vars)
 
 
 def economic_calendar(
     apikey: str, from_date: str = None, to_date: str = None
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
-    Query FMP /economic_calendar/ API.
+    Query FMP /economic-calendar/ API.
 
     Note: Between the "from" and "to" parameters the maximum time interval can be 3 months.
     :param apikey: Your API key.
-    :param from_date: 'YYYY:MM:DD'
-    :param to_date: 'YYYY:MM:DD'
+    :param from_date: 'YYYY-MM-DD'
+    :param to_date: 'YYYY-MM-DD'
     :return: A list of dictionaries.
     """
-    path = f"economic_calendar"
+    path = f"economic-calendar"
     query_vars = {
         "apikey": apikey,
     }
@@ -138,7 +139,7 @@ def economic_calendar(
         query_vars["from"] = from_date
     if to_date:
         query_vars["to"] = to_date
-    return __return_json_v3(path=path, query_vars=query_vars)
+    return __return_json_stable(path=path, query_vars=query_vars)
 
 
 def earning_calendar_confirmed(
