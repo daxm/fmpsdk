@@ -4,6 +4,7 @@ version = "20250102.0"
 description = ""
 authors = ["Dax Mickelson <github@daxm.net>"]
 readme = "README.md"
+license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
 python = "*"
