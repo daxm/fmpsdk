@@ -78,8 +78,13 @@ from .forex import available_forex, forex, forex_list, forex_news
 from .general import historical_chart, historical_price_full, quote
 from .insider_trading import (
     insider_trading,
+    insider_trading_latest,
+    insider_trading_by_reporting_name,
+    insider_trading_transaction_types,
+    insider_trading_statistics,
+    acquisition_of_beneficial_ownership,
+
     insider_trading_rss_feed,
-    insider_trade_statistics,
     mapper_cik_company,
     mapper_cik_name,
 )
