@@ -65,6 +65,7 @@ from .company_valuation import (
     upgrades_downgrades,
     price_target,
     price_target_consensus,
+    stock_peers,
 )
 from .cryptocurrencies import (
     available_cryptocurrencies,
@@ -201,7 +202,8 @@ __all__ = [
     "stock_screener",
     "delisted_companies",
     "stock_news",
-    "social_sentiments" "earnings_surprises",
+    "social_sentiments",
+    "earnings_surprises",
     "sec_filings",
     "press_releases",
     "earning_calendar",
@@ -289,6 +291,7 @@ __all__ = [
     "upgrades_downgrades",
     "price_target",
     "price_target_consensus",
+    "stock_peers",
     # bulk apis
     "bulk_historical_eod",
     "bulk_profiles",
