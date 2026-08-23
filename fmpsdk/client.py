@@ -37,6 +37,7 @@ from .endpoints.directory import DirectoryEndpoints
 from .endpoints.economics import EconomicsEndpoints
 from .endpoints.esg import EsgEndpoints
 from .endpoints.funds import FundsEndpoints
+from .endpoints.institutional_ownership import InstitutionalOwnershipEndpoints
 from .endpoints.search import SearchEndpoints
 from .endpoints.statements import StatementsEndpoints
 
@@ -110,6 +111,7 @@ class Client(
     EsgEndpoints,
     FundsEndpoints,
     StatementsEndpoints,
+    InstitutionalOwnershipEndpoints,
 ):
     """fmpsdk client.
 

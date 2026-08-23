@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 65 / 238 methods done** (41 more implemented + unit-tested, pending
+**Progress: 65 / 238 methods done** (49 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -264,18 +264,20 @@ Ultimate verification).
 
 ## `client.institutional_ownership` — Form 13F institutional holdings, holders, and derived analytics.
 
-> **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit (Form 13F).
+> **Bucket 2 (Ultimate-gated), confirmed live:** the pricing-audit prediction held —
+> all 8 methods 402 on the free tier. Tests live in
+> `tests/ultimate/test_institutional_ownership.py` only.
 
 8 methods.
 
-- [ ] `institutional_ownership_dates` — `institutional-ownership/dates`
-- [ ] `institutional_ownership_extract` — `institutional-ownership/extract`
-- [ ] `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder`
-- [ ] `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown`
-- [ ] `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary`
-- [ ] `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary`
-- [ ] `institutional_ownership_latest` — `institutional-ownership/latest`
-- [ ] `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary`
+- [x] ultimate-pending `institutional_ownership_dates` — `institutional-ownership/dates` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_extract` — `institutional-ownership/extract` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_latest` — `institutional-ownership/latest` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (402 on free tier)
 
 ## `client.indexes` — Stock-market indexes, their quotes/charts, and their constituent lists.
 

@@ -225,6 +225,30 @@ class StatementsGroup:
         self.revenue_product_segmentation = bind("revenue_product_segmentation")
 
 
+class InstitutionalOwnershipGroup:
+    """``client.institutional_ownership`` — 8 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.institutional_ownership_dates = bind("institutional_ownership_dates")
+        self.institutional_ownership_extract = bind("institutional_ownership_extract")
+        self.institutional_ownership_extract_analytics_holder = bind(
+            "institutional_ownership_extract_analytics_holder"
+        )
+        self.institutional_ownership_holder_industry_breakdown = bind(
+            "institutional_ownership_holder_industry_breakdown"
+        )
+        self.institutional_ownership_holder_performance_summary = bind(
+            "institutional_ownership_holder_performance_summary"
+        )
+        self.institutional_ownership_industry_summary = bind(
+            "institutional_ownership_industry_summary"
+        )
+        self.institutional_ownership_latest = bind("institutional_ownership_latest")
+        self.institutional_ownership_symbol_positions_summary = bind(
+            "institutional_ownership_symbol_positions_summary"
+        )
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -246,3 +270,4 @@ def attach_groups(client: "Client") -> None:
     client.esg = EsgGroup(bind)
     client.funds = FundsGroup(bind)
     client.statements = StatementsGroup(bind)
+    client.institutional_ownership = InstitutionalOwnershipGroup(bind)
