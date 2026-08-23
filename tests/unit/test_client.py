@@ -65,3 +65,29 @@ def test_plan_limit_error_message_says_request_not_endpoint(client, requests_moc
 def test_empty_response_body_returns_empty_list(client, requests_mock):
     requests_mock.get(BASE + "search-symbol", status_code=200, content=b"")
     assert client.search_symbol(query="NOPE") == []
+
+
+@pytest.mark.parametrize("status_code,exception_cls", [(429, fmpsdk.FMPRateLimitError), (503, fmpsdk.FMPServerError)])
+def test_retryable_statuses_retry_then_raise_after_max_retries(
+    client, requests_mock, monkeypatch, status_code, exception_cls
+):
+    monkeypatch.setattr("fmpsdk.client.time.sleep", lambda _seconds: None)
+    requests_mock.get(BASE + "search-symbol", status_code=status_code, text="try again later")
+    with pytest.raises(exception_cls):
+        client.search_symbol(query="AAPL")
+    # 1 initial attempt + client.max_retries (default 3) retries.
+    assert requests_mock.call_count == client.max_retries + 1
+
+
+def test_retryable_status_succeeds_after_transient_failure(client, requests_mock, monkeypatch):
+    monkeypatch.setattr("fmpsdk.client.time.sleep", lambda _seconds: None)
+    requests_mock.get(
+        BASE + "search-symbol",
+        [
+            {"status_code": 503, "text": "temporarily unavailable"},
+            {"status_code": 200, "json": [{"symbol": "AAPL"}]},
+        ],
+    )
+    result = client.search_symbol(query="AAPL")
+    assert result == [{"symbol": "AAPL"}]
+    assert requests_mock.call_count == 2

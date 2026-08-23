@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import logging
 import os
+import random
 import time
 
 import requests
@@ -49,33 +50,20 @@ _NON_RETRYABLE_STATUS_TO_EXCEPTION: dict[int, type[FMPError]] = {
 def _compute_backoff_delay(attempt: int) -> float:
     """Seconds to sleep before retry number ``attempt`` (0-indexed).
 
-    TODO(dax): design the actual backoff schedule.
-
-    This is a real tradeoff, not boilerplate, and it's specific to how you
-    use this SDK: every retry is a real HTTP call and counts against your
-    daily FMP quota (you're at 71/250 today on the free tier) — so an
-    aggressive schedule that retries fast and often can burn quota chasing
-    a 429 that won't clear for a while, while a schedule that's too slow
-    makes a flaky connection error take forever to recover from.
+    Exponential backoff with jitter: ``2**attempt`` seconds plus up to 1s
+    of random jitter, so ``max_retries=3`` (the default) spaces retries at
+    roughly 1-2s, 2-3s, 4-5s. The jitter keeps retries from synchronizing
+    if this is ever driven concurrently; the exponential growth means a
+    429 that won't clear for a bit doesn't get hammered repeatedly.
 
     Only 429 (rate limit) and 5xx (FMP-side failure) ever reach this
     function — 400/401/402/404 raise immediately in ``Client._get``, never
-    retried, so they don't cost you extra calls.
-
-    Some starting points:
-    - fixed delay: `return 1.0`
-    - linear: `return 1.0 * (attempt + 1)`
-    - exponential: `return 2.0 ** attempt`
-    - exponential + jitter (avoids retry storms if you ever run this
-      concurrently): `return (2.0 ** attempt) + random.uniform(0, 1)`
+    retried, so they don't cost extra calls against the daily quota.
 
     :param attempt: 0 for the first retry, 1 for the second, etc.
     :return: seconds to sleep before the retry.
     """
-    raise NotImplementedError(
-        "Pick a backoff schedule in fmpsdk/client.py:_compute_backoff_delay "
-        "before Client can retry anything — see the TODO above it."
-    )
+    return (2.0**attempt) + random.uniform(0, 1)
 
 
 def _map_error(response: requests.Response) -> FMPError:
