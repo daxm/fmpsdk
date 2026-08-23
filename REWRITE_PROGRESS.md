@@ -25,8 +25,9 @@ is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-p
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
 **Progress: 65 / 238 methods done** (49 more implemented + unit-tested pending
-Ultimate verification; 45 more implemented this pass but not yet unit-tested or
-live-verified — see the `indexes` through `technical_indicators` groups below).
+Ultimate verification; 99 more implemented across two code-only passes but not yet
+unit-tested or live-verified — see the `indexes` through `congress` groups below).
+Remaining unstarted: `bulk` (18) and `tipranks` (7), both flagged likely Bucket 2.
 
 ---
 
@@ -401,82 +402,105 @@ live-verified — see the `indexes` through `technical_indicators` groups below)
 
 10 methods.
 
-- [ ] `fmp_articles` — `fmp-articles`
-- [ ] `news_crypto` — `news/crypto`
-- [ ] `news_crypto_latest` — `news/crypto-latest`
-- [ ] `news_forex` — `news/forex`
-- [ ] `news_forex_latest` — `news/forex-latest`
-- [ ] `news_general_latest` — `news/general-latest`
-- [ ] `news_press_releases` — `news/press-releases`
-- [ ] `news_press_releases_latest` — `news/press-releases-latest`
-- [ ] `news_stock` — `news/stock`
-- [ ] `news_stock_latest` — `news/stock-latest`
+> **Implemented, not yet live-tested this session** (code-only pass, same as the
+> `indexes`-through-`technical_indicators` batch above — see `fmpsdk-rewrite-status`
+> memory note).
+
+- [ ] implemented `fmp_articles` — `fmp-articles`
+- [ ] implemented `news_crypto` — `news/crypto`
+- [ ] implemented `news_crypto_latest` — `news/crypto-latest`
+- [ ] implemented `news_forex` — `news/forex`
+- [ ] implemented `news_forex_latest` — `news/forex-latest`
+- [ ] implemented `news_general_latest` — `news/general-latest`
+- [ ] implemented `news_press_releases` — `news/press-releases`
+- [ ] implemented `news_press_releases_latest` — `news/press-releases-latest`
+- [ ] implemented `news_stock` — `news/stock`
+- [ ] implemented `news_stock_latest` — `news/stock-latest`
 
 ## `client.quote` — Real-time and aftermarket quotes, single and batch.
 
 16 methods.
 
-- [ ] `aftermarket_quote` — `aftermarket-quote`
-- [ ] `aftermarket_trade` — `aftermarket-trade`
-- [ ] `batch_aftermarket_quote` — `batch-aftermarket-quote`
-- [ ] `batch_aftermarket_trade` — `batch-aftermarket-trade`
-- [ ] `batch_commodity_quotes` — `batch-commodity-quotes`
-- [ ] `batch_crypto_quotes` — `batch-crypto-quotes`
-- [ ] `batch_etf_quotes` — `batch-etf-quotes`
-- [ ] `batch_exchange_quote` — `batch-exchange-quote`
-- [ ] `batch_forex_quotes` — `batch-forex-quotes`
-- [ ] `batch_index_quotes` — `batch-index-quotes`
-- [ ] `batch_mutualfund_quotes` — `batch-mutualfund-quotes`
-- [ ] `batch_quote` — `batch-quote`
-- [ ] `batch_quote_short` — `batch-quote-short`
-- [ ] `quote` — `quote`
-- [ ] `quote_short` — `quote-short`
-- [ ] `stock_price_change` — `stock-price-change`
+> **Implemented, not yet live-tested this session.** This completes the full §4.3
+> cross-listing table: `quote`/`quote_short`/`batch_index_quotes`/
+> `batch_commodity_quotes`/`batch_crypto_quotes`/`batch_forex_quotes` are now wired
+> into `client.indexes`/`commodity`/`crypto`/`forex` in `groups.py` — all 10
+> cross-listings in the whole rewrite are wired, identity-asserted at write time.
+
+- [ ] implemented `aftermarket_quote` — `aftermarket-quote`
+- [ ] implemented `aftermarket_trade` — `aftermarket-trade`
+- [ ] implemented `batch_aftermarket_quote` — `batch-aftermarket-quote`
+- [ ] implemented `batch_aftermarket_trade` — `batch-aftermarket-trade`
+- [ ] implemented `batch_commodity_quotes` — `batch-commodity-quotes`
+- [ ] implemented `batch_crypto_quotes` — `batch-crypto-quotes`
+- [ ] implemented `batch_etf_quotes` — `batch-etf-quotes`
+- [ ] implemented `batch_exchange_quote` — `batch-exchange-quote`
+- [ ] implemented `batch_forex_quotes` — `batch-forex-quotes`
+- [ ] implemented `batch_index_quotes` — `batch-index-quotes`
+- [ ] implemented `batch_mutualfund_quotes` — `batch-mutualfund-quotes`
+- [ ] implemented `batch_quote` — `batch-quote`
+- [ ] implemented `batch_quote_short` — `batch-quote-short`
+- [ ] implemented `quote` — `quote`
+- [ ] implemented `quote_short` — `quote-short`
+- [ ] implemented `stock_price_change` — `stock-price-change`
 
 ## `client.sec_filings` — SEC filing search, SEC company identity, and SIC industry classification.
 
 12 methods.
 
-- [ ] `all_industry_classification` — `all-industry-classification`
-- [ ] `industry_classification_search` — `industry-classification-search`
-- [ ] `sec_filings_8k` — `sec-filings-8k`
-- [ ] `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
-- [ ] `sec_filings_company_search_name` — `sec-filings-company-search/name`
-- [ ] `sec_filings_company_search_symbol` — `sec-filings-company-search/symbol`
-- [ ] `sec_filings_financials` — `sec-filings-financials`
-- [ ] `sec_filings_search_cik` — `sec-filings-search/cik`
-- [ ] `sec_filings_search_form_type` — `sec-filings-search/form-type`
-- [ ] `sec_filings_search_symbol` — `sec-filings-search/symbol`
-- [ ] `sec_profile` — `sec-profile`
-- [ ] `standard_industrial_classification_list` — `standard-industrial-classification-list`
+> **Implemented, not yet live-tested this session.** `sec_profile`'s second parameter
+> renders in FMP's own docs as `cik-A`, which reads like a table-rendering artifact
+> rather than a real wire name — exposed here as plain `cik` pending live confirmation.
+
+- [ ] implemented `all_industry_classification` — `all-industry-classification`
+- [ ] implemented `industry_classification_search` — `industry-classification-search`
+- [ ] implemented `sec_filings_8k` — `sec-filings-8k`
+- [ ] implemented `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
+- [ ] implemented `sec_filings_company_search_name` — `sec-filings-company-search/name`
+- [ ] implemented `sec_filings_company_search_symbol` — `sec-filings-company-search/symbol`
+- [ ] implemented `sec_filings_financials` — `sec-filings-financials`
+- [ ] implemented `sec_filings_search_cik` — `sec-filings-search/cik`
+- [ ] implemented `sec_filings_search_form_type` — `sec-filings-search/form-type`
+- [ ] implemented `sec_filings_search_symbol` — `sec-filings-search/symbol`
+- [ ] implemented `sec_profile` — `sec-profile`
+- [ ] implemented `standard_industrial_classification_list` — `standard-industrial-classification-list`
 
 ## `client.earnings_transcript` — Earnings-call transcripts and their availability metadata.
 
 > **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
+> **Implemented, not yet live-tested this session.** `earnings_transcript_list` is
+> cross-listed into `client.directory` (§4.3) — wired in `groups.py`.
 
 4 methods.
 
-- [ ] `earning_call_transcript` — `earning-call-transcript`
-- [ ] `earning_call_transcript_dates` — `earning-call-transcript-dates`
-- [ ] `earning_call_transcript_latest` — `earning-call-transcript-latest`
-- [ ] `earnings_transcript_list` — `earnings-transcript-list`
+- [ ] implemented `earning_call_transcript` — `earning-call-transcript`
+- [ ] implemented `earning_call_transcript_dates` — `earning-call-transcript-dates`
+- [ ] implemented `earning_call_transcript_latest` — `earning-call-transcript-latest`
+- [ ] implemented `earnings_transcript_list` — `earnings-transcript-list`
 
 ## `client.congress` — U.S. Senate and House financial disclosures, trades, and member profiles.
 
 12 methods.
 
-- [ ] `house_latest` — `house-latest`
-- [ ] `house_trades` — `house-trades`
-- [ ] `house_trades_by_id` — `house-trades-by-id`
-- [ ] `house_trades_by_name` — `house-trades-by-name`
-- [ ] `senate_latest` — `senate-latest`
-- [ ] `senate_net_worth` — `senate-net-worth`
-- [ ] `senate_net_worth_aggregated` — `senate-net-worth-aggregated`
-- [ ] `senate_positions` — `senate-positions`
-- [ ] `senate_profile` — `senate-profile`
-- [ ] `senate_trades` — `senate-trades`
-- [ ] `senate_trades_by_id` — `senate-trades-by-id`
-- [ ] `senate_trades_by_name` — `senate-trades-by-name`
+> **Implemented, not yet live-tested this session.** §7.5's parameter-naming bug
+> mirrored as documented: `house_trades_by_id` and `senate_trades_by_id` (and every
+> other `senateID`-taking method, including the House ones) expose the Python
+> parameter `senate_id` — the wire name really is `senateID` even on House endpoints,
+> called out loudly in `house_trades_by_id`'s own docstring so it doesn't read as our
+> bug.
+
+- [ ] implemented `house_latest` — `house-latest`
+- [ ] implemented `house_trades` — `house-trades`
+- [ ] implemented `house_trades_by_id` — `house-trades-by-id`
+- [ ] implemented `house_trades_by_name` — `house-trades-by-name`
+- [ ] implemented `senate_latest` — `senate-latest`
+- [ ] implemented `senate_net_worth` — `senate-net-worth`
+- [ ] implemented `senate_net_worth_aggregated` — `senate-net-worth-aggregated`
+- [ ] implemented `senate_positions` — `senate-positions`
+- [ ] implemented `senate_profile` — `senate-profile`
+- [ ] implemented `senate_trades` — `senate-trades`
+- [ ] implemented `senate_trades_by_id` — `senate-trades-by-id`
+- [ ] implemented `senate_trades_by_name` — `senate-trades-by-name`
 
 ## `client.bulk` — Whole-universe bulk downloads.
 

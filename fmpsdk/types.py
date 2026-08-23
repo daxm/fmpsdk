@@ -2513,3 +2513,359 @@ class AdxResult(TypedDict):
     close: float
     volume: int
     adx: float
+
+
+# --- client.news ------------------------------------------------------------
+
+
+class FmpArticlesResult(TypedDict):
+    title: str
+    date: str
+    content: str
+    tickers: str
+    image: str
+    link: str
+    author: str
+    site: str
+
+
+class NewsArticleResult(TypedDict):
+    """Shape shared by all 9 remaining `client.news` methods
+    (`news_general_latest`, `news_press_releases`/`_latest`,
+    `news_stock`/`_latest`, `news_crypto`/`_latest`, `news_forex`/
+    `_latest`) — identical fields in every documented example; the
+    `symbols*`-taking "search" variants and their "-latest" siblings
+    answer the same question (a news article) at different scope
+    (one symbol vs. market-wide)."""
+
+    symbol: str | None
+    publishedDate: str
+    publisher: str
+    title: str
+    image: str
+    site: str
+    text: str
+    url: str
+
+
+# --- client.quote ------------------------------------------------------------
+
+
+class QuoteResult(TypedDict):
+    """Shape shared by `quote` and `batch_quote` — identical fields."""
+
+    symbol: str
+    name: str
+    price: float
+    changePercentage: float
+    change: float
+    volume: int
+    dayLow: float
+    dayHigh: float
+    yearHigh: float
+    yearLow: float
+    marketCap: float | None
+    priceAvg50: float
+    priceAvg200: float
+    exchange: str
+    open: float
+    previousClose: float
+    timestamp: int
+
+
+class QuoteShortResult(TypedDict):
+    """Shape shared by 9 `client.quote` methods: `quote_short`,
+    `batch_quote_short`, `batch_exchange_quote`, `batch_etf_quotes`,
+    `batch_mutualfund_quotes`, `batch_commodity_quotes`,
+    `batch_crypto_quotes`, `batch_forex_quotes`, `batch_index_quotes` —
+    identical fields in every documented example. Per §7.6: singular
+    `batch-quote` takes a `symbols`/`exchange` scope param, plural
+    `batch-*-quotes` covers the whole asset class with no scope param —
+    both shapes converge on this same short form."""
+
+    symbol: str
+    price: float
+    change: float
+    volume: int
+
+
+class AftermarketTradeResult(TypedDict):
+    """Shape shared by `aftermarket_trade` and `batch_aftermarket_trade`."""
+
+    symbol: str
+    price: float
+    tradeSize: int
+    timestamp: int
+
+
+class AftermarketQuoteResult(TypedDict):
+    """Shape shared by `aftermarket_quote` and `batch_aftermarket_quote`."""
+
+    symbol: str
+    bidSize: int
+    bidPrice: float
+    askSize: int
+    askPrice: float
+    volume: int
+    timestamp: int
+
+
+# Functional form, not class syntax: several fields (`1D`, `5D`, `1M`, `3M`,
+# `6M`, `1Y`, `3Y`, `5Y`, `10Y`) start with a digit, which is not a legal
+# Python identifier.
+StockPriceChangeResult = TypedDict(
+    "StockPriceChangeResult",
+    {
+        "symbol": str,
+        "1D": float,
+        "5D": float,
+        "1M": float,
+        "3M": float,
+        "6M": float,
+        "ytd": float,
+        "1Y": float,
+        "3Y": float,
+        "5Y": float,
+        "10Y": float,
+        "max": float,
+    },
+)
+
+
+# --- client.sec_filings -------------------------------------------------------
+
+
+class SecFilingResult(TypedDict):
+    """Shape shared by `sec_filings_8k` and `sec_filings_financials` —
+    identical fields, including `hasFinancials` (absent from the
+    `sec_filings_search_*` family, see `SecFilingSearchResult`)."""
+
+    symbol: str
+    cik: str
+    filingDate: str
+    acceptedDate: str
+    formType: str
+    hasFinancials: bool | None
+    link: str
+    finalLink: str
+
+
+class SecFilingSearchResult(TypedDict):
+    """Shape shared by `sec_filings_search_form_type`,
+    `sec_filings_search_symbol`, and `sec_filings_search_cik` — identical
+    fields, one field short of `SecFilingResult` (no `hasFinancials`)."""
+
+    symbol: str
+    cik: str
+    filingDate: str
+    acceptedDate: str
+    formType: str
+    link: str
+    finalLink: str
+
+
+class SecFilingsCompanySearchResult(TypedDict):
+    """Shape shared by `sec_filings_company_search_name`, `_symbol`, and
+    `_cik` — identical fields. Structurally identical to
+    `IndustryClassificationResult` but kept separate: different question
+    (identify a company by a search term vs. list companies by industry
+    classification), same rationale as §7.8's `profile`."""
+
+    symbol: str
+    name: str
+    cik: str
+    sicCode: str
+    industryTitle: str
+    businessAddress: str
+    phoneNumber: str
+
+
+class SecProfileResult(TypedDict):
+    symbol: str
+    cik: str
+    registrantName: str
+    sicCode: str
+    sicDescription: str
+    sicGroup: str
+    isin: str
+    businessAddress: str
+    mailingAddress: str
+    phoneNumber: str
+    postalCode: str
+    city: str
+    state: str
+    country: str
+    description: str
+    ceo: str
+    website: str
+    exchange: str
+    stateLocation: str
+    stateOfIncorporation: str
+    fiscalYearEnd: str
+    ipoDate: str
+    employees: str
+    secFilingsUrl: str
+    taxIdentificationNumber: str
+    fiftyTwoWeekRange: str
+    isActive: bool
+    assetType: str
+    openFigiComposite: str
+    priceCurrency: str
+    marketSector: str
+    securityType: str | None
+    isEtf: bool
+    isAdr: bool
+    isFund: bool
+
+
+class StandardIndustrialClassificationResult(TypedDict):
+    office: str
+    sicCode: str
+    industryTitle: str
+
+
+class IndustryClassificationResult(TypedDict):
+    """Shape shared by `all_industry_classification` and
+    `industry_classification_search` — same question (industry
+    classification lookup) at different scope (whole universe vs.
+    filtered by symbol/cik/sicCode). See `SecFilingsCompanySearchResult`
+    for the structurally-identical-but-different-question sibling this is
+    deliberately kept apart from."""
+
+    symbol: str
+    name: str
+    cik: str
+    sicCode: str
+    industryTitle: str
+    businessAddress: str
+    phoneNumber: str
+
+
+# --- client.earnings_transcript ------------------------------------------------
+
+
+class EarningCallTranscriptResult(TypedDict):
+    symbol: str
+    period: str
+    year: int
+    date: str
+    content: str
+
+
+class EarningCallTranscriptDatesResult(TypedDict):
+    quarter: int
+    fiscalYear: int
+    date: str
+
+
+class EarningCallTranscriptLatestResult(TypedDict):
+    symbol: str
+    period: str
+    fiscalYear: int
+    date: str
+
+
+class EarningsTranscriptListResult(TypedDict):
+    """Primary group `client.earnings_transcript`; cross-listed into
+    `client.directory` per §4.3 (FMP documents this path under both
+    "Directory" and "EarningsTranscript")."""
+
+    symbol: str
+    companyName: str
+    noOfTranscripts: str
+
+
+# --- client.congress -----------------------------------------------------------
+
+
+# Functional form is not needed here (no field name collides with a
+# keyword or starts with a digit), but the wire field is genuinely
+# `senateID` even on the 4 House methods that share this shape (§7.5) —
+# not a typo, mirrored as-is.
+class CongressionalTradeResult(TypedDict):
+    """Shape shared by 8 `client.congress` methods: `house_latest`,
+    `house_trades`, `house_trades_by_id`, `house_trades_by_name`,
+    `senate_latest`, `senate_trades`, `senate_trades_by_id`,
+    `senate_trades_by_name` — identical fields in every documented
+    example. One disclosure record, whether from a Senate or House
+    filing; FMP's own `senateID` field name is used on House rows too
+    (§7.5's parameter-naming bug, mirrored here as the response field is
+    genuinely spelled this way on both chambers' endpoints)."""
+
+    symbol: str
+    senateID: str
+    disclosureDate: str
+    transactionDate: str
+    firstName: str
+    lastName: str
+    office: str
+    district: str
+    owner: str
+    assetDescription: str
+    assetType: str
+    type: str
+    amount: str
+    capitalGainsOver200USD: str | None
+    comment: str | None
+    link: str
+
+
+class SenateProfileResult(TypedDict):
+    senateID: str
+    firstName: str
+    lastName: str
+    birthDate: str
+    latestParty: str
+    latestState: str
+    latestPosition: str
+    image: str
+    active: bool
+    yearsActive: float
+
+
+class SenatePositionResult(TypedDict):
+    senateID: str
+    congressNumber: int
+    startDate: str
+    endDate: str | None
+    party: str
+    position: str
+    state: str
+    yearsInTerm: float
+
+
+class SenateNetWorthResult(TypedDict):
+    senateID: str
+    formType: str
+    year: int
+    filingDate: str
+    section: str
+    category: str
+    name: str
+    assetType: str
+    incomeType: str | None
+    owner: str
+    comment: str | None
+    debtDetails: dict[str, object] | None
+    valueRange: dict[str, object] | None
+    value: float | None
+    incomeRange: dict[str, object] | None
+    income: float | None
+    link: str
+
+
+class SenateNetWorthAggregatedResult(TypedDict):
+    senateID: str
+    year: int
+    total: float
+    realEstateLiabilities: float
+    cashAndCashEquivalents: float
+    businessAndSelfEmployment: float
+    realEstate: float
+    ownershipInterest: float
+    stock: float
+    options: float
+    revolvingAndCreditLines: float
+    assetBackedSecurities: float
+    businessLiabilities: float
+    mutualFundsAndETFs: float

@@ -33,9 +33,11 @@ from .endpoints.chart import ChartEndpoints
 from .endpoints.commitment_of_traders import CommitmentOfTradersEndpoints
 from .endpoints.commodity import CommodityEndpoints
 from .endpoints.company import CompanyEndpoints
+from .endpoints.congress import CongressEndpoints
 from .endpoints.crypto import CryptoEndpoints
 from .endpoints.dcf import DcfEndpoints
 from .endpoints.directory import DirectoryEndpoints
+from .endpoints.earnings_transcript import EarningsTranscriptEndpoints
 from .endpoints.economics import EconomicsEndpoints
 from .endpoints.esg import EsgEndpoints
 from .endpoints.forex import ForexEndpoints
@@ -46,7 +48,10 @@ from .endpoints.insider_trades import InsiderTradesEndpoints
 from .endpoints.institutional_ownership import InstitutionalOwnershipEndpoints
 from .endpoints.market_hours import MarketHoursEndpoints
 from .endpoints.market_performance import MarketPerformanceEndpoints
+from .endpoints.news import NewsEndpoints
+from .endpoints.quote import QuoteEndpoints
 from .endpoints.search import SearchEndpoints
+from .endpoints.sec_filings import SecFilingsEndpoints
 from .endpoints.statements import StatementsEndpoints
 from .endpoints.technical_indicators import TechnicalIndicatorsEndpoints
 
@@ -130,6 +135,11 @@ class Client(
     MarketPerformanceEndpoints,
     MarketHoursEndpoints,
     TechnicalIndicatorsEndpoints,
+    NewsEndpoints,
+    QuoteEndpoints,
+    SecFilingsEndpoints,
+    EarningsTranscriptEndpoints,
+    CongressEndpoints,
 ):
     """fmpsdk client.
 

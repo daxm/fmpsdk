@@ -52,7 +52,10 @@ class SearchGroup:
 
 
 class DirectoryGroup:
-    """``client.directory`` — 10 primary methods, no cross-listings."""
+    """``client.directory`` — 10 primary methods. 1 cross-listed from
+    ``client.earnings_transcript`` (``earnings_transcript_list``, §4.3 —
+    FMP documents this path under both "Directory" and
+    "EarningsTranscript")."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.actively_trading_list = bind("actively_trading_list")
@@ -65,6 +68,8 @@ class DirectoryGroup:
         self.financial_statement_symbol_list = bind("financial_statement_symbol_list")
         self.stock_list = bind("stock_list")
         self.symbol_change = bind("symbol_change")
+        # Cross-listed from client.earnings_transcript (§4.3).
+        self.earnings_transcript_list = bind("earnings_transcript_list")
 
 
 class AnalystGroup:
@@ -258,10 +263,8 @@ class InstitutionalOwnershipGroup:
 class IndexesGroup:
     """``client.indexes`` — 7 primary methods. 3 cross-listed from
     ``client.chart`` (``historical_chart``, ``historical_price_eod_full``,
-    ``historical_price_eod_light``, §4.3). ``quote``, ``quote_short``, and
-    ``batch_index_quotes`` also cross-list here once ``client.quote``
-    exists — not wired yet, add them to this ``__init__`` when that group
-    is built."""
+    ``historical_price_eod_light``) and 3 from ``client.quote`` (``quote``,
+    ``quote_short``, ``batch_index_quotes``) — all 6 per §4.3."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.dowjones_constituent = bind("dowjones_constituent")
@@ -275,14 +278,16 @@ class IndexesGroup:
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
+        # Cross-listed from client.quote (§4.3).
+        self.quote = bind("quote")
+        self.quote_short = bind("quote_short")
+        self.batch_index_quotes = bind("batch_index_quotes")
 
 
 class CommodityGroup:
     """``client.commodity`` — 1 primary method. 3 cross-listed from
-    ``client.chart`` (§4.3). ``quote``, ``quote_short``, and
-    ``batch_commodity_quotes`` also cross-list here once ``client.quote``
-    exists — not wired yet, add them to this ``__init__`` when that group
-    is built."""
+    ``client.chart`` and 3 from ``client.quote`` (``quote``,
+    ``quote_short``, ``batch_commodity_quotes``) — all 6 per §4.3."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.commodities_list = bind("commodities_list")
@@ -290,14 +295,16 @@ class CommodityGroup:
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
+        # Cross-listed from client.quote (§4.3).
+        self.quote = bind("quote")
+        self.quote_short = bind("quote_short")
+        self.batch_commodity_quotes = bind("batch_commodity_quotes")
 
 
 class CryptoGroup:
     """``client.crypto`` — 1 primary method. 3 cross-listed from
-    ``client.chart`` (§4.3). ``quote``, ``quote_short``, and
-    ``batch_crypto_quotes`` also cross-list here once ``client.quote``
-    exists — not wired yet, add them to this ``__init__`` when that group
-    is built."""
+    ``client.chart`` and 3 from ``client.quote`` (``quote``,
+    ``quote_short``, ``batch_crypto_quotes``) — all 6 per §4.3."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.cryptocurrency_list = bind("cryptocurrency_list")
@@ -305,6 +312,10 @@ class CryptoGroup:
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
+        # Cross-listed from client.quote (§4.3).
+        self.quote = bind("quote")
+        self.quote_short = bind("quote_short")
+        self.batch_crypto_quotes = bind("batch_crypto_quotes")
 
 
 class FundraisersGroup:
@@ -321,10 +332,8 @@ class FundraisersGroup:
 
 class ForexGroup:
     """``client.forex`` — 1 primary method. 3 cross-listed from
-    ``client.chart`` (§4.3). ``quote``, ``quote_short``, and
-    ``batch_forex_quotes`` also cross-list here once ``client.quote``
-    exists — not wired yet, add them to this ``__init__`` when that group
-    is built."""
+    ``client.chart`` and 3 from ``client.quote`` (``quote``,
+    ``quote_short``, ``batch_forex_quotes``) — all 6 per §4.3."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.forex_list = bind("forex_list")
@@ -332,6 +341,10 @@ class ForexGroup:
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
+        # Cross-listed from client.quote (§4.3).
+        self.quote = bind("quote")
+        self.quote_short = bind("quote_short")
+        self.batch_forex_quotes = bind("batch_forex_quotes")
 
 
 class InsiderTradesGroup:
@@ -393,6 +406,98 @@ class TechnicalIndicatorsGroup:
         self.technical_indicators_wma = bind("technical_indicators_wma")
 
 
+class NewsGroup:
+    """``client.news`` — 10 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.fmp_articles = bind("fmp_articles")
+        self.news_crypto = bind("news_crypto")
+        self.news_crypto_latest = bind("news_crypto_latest")
+        self.news_forex = bind("news_forex")
+        self.news_forex_latest = bind("news_forex_latest")
+        self.news_general_latest = bind("news_general_latest")
+        self.news_press_releases = bind("news_press_releases")
+        self.news_press_releases_latest = bind("news_press_releases_latest")
+        self.news_stock = bind("news_stock")
+        self.news_stock_latest = bind("news_stock_latest")
+
+
+class QuoteGroup:
+    """``client.quote`` — 16 primary methods. 6 are cross-listed out into
+    ``indexes``/``commodity``/``crypto``/``forex`` (§4.3, see those
+    groups' own docstrings)."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.aftermarket_quote = bind("aftermarket_quote")
+        self.aftermarket_trade = bind("aftermarket_trade")
+        self.batch_aftermarket_quote = bind("batch_aftermarket_quote")
+        self.batch_aftermarket_trade = bind("batch_aftermarket_trade")
+        self.batch_commodity_quotes = bind("batch_commodity_quotes")
+        self.batch_crypto_quotes = bind("batch_crypto_quotes")
+        self.batch_etf_quotes = bind("batch_etf_quotes")
+        self.batch_exchange_quote = bind("batch_exchange_quote")
+        self.batch_forex_quotes = bind("batch_forex_quotes")
+        self.batch_index_quotes = bind("batch_index_quotes")
+        self.batch_mutualfund_quotes = bind("batch_mutualfund_quotes")
+        self.batch_quote = bind("batch_quote")
+        self.batch_quote_short = bind("batch_quote_short")
+        self.quote = bind("quote")
+        self.quote_short = bind("quote_short")
+        self.stock_price_change = bind("stock_price_change")
+
+
+class SecFilingsGroup:
+    """``client.sec_filings`` — 12 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.all_industry_classification = bind("all_industry_classification")
+        self.industry_classification_search = bind("industry_classification_search")
+        self.sec_filings_8k = bind("sec_filings_8k")
+        self.sec_filings_company_search_cik = bind("sec_filings_company_search_cik")
+        self.sec_filings_company_search_name = bind("sec_filings_company_search_name")
+        self.sec_filings_company_search_symbol = bind(
+            "sec_filings_company_search_symbol"
+        )
+        self.sec_filings_financials = bind("sec_filings_financials")
+        self.sec_filings_search_cik = bind("sec_filings_search_cik")
+        self.sec_filings_search_form_type = bind("sec_filings_search_form_type")
+        self.sec_filings_search_symbol = bind("sec_filings_search_symbol")
+        self.sec_profile = bind("sec_profile")
+        self.standard_industrial_classification_list = bind(
+            "standard_industrial_classification_list"
+        )
+
+
+class EarningsTranscriptGroup:
+    """``client.earnings_transcript`` — 4 primary methods. 1
+    (``earnings_transcript_list``) is also cross-listed into
+    ``client.directory`` (§4.3, see that group's docstring)."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.earning_call_transcript = bind("earning_call_transcript")
+        self.earning_call_transcript_dates = bind("earning_call_transcript_dates")
+        self.earning_call_transcript_latest = bind("earning_call_transcript_latest")
+        self.earnings_transcript_list = bind("earnings_transcript_list")
+
+
+class CongressGroup:
+    """``client.congress`` — 12 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.house_latest = bind("house_latest")
+        self.house_trades = bind("house_trades")
+        self.house_trades_by_id = bind("house_trades_by_id")
+        self.house_trades_by_name = bind("house_trades_by_name")
+        self.senate_latest = bind("senate_latest")
+        self.senate_net_worth = bind("senate_net_worth")
+        self.senate_net_worth_aggregated = bind("senate_net_worth_aggregated")
+        self.senate_positions = bind("senate_positions")
+        self.senate_profile = bind("senate_profile")
+        self.senate_trades = bind("senate_trades")
+        self.senate_trades_by_id = bind("senate_trades_by_id")
+        self.senate_trades_by_name = bind("senate_trades_by_name")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -424,3 +529,8 @@ def attach_groups(client: "Client") -> None:
     client.market_performance = MarketPerformanceGroup(bind)
     client.market_hours = MarketHoursGroup(bind)
     client.technical_indicators = TechnicalIndicatorsGroup(bind)
+    client.news = NewsGroup(bind)
+    client.quote = QuoteGroup(bind)
+    client.sec_filings = SecFilingsGroup(bind)
+    client.earnings_transcript = EarningsTranscriptGroup(bind)
+    client.congress = CongressGroup(bind)
