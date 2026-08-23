@@ -1,11 +1,86 @@
-import typing
+"""Validated constant lists carried forward from the legacy ``settings.py``.
 
-BASE_URL_v3: str = "https://financialmodelingprep.com/api/v3/"
-BASE_URL_v4: str = "https://financialmodelingprep.com/api/v4/"
-BASE_URL_STABLE: str = "https://financialmodelingprep.com/stable/"
-DEFAULT_LINE_PARAMETER = "line"
-DEFAULT_LIMIT: int = 10
-INDUSTRY_VALUES: typing.List = [
+Per REWRITE_ARCHITECTURE.md §8.1-§8.3: these are re-verified against current
+``stable`` API docs, not blindly copied. Several legacy constants were wrong
+and are corrected here rather than carried forward silently:
+
+- ``PERIOD_VALUES`` split into three value sets (§8.1) — the old single list
+  was correct for only 7 of the 25 endpoints that take a ``period`` param.
+- ``TECHNICAL_INDICATORS_TIME_DELTA_VALUES`` had a dead ``v3`` token
+  (``"daily"``) that current docs call ``"1day"`` (§8.2).
+- ``SERIES_TYPE_VALUES`` and the ``*_FILENAME`` constants are dropped as
+  dead ``v3``-era artifacts (§8.3) — no ``stable`` endpoint uses them.
+- ``ECONOMIC_INDICATOR_VALUES`` gains ``tradeBalanceGoodsAndServices``,
+  missing from the legacy list but present in current docs (§8.3).
+"""
+
+from __future__ import annotations
+
+# --- period ------------------------------------------------------------
+# 25 endpoints take a `period` parameter across three incompatible value
+# sets (§8.1). Bind the right one per endpoint; do not use one global
+# PERIOD_VALUES constant.
+PERIOD_ANNUAL_QUARTER: tuple[str, ...] = ("annual", "quarter")
+PERIOD_FISCAL: tuple[str, ...] = ("Q1", "Q2", "Q3", "Q4", "FY")
+PERIOD_ANY: tuple[str, ...] = PERIOD_FISCAL + PERIOD_ANNUAL_QUARTER
+
+# --- timeframe -----------------------------------------------------------
+# Two distinct vocabularies (§8.2) — `historical_chart`'s intraday intervals
+# are a strict subset of what `technical_indicators_*` accepts (which also
+# takes `1day`, for which there is no `historical-chart` path — daily bars
+# live at `historical_price_eod_full` instead).
+TIMEFRAME_INTRADAY: tuple[str, ...] = ("1min", "5min", "15min", "30min", "1hour", "4hour")
+TIMEFRAME_TECHNICAL: tuple[str, ...] = TIMEFRAME_INTRADAY + ("1day",)
+
+# --- technical indicators -------------------------------------------------
+# Matches the 9 `technical-indicators/*` paths exactly, including
+# `standardDeviation`'s casing. Useful as a cross-check that no indicator
+# implementation is missing, not as a request-time validator.
+TECHNICAL_INDICATOR_NAMES: tuple[str, ...] = (
+    "sma",
+    "ema",
+    "wma",
+    "dema",
+    "tema",
+    "williams",
+    "rsi",
+    "adx",
+    "standardDeviation",
+)
+
+# --- economic indicators --------------------------------------------------
+ECONOMIC_INDICATOR_VALUES: tuple[str, ...] = (
+    "GDP",
+    "realGDP",
+    "nominalPotentialGDP",
+    "realGDPPerCapita",
+    "federalFunds",
+    "CPI",
+    "inflationRate",
+    "inflation",
+    "retailSales",
+    "consumerSentiment",
+    "durableGoods",
+    "unemploymentRate",
+    "totalNonfarmPayroll",
+    "initialClaims",
+    "industrialProductionTotalIndex",
+    "newPrivatelyOwnedHousingUnitsStartedTotalUnits",
+    "totalVehicleSales",
+    "retailMoneyFunds",
+    "smoothedUSRecessionProbabilities",
+    "3MonthOr90DayRatesAndYieldsCertificatesOfDeposit",
+    "commercialBankInterestRateOnCreditCardPlansAllAccounts",
+    "30YearFixedRateMortgageAverage",
+    "15YearFixedRateMortgageAverage",
+    "tradeBalanceGoodsAndServices",
+)
+
+# --- industries / sectors -------------------------------------------------
+# Static fallback only (§10.2) — `client.directory.available_industries()`
+# and `client.directory.available_sectors()` are the source of truth.
+# Carried forward from the legacy settings.py verbatim; not re-scraped here.
+INDUSTRY_VALUES: tuple[str, ...] = (
     "Entertainment",
     "Oil & Gas Midstream",
     "Semiconductors",
@@ -218,8 +293,8 @@ INDUSTRY_VALUES: typing.List = [
     "Technology Hardware & Equipment",
     "Telecommunication Services",
     "Semiconductors & Semiconductor Equipment",
-]
-SECTOR_VALUES: typing.List = [
+)
+SECTOR_VALUES: tuple[str, ...] = (
     "Communication Services",
     "Energy",
     "Technology",
@@ -277,76 +352,4 @@ SECTOR_VALUES: typing.List = [
     "Distributors",
     "Marine",
     "Diversified Consumer Services",
-]
-PERIOD_VALUES: typing.List = [
-    "annual",
-    "quarter",
-]
-TIME_DELTA_VALUES: typing.List = [
-    "1min",
-    "5min",
-    "15min",
-    "30min",
-    "1hour",
-    "4hour",
-]
-TECHNICAL_INDICATORS_TIME_DELTA_VALUES: typing.List = [
-    "1min",
-    "5min",
-    "15min",
-    "30min",
-    "1hour",
-    "4hour",
-    "daily",
-]
-SERIES_TYPE_VALUES: typing.List = [
-    "line",
-]
-STATISTICS_TYPE_VALUES: typing.List = [
-    "sma",
-    "ema",
-    "wma",
-    "dema",
-    "tema",
-    "williams",
-    "rsi",
-    "adx",
-    "standardDeviation",
-]
-
-FINANCIAL_STATEMENT_FILENAME: str = "financial_statement.zip"
-CASH_FLOW_STATEMENT_FILENAME: str = "cash_flow_statement.csv"
-INCOME_STATEMENT_FILENAME: str = "income_statement.csv"
-BALANCE_SHEET_STATEMENT_FILENAME: str = "balance_sheet_statement.csv"
-INCOME_STATEMENT_AS_REPORTED_FILENAME: str = "income_statement_as_reported.csv"
-BALANCE_SHEET_STATEMENT_AS_REPORTED_FILENAME: str = "balance_sheet_as_reported.csv"
-CASH_FLOW_STATEMENT_AS_REPORTED_FILENAME: str = "cash_flow_as_reported.csv"
-SEC_RSS_FEEDS_FILENAME: str = "sec_rss_feeds.csv"
-SP500_CONSTITUENTS_FILENAME: str = "sp500_constituents.csv"
-NASDAQ_CONSTITUENTS_FILENAME: str = "nasdaq_constituents.csv"
-DOWJONES_CONSTITUENTS_FILENAME: str = "dowjones_constituents.csv"
-ECONOMIC_INDICATOR_VALUES: typing.List = [
-    "GDP",
-    "realGDP",
-    "nominalPotentialGDP",
-    "realGDPPerCapita",
-    "federalFunds",
-    "CPI",
-    "inflationRate",
-    "inflation",
-    "retailSales",
-    "consumerSentiment",
-    "durableGoods",
-    "unemploymentRate",
-    "totalNonfarmPayroll",
-    "initialClaims",
-    "industrialProductionTotalIndex",
-    "newPrivatelyOwnedHousingUnitsStartedTotalUnits",
-    "totalVehicleSales",
-    "retailMoneyFunds",
-    "smoothedUSRecessionProbabilities",
-    "3MonthOr90DayRatesAndYieldsCertificatesOfDeposit",
-    "commercialBankInterestRateOnCreditCardPlansAllAccounts",
-    "30YearFixedRateMortgageAverage",
-    "15YearFixedRateMortgageAverage"
-]
+)

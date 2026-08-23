@@ -7,9 +7,26 @@ readme = "README.md"
 license = "BSD-3-Clause"
 
 [tool.poetry.dependencies]
-python = "*"
-python-dotenv = "*"
+python = ">=3.9"
 requests = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+requests-mock = "*"
+python-dotenv = "*"
+pytest-recording = "*"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# Plain `pytest` never spends real API quota: live/ultimate are opt-in via
+# `pytest -m live` / `pytest -m ultimate` (overriding this addopts marker
+# expression), never run by accident from a bare `pytest` invocation.
+addopts = "-m 'not live and not ultimate'"
+markers = [
+    "unit: mocked, no network, always runs in CI",
+    "live: real API call against Bucket 1 (free-tier-reachable) endpoints",
+    "ultimate: real API call against Bucket 2 (FMP Ultimate-gated) endpoints, skipped by default",
+]
 
 [build-system]
 requires = ["poetry-core"]

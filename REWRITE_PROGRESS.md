@@ -24,7 +24,8 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 0 / 238 methods done.**
+**Progress: 3 / 238 methods done** (4 more implemented + unit-tested, pending
+Ultimate verification).
 
 ---
 
@@ -32,13 +33,18 @@ and move on; if a "Bucket 2" method turns out to work on the current key, even b
 
 7 methods.
 
-- [ ] `company_screener` — `company-screener`
-- [ ] `search_cik` — `search-cik`
-- [ ] `search_cusip` — `search-cusip`
-- [ ] `search_exchange_variants` — `search-exchange-variants`
-- [ ] `search_isin` — `search-isin`
-- [ ] `search_name` — `search-name`
-- [ ] `search_symbol` — `search-symbol`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found 4 of 7
+> methods 402 on the free tier anyway. Reclassified below per the workflow
+> doc's "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
+
+- [x] ultimate-pending `company_screener` — `company-screener` (402 on free tier)
+- [x] done `search_cik` — `search-cik`
+- [x] ultimate-pending `search_cusip` — `search-cusip` (402 on free tier)
+- [x] ultimate-pending `search_exchange_variants` — `search-exchange-variants` (402 on free tier)
+- [x] ultimate-pending `search_isin` — `search-isin` (402 on free tier)
+- [x] done `search_name` — `search-name`
+- [x] done `search_symbol` — `search-symbol`
 
 ## `client.directory` — Whole-universe reference lists: symbols, exchanges, sectors, industries, countries.
 
