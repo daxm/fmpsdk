@@ -24,20 +24,25 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 91 / 238 methods done** (68 more implemented + unit-tested pending
-Ultimate verification; **79 more implemented and unit-tested (2026-08-23) but not
-yet live-verified** — see the `news` through `tipranks` groups below, all tagged
-`unit`). **This is the full 238/238 catalog now implemented in code** — every
-canonical method in REWRITE_ARCHITECTURE.md §6 has a Python implementation.
-2026-08-23's second work session unit-tested and live-tested all 45
-`indexes`-through-`technical_indicators` methods from the first code-only pass;
-a third session live-tested the remaining `market_performance` group (11/11,
-no 402s) and wrote mocked unit tests for all 79 methods in `news`/`quote`/
-`sec_filings`/`earnings_transcript`/`congress`/`bulk`/`tipranks` (268/268 unit
-tests passing, zero API calls spent). What's left: live-test those 79 —
-`news`/`quote`/`sec_filings`/`congress` are the Bucket-1 candidates;
-`earnings_transcript`/`bulk`/`tipranks` are pre-flagged Bucket 2, so expect
-402s there (confirm live rather than assume, per the workflow's discipline).
+**Progress: 109 / 238 methods done, 129 ultimate-pending, 0 left untested.** **This
+is the full 238/238 catalog now implemented in code, and every single method has now
+been attempted at least once (unit-tested, and live-tested except where already
+Bucket-2-confirmed)** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
+Python implementation and a test result. 2026-08-23's second work session
+unit-tested and live-tested all 45 `indexes`-through-`technical_indicators` methods
+from the first code-only pass; a third session live-tested `market_performance`
+(11/11, no 402s), wrote mocked unit tests for all 79 methods in `news`/`quote`/
+`sec_filings`/`earnings_transcript`/`congress`/`bulk`/`tipranks` (268/268 unit tests
+passing), then live-tested all 79 of those too — 19 more passed free-tier
+(`fmp_articles`; `quote`/`quote_short`/`aftermarket_quote`/`aftermarket_trade`/
+`stock_price_change`; 10 of 12 `sec_filings` methods; `house_latest`/
+`senate_latest`), the remaining 60 402'd and moved to `ultimate-pending`
+(`earnings_transcript`, `bulk`, and `tipranks` confirmed fully gated as their
+pre-flagged Bucket 2 status predicted; `news`'s `batch_*` quote family and most of
+`congress` turned out gated too, despite no Bucket 2 flag in §3.5 — see the
+per-group notes below). Nothing left to test — what remains is only the
+`ultimate-pending` methods' actual verification, deferred to a future paid Ultimate
+month per the workflow doc.
 
 ---
 
@@ -417,154 +422,163 @@ tests passing, zero API calls spent). What's left: live-test those 79 —
 
 10 methods.
 
-> **Implemented and unit-tested 2026-08-23** (code-only pass, same as the
-> `indexes`-through-`technical_indicators` batch above — see `fmpsdk-rewrite-status`
-> memory note). Live-testing pending.
+> **Unit- and live-tested 2026-08-23.** Only `fmp_articles` is free-tier reachable —
+> the other 9 methods (the whole `NewsArticleResult`-shaped family: general/
+> press-releases/stock/crypto/forex, each with a "-latest" sibling) all 402'd, despite
+> no Bucket 2 flag in REWRITE_ARCHITECTURE.md §3.5 → `ultimate-pending`.
 
-- [x] unit `fmp_articles` — `fmp-articles`
-- [x] unit `news_crypto` — `news/crypto`
-- [x] unit `news_crypto_latest` — `news/crypto-latest`
-- [x] unit `news_forex` — `news/forex`
-- [x] unit `news_forex_latest` — `news/forex-latest`
-- [x] unit `news_general_latest` — `news/general-latest`
-- [x] unit `news_press_releases` — `news/press-releases`
-- [x] unit `news_press_releases_latest` — `news/press-releases-latest`
-- [x] unit `news_stock` — `news/stock`
-- [x] unit `news_stock_latest` — `news/stock-latest`
+- [x] done `fmp_articles` — `fmp-articles`
+- [x] ultimate-pending `news_crypto` — `news/crypto` (402 on free tier)
+- [x] ultimate-pending `news_crypto_latest` — `news/crypto-latest` (402 on free tier)
+- [x] ultimate-pending `news_forex` — `news/forex` (402 on free tier)
+- [x] ultimate-pending `news_forex_latest` — `news/forex-latest` (402 on free tier)
+- [x] ultimate-pending `news_general_latest` — `news/general-latest` (402 on free tier)
+- [x] ultimate-pending `news_press_releases` — `news/press-releases` (402 on free tier)
+- [x] ultimate-pending `news_press_releases_latest` — `news/press-releases-latest` (402 on free tier)
+- [x] ultimate-pending `news_stock` — `news/stock` (402 on free tier)
+- [x] ultimate-pending `news_stock_latest` — `news/stock-latest` (402 on free tier)
 
 ## `client.quote` — Real-time and aftermarket quotes, single and batch.
 
 16 methods.
 
-> **Implemented and unit-tested 2026-08-23; live-testing pending.** This completes the full §4.3
-> cross-listing table: `quote`/`quote_short`/`batch_index_quotes`/
-> `batch_commodity_quotes`/`batch_crypto_quotes`/`batch_forex_quotes` are now wired
-> into `client.indexes`/`commodity`/`crypto`/`forex` in `groups.py` — all 10
-> cross-listings in the whole rewrite are wired, identity-asserted at write time.
+> **Unit- and live-tested 2026-08-23.** Completes the full §4.3 cross-listing table:
+> `quote`/`quote_short`/`batch_index_quotes`/`batch_commodity_quotes`/
+> `batch_crypto_quotes`/`batch_forex_quotes` are wired into `client.indexes`/
+> `commodity`/`crypto`/`forex` in `groups.py` — all 10 cross-listings in the whole
+> rewrite are wired, identity-asserted at write time. The 5 single-symbol methods
+> (`quote`, `quote_short`, `aftermarket_quote`, `aftermarket_trade`,
+> `stock_price_change`) are free-tier reachable; all 11 `batch_*` methods 402'd — a
+> clean split along §7.6's own singular/plural distinction.
 
-- [x] unit `aftermarket_quote` — `aftermarket-quote`
-- [x] unit `aftermarket_trade` — `aftermarket-trade`
-- [x] unit `batch_aftermarket_quote` — `batch-aftermarket-quote`
-- [x] unit `batch_aftermarket_trade` — `batch-aftermarket-trade`
-- [x] unit `batch_commodity_quotes` — `batch-commodity-quotes`
-- [x] unit `batch_crypto_quotes` — `batch-crypto-quotes`
-- [x] unit `batch_etf_quotes` — `batch-etf-quotes`
-- [x] unit `batch_exchange_quote` — `batch-exchange-quote`
-- [x] unit `batch_forex_quotes` — `batch-forex-quotes`
-- [x] unit `batch_index_quotes` — `batch-index-quotes`
-- [x] unit `batch_mutualfund_quotes` — `batch-mutualfund-quotes`
-- [x] unit `batch_quote` — `batch-quote`
-- [x] unit `batch_quote_short` — `batch-quote-short`
-- [x] unit `quote` — `quote`
-- [x] unit `quote_short` — `quote-short`
-- [x] unit `stock_price_change` — `stock-price-change`
+- [x] done `aftermarket_quote` — `aftermarket-quote`
+- [x] done `aftermarket_trade` — `aftermarket-trade`
+- [x] ultimate-pending `batch_aftermarket_quote` — `batch-aftermarket-quote` (402 on free tier)
+- [x] ultimate-pending `batch_aftermarket_trade` — `batch-aftermarket-trade` (402 on free tier)
+- [x] ultimate-pending `batch_commodity_quotes` — `batch-commodity-quotes` (402 on free tier)
+- [x] ultimate-pending `batch_crypto_quotes` — `batch-crypto-quotes` (402 on free tier)
+- [x] ultimate-pending `batch_etf_quotes` — `batch-etf-quotes` (402 on free tier)
+- [x] ultimate-pending `batch_exchange_quote` — `batch-exchange-quote` (402 on free tier)
+- [x] ultimate-pending `batch_forex_quotes` — `batch-forex-quotes` (402 on free tier)
+- [x] ultimate-pending `batch_index_quotes` — `batch-index-quotes` (402 on free tier)
+- [x] ultimate-pending `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (402 on free tier)
+- [x] ultimate-pending `batch_quote` — `batch-quote` (402 on free tier)
+- [x] ultimate-pending `batch_quote_short` — `batch-quote-short` (402 on free tier)
+- [x] done `quote` — `quote`
+- [x] done `quote_short` — `quote-short`
+- [x] done `stock_price_change` — `stock-price-change`
 
 ## `client.sec_filings` — SEC filing search, SEC company identity, and SIC industry classification.
 
 12 methods.
 
-> **Implemented and unit-tested 2026-08-23; live-testing pending.** `sec_profile`'s second parameter
-> renders in FMP's own docs as `cik-A`, which reads like a table-rendering artifact
-> rather than a real wire name — exposed here as plain `cik` pending live confirmation.
+> **Unit- and live-tested 2026-08-23.** 10 of 12 are free-tier reachable;
+> `industry_classification_search` and `all_industry_classification` 402'd →
+> `ultimate-pending`. `sec_profile`'s second parameter renders in FMP's own docs as
+> `cik-A`, which reads like a table-rendering artifact rather than a real wire name —
+> exposed here as plain `cik`; live-tested with `symbol` only (didn't spend an extra
+> call probing the `cik-A` question), so that particular oddity is still unconfirmed
+> either way.
 
-- [x] unit `all_industry_classification` — `all-industry-classification`
-- [x] unit `industry_classification_search` — `industry-classification-search`
-- [x] unit `sec_filings_8k` — `sec-filings-8k`
-- [x] unit `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
-- [x] unit `sec_filings_company_search_name` — `sec-filings-company-search/name`
-- [x] unit `sec_filings_company_search_symbol` — `sec-filings-company-search/symbol`
-- [x] unit `sec_filings_financials` — `sec-filings-financials`
-- [x] unit `sec_filings_search_cik` — `sec-filings-search/cik`
-- [x] unit `sec_filings_search_form_type` — `sec-filings-search/form-type`
-- [x] unit `sec_filings_search_symbol` — `sec-filings-search/symbol`
-- [x] unit `sec_profile` — `sec-profile`
-- [x] unit `standard_industrial_classification_list` — `standard-industrial-classification-list`
+- [x] ultimate-pending `all_industry_classification` — `all-industry-classification` (402 on free tier)
+- [x] ultimate-pending `industry_classification_search` — `industry-classification-search` (402 on free tier)
+- [x] done `sec_filings_8k` — `sec-filings-8k`
+- [x] done `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
+- [x] done `sec_filings_company_search_name` — `sec-filings-company-search/name`
+- [x] done `sec_filings_company_search_symbol` — `sec-filings-company-search/symbol`
+- [x] done `sec_filings_financials` — `sec-filings-financials`
+- [x] done `sec_filings_search_cik` — `sec-filings-search/cik`
+- [x] done `sec_filings_search_form_type` — `sec-filings-search/form-type`
+- [x] done `sec_filings_search_symbol` — `sec-filings-search/symbol`
+- [x] done `sec_profile` — `sec-profile`
+- [x] done `standard_industrial_classification_list` — `standard-industrial-classification-list`
 
 ## `client.earnings_transcript` — Earnings-call transcripts and their availability metadata.
 
-> **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
-> **Implemented and unit-tested 2026-08-23; live-testing pending.** `earnings_transcript_list` is
-> cross-listed into `client.directory` (§4.3) — wired in `groups.py`.
+> **Confirmed Bucket 2 (Ultimate-gated), 2026-08-23:** all 4 methods 402'd, matching
+> the original pricing audit's prediction. `earnings_transcript_list` is cross-listed
+> into `client.directory` (§4.3, itself fully gated) — consistent with this result.
 
 4 methods.
 
-- [x] unit `earning_call_transcript` — `earning-call-transcript`
-- [x] unit `earning_call_transcript_dates` — `earning-call-transcript-dates`
-- [x] unit `earning_call_transcript_latest` — `earning-call-transcript-latest`
-- [x] unit `earnings_transcript_list` — `earnings-transcript-list`
+- [x] ultimate-pending `earning_call_transcript` — `earning-call-transcript` (402 on free tier)
+- [x] ultimate-pending `earning_call_transcript_dates` — `earning-call-transcript-dates` (402 on free tier)
+- [x] ultimate-pending `earning_call_transcript_latest` — `earning-call-transcript-latest` (402 on free tier)
+- [x] ultimate-pending `earnings_transcript_list` — `earnings-transcript-list` (402 on free tier)
 
 ## `client.congress` — U.S. Senate and House financial disclosures, trades, and member profiles.
 
 12 methods.
 
-> **Implemented and unit-tested 2026-08-23; live-testing pending.** §7.5's parameter-naming bug
-> mirrored as documented: `house_trades_by_id` and `senate_trades_by_id` (and every
-> other `senateID`-taking method, including the House ones) expose the Python
-> parameter `senate_id` — the wire name really is `senateID` even on House endpoints,
-> called out loudly in `house_trades_by_id`'s own docstring so it doesn't read as our
-> bug.
+> **Unit- and live-tested 2026-08-23.** Only the parameterless `house_latest`/
+> `senate_latest` listings are free-tier reachable — every symbol/id/name-scoped
+> lookup (10 methods) 402'd. §7.5's parameter-naming bug mirrored as documented:
+> `house_trades_by_id` and `senate_trades_by_id` (and every other `senateID`-taking
+> method, including the House ones) expose the Python parameter `senate_id` — the
+> wire name really is `senateID` even on House endpoints, called out loudly in
+> `house_trades_by_id`'s own docstring so it doesn't read as our bug.
 
-- [x] unit `house_latest` — `house-latest`
-- [x] unit `house_trades` — `house-trades`
-- [x] unit `house_trades_by_id` — `house-trades-by-id`
-- [x] unit `house_trades_by_name` — `house-trades-by-name`
-- [x] unit `senate_latest` — `senate-latest`
-- [x] unit `senate_net_worth` — `senate-net-worth`
-- [x] unit `senate_net_worth_aggregated` — `senate-net-worth-aggregated`
-- [x] unit `senate_positions` — `senate-positions`
-- [x] unit `senate_profile` — `senate-profile`
-- [x] unit `senate_trades` — `senate-trades`
-- [x] unit `senate_trades_by_id` — `senate-trades-by-id`
-- [x] unit `senate_trades_by_name` — `senate-trades-by-name`
+- [x] done `house_latest` — `house-latest`
+- [x] ultimate-pending `house_trades` — `house-trades` (402 on free tier)
+- [x] ultimate-pending `house_trades_by_id` — `house-trades-by-id` (402 on free tier)
+- [x] ultimate-pending `house_trades_by_name` — `house-trades-by-name` (402 on free tier)
+- [x] done `senate_latest` — `senate-latest`
+- [x] ultimate-pending `senate_net_worth` — `senate-net-worth` (402 on free tier)
+- [x] ultimate-pending `senate_net_worth_aggregated` — `senate-net-worth-aggregated` (402 on free tier)
+- [x] ultimate-pending `senate_positions` — `senate-positions` (402 on free tier)
+- [x] ultimate-pending `senate_profile` — `senate-profile` (402 on free tier)
+- [x] ultimate-pending `senate_trades` — `senate-trades` (402 on free tier)
+- [x] ultimate-pending `senate_trades_by_id` — `senate-trades-by-id` (402 on free tier)
+- [x] ultimate-pending `senate_trades_by_name` — `senate-trades-by-name` (402 on free tier)
 
 ## `client.bulk` — Whole-universe bulk downloads.
 
-> **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
-> **Implemented and unit-tested 2026-08-23; live-testing pending.** 17 of 18 methods return every
-> field as a JSON string, including semantically numeric/boolean fields — a real,
-> documented quirk (see `types/bulk.py`'s module docstring), not a transcription
-> choice. `profile_bulk` is the lone exception (real JSON types) and reuses
-> `ProfileResult` directly rather than duplicating it, since its example response is
-> field-for-field identical to `profile`/`profile_cik`'s.
+> **Confirmed Bucket 2 (Ultimate-gated), 2026-08-23:** all 18 methods 402'd, matching
+> the original pricing audit's prediction — the whole group, not a subset. 17 of 18
+> methods return every field as a JSON string, including semantically numeric/boolean
+> fields — a real, documented quirk (see `types/bulk.py`'s module docstring), not a
+> transcription choice. `profile_bulk` is the lone exception (real JSON types) and
+> reuses `ProfileResult` directly rather than duplicating it, since its example
+> response is field-for-field identical to `profile`/`profile_cik`'s.
 
 18 methods.
 
-- [x] unit `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk`
-- [x] unit `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk`
-- [x] unit `cash_flow_statement_bulk` — `cash-flow-statement-bulk`
-- [x] unit `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk`
-- [x] unit `dcf_bulk` — `dcf-bulk`
-- [x] unit `earnings_surprises_bulk` — `earnings-surprises-bulk`
-- [x] unit `eod_bulk` — `eod-bulk`
-- [x] unit `etf_holder_bulk` — `etf-holder-bulk`
-- [x] unit `income_statement_bulk` — `income-statement-bulk`
-- [x] unit `income_statement_growth_bulk` — `income-statement-growth-bulk`
-- [x] unit `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk`
-- [x] unit `peers_bulk` — `peers-bulk`
-- [x] unit `price_target_summary_bulk` — `price-target-summary-bulk`
-- [x] unit `profile_bulk` — `profile-bulk`
-- [x] unit `rating_bulk` — `rating-bulk`
-- [x] unit `ratios_ttm_bulk` — `ratios-ttm-bulk`
-- [x] unit `scores_bulk` — `scores-bulk`
-- [x] unit `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk`
+- [x] ultimate-pending `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (402 on free tier)
+- [x] ultimate-pending `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (402 on free tier)
+- [x] ultimate-pending `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (402 on free tier)
+- [x] ultimate-pending `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (402 on free tier)
+- [x] ultimate-pending `dcf_bulk` — `dcf-bulk` (402 on free tier)
+- [x] ultimate-pending `earnings_surprises_bulk` — `earnings-surprises-bulk` (402 on free tier)
+- [x] ultimate-pending `eod_bulk` — `eod-bulk` (402 on free tier)
+- [x] ultimate-pending `etf_holder_bulk` — `etf-holder-bulk` (402 on free tier)
+- [x] ultimate-pending `income_statement_bulk` — `income-statement-bulk` (402 on free tier)
+- [x] ultimate-pending `income_statement_growth_bulk` — `income-statement-growth-bulk` (402 on free tier)
+- [x] ultimate-pending `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (402 on free tier)
+- [x] ultimate-pending `peers_bulk` — `peers-bulk` (402 on free tier)
+- [x] ultimate-pending `price_target_summary_bulk` — `price-target-summary-bulk` (402 on free tier)
+- [x] ultimate-pending `profile_bulk` — `profile-bulk` (402 on free tier)
+- [x] ultimate-pending `rating_bulk` — `rating-bulk` (402 on free tier)
+- [x] ultimate-pending `ratios_ttm_bulk` — `ratios-ttm-bulk` (402 on free tier)
+- [x] ultimate-pending `scores_bulk` — `scores-bulk` (402 on free tier)
+- [x] ultimate-pending `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (402 on free tier)
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
-> **Likely Bucket 2 (Ultimate-gated):** Not in the original pricing audit by name (found later via docs), but licensed partner data — treat as Ultimate-only until proven otherwise.
-> **Implemented and unit-tested 2026-08-23; live-testing pending.** `tipranks_pit_symbol` and
-> `tipranks_pit_analyst` share one response type (`TipranksPointInTimeResult`) —
-> identical fields in both documented examples. The 3 summary methods
-> (`tipranks_symbol_summary`/`tipranks_analyst_summary`/`tipranks_firm_summary`) each
-> get their own top-level type (different identifying field: symbol/expertUID/
-> firmName) but share two small nested breakdown types
+> **Confirmed Bucket 2 (Ultimate-gated), 2026-08-23:** all 7 methods 402'd, matching
+> the workflow doc's treat-as-Ultimate-until-proven-otherwise call — the whole group.
+> `tipranks_pit_symbol` and `tipranks_pit_analyst` share one response type
+> (`TipranksPointInTimeResult`) — identical fields in both documented examples. The 3
+> summary methods (`tipranks_symbol_summary`/`tipranks_analyst_summary`/
+> `tipranks_firm_summary`) each get their own top-level type (different identifying
+> field: symbol/expertUID/firmName) but share two small nested breakdown types
 > (`TipranksRecommendationBreakdown`, `TipranksAnalystActionBreakdown`).
 
 7 methods.
 
-- [x] unit `tipranks_analyst_summary` — `tipranks-analyst-summary`
-- [x] unit `tipranks_analysts` — `tipranks-analysts`
-- [x] unit `tipranks_firm_summary` — `tipranks-firm-summary`
-- [x] unit `tipranks_pit_analyst` — `tipranks-pit-analyst`
-- [x] unit `tipranks_pit_symbol` — `tipranks-pit-symbol`
-- [x] unit `tipranks_search` — `tipranks-search`
-- [x] unit `tipranks_symbol_summary` — `tipranks-symbol-summary`
+- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on free tier)
+- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on free tier)
+- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on free tier)
+- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on free tier)
+- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on free tier)
+- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on free tier)
+- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on free tier)
