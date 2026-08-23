@@ -63,6 +63,8 @@ class CrowdfundingOfferingResult(TypedDict):
 
 
 class CrowdfundingOfferingSearchResult(TypedDict):
+    """One issuer matching a Reg CF campaign name search, resolving to a CIK. Returned by `crowdfunding_offerings_search()`."""
+
     cik: str
     name: str
     date: str | None
@@ -119,6 +121,8 @@ class FundraisingResult(TypedDict):
 
 
 class FundraisingSearchResult(TypedDict):
+    """One issuer matching a Reg D/A company name search, resolving to a CIK. Returned by `fundraising_search()`."""
+
     cik: str
     name: str
     date: str | None

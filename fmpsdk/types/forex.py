@@ -8,6 +8,8 @@ from typing import TypedDict
 
 
 class ForexListResult(TypedDict):
+    """One currency pair FMP tracks, with symbol and base/counter currency names. Returned by `forex_list()`."""
+
     symbol: str
     fromCurrency: str
     toCurrency: str

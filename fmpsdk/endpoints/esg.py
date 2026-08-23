@@ -1,8 +1,6 @@
-"""client.esg — ESG disclosures, ratings, and benchmarks
-(REWRITE_ARCHITECTURE.md §6, ``client.esg``). 3 canonical methods, no
-cross-listings. Named by the workflow doc's original pricing-tier audit
-as a likely Bucket 2 (FMP-Ultimate-gated) category — confirm live rather
-than assume.
+"""client.esg — Environmental/social/governance disclosures, ratings,
+and sector benchmarks. 3 methods. Requires an FMP Ultimate-tier plan —
+every method here 402s on the free tier.
 """
 
 from __future__ import annotations

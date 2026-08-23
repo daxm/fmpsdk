@@ -8,6 +8,8 @@ from typing import TypedDict
 
 
 class EsgDisclosuresResult(TypedDict):
+    """One per-filing environmental/social/governance score set from an SEC disclosure. Returned by `esg_disclosures()`."""
+
     date: str
     acceptedDate: str
     symbol: str
@@ -22,6 +24,8 @@ class EsgDisclosuresResult(TypedDict):
 
 
 class EsgRatingsResult(TypedDict):
+    """Current ESG risk rating and industry rank for one company. Returned by `esg_ratings()`."""
+
     symbol: str
     cik: str
     companyName: str
@@ -32,6 +36,8 @@ class EsgRatingsResult(TypedDict):
 
 
 class EsgBenchmarkResult(TypedDict):
+    """Average ESG scores for one sector, for cross-company benchmarking. Returned by `esg_benchmark()`."""
+
     fiscalYear: int
     sector: str
     environmentalScore: float

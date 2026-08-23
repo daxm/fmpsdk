@@ -1,6 +1,5 @@
-"""client.fundraisers — Reg CF crowdfunding and Reg D/A equity offerings
-(REWRITE_ARCHITECTURE.md §6, ``client.fundraisers``). 6 canonical methods,
-no cross-listings.
+"""client.fundraisers — Reg CF crowdfunding and Reg D/A exempt equity
+offering filings. 6 methods.
 """
 
 from __future__ import annotations

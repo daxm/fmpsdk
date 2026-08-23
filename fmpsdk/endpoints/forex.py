@@ -1,9 +1,7 @@
-"""client.forex — FX pair reference list (REWRITE_ARCHITECTURE.md §6,
-``client.forex``). 1 primary method. ``quote``, ``quote_short``,
-``batch_forex_quotes``, ``historical_chart``, ``historical_price_eod_full``,
-and ``historical_price_eod_light`` are cross-listed in from
-``client.quote``/``client.chart`` once those groups exist — see §4.3 and
-the workflow note in ``groups.py``.
+"""client.forex — Currency pair reference list. 1 primary method;
+``quote``, ``quote_short``, ``batch_forex_quotes``, ``historical_chart``,
+``historical_price_eod_full``, and ``historical_price_eod_light`` are
+also reachable here from ``client.quote``/``client.chart``.
 """
 
 from __future__ import annotations

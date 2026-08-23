@@ -8,6 +8,8 @@ from typing import TypedDict
 
 
 class TreasuryRatesResult(TypedDict):
+    """US Treasury yield curve (1-month through 30-year), one row per date. Returned by `treasury_rates()`."""
+
     date: str
     month1: float
     month2: float
@@ -24,12 +26,16 @@ class TreasuryRatesResult(TypedDict):
 
 
 class EconomicIndicatorsResult(TypedDict):
+    """One macroeconomic series (GDP, CPI, unemployment, etc.) value at one date. Returned by `economic_indicators()`."""
+
     name: str
     date: str
     value: float
 
 
 class EconomicCalendarResult(TypedDict):
+    """One scheduled economic data release, with prior/estimate/actual values once reported. Requires an FMP Ultimate-tier plan. Returned by `economic_calendar()`."""
+
     date: str
     country: str
     event: str
@@ -44,6 +50,8 @@ class EconomicCalendarResult(TypedDict):
 
 
 class MarketRiskPremiumResult(TypedDict):
+    """Country risk premium and total equity risk premium for one country. Returned by `market_risk_premium()`."""
+
     country: str
     continent: str
     countryRiskPremium: float

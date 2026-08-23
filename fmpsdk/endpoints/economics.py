@@ -1,6 +1,5 @@
 """client.economics — Macroeconomic series, treasury rates, economic
-calendar, risk premium (REWRITE_ARCHITECTURE.md §6, ``client.economics``).
-4 canonical methods, no cross-listings.
+calendar, and country risk premium. 4 methods.
 """
 
 from __future__ import annotations
@@ -57,7 +56,8 @@ class EconomicsEndpoints:
         to: str | None = None,
     ) -> list[EconomicCalendarResult]:
         """``GET economic-calendar`` — scheduled economic data releases,
-        with prior/estimate/actual values once reported.
+        with prior/estimate/actual values once reported. Requires an FMP
+        Ultimate-tier plan — 402s on the free tier.
 
         :param country: ISO country code to filter by, e.g. ``"US"``.
         :param from_: start date, ``YYYY-MM-DD`` (``from`` is a Python keyword).
