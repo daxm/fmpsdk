@@ -114,6 +114,29 @@ class ChartGroup:
         )
 
 
+class CompanyGroup:
+    """``client.company`` — 17 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.company_notes = bind("company_notes")
+        self.delisted_companies = bind("delisted_companies")
+        self.employee_count = bind("employee_count")
+        self.executive_compensation_benchmark = bind("executive_compensation_benchmark")
+        self.governance_executive_compensation = bind("governance_executive_compensation")
+        self.historical_employee_count = bind("historical_employee_count")
+        self.historical_market_capitalization = bind("historical_market_capitalization")
+        self.key_executives = bind("key_executives")
+        self.market_capitalization = bind("market_capitalization")
+        self.market_capitalization_batch = bind("market_capitalization_batch")
+        self.mergers_acquisitions_latest = bind("mergers_acquisitions_latest")
+        self.mergers_acquisitions_search = bind("mergers_acquisitions_search")
+        self.profile = bind("profile")
+        self.profile_cik = bind("profile_cik")
+        self.shares_float = bind("shares_float")
+        self.shares_float_all = bind("shares_float_all")
+        self.stock_peers = bind("stock_peers")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -128,3 +151,4 @@ def attach_groups(client: "Client") -> None:
     client.analyst = AnalystGroup(bind)
     client.calendar = CalendarGroup(bind)
     client.chart = ChartGroup(bind)
+    client.company = CompanyGroup(bind)

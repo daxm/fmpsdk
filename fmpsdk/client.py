@@ -30,6 +30,7 @@ from .groups import attach_groups
 from .endpoints.analyst import AnalystEndpoints
 from .endpoints.calendar import CalendarEndpoints
 from .endpoints.chart import ChartEndpoints
+from .endpoints.company import CompanyEndpoints
 from .endpoints.directory import DirectoryEndpoints
 from .endpoints.search import SearchEndpoints
 
@@ -91,7 +92,12 @@ def _is_retryable(response: requests.Response) -> bool:
 
 
 class Client(
-    SearchEndpoints, DirectoryEndpoints, AnalystEndpoints, CalendarEndpoints, ChartEndpoints
+    SearchEndpoints,
+    DirectoryEndpoints,
+    AnalystEndpoints,
+    CalendarEndpoints,
+    ChartEndpoints,
+    CompanyEndpoints,
 ):
     """fmpsdk client.
 

@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 21 / 238 methods done** (18 more implemented + unit-tested, pending
+**Progress: 35 / 238 methods done** (21 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -122,23 +122,28 @@ Ultimate verification).
 
 17 methods.
 
-- [ ] `company_notes` — `company-notes`
-- [ ] `delisted_companies` — `delisted-companies`
-- [ ] `employee_count` — `employee-count`
-- [ ] `executive_compensation_benchmark` — `executive-compensation-benchmark`
-- [ ] `governance_executive_compensation` — `governance-executive-compensation`
-- [ ] `historical_employee_count` — `historical-employee-count`
-- [ ] `historical_market_capitalization` — `historical-market-capitalization`
-- [ ] `key_executives` — `key-executives`
-- [ ] `market_capitalization` — `market-capitalization`
-- [ ] `market_capitalization_batch` — `market-capitalization-batch`
-- [ ] `mergers_acquisitions_latest` — `mergers-acquisitions-latest`
-- [ ] `mergers_acquisitions_search` — `mergers-acquisitions-search`
-- [ ] `profile` — `profile`
-- [ ] `profile_cik` — `profile-cik`
-- [ ] `shares_float` — `shares-float`
-- [ ] `shares_float_all` — `shares-float-all`
-- [ ] `stock_peers` — `stock-peers`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found 3 of 17
+> methods 402 on the free tier. Reclassified below per the workflow doc's
+> "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
+
+- [x] done `company_notes` — `company-notes`
+- [x] done `delisted_companies` — `delisted-companies`
+- [x] done `employee_count` — `employee-count`
+- [x] ultimate-pending `executive_compensation_benchmark` — `executive-compensation-benchmark` (402 on free tier)
+- [x] done `governance_executive_compensation` — `governance-executive-compensation`
+- [x] done `historical_employee_count` — `historical-employee-count`
+- [x] done `historical_market_capitalization` — `historical-market-capitalization`
+- [x] done `key_executives` — `key-executives`
+- [x] done `market_capitalization` — `market-capitalization`
+- [x] done `market_capitalization_batch` — `market-capitalization-batch`
+- [x] ultimate-pending `mergers_acquisitions_latest` — `mergers-acquisitions-latest` (402 on free tier)
+- [x] ultimate-pending `mergers_acquisitions_search` — `mergers-acquisitions-search` (402 on free tier)
+- [x] done `profile` — `profile`
+- [x] done `profile_cik` — `profile-cik`
+- [x] done `shares_float` — `shares-float`
+- [x] done `shares_float_all` — `shares-float-all`
+- [x] done `stock_peers` — `stock-peers`
 
 ## `client.commitment_of_traders` — CFTC Commitment-of-Traders reports and analysis.
 
