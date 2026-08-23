@@ -1,17 +1,15 @@
-"""client.quote — Real-time and aftermarket quotes, single and batch
-(REWRITE_ARCHITECTURE.md §6, ``client.quote``). 16 canonical methods.
-``quote``, ``quote_short``, ``batch_index_quotes``,
+"""client.quote — Real-time and aftermarket quotes, single and batch. 16
+methods. ``quote``, ``quote_short``, ``batch_index_quotes``,
 ``batch_commodity_quotes``, ``batch_crypto_quotes``, and
-``batch_forex_quotes`` are cross-listed into ``client.indexes``/
-``client.commodity``/``client.crypto``/``client.forex`` respectively
-(§4.3) — wired in ``groups.py``, not reimplemented here.
+``batch_forex_quotes`` are also reachable from ``client.indexes``/
+``client.commodity``/``client.crypto``/``client.forex`` respectively.
 
-Per §7.6, the ``batch-*`` family encodes a real signal in its
-singular/plural naming: singular ``batch-quote``/``batch-exchange-quote``
-take a ``symbols``/``exchange`` scope parameter; plural
-``batch-*-quotes`` (etf/mutualfund/commodity/crypto/forex/index) cover
-the *whole* asset class with no scope parameter. Both converge on the
-same short response shape (``QuoteShortResult``).
+Only the 5 single-symbol methods (``quote``, ``quote_short``,
+``aftermarket_quote``, ``aftermarket_trade``, ``stock_price_change``)
+work on the free tier — every ``batch_*`` method requires an FMP
+Ultimate-tier plan, including the singular-named ones
+(``batch_quote``, ``batch_exchange_quote``, ``batch_aftermarket_*``),
+not just the plural whole-asset-class ones.
 """
 
 from __future__ import annotations
@@ -141,7 +139,7 @@ class QuoteEndpoints:
 
     def batch_etf_quotes(self, short: bool | None = None) -> list[QuoteShortResult]:
         """``GET batch-etf-quotes`` — condensed quotes for every ETF FMP
-        tracks. No scope parameter — whole asset class (§7.6).
+        tracks. No scope parameter — whole asset class.
 
         :param short: passed through as documented by FMP.
         """
@@ -153,8 +151,7 @@ class QuoteEndpoints:
         self, short: bool | None = None
     ) -> list[QuoteShortResult]:
         """``GET batch-mutualfund-quotes`` — condensed quotes for every
-        mutual fund FMP tracks. No scope parameter — whole asset class
-        (§7.6).
+        mutual fund FMP tracks. No scope parameter — whole asset class.
 
         :param short: passed through as documented by FMP.
         """
@@ -167,8 +164,8 @@ class QuoteEndpoints:
         self, short: bool | None = None
     ) -> list[QuoteShortResult]:
         """``GET batch-commodity-quotes`` — condensed quotes for every
-        commodity FMP tracks. No scope parameter — whole asset class
-        (§7.6). Cross-listed into ``client.commodity``.
+        commodity FMP tracks. No scope parameter — whole asset class.
+        Also reachable from ``client.commodity``.
 
         :param short: passed through as documented by FMP.
         """
@@ -179,8 +176,8 @@ class QuoteEndpoints:
 
     def batch_crypto_quotes(self, short: bool | None = None) -> list[QuoteShortResult]:
         """``GET batch-crypto-quotes`` — condensed quotes for every
-        cryptocurrency FMP tracks. No scope parameter — whole asset class
-        (§7.6). Cross-listed into ``client.crypto``.
+        cryptocurrency FMP tracks. No scope parameter — whole asset
+        class. Also reachable from ``client.crypto``.
 
         :param short: passed through as documented by FMP.
         """
@@ -191,8 +188,8 @@ class QuoteEndpoints:
 
     def batch_forex_quotes(self, short: bool | None = None) -> list[QuoteShortResult]:
         """``GET batch-forex-quotes`` — condensed quotes for every
-        currency pair FMP tracks. No scope parameter — whole asset class
-        (§7.6). Cross-listed into ``client.forex``.
+        currency pair FMP tracks. No scope parameter — whole asset
+        class. Also reachable from ``client.forex``.
 
         :param short: passed through as documented by FMP.
         """
@@ -202,8 +199,8 @@ class QuoteEndpoints:
 
     def batch_index_quotes(self, short: bool | None = None) -> list[QuoteShortResult]:
         """``GET batch-index-quotes`` — condensed quotes for every stock
-        market index FMP tracks. No scope parameter — whole asset class
-        (§7.6). Cross-listed into ``client.indexes``.
+        market index FMP tracks. No scope parameter — whole asset
+        class. Also reachable from ``client.indexes``.
 
         :param short: passed through as documented by FMP.
         """

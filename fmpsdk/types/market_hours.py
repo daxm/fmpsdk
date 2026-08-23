@@ -20,6 +20,9 @@ class ExchangeMarketHoursResult(TypedDict):
 
 
 class HolidaysByExchangeResult(TypedDict):
+    """One non-trading holiday date for one exchange, with any adjusted
+    open/close times. Returned by `holidays_by_exchange()`."""
+
     exchange: str
     date: str
     name: str

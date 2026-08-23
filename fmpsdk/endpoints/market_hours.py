@@ -1,6 +1,5 @@
-"""client.market_hours — Exchange trading sessions and holiday calendars
-(REWRITE_ARCHITECTURE.md §6, ``client.market_hours``). 3 canonical
-methods, no cross-listings.
+"""client.market_hours — Exchange trading sessions and holiday
+calendars. 3 methods.
 """
 
 from __future__ import annotations

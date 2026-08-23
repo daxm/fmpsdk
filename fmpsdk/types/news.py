@@ -8,6 +8,9 @@ from typing import TypedDict
 
 
 class FmpArticlesResult(TypedDict):
+    """One of FMP's own editorial articles. Returned by
+    `fmp_articles()`."""
+
     title: str
     date: str
     content: str

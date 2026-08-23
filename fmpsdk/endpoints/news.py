@@ -1,7 +1,7 @@
-"""client.news — News, press releases, and FMP editorial articles
-(REWRITE_ARCHITECTURE.md §6, ``client.news``). 10 canonical methods, no
-cross-listings. 9 of the 10 share one response shape (``NewsArticleResult``)
-— see ``types.py`` for which.
+"""client.news — News, press releases, and FMP editorial articles. 10
+methods. Only ``fmp_articles`` works on the free tier — the other 9 (the
+general/press-releases/stock/crypto/forex family and their "-latest"
+siblings) require an FMP Ultimate-tier plan.
 """
 
 from __future__ import annotations

@@ -1,6 +1,6 @@
 """client.market_performance — Sector/industry performance and P/E,
-snapshot and historical, plus market leaders (REWRITE_ARCHITECTURE.md §6,
-``client.market_performance``). 11 canonical methods, no cross-listings.
+snapshot and historical, plus today's market leaders (biggest gainers/
+losers, most active). 11 methods.
 """
 
 from __future__ import annotations
