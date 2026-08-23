@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 3 / 238 methods done** (4 more implemented + unit-tested, pending
+**Progress: 3 / 238 methods done** (14 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -50,16 +50,22 @@ Ultimate verification).
 
 10 methods.
 
-- [ ] `actively_trading_list` — `actively-trading-list`
-- [ ] `available_countries` — `available-countries`
-- [ ] `available_exchanges` — `available-exchanges`
-- [ ] `available_industries` — `available-industries`
-- [ ] `available_sectors` — `available-sectors`
-- [ ] `cik_list` — `cik-list`
-- [ ] `etf_list` — `etf-list`
-- [ ] `financial_statement_symbol_list` — `financial-statement-symbol-list`
-- [ ] `stock_list` — `stock-list`
-- [ ] `symbol_change` — `symbol-change`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found all 10
+> of 10 methods 402 on the free tier — the whole group, not a subset like
+> `search`'s 4/7. Reclassified below per the workflow doc's "if a Bucket 1
+> method 402s, mark it `ultimate-pending`" rule.
+
+- [x] ultimate-pending `actively_trading_list` — `actively-trading-list` (402 on free tier)
+- [x] ultimate-pending `available_countries` — `available-countries` (402 on free tier)
+- [x] ultimate-pending `available_exchanges` — `available-exchanges` (402 on free tier)
+- [x] ultimate-pending `available_industries` — `available-industries` (402 on free tier)
+- [x] ultimate-pending `available_sectors` — `available-sectors` (402 on free tier)
+- [x] ultimate-pending `cik_list` — `cik-list` (402 on free tier)
+- [x] ultimate-pending `etf_list` — `etf-list` (402 on free tier)
+- [x] ultimate-pending `financial_statement_symbol_list` — `financial-statement-symbol-list` (402 on free tier)
+- [x] ultimate-pending `stock_list` — `stock-list` (402 on free tier)
+- [x] ultimate-pending `symbol_change` — `symbol-change` (402 on free tier)
 
 ## `client.analyst` — Sell-side estimates, ratings, price targets, grades.
 

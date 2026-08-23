@@ -51,6 +51,22 @@ class SearchGroup:
         self.search_symbol = bind("search_symbol")
 
 
+class DirectoryGroup:
+    """``client.directory`` — 10 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.actively_trading_list = bind("actively_trading_list")
+        self.available_countries = bind("available_countries")
+        self.available_exchanges = bind("available_exchanges")
+        self.available_industries = bind("available_industries")
+        self.available_sectors = bind("available_sectors")
+        self.cik_list = bind("cik_list")
+        self.etf_list = bind("etf_list")
+        self.financial_statement_symbol_list = bind("financial_statement_symbol_list")
+        self.stock_list = bind("stock_list")
+        self.symbol_change = bind("symbol_change")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -61,3 +77,4 @@ def attach_groups(client: "Client") -> None:
     """
     bind = _MethodBinder(client)
     client.search = SearchGroup(bind)
+    client.directory = DirectoryGroup(bind)
