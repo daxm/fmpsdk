@@ -44,6 +44,8 @@ class EarningsResult(TypedDict):
 
 
 class IposCalendarResult(TypedDict):
+    """One upcoming or recent IPO. Returned by `ipos_calendar()`."""
+
     symbol: str
     date: str
     daa: str  # Verbatim from FMP's documented example — not a typo we're introducing.
@@ -56,6 +58,8 @@ class IposCalendarResult(TypedDict):
 
 
 class IposDisclosureResult(TypedDict):
+    """One SEC IPO disclosure filing. Returned by `ipos_disclosure()`."""
+
     symbol: str
     filingDate: str
     acceptedDate: str
@@ -66,6 +70,9 @@ class IposDisclosureResult(TypedDict):
 
 
 class IposProspectusResult(TypedDict):
+    """One SEC IPO prospectus filing, with offering-price detail.
+    Returned by `ipos_prospectus()`."""
+
     symbol: str
     acceptedDate: str
     filingDate: str

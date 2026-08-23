@@ -22,6 +22,8 @@ from typing import TypedDict
 
 
 class RatingBulkResult(TypedDict):
+    """Current overall rating and component scores for every company at once. Returned by `rating_bulk()`."""
+
     symbol: str
     date: str
     rating: str
@@ -47,6 +49,8 @@ DcfBulkResult = TypedDict(
 
 
 class ScoresBulkResult(TypedDict):
+    """Altman Z-Score, Piotroski score, and related financial-health metrics for every company at once. Returned by `scores_bulk()`."""
+
     symbol: str
     reportedCurrency: str
     altmanZScore: str
@@ -61,6 +65,8 @@ class ScoresBulkResult(TypedDict):
 
 
 class PriceTargetSummaryBulkResult(TypedDict):
+    """Analyst price-target summary (last month/quarter/year/all-time) for every company at once. Returned by `price_target_summary_bulk()`."""
+
     symbol: str
     lastMonthCount: str
     lastMonthAvgPriceTarget: str
@@ -74,6 +80,8 @@ class PriceTargetSummaryBulkResult(TypedDict):
 
 
 class EtfHolderBulkResult(TypedDict):
+    """ETF holdings for a whole page of the universe at once. Returned by `etf_holder_bulk()`."""
+
     symbol: str
     name: str
     sharesNumber: str
@@ -86,6 +94,8 @@ class EtfHolderBulkResult(TypedDict):
 
 
 class UpgradesDowngradesConsensusBulkResult(TypedDict):
+    """Analyst upgrade/downgrade consensus for every company at once. Returned by `upgrades_downgrades_consensus_bulk()`."""
+
     symbol: str
     strongBuy: str
     buy: str
@@ -96,6 +106,8 @@ class UpgradesDowngradesConsensusBulkResult(TypedDict):
 
 
 class KeyMetricsTtmBulkResult(TypedDict):
+    """Trailing-twelve-month key metrics for every company at once. Returned by `key_metrics_ttm_bulk()`."""
+
     symbol: str
     marketCap: str
     enterpriseValueTTM: str
@@ -142,6 +154,8 @@ class KeyMetricsTtmBulkResult(TypedDict):
 
 
 class RatiosTtmBulkResult(TypedDict):
+    """Trailing-twelve-month financial ratios for every company at once. Returned by `ratios_ttm_bulk()`."""
+
     symbol: str
     grossProfitMarginTTM: str
     ebitMarginTTM: str
@@ -205,11 +219,15 @@ class RatiosTtmBulkResult(TypedDict):
 
 
 class PeersBulkResult(TypedDict):
+    """Peer-company list for every company at once. Returned by `peers_bulk()`."""
+
     symbol: str
     peers: str
 
 
 class EarningsSurprisesBulkResult(TypedDict):
+    """Actual vs. estimated EPS for every company, for one fiscal year. Returned by `earnings_surprises_bulk()`."""
+
     symbol: str
     date: str
     epsActual: str
@@ -218,6 +236,8 @@ class EarningsSurprisesBulkResult(TypedDict):
 
 
 class IncomeStatementBulkResult(TypedDict):
+    """Income statement for every company, for one fiscal period. Returned by `income_statement_bulk()`."""
+
     date: str
     symbol: str
     reportedCurrency: str
@@ -260,6 +280,8 @@ class IncomeStatementBulkResult(TypedDict):
 
 
 class IncomeStatementGrowthBulkResult(TypedDict):
+    """Income statement growth for every company, for one fiscal period. Returned by `income_statement_growth_bulk()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -297,6 +319,8 @@ class IncomeStatementGrowthBulkResult(TypedDict):
 
 
 class BalanceSheetStatementBulkResult(TypedDict):
+    """Balance sheet for every company, for one fiscal period. Returned by `balance_sheet_statement_bulk()`."""
+
     date: str
     symbol: str
     reportedCurrency: str
@@ -361,6 +385,8 @@ class BalanceSheetStatementBulkResult(TypedDict):
 
 
 class BalanceSheetStatementGrowthBulkResult(TypedDict):
+    """Balance sheet growth for every company, for one fiscal period. Returned by `balance_sheet_statement_growth_bulk()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -420,6 +446,8 @@ class BalanceSheetStatementGrowthBulkResult(TypedDict):
 
 
 class CashFlowStatementBulkResult(TypedDict):
+    """Cash flow statement for every company, for one fiscal period. Returned by `cash_flow_statement_bulk()`."""
+
     date: str
     symbol: str
     reportedCurrency: str
@@ -521,6 +549,8 @@ class CashFlowStatementGrowthBulkResult(TypedDict):
 
 
 class EodBulkResult(TypedDict):
+    """End-of-day OHLCV price for every symbol, on one date. Returned by `eod_bulk()`."""
+
     symbol: str
     date: str
     open: str

@@ -1,10 +1,8 @@
-"""client.chart — Historical price series, EOD and intraday, for every
-asset class (REWRITE_ARCHITECTURE.md §6, ``client.chart``). 5 canonical
+"""client.chart — Historical price series, end-of-day and intraday, for
+any symbol FMP covers (stocks, indexes, commodities, crypto, forex). 5
 methods. ``historical_chart``, ``historical_price_eod_full``, and
-``historical_price_eod_light`` are cross-listed into ``indexes``,
-``commodity``, ``crypto``, and ``forex`` once those groups exist — the
-``_MethodBinder`` in ``groups.py`` is what keeps those bound methods
-identity-equal to the ones here.
+``historical_price_eod_light`` are also reachable from
+``client.indexes``/``commodity``/``crypto``/``forex``.
 """
 
 from __future__ import annotations
@@ -34,15 +32,15 @@ class ChartEndpoints:
         nonadjusted: bool | None = None,
         extended: bool | None = None,
     ) -> list[HistoricalChartResult]:
-        """``GET historical-chart/{timeframe}`` — intraday OHLCV bars. The
-        FMP path itself is templated by timeframe (§5.3 collapse: this one
-        method covers all 6 intraday intervals FMP documents separately).
+        """``GET historical-chart/{timeframe}`` — intraday OHLCV bars, one
+        method covering all 6 intraday intervals FMP documents
+        separately.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param timeframe: one of ``constants.TIMEFRAME_INTRADAY``
             (``"1min"``, ``"5min"``, ``"15min"``, ``"30min"``, ``"1hour"``,
-            ``"4hour"`` — no ``"1day"`` here; that's ``technical_indicators_*``
-            territory, §8.2).
+            ``"4hour"``). There's no ``"1day"`` here — for daily bars use
+            ``historical_price_eod_full`` instead.
         :param from_: start date, ``YYYY-MM-DD`` (``from`` is a Python keyword).
         :param to: end date, ``YYYY-MM-DD``.
         :param nonadjusted: return split-unadjusted prices.

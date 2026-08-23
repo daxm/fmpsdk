@@ -1,6 +1,6 @@
-"""client.analyst — Sell-side estimates, ratings, price targets, grades
-(REWRITE_ARCHITECTURE.md §6, ``client.analyst``). 8 canonical methods, no
-cross-listings. Every method takes a required ``symbol``.
+"""client.analyst — Sell-side estimates, ratings, price targets, and
+analyst grading actions for a stock. 8 methods, each keyed by a
+required ``symbol``.
 """
 
 from __future__ import annotations
@@ -34,9 +34,9 @@ class AnalystEndpoints:
         """``GET analyst-estimates`` — consensus revenue/EPS/margin forecasts.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
-        :param period: ``"annual"`` or ``"quarter"`` (``constants.PERIOD_ANNUAL_QUARTER``
-            — one of the three incompatible ``period`` vocabularies in the
-            catalog, §8.1; this endpoint does *not* accept ``Q1``-``Q4``/``FY``).
+        :param period: ``"annual"`` or ``"quarter"`` (see
+            ``constants.PERIOD_ANNUAL_QUARTER``) — this endpoint does
+            *not* accept ``Q1``-``Q4``/``FY``.
         :param page: zero-indexed page number.
         :param limit: max results to return.
         """

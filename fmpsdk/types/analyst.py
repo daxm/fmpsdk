@@ -8,6 +8,9 @@ from typing import TypedDict
 
 
 class AnalystEstimatesResult(TypedDict):
+    """Consensus revenue/EPS/margin forecast for one period. Returned by
+    `analyst_estimates()`."""
+
     symbol: str
     date: str
     revenueLow: float
@@ -33,6 +36,9 @@ class AnalystEstimatesResult(TypedDict):
 
 
 class RatingsSnapshotResult(TypedDict):
+    """Current overall rating and per-factor scores (DCF, ROE, ROA,
+    debt/equity, P/E, P/B). Returned by `ratings_snapshot()`."""
+
     symbol: str
     rating: str
     overallScore: int
@@ -62,6 +68,9 @@ class RatingsHistoricalResult(TypedDict):
 
 
 class PriceTargetSummaryResult(TypedDict):
+    """Average analyst price targets over the last month/quarter/year/
+    all-time, with publisher list. Returned by `price_target_summary()`."""
+
     symbol: str
     lastMonthCount: int
     lastMonthAvgPriceTarget: float
@@ -77,6 +86,9 @@ class PriceTargetSummaryResult(TypedDict):
 
 
 class PriceTargetConsensusResult(TypedDict):
+    """High/low/median/consensus analyst price targets. Returned by
+    `price_target_consensus()`."""
+
     symbol: str
     targetHigh: float
     targetLow: float
@@ -85,6 +97,9 @@ class PriceTargetConsensusResult(TypedDict):
 
 
 class GradesResult(TypedDict):
+    """One analyst grading action (upgrade, downgrade, maintain).
+    Returned by `grades()`."""
+
     symbol: str
     date: str
     gradingCompany: str
@@ -94,6 +109,9 @@ class GradesResult(TypedDict):
 
 
 class GradesHistoricalResult(TypedDict):
+    """Dated counts of strong-buy/buy/hold/sell/strong-sell ratings in
+    force, one row per date. Returned by `grades_historical()`."""
+
     symbol: str
     date: str
     analystRatingsStrongBuy: int
@@ -104,6 +122,9 @@ class GradesHistoricalResult(TypedDict):
 
 
 class GradesConsensusResult(TypedDict):
+    """Current consensus grade counts and overall consensus label (e.g.
+    ``"Buy"``). Returned by `grades_consensus()`."""
+
     symbol: str
     strongBuy: int
     buy: int

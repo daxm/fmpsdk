@@ -20,6 +20,9 @@ class HistoricalChartResult(TypedDict):
 
 
 class HistoricalPriceEodLightResult(TypedDict):
+    """Daily close price and volume only, no OHLC. Returned by
+    `historical_price_eod_light()`."""
+
     symbol: str
     date: str
     price: float
@@ -27,6 +30,9 @@ class HistoricalPriceEodLightResult(TypedDict):
 
 
 class HistoricalPriceEodFullResult(TypedDict):
+    """Full daily OHLCV plus change and VWAP. Returned by
+    `historical_price_eod_full()`."""
+
     symbol: str
     date: str
     open: float

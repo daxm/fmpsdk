@@ -1,11 +1,11 @@
-"""client.bulk — Whole-universe bulk downloads (REWRITE_ARCHITECTURE.md §6,
-``client.bulk``). 18 canonical methods, no cross-listings. Named "Likely
-Bucket 2 (Ultimate-gated)" by the workflow doc's original pricing-tier
-audit — confirm live rather than assume.
+"""client.bulk — Whole-universe bulk downloads: one call returns a
+field set for every company FMP covers, instead of one call per symbol.
+18 methods. Requires an FMP Ultimate-tier plan — every method 402s on
+the free tier.
 
-See ``types/bulk.py``'s module docstring for the documented quirk this
-whole group shares: every method except ``profile_bulk`` returns every
-field as a JSON string, including semantically numeric/boolean ones.
+Every method except ``profile_bulk`` returns every field as a JSON
+string, including semantically numeric/boolean ones — see
+``types/bulk.py``'s module docstring.
 """
 
 from __future__ import annotations

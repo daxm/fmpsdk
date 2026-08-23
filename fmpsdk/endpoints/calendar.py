@@ -1,10 +1,7 @@
 """client.calendar — Date-driven corporate events: dividends, earnings,
-IPOs, splits (REWRITE_ARCHITECTURE.md §6, ``client.calendar``). 9 canonical
-methods, no cross-listings. Each event type has a paired "one company's
-history" method (``symbol*``) and a "market-wide, one date range" method
-(``from``/``to``) — both share a response type per ``types.py`` where the
-documented shapes are identical, since they answer the same question at
-different scope.
+IPOs, and splits. 9 methods. Dividends/earnings/splits each come as a
+pair: one company's history (``symbol``) and a market-wide date range
+(``from``/``to``).
 """
 
 from __future__ import annotations
