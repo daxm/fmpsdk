@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 35 / 238 methods done** (24 more implemented + unit-tested, pending
+**Progress: 39 / 238 methods done** (24 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -162,10 +162,10 @@ Ultimate verification).
 
 4 methods.
 
-- [ ] `custom_discounted_cash_flow` — `custom-discounted-cash-flow`
-- [ ] `custom_levered_discounted_cash_flow` — `custom-levered-discounted-cash-flow`
-- [ ] `discounted_cash_flow` — `discounted-cash-flow`
-- [ ] `levered_discounted_cash_flow` — `levered-discounted-cash-flow`
+- [x] done `custom_discounted_cash_flow` — `custom-discounted-cash-flow`
+- [x] done `custom_levered_discounted_cash_flow` — `custom-levered-discounted-cash-flow`
+- [x] done `discounted_cash_flow` — `discounted-cash-flow`
+- [x] done `levered_discounted_cash_flow` — `levered-discounted-cash-flow`
 
 ## `client.economics` — Macroeconomic series, treasury rates, economic calendar, risk premium.
 

@@ -32,6 +32,7 @@ from .endpoints.calendar import CalendarEndpoints
 from .endpoints.chart import ChartEndpoints
 from .endpoints.commitment_of_traders import CommitmentOfTradersEndpoints
 from .endpoints.company import CompanyEndpoints
+from .endpoints.dcf import DcfEndpoints
 from .endpoints.directory import DirectoryEndpoints
 from .endpoints.search import SearchEndpoints
 
@@ -100,6 +101,7 @@ class Client(
     ChartEndpoints,
     CompanyEndpoints,
     CommitmentOfTradersEndpoints,
+    DcfEndpoints,
 ):
     """fmpsdk client.
 
