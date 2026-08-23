@@ -1,9 +1,6 @@
 """client.institutional_ownership — Form 13F institutional holdings,
-holders, and derived analytics (REWRITE_ARCHITECTURE.md §6,
-``client.institutional_ownership``). 8 canonical methods, no
-cross-listings. Named by the workflow doc's original pricing-tier audit
-as a likely Bucket 2 ("granular Form 13F") category — confirm live rather
-than assume.
+holders, and derived analytics. 8 methods. Requires an FMP
+Ultimate-tier plan — every method here 402s on the free tier.
 """
 
 from __future__ import annotations

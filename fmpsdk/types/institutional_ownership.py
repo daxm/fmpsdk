@@ -8,6 +8,8 @@ from typing import TypedDict
 
 
 class InstitutionalOwnershipLatestResult(TypedDict):
+    """One recent Form 13F filing, across all institutional investors. Returned by `institutional_ownership_latest()`."""
+
     cik: str
     name: str
     date: str
@@ -19,6 +21,8 @@ class InstitutionalOwnershipLatestResult(TypedDict):
 
 
 class InstitutionalOwnershipExtractResult(TypedDict):
+    """One security in one filer's Form 13F holdings for one quarter. Returned by `institutional_ownership_extract()`."""
+
     date: str
     filingDate: str
     acceptedDate: str
@@ -36,12 +40,16 @@ class InstitutionalOwnershipExtractResult(TypedDict):
 
 
 class InstitutionalOwnershipDatesResult(TypedDict):
+    """One fiscal year/quarter one filer has a Form 13F on file for. Returned by `institutional_ownership_dates()`."""
+
     date: str
     year: int
     quarter: int
 
 
 class InstitutionalOwnershipExtractAnalyticsHolderResult(TypedDict):
+    """Per-holder analytics for one security: weight, market value and share-count changes, ownership percentage, holding period. Returned by `institutional_ownership_extract_analytics_holder()`."""
+
     date: str
     cik: str
     filingDate: str
@@ -84,6 +92,8 @@ class InstitutionalOwnershipExtractAnalyticsHolderResult(TypedDict):
 
 
 class InstitutionalOwnershipHolderPerformanceSummaryResult(TypedDict):
+    """One filer's portfolio performance, including S&P 500-relative returns over 1/3/5 years and since inception. Returned by `institutional_ownership_holder_performance_summary()`."""
+
     date: str
     cik: str
     investorName: str
@@ -120,6 +130,8 @@ class InstitutionalOwnershipHolderPerformanceSummaryResult(TypedDict):
 
 
 class InstitutionalOwnershipHolderIndustryBreakdownResult(TypedDict):
+    """One filer's portfolio weight and performance for one industry. Returned by `institutional_ownership_holder_industry_breakdown()`."""
+
     date: str
     cik: str
     investorName: str
@@ -135,6 +147,8 @@ class InstitutionalOwnershipHolderIndustryBreakdownResult(TypedDict):
 
 
 class InstitutionalOwnershipSymbolPositionsSummaryResult(TypedDict):
+    """Aggregate institutional positioning in one security: investor count, share/value totals, new/increased/reduced/closed position counts, put/call ratio. Returned by `institutional_ownership_symbol_positions_summary()`."""
+
     symbol: str
     cik: str
     date: str
@@ -174,6 +188,8 @@ class InstitutionalOwnershipSymbolPositionsSummaryResult(TypedDict):
 
 
 class InstitutionalOwnershipIndustrySummaryResult(TypedDict):
+    """Total institutional investment value for one industry, market-wide. Returned by `institutional_ownership_industry_summary()`."""
+
     industryTitle: str
     industryValue: float
     date: str

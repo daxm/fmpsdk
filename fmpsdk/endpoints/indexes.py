@@ -1,9 +1,9 @@
 """client.indexes — Stock-market indexes, their quotes/charts, and their
-constituent lists (REWRITE_ARCHITECTURE.md §6, ``client.indexes``). 7
-primary methods. 3 methods (``historical_chart``,
-``historical_price_eod_full``, ``historical_price_eod_light``) are
-cross-listed in from ``client.chart`` — bound in ``groups.py``, not
-reimplemented here (§4.3).
+constituent lists. 7 primary methods; ``historical_chart``,
+``historical_price_eod_full``, and ``historical_price_eod_light`` are
+also reachable here from ``client.chart``. Only ``index_list`` works on
+the free tier — the 3 constituent-list methods and their 3
+``historical_*`` counterparts all require an FMP Ultimate-tier plan.
 """
 
 from __future__ import annotations

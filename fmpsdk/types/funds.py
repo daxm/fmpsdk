@@ -8,6 +8,8 @@ from typing import TypedDict
 
 
 class EtfHoldingsResult(TypedDict):
+    """One asset an ETF holds, with market value and portfolio weight. Returned by `etf_holdings()`."""
+
     symbol: str
     asset: str
     name: str
@@ -27,6 +29,8 @@ class EtfInfoSectorExposure(TypedDict):
 
 
 class EtfInfoResult(TypedDict):
+    """Fund-level metadata: expense ratio, AUM, NAV, inception date, and sector exposure breakdown. Returned by `etf_info()`."""
+
     symbol: str
     name: str
     description: str
@@ -49,6 +53,8 @@ class EtfInfoResult(TypedDict):
 
 
 class EtfCountryWeightingsResult(TypedDict):
+    """Portfolio weight by country of an ETF's underlying holdings. Returned by `etf_country_weightings()`."""
+
     country: str
     # Verbatim from FMP's documented example: sent as a "97.26%"-style
     # string, not a float, unlike EtfSectorWeightingsResult below.
@@ -69,12 +75,16 @@ class EtfAssetExposureResult(TypedDict):
 
 
 class EtfSectorWeightingsResult(TypedDict):
+    """Portfolio weight by sector of an ETF's underlying holdings. Returned by `etf_sector_weightings()`."""
+
     symbol: str
     sector: str
     weightPercentage: float
 
 
 class FundsDisclosureHoldersLatestResult(TypedDict):
+    """One fund's most recent disclosed holding of one security, with share count and change since the prior filing. Returned by `funds_disclosure_holders_latest()`."""
+
     cik: str
     holder: str
     securityCusip: str
@@ -85,6 +95,8 @@ class FundsDisclosureHoldersLatestResult(TypedDict):
 
 
 class FundsDisclosureResult(TypedDict):
+    """One N-PORT-style per-holding disclosure line for one fund, one filing period. Returned by `funds_disclosure()`."""
+
     cik: str
     date: str
     acceptedDate: str
@@ -111,6 +123,8 @@ class FundsDisclosureResult(TypedDict):
 
 
 class FundsDisclosureHoldersSearchResult(TypedDict):
+    """One fund/entity matching a name search, with CIK, series/class IDs, and filer address. Returned by `funds_disclosure_holders_search()`."""
+
     symbol: str
     cik: str
     classId: str
@@ -127,6 +141,8 @@ class FundsDisclosureHoldersSearchResult(TypedDict):
 
 
 class FundsDisclosureDatesResult(TypedDict):
+    """One filing period available for `funds_disclosure()`, for one fund. Returned by `funds_disclosure_dates()`."""
+
     date: str
     year: int
     quarter: int

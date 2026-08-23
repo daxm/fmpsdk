@@ -8,6 +8,8 @@ from typing import TypedDict
 
 
 class IndexListResult(TypedDict):
+    """One stock market index FMP tracks, with symbol, name, exchange, and currency. Returned by `index_list()`."""
+
     symbol: str
     name: str
     exchange: str

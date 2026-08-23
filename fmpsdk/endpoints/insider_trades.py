@@ -1,6 +1,7 @@
 """client.insider_trades — Form 4 insider transactions, statistics, and
-beneficial-ownership acquisitions (REWRITE_ARCHITECTURE.md §6,
-``client.insider_trades``). 6 canonical methods, no cross-listings.
+beneficial-ownership acquisitions. 6 methods. Only
+``insider_trading_latest`` and ``insider_trading_transaction_type`` work
+on the free tier — the other 4 require an FMP Ultimate-tier plan.
 """
 
 from __future__ import annotations

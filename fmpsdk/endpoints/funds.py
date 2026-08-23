@@ -1,8 +1,6 @@
-"""client.funds — ETF and mutual-fund composition, info, and N-PORT/13F-style
-disclosures (REWRITE_ARCHITECTURE.md §6, ``client.funds``). 9 canonical
-methods, no cross-listings. FMP nests these under ``etf/`` and ``funds/``
-path prefixes rather than the flat ``group-name`` convention used
-elsewhere in the catalog — passed straight through to ``self._get``.
+"""client.funds — ETF composition/info and fund N-PORT-style holdings
+disclosures. 9 methods. Requires an FMP Ultimate-tier plan — every
+method here 402s on the free tier.
 """
 
 from __future__ import annotations
