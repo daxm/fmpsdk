@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 35 / 238 methods done** (21 more implemented + unit-tested, pending
+**Progress: 35 / 238 methods done** (24 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -149,9 +149,14 @@ Ultimate verification).
 
 3 methods.
 
-- [ ] `commitment_of_traders_analysis` — `commitment-of-traders-analysis`
-- [ ] `commitment_of_traders_list` — `commitment-of-traders-list`
-- [ ] `commitment_of_traders_report` — `commitment-of-traders-report`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found all 3
+> methods 402 on the free tier. Reclassified below per the workflow doc's
+> "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
+
+- [x] ultimate-pending `commitment_of_traders_analysis` — `commitment-of-traders-analysis` (402 on free tier)
+- [x] ultimate-pending `commitment_of_traders_list` — `commitment-of-traders-list` (402 on free tier)
+- [x] ultimate-pending `commitment_of_traders_report` — `commitment-of-traders-report` (402 on free tier)
 
 ## `client.dcf` — Discounted-cash-flow valuations, standard and custom-input.
 

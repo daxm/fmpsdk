@@ -137,6 +137,15 @@ class CompanyGroup:
         self.stock_peers = bind("stock_peers")
 
 
+class CommitmentOfTradersGroup:
+    """``client.commitment_of_traders`` — 3 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.commitment_of_traders_analysis = bind("commitment_of_traders_analysis")
+        self.commitment_of_traders_list = bind("commitment_of_traders_list")
+        self.commitment_of_traders_report = bind("commitment_of_traders_report")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -152,3 +161,4 @@ def attach_groups(client: "Client") -> None:
     client.calendar = CalendarGroup(bind)
     client.chart = ChartGroup(bind)
     client.company = CompanyGroup(bind)
+    client.commitment_of_traders = CommitmentOfTradersGroup(bind)
