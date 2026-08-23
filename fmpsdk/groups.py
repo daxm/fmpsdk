@@ -67,6 +67,20 @@ class DirectoryGroup:
         self.symbol_change = bind("symbol_change")
 
 
+class AnalystGroup:
+    """``client.analyst`` — 8 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.analyst_estimates = bind("analyst_estimates")
+        self.grades = bind("grades")
+        self.grades_consensus = bind("grades_consensus")
+        self.grades_historical = bind("grades_historical")
+        self.price_target_consensus = bind("price_target_consensus")
+        self.price_target_summary = bind("price_target_summary")
+        self.ratings_historical = bind("ratings_historical")
+        self.ratings_snapshot = bind("ratings_snapshot")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -78,3 +92,4 @@ def attach_groups(client: "Client") -> None:
     bind = _MethodBinder(client)
     client.search = SearchGroup(bind)
     client.directory = DirectoryGroup(bind)
+    client.analyst = AnalystGroup(bind)

@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 3 / 238 methods done** (14 more implemented + unit-tested, pending
+**Progress: 11 / 238 methods done** (14 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -71,14 +71,14 @@ Ultimate verification).
 
 8 methods.
 
-- [ ] `analyst_estimates` — `analyst-estimates`
-- [ ] `grades` — `grades`
-- [ ] `grades_consensus` — `grades-consensus`
-- [ ] `grades_historical` — `grades-historical`
-- [ ] `price_target_consensus` — `price-target-consensus`
-- [ ] `price_target_summary` — `price-target-summary`
-- [ ] `ratings_historical` — `ratings-historical`
-- [ ] `ratings_snapshot` — `ratings-snapshot`
+- [x] done `analyst_estimates` — `analyst-estimates`
+- [x] done `grades` — `grades`
+- [x] done `grades_consensus` — `grades-consensus`
+- [x] done `grades_historical` — `grades-historical`
+- [x] done `price_target_consensus` — `price-target-consensus`
+- [x] done `price_target_summary` — `price-target-summary`
+- [x] done `ratings_historical` — `ratings-historical`
+- [x] done `ratings_snapshot` — `ratings-snapshot`
 
 ## `client.calendar` — Date-driven corporate events: dividends, earnings, IPOs, splits.
 

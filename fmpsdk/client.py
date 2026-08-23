@@ -27,6 +27,7 @@ from .exceptions import (
     FMPValidationError,
 )
 from .groups import attach_groups
+from .endpoints.analyst import AnalystEndpoints
 from .endpoints.directory import DirectoryEndpoints
 from .endpoints.search import SearchEndpoints
 
@@ -87,7 +88,7 @@ def _is_retryable(response: requests.Response) -> bool:
     return response.status_code == 429 or response.status_code >= 500
 
 
-class Client(SearchEndpoints, DirectoryEndpoints):
+class Client(SearchEndpoints, DirectoryEndpoints, AnalystEndpoints):
     """fmpsdk client.
 
     >>> client = Client()  # reads FMP_API_KEY from the environment
