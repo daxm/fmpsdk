@@ -81,6 +81,21 @@ class AnalystGroup:
         self.ratings_snapshot = bind("ratings_snapshot")
 
 
+class CalendarGroup:
+    """``client.calendar`` — 9 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.dividends = bind("dividends")
+        self.dividends_calendar = bind("dividends_calendar")
+        self.earnings = bind("earnings")
+        self.earnings_calendar = bind("earnings_calendar")
+        self.ipos_calendar = bind("ipos_calendar")
+        self.ipos_disclosure = bind("ipos_disclosure")
+        self.ipos_prospectus = bind("ipos_prospectus")
+        self.splits = bind("splits")
+        self.splits_calendar = bind("splits_calendar")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -93,3 +108,4 @@ def attach_groups(client: "Client") -> None:
     client.search = SearchGroup(bind)
     client.directory = DirectoryGroup(bind)
     client.analyst = AnalystGroup(bind)
+    client.calendar = CalendarGroup(bind)

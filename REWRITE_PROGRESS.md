@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 11 / 238 methods done** (14 more implemented + unit-tested, pending
+**Progress: 17 / 238 methods done** (17 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -84,15 +84,22 @@ Ultimate verification).
 
 9 methods.
 
-- [ ] `dividends` — `dividends`
-- [ ] `dividends_calendar` — `dividends-calendar`
-- [ ] `earnings` — `earnings`
-- [ ] `earnings_calendar` — `earnings-calendar`
-- [ ] `ipos_calendar` — `ipos-calendar`
-- [ ] `ipos_disclosure` — `ipos-disclosure`
-- [ ] `ipos_prospectus` — `ipos-prospectus`
-- [ ] `splits` — `splits`
-- [ ] `splits_calendar` — `splits-calendar`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found the 3
+> `ipos_*` methods 402 on the free tier — the whole IPOs category, while
+> dividends/earnings/splits are all free-tier reachable. Reclassified below
+> per the workflow doc's "if a Bucket 1 method 402s, mark it
+> `ultimate-pending`" rule.
+
+- [x] done `dividends` — `dividends`
+- [x] done `dividends_calendar` — `dividends-calendar`
+- [x] done `earnings` — `earnings`
+- [x] done `earnings_calendar` — `earnings-calendar`
+- [x] ultimate-pending `ipos_calendar` — `ipos-calendar` (402 on free tier)
+- [x] ultimate-pending `ipos_disclosure` — `ipos-disclosure` (402 on free tier)
+- [x] ultimate-pending `ipos_prospectus` — `ipos-prospectus` (402 on free tier)
+- [x] done `splits` — `splits`
+- [x] done `splits_calendar` — `splits-calendar`
 
 ## `client.chart` — Historical price series, EOD and intraday, for every asset class.
 
