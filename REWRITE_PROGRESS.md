@@ -24,20 +24,18 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 80 / 238 methods done** (68 more implemented + unit-tested pending
-Ultimate verification; 11 more implemented + unit-tested but not yet live-tested
-(`market_performance`, live-testing deferred mid-session when the daily API quota
-ran out — see `fmpsdk-rewrite-status` memory note); **79 more implemented across
-two code-only passes but not yet unit-tested or live-verified** — see the `news`
-through `tipranks` groups below). **This is the full 238/238 catalog now
-implemented in code** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
-Python implementation. 2026-08-23's second work session unit-tested and
-live-tested all 45 `indexes`-through-`technical_indicators` methods from the first
-code-only pass (`market_performance` unit-tested only, live-testing pending).
+**Progress: 91 / 238 methods done** (68 more implemented + unit-tested pending
+Ultimate verification; **79 more implemented across two code-only passes but not
+yet unit-tested or live-verified** — see the `news` through `tipranks` groups
+below). **This is the full 238/238 catalog now implemented in code** — every
+canonical method in REWRITE_ARCHITECTURE.md §6 has a Python implementation.
+2026-08-23's second work session unit-tested and live-tested all 45
+`indexes`-through-`technical_indicators` methods from the first code-only pass;
+a third session live-tested the remaining `market_performance` group (11/11,
+no 402s), closing out everything from the first two code-only passes.
 What's left: unit tests for the remaining 79 `implemented`-tagged methods
 (`news`/`quote`/`sec_filings`/`earnings_transcript`/`congress`/`bulk`/`tipranks`),
-then live-testing everything not already Bucket-2-confirmed, starting with
-`market_performance`.
+then live-testing everything not already Bucket-2-confirmed.
 
 ---
 
@@ -371,22 +369,19 @@ then live-testing everything not already Bucket-2-confirmed, starting with
 
 11 methods.
 
-> **Unit-tested 2026-08-23; live-testing deferred to next session** —
-> daily API quota ran out mid-session before this group's turn (see
-> `fmpsdk-rewrite-status` memory note). Test live before anything else
-> next time the quota resets.
+> **Unit- and live-tested 2026-08-23 — all 11 free-tier reachable, no 402s.**
 
-- [x] unit `biggest_gainers` — `biggest-gainers`
-- [x] unit `biggest_losers` — `biggest-losers`
-- [x] unit `historical_industry_pe` — `historical-industry-pe`
-- [x] unit `historical_industry_performance` — `historical-industry-performance`
-- [x] unit `historical_sector_pe` — `historical-sector-pe`
-- [x] unit `historical_sector_performance` — `historical-sector-performance`
-- [x] unit `industry_pe_snapshot` — `industry-pe-snapshot`
-- [x] unit `industry_performance_snapshot` — `industry-performance-snapshot`
-- [x] unit `most_actives` — `most-actives`
-- [x] unit `sector_pe_snapshot` — `sector-pe-snapshot`
-- [x] unit `sector_performance_snapshot` — `sector-performance-snapshot`
+- [x] done `biggest_gainers` — `biggest-gainers`
+- [x] done `biggest_losers` — `biggest-losers`
+- [x] done `historical_industry_pe` — `historical-industry-pe`
+- [x] done `historical_industry_performance` — `historical-industry-performance`
+- [x] done `historical_sector_pe` — `historical-sector-pe`
+- [x] done `historical_sector_performance` — `historical-sector-performance`
+- [x] done `industry_pe_snapshot` — `industry-pe-snapshot`
+- [x] done `industry_performance_snapshot` — `industry-performance-snapshot`
+- [x] done `most_actives` — `most-actives`
+- [x] done `sector_pe_snapshot` — `sector-pe-snapshot`
+- [x] done `sector_performance_snapshot` — `sector-performance-snapshot`
 
 ## `client.market_hours` — Exchange trading sessions and holiday calendars.
 

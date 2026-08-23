@@ -2,7 +2,17 @@
 The idea behind this project is to provide a 'one-stop-shop' to the API endpoints provided by 
 [Financial Model Prep](http://financialmodelingprep.com) website.
 
-**Note: fmpsdk should be synced with FMP's API changelog as of 20210220.  Changes thereafter are not yet included.**
+First, a personal note to you.  My apologies for letting this package get so out of date.  I was waiting for FMP to finish
+making changes to their API (things kept getting shifted around) and then I have a personal issue crop up and delay
+me working on this project for even longer.  Things are back on track and I should be able to respond to PRs and Issues
+in a far more timely manner going forward.
+
+Second, because of the long missing time since I updated this project the FMP API has changed so much that something like
+50% of the Python methods in this project were defunct.  Instead of trying to support the old Python methods are have 
+been using and make some sort of 'alias' to the new FMP API ways I decide to start over and build up from scratch. Alas,
+the versioning numbering I choose for this project (basically the date with a dot patch feature) doesn't provide me a
+clean version bump mechanism.  So, the 20250102.0 version is the last version using the old methods and any new version
+with a number larger than that will be using the new method schema.
 
 ## How to Use
 1. Install the package: `pip install fmpsdk`
@@ -35,3 +45,4 @@ jump in and help!  These are this project's stars.  Thank you.
   - [Ken Caruso](https://github.com/ipl31)
   - [iforgotmypass](https://github.com/iforgotmypass)
   - [Ivelin Ivanov](https://github.com/ivelin)
+  - Claude Code
