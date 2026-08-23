@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.earnings_transcript`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.earnings_transcript``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.earnings_transcript`` methods."""
 
 from __future__ import annotations
 
@@ -36,9 +29,9 @@ class EarningCallTranscriptLatestResult(TypedDict):
 
 
 class EarningsTranscriptListResult(TypedDict):
-    """Primary group `client.earnings_transcript`; cross-listed into
-    `client.directory` per §4.3 (FMP documents this path under both
-    "Directory" and "EarningsTranscript")."""
+    """Also reachable as `client.directory.earnings_transcript_list` —
+    FMP documents this endpoint under both "Directory" and "Earnings
+    Transcripts"."""
 
     symbol: str
     companyName: str

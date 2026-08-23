@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.sec_filings`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.sec_filings``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.sec_filings`` methods."""
 
 from __future__ import annotations
 
@@ -45,10 +38,9 @@ class SecFilingSearchResult(TypedDict):
 
 class SecFilingsCompanySearchResult(TypedDict):
     """Shape shared by `sec_filings_company_search_name`, `_symbol`, and
-    `_cik` — identical fields. Structurally identical to
-    `IndustryClassificationResult` but kept separate: different question
-    (identify a company by a search term vs. list companies by industry
-    classification), same rationale as §7.8's `profile`."""
+    `_cik`. Structurally identical to `IndustryClassificationResult` but
+    kept as a separate type — one identifies a company by a search term,
+    the other lists companies by industry classification."""
 
     symbol: str
     name: str

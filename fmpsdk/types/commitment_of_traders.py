@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.commitment_of_traders`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.commitment_of_traders``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.commitment_of_traders`` methods."""
 
 from __future__ import annotations
 
@@ -15,11 +8,11 @@ from typing import TypedDict
 
 
 class CommitmentOfTradersReportResult(TypedDict):
-    """CFTC COT report, one row per market per date. ~140 fields — kept
-    fully typed per the project's response-typing contract (§8.4) rather
-    than collapsed to a looser type; field names are verbatim from the
-    documented example, including its two `Spead`/`Spread` inconsistencies
-    (not our typo to fix)."""
+    """CFTC Commitment of Traders report, one row per market per date.
+    ~140 fields, fully typed. Field names are verbatim from FMP's own
+    response, including its `Spead`/`Spread` and `netPostion` typos —
+    not corrected here, since fixing them would break parsing a real
+    response."""
 
     symbol: str
     date: str

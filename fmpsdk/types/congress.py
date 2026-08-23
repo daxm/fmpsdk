@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.congress`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.congress``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.congress`` methods."""
 
 from __future__ import annotations
 
@@ -14,19 +7,13 @@ from typing import TypedDict
 # --- client.congress -----------------------------------------------------------
 
 
-# Functional form is not needed here (no field name collides with a
-# keyword or starts with a digit), but the wire field is genuinely
-# `senateID` even on the 4 House methods that share this shape (§7.5) —
-# not a typo, mirrored as-is.
 class CongressionalTradeResult(TypedDict):
-    """Shape shared by 8 `client.congress` methods: `house_latest`,
-    `house_trades`, `house_trades_by_id`, `house_trades_by_name`,
-    `senate_latest`, `senate_trades`, `senate_trades_by_id`,
-    `senate_trades_by_name` — identical fields in every documented
-    example. One disclosure record, whether from a Senate or House
-    filing; FMP's own `senateID` field name is used on House rows too
-    (§7.5's parameter-naming bug, mirrored here as the response field is
-    genuinely spelled this way on both chambers' endpoints)."""
+    """One financial disclosure record, from either a House or Senate
+    filing. Shared by `house_latest`, `house_trades`,
+    `house_trades_by_id`, `house_trades_by_name`, `senate_latest`,
+    `senate_trades`, `senate_trades_by_id`, `senate_trades_by_name`.
+    Note the `senateID` field is used on House rows too — that's FMP's
+    own naming, not a typo in this SDK."""
 
     symbol: str
     senateID: str

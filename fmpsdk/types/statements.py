@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.statements`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.statements``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.statements`` methods."""
 
 from __future__ import annotations
 
@@ -732,18 +725,12 @@ class FinancialReportsDatesResult(TypedDict):
 
 # `financial_reports_json` returns a per-filing document broken into
 # named report sections ("Cover Page", "Auditor Information", ...) whose
-# set is not fixed across filings/companies — genuinely dynamic, not a
-# knowable static shape. A plain dict alias is the honest type here,
-# same spirit as the loose typing on `financial_statement_full_as_reported`
-# below, rather than forcing an inaccurate TypedDict onto free-form XBRL
-# section data. Also: verified live that the real response is a single
-# bare object, not the array FMP's own docs show it as (§8.4's second
-# documented response-contract exception) — `financial_reports_json`
-# returns `FinancialReportsJsonResult` directly, never
-# `list[FinancialReportsJsonResult]`. `financial_reports_xlsx` (the first
-# such exception) shares the same underlying report but returns raw XLSX
-# bytes instead — also verified live, not assumed from the docs (whose
-# example response for it is a byte-for-byte copy of this JSON shape).
+# set isn't fixed across filings/companies, so a plain dict is the
+# honest type here rather than an inaccurate TypedDict. Two things to
+# know if you call it directly: the method returns a single
+# `FinancialReportsJsonResult` object, NOT a list, unlike every other
+# method in this package — and `financial_reports_xlsx` (same
+# underlying report) returns raw XLSX bytes instead of JSON.
 FinancialReportsJsonResult = dict[str, object]
 
 

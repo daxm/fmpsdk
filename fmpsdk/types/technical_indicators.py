@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.technical_indicators`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.technical_indicators``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.technical_indicators`` methods."""
 
 from __future__ import annotations
 

@@ -1,23 +1,16 @@
-"""TypedDicts for FMP response shapes, generated from api-docs.md example
-responses (REWRITE_ARCHITECTURE.md §8.4, §11). Cast at the JSON boundary in
-each endpoint method via ``typing.cast()`` — zero runtime cost, no new
-dependency.
+"""``TypedDict`` definitions for every shape an fmpsdk method can return —
+one per response *shape*, not per method, so two methods that return
+identical data (e.g. ``search_symbol``/``search_name``) share a type,
+while two methods that merely live in the same group but answer
+different questions (e.g. ``profile`` vs. ``profile_cik``) get separate
+types even when structurally similar.
 
-One TypedDict per response *shape*, not per method: methods verified
-identical under §5.1's V2 test (e.g. ``search_symbol`` / ``search_name``)
-share a type. Methods that merely sit in the same group but answer
-different questions (§7.8: ``profile`` means five different things across
-the catalog) always get separate types.
-
-Split into one module per alias group (mirroring ``endpoints/``) once this
-package passed ~2900 lines and 155 types across 27 groups — the split fell
-out mechanically from what each ``endpoints/<group>.py`` actually imports;
-no type is used by more than one group. This ``__init__.py`` re-exports
-every name so ``from fmpsdk.types import X`` (used throughout
-``endpoints/``) is unchanged regardless of which submodule ``X`` actually
-lives in — nothing outside this package needs to know the split exists.
-When adding a new group's types, add the submodule here in the same two
-places: the import block and ``__all__``.
+Each method's return-type annotation names the ``TypedDict`` it returns
+— that's the fastest way to see a response's exact fields without
+making a live call. These are organized into one module per FMP data
+category (mirroring ``endpoints/``); this ``__init__.py`` re-exports
+every name, so ``from fmpsdk.types import X`` works regardless of which
+submodule ``X`` actually lives in.
 """
 
 from __future__ import annotations

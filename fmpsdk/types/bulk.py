@@ -1,35 +1,19 @@
-"""TypedDicts for ``client.bulk`` response shapes
-(REWRITE_ARCHITECTURE.md §6, ``client.bulk``).
+"""Response shapes returned by ``client.bulk`` methods.
 
-**Every bulk endpoint except `profile_bulk` returns every field as a JSON
-string, including fields that are semantically numeric or boolean** (e.g.
-`rating_bulk`'s `"discountedCashFlowScore": "5"`,
-`earnings_surprises_bulk`'s `"epsActual": "0.3631"`). This isn't a
-transcription choice — it's what FMP's own documented example responses
-literally show, verbatim, for 17 of the 18 methods. `profile_bulk` is the
-lone exception: its example response has real JSON numbers/booleans, and
-its shape is identical field-for-field to `ProfileResult`
-(`types/company.py`) — reused directly rather than duplicated, since it
-answers the same question (`profile`/`profile_cik`) at bulk scope. Typing
-the other 17 as `str` throughout matches the doc evidence; verify live
-before assuming otherwise.
+**Every method except `profile_bulk` returns every field as a JSON
+string, including fields that are semantically numeric or boolean** —
+e.g. `rating_bulk`'s `"discountedCashFlowScore": "5"`,
+`earnings_surprises_bulk`'s `"epsActual": "0.3631"`. Don't assume
+`int`/`float` on these without converting first. `profile_bulk` is the
+lone exception, with real JSON numbers/booleans (it shares its shape
+with `ProfileResult`, from `profile`/`profile_cik`). This whole group
+is Ultimate-gated on FMP's free tier, so the all-string typing is taken
+from FMP's documented examples rather than a live response — worth a
+sanity check against a real response if you're on a paid plan.
 
-`etf_holder_bulk`'s documented example has a garbled key/value pair —
-`"lastUpdated\"": "2024-09-06\""` (embedded stray quote characters in
-both the key and the value) — almost certainly a doc-generation artifact,
-not a real wire field name containing a literal `"`. Modeled here as the
-sane `lastUpdated: str`; flagged for live confirmation like `sec_profile`'s
-`cik-A` parameter oddity in `types/sec_filings.py`.
-
-`cash_flow_statement_growth_bulk`'s field names preserve FMP's own typos
-verbatim (`...Activites`, missing the second `i`, on 3 of its fields) —
-same policy as `commitment_of_traders`'s `Spead`/`netPostion`: "fixing"
-it would break the cast against real JSON.
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions and the
-re-export barrel that keeps ``from fmpsdk.types import X`` working
-unchanged for every caller.
+`cash_flow_statement_growth_bulk`'s field names preserve FMP's own
+typos verbatim (`...Activites`, missing the second `i`, on 3 fields) —
+not fixed here, since that would break parsing a real response.
 """
 
 from __future__ import annotations

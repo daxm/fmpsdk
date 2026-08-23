@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.chart`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.chart``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.chart`` methods."""
 
 from __future__ import annotations
 
@@ -13,11 +6,10 @@ from typing import TypedDict
 
 
 class HistoricalChartResult(TypedDict):
-    """Response for the 6 `historical_chart` intraday timeframes (§5.3
-    collapse: `1min`/`5min`/`15min`/`30min`/`1hour`/`4hour` share one
-    method and one shape). No `symbol` field in any documented example —
-    unlike every other chart shape, the caller already knows which symbol
-    they asked for."""
+    """Response for `historical_chart`'s intraday timeframes
+    (`1min`/`5min`/`15min`/`30min`/`1hour`/`4hour`). No `symbol` field —
+    unlike every other chart shape, since you already know which symbol
+    you asked for."""
 
     date: str
     open: float
@@ -49,10 +41,9 @@ class HistoricalPriceEodFullResult(TypedDict):
 
 class HistoricalPriceEodNonSplitAdjustedResult(TypedDict):
     """Same field set as `HistoricalPriceEodDividendAdjustedResult`, but
-    kept separate: split-adjustment and dividend-adjustment are different
-    questions about "true" price, not the same query at different scope
-    (contrast `DividendResult`/`SplitResult` above, §7.8's `profile`
-    precedent)."""
+    kept as a separate type: split-adjustment and dividend-adjustment
+    answer different questions about "true" price, so don't assume the
+    two are interchangeable even though the shape matches."""
 
     symbol: str
     date: str

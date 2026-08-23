@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.dcf`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.dcf``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.dcf`` methods."""
 
 from __future__ import annotations
 
@@ -27,8 +20,7 @@ DiscountedCashFlowResult = TypedDict(
 
 # Deliberately not shared with DiscountedCashFlowResult despite the
 # identical field set: unlevered and levered DCF answer different
-# valuation questions (§7.8's `profile` precedent — same rationale as
-# HistoricalPriceEodNonSplitAdjustedResult vs. …DividendAdjustedResult).
+# valuation questions, so don't assume the two are interchangeable.
 LeveredDiscountedCashFlowResult = TypedDict(
     "LeveredDiscountedCashFlowResult",
     {

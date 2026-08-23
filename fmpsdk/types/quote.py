@@ -1,11 +1,4 @@
-"""TypedDicts for ``client.quote`` response shapes (REWRITE_ARCHITECTURE.md §6, ``client.quote``).
-
-Split out of the former single ``types.py`` for size — see
-``fmpsdk/types/__init__.py`` for the shared conventions (naming,
-when shapes are/aren't reused, the functional-TypedDict-form cases)
-and the re-export barrel that keeps ``from fmpsdk.types import X``
-working unchanged for every caller.
-"""
+"""Response shapes returned by ``client.quote`` methods."""
 
 from __future__ import annotations
 
@@ -37,14 +30,11 @@ class QuoteResult(TypedDict):
 
 
 class QuoteShortResult(TypedDict):
-    """Shape shared by 9 `client.quote` methods: `quote_short`,
-    `batch_quote_short`, `batch_exchange_quote`, `batch_etf_quotes`,
-    `batch_mutualfund_quotes`, `batch_commodity_quotes`,
-    `batch_crypto_quotes`, `batch_forex_quotes`, `batch_index_quotes` —
-    identical fields in every documented example. Per §7.6: singular
-    `batch-quote` takes a `symbols`/`exchange` scope param, plural
-    `batch-*-quotes` covers the whole asset class with no scope param —
-    both shapes converge on this same short form."""
+    """Condensed quote shape (price/change/volume only) shared by
+    `quote_short` and every `batch_*` quote method: `batch_quote_short`,
+    `batch_exchange_quote`, `batch_etf_quotes`, `batch_mutualfund_quotes`,
+    `batch_commodity_quotes`, `batch_crypto_quotes`, `batch_forex_quotes`,
+    `batch_index_quotes`."""
 
     symbol: str
     price: float
