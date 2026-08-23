@@ -1,8 +1,9 @@
-"""client.dcf — Discounted-cash-flow valuations, standard and custom-input
-(REWRITE_ARCHITECTURE.md §6, ``client.dcf``). 4 canonical methods, no
-cross-listings. The two custom-input methods share an identical 18-param
-assumption set (all optional overrides on top of FMP's own model
-defaults) — factored into one private builder so it's defined once.
+"""client.dcf — Discounted-cash-flow valuations: FMP's own model
+defaults, or your own assumption overrides. 4 methods. The two
+"custom" methods share an identical 18-parameter set of optional
+overrides (growth rate, margins, WACC components, and so on) — leave
+any of them unset to fall back to FMP's own default for that
+assumption.
 """
 
 from __future__ import annotations
@@ -119,10 +120,9 @@ class DcfEndpoints:
     ) -> list[CustomDiscountedCashFlowResult]:
         """``GET custom-discounted-cash-flow`` — unlevered DCF with every
         model assumption overridable. Any parameter left unset falls back
-        to FMP's own default for that assumption (§8.8 — we never invent
-        one ourselves). Full year-by-year projection in the response:
-        revenue/EBITDA/EBIT build-up, WACC components, terminal value,
-        equity value per share.
+        to FMP's own default for that assumption. Full year-by-year
+        projection in the response: revenue/EBITDA/EBIT build-up, WACC
+        components, terminal value, equity value per share.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param revenue_growth_pct: override for projected revenue growth rate.

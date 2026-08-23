@@ -8,6 +8,9 @@ from typing import TypedDict
 
 
 class CryptocurrencyListResult(TypedDict):
+    """One cryptocurrency FMP tracks, with symbol, name, exchange, and
+    supply data. Returned by `cryptocurrency_list()`."""
+
     symbol: str
     name: str
     exchange: str

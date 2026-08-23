@@ -1,9 +1,7 @@
 """client.earnings_transcript — Earnings-call transcripts and their
-availability metadata (REWRITE_ARCHITECTURE.md §6,
-``client.earnings_transcript``). 4 canonical methods. 1
-(``earnings_transcript_list``) is cross-listed into ``client.directory``
-per §4.3 (FMP documents this path under both "Directory" and
-"EarningsTranscript") — wired in ``groups.py``, not reimplemented there.
+availability metadata. 4 methods. ``earnings_transcript_list`` is also
+reachable as ``client.directory.earnings_transcript_list``. Requires an
+FMP Ultimate-tier plan — every method here 402s on the free tier.
 """
 
 from __future__ import annotations

@@ -33,6 +33,10 @@ LeveredDiscountedCashFlowResult = TypedDict(
 
 
 class CustomDiscountedCashFlowResult(TypedDict):
+    """One year of the projection built by `custom_discounted_cash_flow()`
+    — revenue/EBITDA/EBIT build-up, WACC components, and per-year
+    valuation detail, using your overridden assumptions where given."""
+
     year: str
     symbol: str
     revenue: float
@@ -83,6 +87,10 @@ class CustomDiscountedCashFlowResult(TypedDict):
 
 
 class CustomLeveredDiscountedCashFlowResult(TypedDict):
+    """One year of the projection built by
+    `custom_levered_discounted_cash_flow()` — same idea as
+    `CustomDiscountedCashFlowResult`, levered (net of debt)."""
+
     year: str
     symbol: str
     revenue: float

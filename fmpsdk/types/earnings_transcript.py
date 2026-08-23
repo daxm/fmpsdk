@@ -8,6 +8,9 @@ from typing import TypedDict
 
 
 class EarningCallTranscriptResult(TypedDict):
+    """Full text of one earnings call for one fiscal quarter. Returned
+    by `earning_call_transcript()`."""
+
     symbol: str
     period: str
     year: int
@@ -16,12 +19,18 @@ class EarningCallTranscriptResult(TypedDict):
 
 
 class EarningCallTranscriptDatesResult(TypedDict):
+    """One fiscal year/quarter a company has an earnings-call transcript
+    on file for. Returned by `earning_call_transcript_dates()`."""
+
     quarter: int
     fiscalYear: int
     date: str
 
 
 class EarningCallTranscriptLatestResult(TypedDict):
+    """One recent earnings-call transcript, across all companies.
+    Returned by `earning_call_transcript_latest()`."""
+
     symbol: str
     period: str
     fiscalYear: int

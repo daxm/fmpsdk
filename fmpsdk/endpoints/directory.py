@@ -1,8 +1,8 @@
-"""client.directory — Whole-universe reference lists: symbols, exchanges,
-sectors, industries, countries (REWRITE_ARCHITECTURE.md §6, ``client.directory``).
-10 canonical methods, no cross-listings. Every response is a flat, param-free
-(or nearly so) list — no ``symbol``/``cik``-scoped lookups belong here, those
-live in other groups.
+"""client.directory — Whole-universe reference lists: symbols,
+exchanges, sectors, industries, countries. 10 methods, each a flat,
+mostly param-free list (no ``symbol``/``cik``-scoped lookups — those
+live in other groups). Requires an FMP Ultimate-tier plan — every
+method here 402s on the free tier.
 """
 
 from __future__ import annotations

@@ -1,9 +1,8 @@
-"""client.crypto — Cryptocurrency instrument reference list
-(REWRITE_ARCHITECTURE.md §6, ``client.crypto``). 1 primary method.
-``quote``, ``quote_short``, ``batch_crypto_quotes``, ``historical_chart``,
-``historical_price_eod_full``, and ``historical_price_eod_light`` are
-cross-listed in from ``client.quote``/``client.chart`` once those groups
-exist — see §4.3 and the workflow note in ``groups.py``.
+"""client.crypto — Cryptocurrency instrument reference list. 1 primary
+method; ``quote``, ``quote_short``, ``batch_crypto_quotes``,
+``historical_chart``, ``historical_price_eod_full``, and
+``historical_price_eod_light`` are also reachable here from
+``client.quote``/``client.chart``.
 """
 
 from __future__ import annotations
