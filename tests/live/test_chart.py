@@ -31,3 +31,9 @@ def test_historical_price_eod_non_split_adjusted(live_client):
 def test_historical_price_eod_dividend_adjusted(live_client):
     result = live_client.historical_price_eod_dividend_adjusted(symbol="AAPL")
     assert result[0]["symbol"] == "AAPL"
+
+
+def test_historical_chart(live_client):
+    result = live_client.historical_chart(symbol="AAPL", timeframe="1hour")
+    assert len(result) > 0
+    assert "close" in result[0]

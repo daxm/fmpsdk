@@ -1,7 +1,8 @@
 """client.calendar — Date-driven corporate events: dividends, earnings,
 IPOs, and splits. 9 methods. Dividends/earnings/splits each come as a
 pair: one company's history (``symbol``) and a market-wide date range
-(``from``/``to``).
+(``from``/``to``). The 3 ``ipos_*`` methods require an FMP Starter-tier
+plan or higher — all 3 402 on the free tier.
 """
 
 from __future__ import annotations
@@ -107,6 +108,7 @@ class CalendarEndpoints:
         self, from_: str | None = None, to: str | None = None
     ) -> list[IposCalendarResult]:
         """``GET ipos-calendar`` — upcoming and recent IPOs in a date range.
+        Requires an FMP Starter-tier plan or higher — 402s on the free tier.
 
         :param from_: start date, ``YYYY-MM-DD`` (``from`` is a Python keyword).
         :param to: end date, ``YYYY-MM-DD``.
@@ -120,7 +122,8 @@ class CalendarEndpoints:
         self, from_: str | None = None, to: str | None = None
     ) -> list[IposDisclosureResult]:
         """``GET ipos-disclosure`` — SEC IPO disclosure filings in a date
-        range.
+        range. Requires an FMP Starter-tier plan or higher — 402s on the
+        free tier.
 
         :param from_: start date, ``YYYY-MM-DD`` (``from`` is a Python keyword).
         :param to: end date, ``YYYY-MM-DD``.
@@ -134,7 +137,8 @@ class CalendarEndpoints:
         self, from_: str | None = None, to: str | None = None
     ) -> list[IposProspectusResult]:
         """``GET ipos-prospectus`` — SEC IPO prospectus filings in a date
-        range, with offering-price detail.
+        range, with offering-price detail. Requires an FMP Starter-tier
+        plan or higher — 402s on the free tier.
 
         :param from_: start date, ``YYYY-MM-DD`` (``from`` is a Python keyword).
         :param to: end date, ``YYYY-MM-DD``.

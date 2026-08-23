@@ -1,6 +1,7 @@
 """client.esg — Environmental/social/governance disclosures, ratings,
-and sector benchmarks. 3 methods. Requires an FMP Ultimate-tier plan —
-every method here 402s on the free tier.
+and sector benchmarks. 3 methods. Still 402s on both the free and
+Starter tiers as of 2026-08-23 — requires FMP Premium or Ultimate (not
+yet confirmed which).
 """
 
 from __future__ import annotations

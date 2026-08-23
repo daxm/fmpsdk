@@ -1,6 +1,7 @@
 """client.institutional_ownership — Form 13F institutional holdings,
-holders, and derived analytics. 8 methods. Requires an FMP
-Ultimate-tier plan — every method here 402s on the free tier.
+holders, and derived analytics. 8 methods. Still 402s on both the free
+and Starter tiers as of 2026-08-23 — every method requires FMP Premium
+or Ultimate (not yet confirmed which).
 """
 
 from __future__ import annotations

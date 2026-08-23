@@ -1,7 +1,10 @@
 """client.news — News, press releases, and FMP editorial articles. 10
-methods. Only ``fmp_articles`` works on the free tier — the other 9 (the
-general/press-releases/stock/crypto/forex family and their "-latest"
-siblings) require an FMP Ultimate-tier plan.
+methods. ``fmp_articles`` works on the free tier. ``news_general_latest``
+and the ``news_stock``/``news_crypto``/``news_forex`` family (with their
+"-latest" siblings) — 7 methods — require an FMP Starter-tier plan or
+higher. ``news_press_releases`` and ``news_press_releases_latest`` still
+402 on both the free and Starter tiers as of 2026-08-23 — they require
+FMP Premium or Ultimate (not yet confirmed which).
 """
 
 from __future__ import annotations

@@ -1,18 +1,15 @@
-"""Ultimate-tier (Bucket 2) live tests for client.directory.
+"""Live tests for client.directory against the real FMP API.
 
-Discovered live, not predicted by REWRITE_ARCHITECTURE.md's group
-directory (which lists no Bucket 2 flag on `directory`): all 10 methods
-402 on the free tier — the whole group, not a subset like `search`'s 4/7.
-Skipped by default (`-m "not ultimate"` / excluded unless explicitly
-selected); run for real only during a deliberately-timed FMP Ultimate
-month, per the rewrite workflow.
+All methods below were confirmed on 2026-08-23 to require at least an FMP
+Starter-tier key (they 402 on the free tier) -- moved here from
+tests/ultimate/test_directory.py once Dax upgraded from Free to Starter.
 """
 
 from __future__ import annotations
 
 import pytest
 
-pytestmark = pytest.mark.ultimate
+pytestmark = pytest.mark.live
 
 
 def test_stock_list(live_client):

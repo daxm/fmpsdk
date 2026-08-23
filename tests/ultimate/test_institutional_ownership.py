@@ -48,7 +48,9 @@ def test_institutional_ownership_extract_analytics_holder(live_client):
 
 
 def test_institutional_ownership_holder_performance_summary(live_client):
-    result = live_client.institutional_ownership_holder_performance_summary(cik=BERKSHIRE_CIK)
+    result = live_client.institutional_ownership_holder_performance_summary(
+        cik=BERKSHIRE_CIK
+    )
     assert len(result) > 0
     assert "investorName" in result[0]
 
@@ -70,6 +72,8 @@ def test_institutional_ownership_symbol_positions_summary(live_client):
 
 
 def test_institutional_ownership_industry_summary(live_client):
-    result = live_client.institutional_ownership_industry_summary(year="2023", quarter="3")
+    result = live_client.institutional_ownership_industry_summary(
+        year="2023", quarter="3"
+    )
     assert len(result) > 0
     assert "industryTitle" in result[0]

@@ -2,7 +2,9 @@
 any symbol FMP covers (stocks, indexes, commodities, crypto, forex). 5
 methods. ``historical_chart``, ``historical_price_eod_full``, and
 ``historical_price_eod_light`` are also reachable from
-``client.indexes``/``commodity``/``crypto``/``forex``.
+``client.indexes``/``commodity``/``crypto``/``forex``. ``historical_chart``
+requires an FMP Starter-tier plan or higher — 402s on the free tier; the
+4 ``historical_price_eod_*`` methods all work on the free tier.
 """
 
 from __future__ import annotations
@@ -34,7 +36,8 @@ class ChartEndpoints:
     ) -> list[HistoricalChartResult]:
         """``GET historical-chart/{timeframe}`` — intraday OHLCV bars, one
         method covering all 6 intraday intervals FMP documents
-        separately.
+        separately. Requires an FMP Starter-tier plan or higher — 402s
+        on the free tier.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param timeframe: one of ``constants.TIMEFRAME_INTRADAY``

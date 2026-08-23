@@ -72,3 +72,15 @@ def test_sec_profile(live_client):
 def test_standard_industrial_classification_list(live_client):
     result = live_client.standard_industrial_classification_list(sic_code="7372")
     assert isinstance(result, list)
+
+
+def test_industry_classification_search(live_client):
+    result = live_client.industry_classification_search(symbol="AAPL")
+    assert len(result) > 0
+    assert result[0]["symbol"] == "AAPL"
+
+
+def test_all_industry_classification(live_client):
+    result = live_client.all_industry_classification(page=0, limit=1)
+    assert len(result) > 0
+    assert "sicCode" in result[0]

@@ -45,3 +45,21 @@ def test_splits(live_client):
 def test_splits_calendar(live_client):
     result = live_client.splits_calendar(from_=FROM, to=TO)
     assert isinstance(result, list)
+
+
+def test_ipos_calendar(live_client):
+    result = live_client.ipos_calendar(from_=FROM, to=TO)
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_ipos_disclosure(live_client):
+    result = live_client.ipos_disclosure(from_=FROM, to=TO)
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_ipos_prospectus(live_client):
+    result = live_client.ipos_prospectus(from_=FROM, to=TO)
+    assert len(result) > 0
+    assert "symbol" in result[0]

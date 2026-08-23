@@ -180,8 +180,8 @@ class CompanyEndpoints:
         self, page: int | None = None, limit: int | None = None
     ) -> list[MergersAcquisitionsResult]:
         """``GET mergers-acquisitions-latest`` — recent M&A filings,
-        unfiltered, paginated. Requires an FMP Ultimate-tier plan — 402s
-        on the free tier.
+        unfiltered, paginated. Requires an FMP Starter-tier plan or higher —
+        402s on the free tier.
 
         :param page: zero-indexed page number.
         :param limit: max results per page.
@@ -194,7 +194,8 @@ class CompanyEndpoints:
     def mergers_acquisitions_search(self, name: str) -> list[MergersAcquisitionsResult]:
         """``GET mergers-acquisitions-search`` — the same M&A filing data
         as :meth:`mergers_acquisitions_latest`, filtered by company name.
-        Requires an FMP Ultimate-tier plan — 402s on the free tier.
+        Still 402s on both the free and Starter tiers as of 2026-08-23 —
+        requires FMP Premium or Ultimate (not yet confirmed which).
 
         :param name: company name (acquirer or target) to search for, e.g. ``"Apple"``.
         """
@@ -231,7 +232,8 @@ class CompanyEndpoints:
     ) -> list[ExecutiveCompensationBenchmarkResult]:
         """``GET executive-compensation-benchmark`` — average executive
         compensation by industry, for cross-company benchmarking.
-        Requires an FMP Ultimate-tier plan — 402s on the free tier.
+        Still 402s on both the free and Starter tiers as of 2026-08-23 —
+        requires FMP Premium or Ultimate (not yet confirmed which).
 
         :param year: filing year, e.g. ``"2024"``.
         """

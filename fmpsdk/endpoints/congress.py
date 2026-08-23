@@ -1,8 +1,13 @@
 """client.congress — U.S. Senate and House financial disclosures, trades,
-and member profiles. 12 methods. Only the two parameterless listings,
-``house_latest`` and ``senate_latest``, work on the free tier — every
-other, symbol/id/name-scoped method here requires an FMP Ultimate-tier
-plan.
+and member profiles. 12 methods. ``house_latest`` and ``senate_latest``
+(the two parameterless listings) work on the free tier. The 6
+symbol/id/name-scoped trade lookups (``house_trades``,
+``house_trades_by_id``, ``house_trades_by_name``, ``senate_trades``,
+``senate_trades_by_id``, ``senate_trades_by_name``) require an FMP
+Starter-tier plan or higher. ``senate_profile``, ``senate_positions``,
+``senate_net_worth``, and ``senate_net_worth_aggregated`` still 402 on
+both the free and Starter tiers as of 2026-08-23 — they require FMP
+Premium or Ultimate (not yet confirmed which).
 
 Every method that takes a member ID names its parameter ``senate_id``,
 including the House ones (``house_trades_by_id``) — that's FMP's own

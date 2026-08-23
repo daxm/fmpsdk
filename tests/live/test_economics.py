@@ -28,3 +28,9 @@ def test_market_risk_premium(live_client):
     result = live_client.market_risk_premium()
     assert len(result) > 0
     assert "country" in result[0]
+
+
+def test_economic_calendar(live_client):
+    result = live_client.economic_calendar(country="US")
+    assert len(result) > 0
+    assert "event" in result[0]

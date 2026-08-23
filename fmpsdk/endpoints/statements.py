@@ -65,8 +65,9 @@ class StatementsEndpoints:
         self, symbol: str, limit: int | None = None
     ) -> list[IncomeStatementResult]:
         """``GET income-statement-ttm`` — the same shape as
-        :meth:`income_statement`, trailing twelve months. Requires an
-        FMP Ultimate-tier plan — 402s on the free tier.
+        :meth:`income_statement`, trailing twelve months. Still 402s on
+        both the free and Starter tiers as of 2026-08-23 — requires FMP
+        Premium or Ultimate (not yet confirmed which).
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -136,8 +137,9 @@ class StatementsEndpoints:
     ) -> list[BalanceSheetStatementTtmResult]:
         """``GET balance-sheet-statement-ttm`` — near-identical shape to
         :meth:`balance_sheet_statement`, trailing twelve months (kept as
-        its own type — see `BalanceSheetStatementTtmResult`). Requires
-        an FMP Ultimate-tier plan — 402s on the free tier.
+        its own type — see `BalanceSheetStatementTtmResult`). Still
+        402s on both the free and Starter tiers as of 2026-08-23 —
+        requires FMP Premium or Ultimate (not yet confirmed which).
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -207,8 +209,9 @@ class StatementsEndpoints:
         self, symbol: str, limit: int | None = None
     ) -> list[CashFlowStatementResult]:
         """``GET cash-flow-statement-ttm`` — the same shape as
-        :meth:`cash_flow_statement`, trailing twelve months. Requires an
-        FMP Ultimate-tier plan — 402s on the free tier.
+        :meth:`cash_flow_statement`, trailing twelve months. Still 402s
+        on both the free and Starter tiers as of 2026-08-23 — requires
+        FMP Premium or Ultimate (not yet confirmed which).
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -278,7 +281,8 @@ class StatementsEndpoints:
     ) -> list[LatestFinancialStatementsResult]:
         """``GET latest-financial-statements`` — every company with a
         newly filed statement, paginated across the whole market.
-        Requires an FMP Ultimate-tier plan — 402s on the free tier.
+        Still 402s on both the free and Starter tiers as of 2026-08-23
+        — requires FMP Premium or Ultimate (not yet confirmed which).
 
         :param page: zero-indexed page number.
         :param limit: max results per page.

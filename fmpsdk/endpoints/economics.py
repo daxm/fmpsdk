@@ -57,7 +57,7 @@ class EconomicsEndpoints:
     ) -> list[EconomicCalendarResult]:
         """``GET economic-calendar`` — scheduled economic data releases,
         with prior/estimate/actual values once reported. Requires an FMP
-        Ultimate-tier plan — 402s on the free tier.
+        Starter-tier plan or higher — 402s on the free tier.
 
         :param country: ISO country code to filter by, e.g. ``"US"``.
         :param from_: start date, ``YYYY-MM-DD`` (``from`` is a Python keyword).

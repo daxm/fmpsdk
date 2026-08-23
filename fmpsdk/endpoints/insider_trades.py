@@ -1,7 +1,8 @@
 """client.insider_trades — Form 4 insider transactions, statistics, and
 beneficial-ownership acquisitions. 6 methods. Only
 ``insider_trading_latest`` and ``insider_trading_transaction_type`` work
-on the free tier — the other 4 require an FMP Ultimate-tier plan.
+on the free tier — the other 4 require an FMP Starter-tier plan or
+higher.
 """
 
 from __future__ import annotations

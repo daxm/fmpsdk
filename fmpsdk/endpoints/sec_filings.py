@@ -1,7 +1,8 @@
 """client.sec_filings — SEC filing search, SEC company identity, and
 SIC industry classification. 12 methods. Only
 ``industry_classification_search`` and ``all_industry_classification``
-require an FMP Ultimate-tier plan — the other 10 work on the free tier.
+require an FMP Starter-tier plan or higher — the other 10 work on the
+free tier.
 """
 
 from __future__ import annotations

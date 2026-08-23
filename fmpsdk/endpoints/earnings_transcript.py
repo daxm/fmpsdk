@@ -1,7 +1,8 @@
 """client.earnings_transcript — Earnings-call transcripts and their
 availability metadata. 4 methods. ``earnings_transcript_list`` is also
-reachable as ``client.directory.earnings_transcript_list``. Requires an
-FMP Ultimate-tier plan — every method here 402s on the free tier.
+reachable as ``client.directory.earnings_transcript_list``. Still 402s
+on both the free and Starter tiers as of 2026-08-23 — every method
+requires FMP Premium or Ultimate (not yet confirmed which).
 """
 
 from __future__ import annotations

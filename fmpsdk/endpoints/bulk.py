@@ -1,7 +1,8 @@
 """client.bulk — Whole-universe bulk downloads: one call returns a
 field set for every company FMP covers, instead of one call per symbol.
-18 methods. Requires an FMP Ultimate-tier plan — every method 402s on
-the free tier.
+18 methods. Still 402s on both the free and Starter tiers as of
+2026-08-23 — every method requires FMP Premium or Ultimate (not yet
+confirmed which).
 
 Every method except ``profile_bulk`` returns every field as a JSON
 string, including semantically numeric/boolean ones — see

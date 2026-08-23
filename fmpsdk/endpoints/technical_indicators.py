@@ -1,8 +1,8 @@
 """client.technical_indicators — Computed technical indicator series
 (SMA, EMA, WMA, DEMA, TEMA, RSI, standard deviation, Williams %R, ADX).
 9 methods, all taking the same ``symbol``/``period_length``/
-``timeframe``/``from``/``to`` parameters. Requires an FMP Ultimate-tier
-plan — every method here 402s on the free tier.
+``timeframe``/``from``/``to`` parameters. Requires an FMP Starter-tier
+plan or higher — every method here 402s on the free tier.
 """
 
 from __future__ import annotations

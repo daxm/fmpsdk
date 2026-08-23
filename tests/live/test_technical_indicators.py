@@ -1,15 +1,15 @@
-"""Ultimate-tier tests for client.technical_indicators — all 9 methods
-402 on the free tier (confirmed live 2026-08-23), despite no Bucket 2
-flag in REWRITE_ARCHITECTURE.md §3.5. The whole group is gated, not a
-subset — no `tests/live/test_technical_indicators.py` exists. Skipped
-until the one-month FMP Ultimate verification pass.
+"""Live tests for client.technical_indicators against the real FMP API.
+
+All methods below were confirmed on 2026-08-23 to require at least an FMP
+Starter-tier key (they 402 on the free tier) -- moved here from
+tests/ultimate/test_technical_indicators.py once Dax upgraded from Free to Starter.
 """
 
 from __future__ import annotations
 
 import pytest
 
-pytestmark = pytest.mark.ultimate
+pytestmark = pytest.mark.live
 
 
 def test_technical_indicators_sma(live_client):

@@ -1,6 +1,7 @@
 """client.tipranks — TipRanks partner analyst ratings and coverage
-data. 7 methods. Requires an FMP Ultimate-tier plan — every method here
-402s on the free tier.
+data. 7 methods. Still 402s on both the free and Starter tiers as of
+2026-08-23 — every method requires FMP Premium or Ultimate (not yet
+confirmed which).
 """
 
 from __future__ import annotations

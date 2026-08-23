@@ -12,11 +12,22 @@ Commit it alongside the method(s) it tracks, as its own line in the diff.
 **Status tags** (append after the method name once it's past `[ ]`):
 - `[x] unit` — implemented, mocked unit test passing, not yet live-verified
 - `[x] live` — implemented, unit-tested, and live-verified against the real API (Bucket 1)
-- `[x] ultimate-pending` — implemented and unit-tested; live verification blocked on the
-  one-month Ultimate subscription (Bucket 2 — see below)
-- `[x] done` — implemented, unit-tested, live-verified, nothing left
+- `[x] ultimate-pending` — implemented and unit-tested; confirmed to 402 on every FMP tier
+  tested so far (see the parenthetical after each line for exactly which tiers)
+- `[x] done` — implemented, unit-tested, live-verified on some real tier, nothing left.
+  Check the parenthetical: plain `done` with no tier note means free-tier; `(works on
+  Starter tier; ...)` etc. means it needed that paid tier or higher
 - `[ ] blocked: <reason>` — attempted, hit something unexpected (e.g. a doc/reality
   mismatch worth flagging), not resolved yet
+
+**FMP's real pricing ladder is Free → Starter → Premium → Ultimate** (not just
+Free/Ultimate as earlier notes in this project assumed) — see the dated entry below and
+[[fmpsdk-rewrite-status]] for how that was discovered. The plan: whenever Dax upgrades to
+the next paid tier, re-run `pytest tests/ultimate/ -m ultimate`, move whatever now passes
+into `tests/live/`, and repeat at the next tier up. A method still `ultimate-pending` after
+a tier's pass hasn't necessarily earned the name "needs Ultimate" — it just hasn't been
+confirmed working yet at any tier tried so far; the parenthetical always says which tiers
+it's actually been tested against and failed on.
 
 **Bucket note:** group-level Bucket 2 flags below are a best-effort carry-over from the
 original pricing-tier audit earlier in this project, not verified per-method. The actual
@@ -24,7 +35,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 109 / 238 methods done, 129 ultimate-pending, 0 left untested.** **This
+**Progress: 160 / 238 methods done, 78 ultimate-pending, 0 left untested.** **This
 is the full 238/238 catalog now implemented in code, and every single method has now
 been attempted at least once (unit-tested, and live-tested except where already
 Bucket-2-confirmed)** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
@@ -40,9 +51,34 @@ passing), then live-tested all 79 of those too — 19 more passed free-tier
 (`earnings_transcript`, `bulk`, and `tipranks` confirmed fully gated as their
 pre-flagged Bucket 2 status predicted; `news`'s `batch_*` quote family and most of
 `congress` turned out gated too, despite no Bucket 2 flag in §3.5 — see the
-per-group notes below). Nothing left to test — what remains is only the
-`ultimate-pending` methods' actual verification, deferred to a future paid Ultimate
-month per the workflow doc.
+per-group notes below).
+
+**2026-08-23, later — Dax upgraded Free → Starter.** Learned FMP's pricing ladder
+actually has 4 tiers (Free/Starter/Premium/Ultimate), not the Free/Ultimate binary this
+project assumed until now. Re-ran all 129 `ultimate-pending` methods' existing
+`tests/ultimate/` test bodies (no new tests needed to write) against the Starter-tier
+key: **51 now pass, 78 still 402.** All 51 moved into `tests/live/` (merged into each
+group's existing live file, or a new one where the whole group had been gated), tagged
+`done` with a "works on Starter tier" note below; the 78 still-gated stay
+`ultimate-pending`, now annotated "402 on free tier and on Starter tier" so a future
+Premium-tier pass knows exactly what's already been ruled out. Full groups that flipped
+entirely to `done`: `directory` (10/10), `insider_trades` (4/4, closing that group out
+completely), `technical_indicators` (9/9, closing that group out completely),
+`sec_filings` (2/2, closing that group out completely — all 12 methods now done),
+`calendar`'s IPOs (3/3), `chart`'s `historical_chart` (closing that group out
+completely), `economics`'s `economic_calendar` (closing that group out completely),
+`search`'s remaining 4 (closing that group out completely). Partial flips: `news` (7 of
+9 402'd methods now pass — only the 2 press-releases methods still gated), `congress`
+(6 of 10 — the symbol/name-scoped trade lookups now work, the 4 senate-profile-shaped
+methods don't), `funds` (3 of 9 — the informational ETF endpoints work, the disclosure/
+holdings ones don't), `company` (1 of 3 — `mergers_acquisitions_latest` only). Groups
+that stayed **fully** gated even at Starter: `bulk` (18), `commitment_of_traders` (3),
+`earnings_transcript` (4), `esg` (3), `institutional_ownership` (8), `tipranks` (7),
+`indexes`'s constituent-list methods (6), `quote`'s `batch_*` family (11), `statements`'s
+TTM/latest (4). Whole test suite re-run after the reorg: 268/268 unit, 160/160 live
+(includes the 51 newly-moved), 78/78 ultimate still failing as expected — clean split,
+no regressions. Docstrings for affected methods/groups still need a pass to state the
+new Starter-tier facts (see the group sections below for what's stale).
 
 ---
 
@@ -55,11 +91,11 @@ month per the workflow doc.
 > methods 402 on the free tier anyway. Reclassified below per the workflow
 > doc's "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `company_screener` — `company-screener` (402 on free tier)
+- [x] done `company_screener` — `company-screener` (works on Starter tier; 402 on free tier)
 - [x] done `search_cik` — `search-cik`
-- [x] ultimate-pending `search_cusip` — `search-cusip` (402 on free tier)
-- [x] ultimate-pending `search_exchange_variants` — `search-exchange-variants` (402 on free tier)
-- [x] ultimate-pending `search_isin` — `search-isin` (402 on free tier)
+- [x] done `search_cusip` — `search-cusip` (works on Starter tier; 402 on free tier)
+- [x] done `search_exchange_variants` — `search-exchange-variants` (works on Starter tier; 402 on free tier)
+- [x] done `search_isin` — `search-isin` (works on Starter tier; 402 on free tier)
 - [x] done `search_name` — `search-name`
 - [x] done `search_symbol` — `search-symbol`
 
@@ -73,16 +109,16 @@ month per the workflow doc.
 > `search`'s 4/7. Reclassified below per the workflow doc's "if a Bucket 1
 > method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `actively_trading_list` — `actively-trading-list` (402 on free tier)
-- [x] ultimate-pending `available_countries` — `available-countries` (402 on free tier)
-- [x] ultimate-pending `available_exchanges` — `available-exchanges` (402 on free tier)
-- [x] ultimate-pending `available_industries` — `available-industries` (402 on free tier)
-- [x] ultimate-pending `available_sectors` — `available-sectors` (402 on free tier)
-- [x] ultimate-pending `cik_list` — `cik-list` (402 on free tier)
-- [x] ultimate-pending `etf_list` — `etf-list` (402 on free tier)
-- [x] ultimate-pending `financial_statement_symbol_list` — `financial-statement-symbol-list` (402 on free tier)
-- [x] ultimate-pending `stock_list` — `stock-list` (402 on free tier)
-- [x] ultimate-pending `symbol_change` — `symbol-change` (402 on free tier)
+- [x] done `actively_trading_list` — `actively-trading-list` (works on Starter tier; 402 on free tier)
+- [x] done `available_countries` — `available-countries` (works on Starter tier; 402 on free tier)
+- [x] done `available_exchanges` — `available-exchanges` (works on Starter tier; 402 on free tier)
+- [x] done `available_industries` — `available-industries` (works on Starter tier; 402 on free tier)
+- [x] done `available_sectors` — `available-sectors` (works on Starter tier; 402 on free tier)
+- [x] done `cik_list` — `cik-list` (works on Starter tier; 402 on free tier)
+- [x] done `etf_list` — `etf-list` (works on Starter tier; 402 on free tier)
+- [x] done `financial_statement_symbol_list` — `financial-statement-symbol-list` (works on Starter tier; 402 on free tier)
+- [x] done `stock_list` — `stock-list` (works on Starter tier; 402 on free tier)
+- [x] done `symbol_change` — `symbol-change` (works on Starter tier; 402 on free tier)
 
 ## `client.analyst` — Sell-side estimates, ratings, price targets, grades.
 
@@ -112,9 +148,9 @@ month per the workflow doc.
 - [x] done `dividends_calendar` — `dividends-calendar`
 - [x] done `earnings` — `earnings`
 - [x] done `earnings_calendar` — `earnings-calendar`
-- [x] ultimate-pending `ipos_calendar` — `ipos-calendar` (402 on free tier)
-- [x] ultimate-pending `ipos_disclosure` — `ipos-disclosure` (402 on free tier)
-- [x] ultimate-pending `ipos_prospectus` — `ipos-prospectus` (402 on free tier)
+- [x] done `ipos_calendar` — `ipos-calendar` (works on Starter tier; 402 on free tier)
+- [x] done `ipos_disclosure` — `ipos-disclosure` (works on Starter tier; 402 on free tier)
+- [x] done `ipos_prospectus` — `ipos-prospectus` (works on Starter tier; 402 on free tier)
 - [x] done `splits` — `splits`
 - [x] done `splits_calendar` — `splits-calendar`
 
@@ -129,7 +165,7 @@ month per the workflow doc.
 > below per the workflow doc's "if a Bucket 1 method 402s, mark it
 > `ultimate-pending`" rule.
 
-- [x] ultimate-pending `historical_chart` — `historical-chart/{timeframe}` (402 on free tier)
+- [x] done `historical_chart` — `historical-chart/{timeframe}` (works on Starter tier; 402 on free tier)
 - [x] done `historical_price_eod_dividend_adjusted` — `historical-price-eod/dividend-adjusted`
 - [x] done `historical_price_eod_full` — `historical-price-eod/full`
 - [x] done `historical_price_eod_light` — `historical-price-eod/light`
@@ -147,15 +183,15 @@ month per the workflow doc.
 - [x] done `company_notes` — `company-notes`
 - [x] done `delisted_companies` — `delisted-companies`
 - [x] done `employee_count` — `employee-count`
-- [x] ultimate-pending `executive_compensation_benchmark` — `executive-compensation-benchmark` (402 on free tier)
+- [x] ultimate-pending `executive_compensation_benchmark` — `executive-compensation-benchmark` (402 on free tier and on Starter tier)
 - [x] done `governance_executive_compensation` — `governance-executive-compensation`
 - [x] done `historical_employee_count` — `historical-employee-count`
 - [x] done `historical_market_capitalization` — `historical-market-capitalization`
 - [x] done `key_executives` — `key-executives`
 - [x] done `market_capitalization` — `market-capitalization`
 - [x] done `market_capitalization_batch` — `market-capitalization-batch`
-- [x] ultimate-pending `mergers_acquisitions_latest` — `mergers-acquisitions-latest` (402 on free tier)
-- [x] ultimate-pending `mergers_acquisitions_search` — `mergers-acquisitions-search` (402 on free tier)
+- [x] done `mergers_acquisitions_latest` — `mergers-acquisitions-latest` (works on Starter tier; 402 on free tier)
+- [x] ultimate-pending `mergers_acquisitions_search` — `mergers-acquisitions-search` (402 on free tier and on Starter tier)
 - [x] done `profile` — `profile`
 - [x] done `profile_cik` — `profile-cik`
 - [x] done `shares_float` — `shares-float`
@@ -171,9 +207,9 @@ month per the workflow doc.
 > methods 402 on the free tier. Reclassified below per the workflow doc's
 > "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `commitment_of_traders_analysis` — `commitment-of-traders-analysis` (402 on free tier)
-- [x] ultimate-pending `commitment_of_traders_list` — `commitment-of-traders-list` (402 on free tier)
-- [x] ultimate-pending `commitment_of_traders_report` — `commitment-of-traders-report` (402 on free tier)
+- [x] ultimate-pending `commitment_of_traders_analysis` — `commitment-of-traders-analysis` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `commitment_of_traders_list` — `commitment-of-traders-list` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `commitment_of_traders_report` — `commitment-of-traders-report` (402 on free tier and on Starter tier)
 
 ## `client.dcf` — Discounted-cash-flow valuations, standard and custom-input.
 
@@ -194,7 +230,7 @@ month per the workflow doc.
 > Reclassified below per the workflow doc's "if a Bucket 1 method 402s,
 > mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `economic_calendar` — `economic-calendar` (402 on free tier)
+- [x] done `economic_calendar` — `economic-calendar` (works on Starter tier; 402 on free tier)
 - [x] done `economic_indicators` — `economic-indicators`
 - [x] done `market_risk_premium` — `market-risk-premium`
 - [x] done `treasury_rates` — `treasury-rates`
@@ -206,9 +242,9 @@ month per the workflow doc.
 
 3 methods.
 
-- [x] ultimate-pending `esg_benchmark` — `esg-benchmark` (402 on free tier)
-- [x] ultimate-pending `esg_disclosures` — `esg-disclosures` (402 on free tier)
-- [x] ultimate-pending `esg_ratings` — `esg-ratings` (402 on free tier)
+- [x] ultimate-pending `esg_benchmark` — `esg-benchmark` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `esg_disclosures` — `esg-disclosures` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `esg_ratings` — `esg-ratings` (402 on free tier and on Starter tier)
 
 ## `client.funds` — ETF and mutual-fund composition, info, and N-PORT/13F-style disclosures.
 
@@ -219,15 +255,15 @@ month per the workflow doc.
 > methods 402 on the free tier. Reclassified below per the workflow doc's
 > "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `etf_asset_exposure` — `etf/asset-exposure` (402 on free tier)
-- [x] ultimate-pending `etf_country_weightings` — `etf/country-weightings` (402 on free tier)
-- [x] ultimate-pending `etf_holdings` — `etf/holdings` (402 on free tier)
-- [x] ultimate-pending `etf_info` — `etf/info` (402 on free tier)
-- [x] ultimate-pending `etf_sector_weightings` — `etf/sector-weightings` (402 on free tier)
-- [x] ultimate-pending `funds_disclosure` — `funds/disclosure` (402 on free tier)
-- [x] ultimate-pending `funds_disclosure_dates` — `funds/disclosure-dates` (402 on free tier)
-- [x] ultimate-pending `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (402 on free tier)
-- [x] ultimate-pending `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (402 on free tier)
+- [x] ultimate-pending `etf_asset_exposure` — `etf/asset-exposure` (402 on free tier and on Starter tier)
+- [x] done `etf_country_weightings` — `etf/country-weightings` (works on Starter tier; 402 on free tier)
+- [x] ultimate-pending `etf_holdings` — `etf/holdings` (402 on free tier and on Starter tier)
+- [x] done `etf_info` — `etf/info` (works on Starter tier; 402 on free tier)
+- [x] done `etf_sector_weightings` — `etf/sector-weightings` (works on Starter tier; 402 on free tier)
+- [x] ultimate-pending `funds_disclosure` — `funds/disclosure` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `funds_disclosure_dates` — `funds/disclosure-dates` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (402 on free tier and on Starter tier)
 
 ## `client.statements` — Financial statements and everything computed directly from them.
 
@@ -254,11 +290,11 @@ month per the workflow doc.
 - [x] done `balance_sheet_statement` — `balance-sheet-statement`
 - [x] done `balance_sheet_statement_as_reported` — `balance-sheet-statement-as-reported`
 - [x] done `balance_sheet_statement_growth` — `balance-sheet-statement-growth`
-- [x] ultimate-pending `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (402 on free tier)
+- [x] ultimate-pending `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (402 on free tier and on Starter tier)
 - [x] done `cash_flow_statement` — `cash-flow-statement`
 - [x] done `cash_flow_statement_as_reported` — `cash-flow-statement-as-reported`
 - [x] done `cash_flow_statement_growth` — `cash-flow-statement-growth`
-- [x] ultimate-pending `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (402 on free tier)
+- [x] ultimate-pending `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (402 on free tier and on Starter tier)
 - [x] done `enterprise_values` — `enterprise-values`
 - [x] done `financial_growth` — `financial-growth`
 - [x] done `financial_reports_dates` — `financial-reports-dates`
@@ -269,10 +305,10 @@ month per the workflow doc.
 - [x] done `income_statement` — `income-statement`
 - [x] done `income_statement_as_reported` — `income-statement-as-reported`
 - [x] done `income_statement_growth` — `income-statement-growth`
-- [x] ultimate-pending `income_statement_ttm` — `income-statement-ttm` (402 on free tier)
+- [x] ultimate-pending `income_statement_ttm` — `income-statement-ttm` (402 on free tier and on Starter tier)
 - [x] done `key_metrics` — `key-metrics`
 - [x] done `key_metrics_ttm` — `key-metrics-ttm`
-- [x] ultimate-pending `latest_financial_statements` — `latest-financial-statements` (402 on free tier)
+- [x] ultimate-pending `latest_financial_statements` — `latest-financial-statements` (402 on free tier and on Starter tier)
 - [x] done `owner_earnings` — `owner-earnings`
 - [x] done `ratios` — `ratios`
 - [x] done `ratios_ttm` — `ratios-ttm`
@@ -287,14 +323,14 @@ month per the workflow doc.
 
 8 methods.
 
-- [x] ultimate-pending `institutional_ownership_dates` — `institutional-ownership/dates` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_extract` — `institutional-ownership/extract` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_latest` — `institutional-ownership/latest` (402 on free tier)
-- [x] ultimate-pending `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (402 on free tier)
+- [x] ultimate-pending `institutional_ownership_dates` — `institutional-ownership/dates` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_extract` — `institutional-ownership/extract` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_latest` — `institutional-ownership/latest` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (402 on free tier and on Starter tier)
 
 ## `client.indexes` — Stock-market indexes, their quotes/charts, and their constituent lists.
 
@@ -308,13 +344,13 @@ month per the workflow doc.
 > verified via `assert client.indexes.historical_chart is
 > client.chart.historical_chart` at write time.
 
-- [x] ultimate-pending `dowjones_constituent` — `dowjones-constituent` (402 on free tier)
-- [x] ultimate-pending `historical_dowjones_constituent` — `historical-dowjones-constituent` (402 on free tier)
-- [x] ultimate-pending `historical_nasdaq_constituent` — `historical-nasdaq-constituent` (402 on free tier)
-- [x] ultimate-pending `historical_sp500_constituent` — `historical-sp500-constituent` (402 on free tier)
+- [x] ultimate-pending `dowjones_constituent` — `dowjones-constituent` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `historical_dowjones_constituent` — `historical-dowjones-constituent` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `historical_nasdaq_constituent` — `historical-nasdaq-constituent` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `historical_sp500_constituent` — `historical-sp500-constituent` (402 on free tier and on Starter tier)
 - [x] done `index_list` — `index-list`
-- [x] ultimate-pending `nasdaq_constituent` — `nasdaq-constituent` (402 on free tier)
-- [x] ultimate-pending `sp500_constituent` — `sp500-constituent` (402 on free tier)
+- [x] ultimate-pending `nasdaq_constituent` — `nasdaq-constituent` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `sp500_constituent` — `sp500-constituent` (402 on free tier and on Starter tier)
 
 ## `client.commodity` — Commodity instruments: list, quotes, charts.
 
@@ -365,11 +401,11 @@ month per the workflow doc.
 > and `insider_trading_transaction_type` are free-tier reachable — the
 > other 4 all 402 despite no Bucket 2 flag in REWRITE_ARCHITECTURE.md §3.5.
 
-- [x] ultimate-pending `acquisition_of_beneficial_ownership` — `acquisition-of-beneficial-ownership` (402 on free tier)
+- [x] done `acquisition_of_beneficial_ownership` — `acquisition-of-beneficial-ownership` (works on Starter tier; 402 on free tier)
 - [x] done `insider_trading_latest` — `insider-trading/latest`
-- [x] ultimate-pending `insider_trading_reporting_name` — `insider-trading/reporting-name` (402 on free tier)
-- [x] ultimate-pending `insider_trading_search` — `insider-trading/search` (402 on free tier)
-- [x] ultimate-pending `insider_trading_statistics` — `insider-trading/statistics` (402 on free tier)
+- [x] done `insider_trading_reporting_name` — `insider-trading/reporting-name` (works on Starter tier; 402 on free tier)
+- [x] done `insider_trading_search` — `insider-trading/search` (works on Starter tier; 402 on free tier)
+- [x] done `insider_trading_statistics` — `insider-trading/statistics` (works on Starter tier; 402 on free tier)
 - [x] done `insider_trading_transaction_type` — `insider-trading-transaction-type`
 
 ## `client.market_performance` — Sector/industry performance and P/E, snapshot and historical, plus market leaders.
@@ -408,15 +444,15 @@ month per the workflow doc.
 > tier, the whole group gated, despite no Bucket 2 flag in
 > REWRITE_ARCHITECTURE.md §3.5.
 
-- [x] ultimate-pending `technical_indicators_adx` — `technical-indicators/adx` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_dema` — `technical-indicators/dema` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_ema` — `technical-indicators/ema` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_rsi` — `technical-indicators/rsi` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_sma` — `technical-indicators/sma` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_standarddeviation` — `technical-indicators/standarddeviation` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_tema` — `technical-indicators/tema` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_williams` — `technical-indicators/williams` (402 on free tier)
-- [x] ultimate-pending `technical_indicators_wma` — `technical-indicators/wma` (402 on free tier)
+- [x] done `technical_indicators_adx` — `technical-indicators/adx` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_dema` — `technical-indicators/dema` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_ema` — `technical-indicators/ema` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_rsi` — `technical-indicators/rsi` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_sma` — `technical-indicators/sma` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_standarddeviation` — `technical-indicators/standarddeviation` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_tema` — `technical-indicators/tema` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_williams` — `technical-indicators/williams` (works on Starter tier; 402 on free tier)
+- [x] done `technical_indicators_wma` — `technical-indicators/wma` (works on Starter tier; 402 on free tier)
 
 ## `client.news` — News, press releases, and FMP editorial articles.
 
@@ -428,15 +464,15 @@ month per the workflow doc.
 > no Bucket 2 flag in REWRITE_ARCHITECTURE.md §3.5 → `ultimate-pending`.
 
 - [x] done `fmp_articles` — `fmp-articles`
-- [x] ultimate-pending `news_crypto` — `news/crypto` (402 on free tier)
-- [x] ultimate-pending `news_crypto_latest` — `news/crypto-latest` (402 on free tier)
-- [x] ultimate-pending `news_forex` — `news/forex` (402 on free tier)
-- [x] ultimate-pending `news_forex_latest` — `news/forex-latest` (402 on free tier)
-- [x] ultimate-pending `news_general_latest` — `news/general-latest` (402 on free tier)
-- [x] ultimate-pending `news_press_releases` — `news/press-releases` (402 on free tier)
-- [x] ultimate-pending `news_press_releases_latest` — `news/press-releases-latest` (402 on free tier)
-- [x] ultimate-pending `news_stock` — `news/stock` (402 on free tier)
-- [x] ultimate-pending `news_stock_latest` — `news/stock-latest` (402 on free tier)
+- [x] done `news_crypto` — `news/crypto` (works on Starter tier; 402 on free tier)
+- [x] done `news_crypto_latest` — `news/crypto-latest` (works on Starter tier; 402 on free tier)
+- [x] done `news_forex` — `news/forex` (works on Starter tier; 402 on free tier)
+- [x] done `news_forex_latest` — `news/forex-latest` (works on Starter tier; 402 on free tier)
+- [x] done `news_general_latest` — `news/general-latest` (works on Starter tier; 402 on free tier)
+- [x] ultimate-pending `news_press_releases` — `news/press-releases` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `news_press_releases_latest` — `news/press-releases-latest` (402 on free tier and on Starter tier)
+- [x] done `news_stock` — `news/stock` (works on Starter tier; 402 on free tier)
+- [x] done `news_stock_latest` — `news/stock-latest` (works on Starter tier; 402 on free tier)
 
 ## `client.quote` — Real-time and aftermarket quotes, single and batch.
 
@@ -453,17 +489,17 @@ month per the workflow doc.
 
 - [x] done `aftermarket_quote` — `aftermarket-quote`
 - [x] done `aftermarket_trade` — `aftermarket-trade`
-- [x] ultimate-pending `batch_aftermarket_quote` — `batch-aftermarket-quote` (402 on free tier)
-- [x] ultimate-pending `batch_aftermarket_trade` — `batch-aftermarket-trade` (402 on free tier)
-- [x] ultimate-pending `batch_commodity_quotes` — `batch-commodity-quotes` (402 on free tier)
-- [x] ultimate-pending `batch_crypto_quotes` — `batch-crypto-quotes` (402 on free tier)
-- [x] ultimate-pending `batch_etf_quotes` — `batch-etf-quotes` (402 on free tier)
-- [x] ultimate-pending `batch_exchange_quote` — `batch-exchange-quote` (402 on free tier)
-- [x] ultimate-pending `batch_forex_quotes` — `batch-forex-quotes` (402 on free tier)
-- [x] ultimate-pending `batch_index_quotes` — `batch-index-quotes` (402 on free tier)
-- [x] ultimate-pending `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (402 on free tier)
-- [x] ultimate-pending `batch_quote` — `batch-quote` (402 on free tier)
-- [x] ultimate-pending `batch_quote_short` — `batch-quote-short` (402 on free tier)
+- [x] ultimate-pending `batch_aftermarket_quote` — `batch-aftermarket-quote` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_aftermarket_trade` — `batch-aftermarket-trade` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_commodity_quotes` — `batch-commodity-quotes` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_crypto_quotes` — `batch-crypto-quotes` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_etf_quotes` — `batch-etf-quotes` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_exchange_quote` — `batch-exchange-quote` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_forex_quotes` — `batch-forex-quotes` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_index_quotes` — `batch-index-quotes` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_quote` — `batch-quote` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `batch_quote_short` — `batch-quote-short` (402 on free tier and on Starter tier)
 - [x] done `quote` — `quote`
 - [x] done `quote_short` — `quote-short`
 - [x] done `stock_price_change` — `stock-price-change`
@@ -480,8 +516,8 @@ month per the workflow doc.
 > call probing the `cik-A` question), so that particular oddity is still unconfirmed
 > either way.
 
-- [x] ultimate-pending `all_industry_classification` — `all-industry-classification` (402 on free tier)
-- [x] ultimate-pending `industry_classification_search` — `industry-classification-search` (402 on free tier)
+- [x] done `all_industry_classification` — `all-industry-classification` (works on Starter tier; 402 on free tier)
+- [x] done `industry_classification_search` — `industry-classification-search` (works on Starter tier; 402 on free tier)
 - [x] done `sec_filings_8k` — `sec-filings-8k`
 - [x] done `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
 - [x] done `sec_filings_company_search_name` — `sec-filings-company-search/name`
@@ -501,10 +537,10 @@ month per the workflow doc.
 
 4 methods.
 
-- [x] ultimate-pending `earning_call_transcript` — `earning-call-transcript` (402 on free tier)
-- [x] ultimate-pending `earning_call_transcript_dates` — `earning-call-transcript-dates` (402 on free tier)
-- [x] ultimate-pending `earning_call_transcript_latest` — `earning-call-transcript-latest` (402 on free tier)
-- [x] ultimate-pending `earnings_transcript_list` — `earnings-transcript-list` (402 on free tier)
+- [x] ultimate-pending `earning_call_transcript` — `earning-call-transcript` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `earning_call_transcript_dates` — `earning-call-transcript-dates` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `earning_call_transcript_latest` — `earning-call-transcript-latest` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `earnings_transcript_list` — `earnings-transcript-list` (402 on free tier and on Starter tier)
 
 ## `client.congress` — U.S. Senate and House financial disclosures, trades, and member profiles.
 
@@ -519,17 +555,17 @@ month per the workflow doc.
 > `house_trades_by_id`'s own docstring so it doesn't read as our bug.
 
 - [x] done `house_latest` — `house-latest`
-- [x] ultimate-pending `house_trades` — `house-trades` (402 on free tier)
-- [x] ultimate-pending `house_trades_by_id` — `house-trades-by-id` (402 on free tier)
-- [x] ultimate-pending `house_trades_by_name` — `house-trades-by-name` (402 on free tier)
+- [x] done `house_trades` — `house-trades` (works on Starter tier; 402 on free tier)
+- [x] done `house_trades_by_id` — `house-trades-by-id` (works on Starter tier; 402 on free tier)
+- [x] done `house_trades_by_name` — `house-trades-by-name` (works on Starter tier; 402 on free tier)
 - [x] done `senate_latest` — `senate-latest`
-- [x] ultimate-pending `senate_net_worth` — `senate-net-worth` (402 on free tier)
-- [x] ultimate-pending `senate_net_worth_aggregated` — `senate-net-worth-aggregated` (402 on free tier)
-- [x] ultimate-pending `senate_positions` — `senate-positions` (402 on free tier)
-- [x] ultimate-pending `senate_profile` — `senate-profile` (402 on free tier)
-- [x] ultimate-pending `senate_trades` — `senate-trades` (402 on free tier)
-- [x] ultimate-pending `senate_trades_by_id` — `senate-trades-by-id` (402 on free tier)
-- [x] ultimate-pending `senate_trades_by_name` — `senate-trades-by-name` (402 on free tier)
+- [x] ultimate-pending `senate_net_worth` — `senate-net-worth` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `senate_net_worth_aggregated` — `senate-net-worth-aggregated` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `senate_positions` — `senate-positions` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `senate_profile` — `senate-profile` (402 on free tier and on Starter tier)
+- [x] done `senate_trades` — `senate-trades` (works on Starter tier; 402 on free tier)
+- [x] done `senate_trades_by_id` — `senate-trades-by-id` (works on Starter tier; 402 on free tier)
+- [x] done `senate_trades_by_name` — `senate-trades-by-name` (works on Starter tier; 402 on free tier)
 
 ## `client.bulk` — Whole-universe bulk downloads.
 
@@ -543,24 +579,24 @@ month per the workflow doc.
 
 18 methods.
 
-- [x] ultimate-pending `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (402 on free tier)
-- [x] ultimate-pending `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (402 on free tier)
-- [x] ultimate-pending `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (402 on free tier)
-- [x] ultimate-pending `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (402 on free tier)
-- [x] ultimate-pending `dcf_bulk` — `dcf-bulk` (402 on free tier)
-- [x] ultimate-pending `earnings_surprises_bulk` — `earnings-surprises-bulk` (402 on free tier)
-- [x] ultimate-pending `eod_bulk` — `eod-bulk` (402 on free tier)
-- [x] ultimate-pending `etf_holder_bulk` — `etf-holder-bulk` (402 on free tier)
-- [x] ultimate-pending `income_statement_bulk` — `income-statement-bulk` (402 on free tier)
-- [x] ultimate-pending `income_statement_growth_bulk` — `income-statement-growth-bulk` (402 on free tier)
-- [x] ultimate-pending `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (402 on free tier)
-- [x] ultimate-pending `peers_bulk` — `peers-bulk` (402 on free tier)
-- [x] ultimate-pending `price_target_summary_bulk` — `price-target-summary-bulk` (402 on free tier)
-- [x] ultimate-pending `profile_bulk` — `profile-bulk` (402 on free tier)
-- [x] ultimate-pending `rating_bulk` — `rating-bulk` (402 on free tier)
-- [x] ultimate-pending `ratios_ttm_bulk` — `ratios-ttm-bulk` (402 on free tier)
-- [x] ultimate-pending `scores_bulk` — `scores-bulk` (402 on free tier)
-- [x] ultimate-pending `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (402 on free tier)
+- [x] ultimate-pending `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `dcf_bulk` — `dcf-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `earnings_surprises_bulk` — `earnings-surprises-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `eod_bulk` — `eod-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `etf_holder_bulk` — `etf-holder-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `income_statement_bulk` — `income-statement-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `income_statement_growth_bulk` — `income-statement-growth-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `peers_bulk` — `peers-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `price_target_summary_bulk` — `price-target-summary-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `profile_bulk` — `profile-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `rating_bulk` — `rating-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `ratios_ttm_bulk` — `ratios-ttm-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `scores_bulk` — `scores-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (402 on free tier and on Starter tier)
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
@@ -575,10 +611,10 @@ month per the workflow doc.
 
 7 methods.
 
-- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on free tier)
-- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on free tier)
-- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on free tier)
-- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on free tier)
-- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on free tier)
-- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on free tier)
-- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on free tier)
+- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on free tier and on Starter tier)

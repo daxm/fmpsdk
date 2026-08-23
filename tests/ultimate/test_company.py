@@ -15,10 +15,10 @@ import pytest
 pytestmark = pytest.mark.ultimate
 
 
-def test_mergers_acquisitions_latest(live_client):
-    result = live_client.mergers_acquisitions_latest(limit=10)
-    assert len(result) > 0
-    assert "symbol" in result[0]
+# NOTE (2026-08-23): re-tested against Dax's FMP Starter-tier key.
+# 1 of this group's methods now pass (moved to
+# tests/live/test_company.py); the 2 below still 402 on
+# Starter -- gated at Premium or Ultimate, exact tier not yet confirmed.
 
 
 def test_mergers_acquisitions_search(live_client):

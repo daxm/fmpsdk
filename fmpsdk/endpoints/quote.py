@@ -6,8 +6,9 @@ methods. ``quote``, ``quote_short``, ``batch_index_quotes``,
 
 Only the 5 single-symbol methods (``quote``, ``quote_short``,
 ``aftermarket_quote``, ``aftermarket_trade``, ``stock_price_change``)
-work on the free tier — every ``batch_*`` method requires an FMP
-Ultimate-tier plan, including the singular-named ones
+work on the free tier — every ``batch_*`` method still 402s on both the
+free and Starter tiers as of 2026-08-23 (requires FMP Premium or
+Ultimate, not yet confirmed which), including the singular-named ones
 (``batch_quote``, ``batch_exchange_quote``, ``batch_aftermarket_*``),
 not just the plural whole-asset-class ones.
 """

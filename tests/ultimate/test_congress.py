@@ -18,44 +18,10 @@ pytestmark = pytest.mark.ultimate
 _SENATE_ID = "P000197"
 
 
-def test_house_trades(live_client):
-    result = live_client.house_trades(symbol="AAPL", limit=1)
-    assert isinstance(result, list)
-
-
-def test_house_trades_by_id(live_client):
-    result = live_client.house_trades_by_id(senate_id=_SENATE_ID, limit=1)
-    assert isinstance(result, list)
-
-
-def test_house_trades_by_name(live_client):
-    result = live_client.house_trades_by_name(name="James")
-    assert isinstance(result, list)
-
-
-def test_senate_trades(live_client):
-    result = live_client.senate_trades(symbol="AAPL", limit=1)
-    assert isinstance(result, list)
-
-
-def test_senate_trades_by_id(live_client):
-    result = live_client.senate_trades_by_id(senate_id=_SENATE_ID, limit=1)
-    assert isinstance(result, list)
-
-
-def test_senate_trades_by_name(live_client):
-    result = live_client.senate_trades_by_name(name="Jerry")
-    assert isinstance(result, list)
-
-
-def test_senate_profile(live_client):
-    result = live_client.senate_profile(senate_id=_SENATE_ID)
-    assert isinstance(result, list)
-
-
-def test_senate_positions(live_client):
-    result = live_client.senate_positions(senate_id=_SENATE_ID)
-    assert isinstance(result, list)
+# NOTE (2026-08-23): re-tested against Dax's FMP Starter-tier key.
+# 6 of this group's methods now pass (moved to
+# tests/live/test_congress.py); the 4 below still 402 on
+# Starter -- gated at Premium or Ultimate, exact tier not yet confirmed.
 
 
 def test_senate_net_worth(live_client):
@@ -65,4 +31,14 @@ def test_senate_net_worth(live_client):
 
 def test_senate_net_worth_aggregated(live_client):
     result = live_client.senate_net_worth_aggregated(senate_id=_SENATE_ID)
+    assert isinstance(result, list)
+
+
+def test_senate_positions(live_client):
+    result = live_client.senate_positions(senate_id=_SENATE_ID)
+    assert isinstance(result, list)
+
+
+def test_senate_profile(live_client):
+    result = live_client.senate_profile(senate_id=_SENATE_ID)
     assert isinstance(result, list)

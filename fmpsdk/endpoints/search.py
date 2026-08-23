@@ -2,7 +2,7 @@
 the company screener. 7 methods. ``search_symbol``, ``search_name``,
 and ``search_cik`` work on the free tier; ``search_cusip``,
 ``search_isin``, ``search_exchange_variants``, and ``company_screener``
-require an FMP Ultimate-tier plan.
+require an FMP Starter-tier plan or higher.
 """
 
 from __future__ import annotations
@@ -122,7 +122,7 @@ class SearchEndpoints:
     ) -> list[CompanyScreenerResult]:
         """``GET company-screener`` — filter the whole equity universe by
         market cap, price, sector, and more. Requires an FMP
-        Ultimate-tier plan — 402s on the free tier.
+        Starter-tier plan or higher — 402s on the free tier.
         """
         return cast(
             "list[CompanyScreenerResult]",

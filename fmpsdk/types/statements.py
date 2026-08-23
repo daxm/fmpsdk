@@ -243,7 +243,7 @@ class CashFlowStatementResult(TypedDict):
 
 
 class LatestFinancialStatementsResult(TypedDict):
-    """One company with a newly filed financial statement. Requires an FMP Ultimate-tier plan. Returned by `latest_financial_statements()`."""
+    """One company with a newly filed financial statement. Still 402s on both the free and Starter tiers as of 2026-08-23 — requires FMP Premium or Ultimate (not yet confirmed which). Returned by `latest_financial_statements()`."""
 
     symbol: str
     calendarYear: int

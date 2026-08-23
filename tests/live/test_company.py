@@ -88,3 +88,7 @@ def test_governance_executive_compensation(live_client):
     assert isinstance(result, list)
 
 
+def test_mergers_acquisitions_latest(live_client):
+    result = live_client.mergers_acquisitions_latest(limit=10)
+    assert len(result) > 0
+    assert "symbol" in result[0]

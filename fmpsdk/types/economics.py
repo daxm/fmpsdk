@@ -34,7 +34,7 @@ class EconomicIndicatorsResult(TypedDict):
 
 
 class EconomicCalendarResult(TypedDict):
-    """One scheduled economic data release, with prior/estimate/actual values once reported. Requires an FMP Ultimate-tier plan. Returned by `economic_calendar()`."""
+    """One scheduled economic data release, with prior/estimate/actual values once reported. Requires an FMP Starter-tier plan or higher. Returned by `economic_calendar()`."""
 
     date: str
     country: str

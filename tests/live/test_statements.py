@@ -35,7 +35,9 @@ def test_balance_sheet_statement(live_client):
 
 
 def test_balance_sheet_statement_as_reported(live_client):
-    result = live_client.balance_sheet_statement_as_reported(symbol="AAPL", period="annual")
+    result = live_client.balance_sheet_statement_as_reported(
+        symbol="AAPL", period="annual"
+    )
     assert result[0]["symbol"] == "AAPL"
 
 
@@ -60,7 +62,9 @@ def test_cash_flow_statement_growth(live_client):
 
 
 def test_financial_statement_full_as_reported(live_client):
-    result = live_client.financial_statement_full_as_reported(symbol="AAPL", period="annual")
+    result = live_client.financial_statement_full_as_reported(
+        symbol="AAPL", period="annual"
+    )
     assert result[0]["symbol"] == "AAPL"
 
 
