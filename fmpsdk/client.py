@@ -31,15 +31,24 @@ from .endpoints.analyst import AnalystEndpoints
 from .endpoints.calendar import CalendarEndpoints
 from .endpoints.chart import ChartEndpoints
 from .endpoints.commitment_of_traders import CommitmentOfTradersEndpoints
+from .endpoints.commodity import CommodityEndpoints
 from .endpoints.company import CompanyEndpoints
+from .endpoints.crypto import CryptoEndpoints
 from .endpoints.dcf import DcfEndpoints
 from .endpoints.directory import DirectoryEndpoints
 from .endpoints.economics import EconomicsEndpoints
 from .endpoints.esg import EsgEndpoints
+from .endpoints.forex import ForexEndpoints
 from .endpoints.funds import FundsEndpoints
+from .endpoints.fundraisers import FundraisersEndpoints
+from .endpoints.indexes import IndexesEndpoints
+from .endpoints.insider_trades import InsiderTradesEndpoints
 from .endpoints.institutional_ownership import InstitutionalOwnershipEndpoints
+from .endpoints.market_hours import MarketHoursEndpoints
+from .endpoints.market_performance import MarketPerformanceEndpoints
 from .endpoints.search import SearchEndpoints
 from .endpoints.statements import StatementsEndpoints
+from .endpoints.technical_indicators import TechnicalIndicatorsEndpoints
 
 logger = logging.getLogger("fmpsdk")
 
@@ -112,6 +121,15 @@ class Client(
     FundsEndpoints,
     StatementsEndpoints,
     InstitutionalOwnershipEndpoints,
+    IndexesEndpoints,
+    CommodityEndpoints,
+    CryptoEndpoints,
+    FundraisersEndpoints,
+    ForexEndpoints,
+    InsiderTradesEndpoints,
+    MarketPerformanceEndpoints,
+    MarketHoursEndpoints,
+    TechnicalIndicatorsEndpoints,
 ):
     """fmpsdk client.
 

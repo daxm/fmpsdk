@@ -255,6 +255,144 @@ class InstitutionalOwnershipGroup:
         )
 
 
+class IndexesGroup:
+    """``client.indexes`` — 7 primary methods. 3 cross-listed from
+    ``client.chart`` (``historical_chart``, ``historical_price_eod_full``,
+    ``historical_price_eod_light``, §4.3). ``quote``, ``quote_short``, and
+    ``batch_index_quotes`` also cross-list here once ``client.quote``
+    exists — not wired yet, add them to this ``__init__`` when that group
+    is built."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.dowjones_constituent = bind("dowjones_constituent")
+        self.historical_dowjones_constituent = bind("historical_dowjones_constituent")
+        self.historical_nasdaq_constituent = bind("historical_nasdaq_constituent")
+        self.historical_sp500_constituent = bind("historical_sp500_constituent")
+        self.index_list = bind("index_list")
+        self.nasdaq_constituent = bind("nasdaq_constituent")
+        self.sp500_constituent = bind("sp500_constituent")
+        # Cross-listed from client.chart (§4.3).
+        self.historical_chart = bind("historical_chart")
+        self.historical_price_eod_full = bind("historical_price_eod_full")
+        self.historical_price_eod_light = bind("historical_price_eod_light")
+
+
+class CommodityGroup:
+    """``client.commodity`` — 1 primary method. 3 cross-listed from
+    ``client.chart`` (§4.3). ``quote``, ``quote_short``, and
+    ``batch_commodity_quotes`` also cross-list here once ``client.quote``
+    exists — not wired yet, add them to this ``__init__`` when that group
+    is built."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.commodities_list = bind("commodities_list")
+        # Cross-listed from client.chart (§4.3).
+        self.historical_chart = bind("historical_chart")
+        self.historical_price_eod_full = bind("historical_price_eod_full")
+        self.historical_price_eod_light = bind("historical_price_eod_light")
+
+
+class CryptoGroup:
+    """``client.crypto`` — 1 primary method. 3 cross-listed from
+    ``client.chart`` (§4.3). ``quote``, ``quote_short``, and
+    ``batch_crypto_quotes`` also cross-list here once ``client.quote``
+    exists — not wired yet, add them to this ``__init__`` when that group
+    is built."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.cryptocurrency_list = bind("cryptocurrency_list")
+        # Cross-listed from client.chart (§4.3).
+        self.historical_chart = bind("historical_chart")
+        self.historical_price_eod_full = bind("historical_price_eod_full")
+        self.historical_price_eod_light = bind("historical_price_eod_light")
+
+
+class FundraisersGroup:
+    """``client.fundraisers`` — 6 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.crowdfunding_offerings = bind("crowdfunding_offerings")
+        self.crowdfunding_offerings_latest = bind("crowdfunding_offerings_latest")
+        self.crowdfunding_offerings_search = bind("crowdfunding_offerings_search")
+        self.fundraising = bind("fundraising")
+        self.fundraising_latest = bind("fundraising_latest")
+        self.fundraising_search = bind("fundraising_search")
+
+
+class ForexGroup:
+    """``client.forex`` — 1 primary method. 3 cross-listed from
+    ``client.chart`` (§4.3). ``quote``, ``quote_short``, and
+    ``batch_forex_quotes`` also cross-list here once ``client.quote``
+    exists — not wired yet, add them to this ``__init__`` when that group
+    is built."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.forex_list = bind("forex_list")
+        # Cross-listed from client.chart (§4.3).
+        self.historical_chart = bind("historical_chart")
+        self.historical_price_eod_full = bind("historical_price_eod_full")
+        self.historical_price_eod_light = bind("historical_price_eod_light")
+
+
+class InsiderTradesGroup:
+    """``client.insider_trades`` — 6 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.acquisition_of_beneficial_ownership = bind(
+            "acquisition_of_beneficial_ownership"
+        )
+        self.insider_trading_latest = bind("insider_trading_latest")
+        self.insider_trading_reporting_name = bind("insider_trading_reporting_name")
+        self.insider_trading_search = bind("insider_trading_search")
+        self.insider_trading_statistics = bind("insider_trading_statistics")
+        self.insider_trading_transaction_type = bind("insider_trading_transaction_type")
+
+
+class MarketPerformanceGroup:
+    """``client.market_performance`` — 11 primary methods, no
+    cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.biggest_gainers = bind("biggest_gainers")
+        self.biggest_losers = bind("biggest_losers")
+        self.historical_industry_pe = bind("historical_industry_pe")
+        self.historical_industry_performance = bind("historical_industry_performance")
+        self.historical_sector_pe = bind("historical_sector_pe")
+        self.historical_sector_performance = bind("historical_sector_performance")
+        self.industry_pe_snapshot = bind("industry_pe_snapshot")
+        self.industry_performance_snapshot = bind("industry_performance_snapshot")
+        self.most_actives = bind("most_actives")
+        self.sector_pe_snapshot = bind("sector_pe_snapshot")
+        self.sector_performance_snapshot = bind("sector_performance_snapshot")
+
+
+class MarketHoursGroup:
+    """``client.market_hours`` — 3 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.all_exchange_market_hours = bind("all_exchange_market_hours")
+        self.exchange_market_hours = bind("exchange_market_hours")
+        self.holidays_by_exchange = bind("holidays_by_exchange")
+
+
+class TechnicalIndicatorsGroup:
+    """``client.technical_indicators`` — 9 primary methods, no
+    cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.technical_indicators_adx = bind("technical_indicators_adx")
+        self.technical_indicators_dema = bind("technical_indicators_dema")
+        self.technical_indicators_ema = bind("technical_indicators_ema")
+        self.technical_indicators_rsi = bind("technical_indicators_rsi")
+        self.technical_indicators_sma = bind("technical_indicators_sma")
+        self.technical_indicators_standarddeviation = bind(
+            "technical_indicators_standarddeviation"
+        )
+        self.technical_indicators_tema = bind("technical_indicators_tema")
+        self.technical_indicators_williams = bind("technical_indicators_williams")
+        self.technical_indicators_wma = bind("technical_indicators_wma")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -277,3 +415,12 @@ def attach_groups(client: "Client") -> None:
     client.funds = FundsGroup(bind)
     client.statements = StatementsGroup(bind)
     client.institutional_ownership = InstitutionalOwnershipGroup(bind)
+    client.indexes = IndexesGroup(bind)
+    client.commodity = CommodityGroup(bind)
+    client.crypto = CryptoGroup(bind)
+    client.fundraisers = FundraisersGroup(bind)
+    client.forex = ForexGroup(bind)
+    client.insider_trades = InsiderTradesGroup(bind)
+    client.market_performance = MarketPerformanceGroup(bind)
+    client.market_hours = MarketHoursGroup(bind)
+    client.technical_indicators = TechnicalIndicatorsGroup(bind)

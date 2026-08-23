@@ -24,8 +24,9 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 65 / 238 methods done** (49 more implemented + unit-tested, pending
-Ultimate verification).
+**Progress: 65 / 238 methods done** (49 more implemented + unit-tested pending
+Ultimate verification; 45 more implemented this pass but not yet unit-tested or
+live-verified — see the `indexes` through `technical_indicators` groups below).
 
 ---
 
@@ -283,91 +284,118 @@ Ultimate verification).
 
 7 methods.
 
-- [ ] `dowjones_constituent` — `dowjones-constituent`
-- [ ] `historical_dowjones_constituent` — `historical-dowjones-constituent`
-- [ ] `historical_nasdaq_constituent` — `historical-nasdaq-constituent`
-- [ ] `historical_sp500_constituent` — `historical-sp500-constituent`
-- [ ] `index_list` — `index-list`
-- [ ] `nasdaq_constituent` — `nasdaq-constituent`
-- [ ] `sp500_constituent` — `sp500-constituent`
+> **Implemented, not yet live-tested this session** (code-only pass — see
+> `fmpsdk-rewrite-status` memory note for why). 3 cross-listed from
+> `client.chart` (`historical_chart`, `historical_price_eod_full`,
+> `historical_price_eod_light`) already hold the identity invariant —
+> verified via `assert client.indexes.historical_chart is
+> client.chart.historical_chart` at write time.
+
+- [ ] implemented `dowjones_constituent` — `dowjones-constituent`
+- [ ] implemented `historical_dowjones_constituent` — `historical-dowjones-constituent`
+- [ ] implemented `historical_nasdaq_constituent` — `historical-nasdaq-constituent`
+- [ ] implemented `historical_sp500_constituent` — `historical-sp500-constituent`
+- [ ] implemented `index_list` — `index-list`
+- [ ] implemented `nasdaq_constituent` — `nasdaq-constituent`
+- [ ] implemented `sp500_constituent` — `sp500-constituent`
 
 ## `client.commodity` — Commodity instruments: list, quotes, charts.
 
 1 methods.
 
-- [ ] `commodities_list` — `commodities-list`
+> **Implemented, not yet live-tested this session.** `quote`/`quote_short`/
+> `batch_commodity_quotes` will cross-list here once `client.quote` is
+> built; the 3 `client.chart` cross-listings are already wired.
+
+- [ ] implemented `commodities_list` — `commodities-list`
 
 ## `client.crypto` — Cryptocurrency instruments: list, quotes, charts.
 
 1 methods.
 
-- [ ] `cryptocurrency_list` — `cryptocurrency-list`
+> **Implemented, not yet live-tested this session.** Same cross-listing
+> note as `client.commodity` above.
+
+- [ ] implemented `cryptocurrency_list` — `cryptocurrency-list`
 
 ## `client.fundraisers` — Reg CF crowdfunding and Reg D/A equity offerings.
 
 6 methods.
 
-- [ ] `crowdfunding_offerings` — `crowdfunding-offerings`
-- [ ] `crowdfunding_offerings_latest` — `crowdfunding-offerings-latest`
-- [ ] `crowdfunding_offerings_search` — `crowdfunding-offerings-search`
-- [ ] `fundraising` — `fundraising`
-- [ ] `fundraising_latest` — `fundraising-latest`
-- [ ] `fundraising_search` — `fundraising-search`
+> **Implemented, not yet live-tested this session.**
+
+- [ ] implemented `crowdfunding_offerings` — `crowdfunding-offerings`
+- [ ] implemented `crowdfunding_offerings_latest` — `crowdfunding-offerings-latest`
+- [ ] implemented `crowdfunding_offerings_search` — `crowdfunding-offerings-search`
+- [ ] implemented `fundraising` — `fundraising`
+- [ ] implemented `fundraising_latest` — `fundraising-latest`
+- [ ] implemented `fundraising_search` — `fundraising-search`
 
 ## `client.forex` — FX pairs: list, quotes, charts.
 
 1 methods.
 
-- [ ] `forex_list` — `forex-list`
+> **Implemented, not yet live-tested this session.** Same cross-listing
+> note as `client.commodity` above.
+
+- [ ] implemented `forex_list` — `forex-list`
 
 ## `client.insider_trades` — Form 4 insider transactions, statistics, and beneficial-ownership acquisitions.
 
 6 methods.
 
-- [ ] `acquisition_of_beneficial_ownership` — `acquisition-of-beneficial-ownership`
-- [ ] `insider_trading_latest` — `insider-trading/latest`
-- [ ] `insider_trading_reporting_name` — `insider-trading/reporting-name`
-- [ ] `insider_trading_search` — `insider-trading/search`
-- [ ] `insider_trading_statistics` — `insider-trading/statistics`
-- [ ] `insider_trading_transaction_type` — `insider-trading-transaction-type`
+> **Implemented, not yet live-tested this session.**
+
+- [ ] implemented `acquisition_of_beneficial_ownership` — `acquisition-of-beneficial-ownership`
+- [ ] implemented `insider_trading_latest` — `insider-trading/latest`
+- [ ] implemented `insider_trading_reporting_name` — `insider-trading/reporting-name`
+- [ ] implemented `insider_trading_search` — `insider-trading/search`
+- [ ] implemented `insider_trading_statistics` — `insider-trading/statistics`
+- [ ] implemented `insider_trading_transaction_type` — `insider-trading-transaction-type`
 
 ## `client.market_performance` — Sector/industry performance and P/E, snapshot and historical, plus market leaders.
 
 11 methods.
 
-- [ ] `biggest_gainers` — `biggest-gainers`
-- [ ] `biggest_losers` — `biggest-losers`
-- [ ] `historical_industry_pe` — `historical-industry-pe`
-- [ ] `historical_industry_performance` — `historical-industry-performance`
-- [ ] `historical_sector_pe` — `historical-sector-pe`
-- [ ] `historical_sector_performance` — `historical-sector-performance`
-- [ ] `industry_pe_snapshot` — `industry-pe-snapshot`
-- [ ] `industry_performance_snapshot` — `industry-performance-snapshot`
-- [ ] `most_actives` — `most-actives`
-- [ ] `sector_pe_snapshot` — `sector-pe-snapshot`
-- [ ] `sector_performance_snapshot` — `sector-performance-snapshot`
+> **Implemented, not yet live-tested this session.**
+
+- [ ] implemented `biggest_gainers` — `biggest-gainers`
+- [ ] implemented `biggest_losers` — `biggest-losers`
+- [ ] implemented `historical_industry_pe` — `historical-industry-pe`
+- [ ] implemented `historical_industry_performance` — `historical-industry-performance`
+- [ ] implemented `historical_sector_pe` — `historical-sector-pe`
+- [ ] implemented `historical_sector_performance` — `historical-sector-performance`
+- [ ] implemented `industry_pe_snapshot` — `industry-pe-snapshot`
+- [ ] implemented `industry_performance_snapshot` — `industry-performance-snapshot`
+- [ ] implemented `most_actives` — `most-actives`
+- [ ] implemented `sector_pe_snapshot` — `sector-pe-snapshot`
+- [ ] implemented `sector_performance_snapshot` — `sector-performance-snapshot`
 
 ## `client.market_hours` — Exchange trading sessions and holiday calendars.
 
 3 methods.
 
-- [ ] `all_exchange_market_hours` — `all-exchange-market-hours`
-- [ ] `exchange_market_hours` — `exchange-market-hours`
-- [ ] `holidays_by_exchange` — `holidays-by-exchange`
+> **Implemented, not yet live-tested this session.**
+
+- [ ] implemented `all_exchange_market_hours` — `all-exchange-market-hours`
+- [ ] implemented `exchange_market_hours` — `exchange-market-hours`
+- [ ] implemented `holidays_by_exchange` — `holidays-by-exchange`
 
 ## `client.technical_indicators` — Computed technical indicator series.
 
 9 methods.
 
-- [ ] `technical_indicators_adx` — `technical-indicators/adx`
-- [ ] `technical_indicators_dema` — `technical-indicators/dema`
-- [ ] `technical_indicators_ema` — `technical-indicators/ema`
-- [ ] `technical_indicators_rsi` — `technical-indicators/rsi`
-- [ ] `technical_indicators_sma` — `technical-indicators/sma`
-- [ ] `technical_indicators_standarddeviation` — `technical-indicators/standarddeviation`
-- [ ] `technical_indicators_tema` — `technical-indicators/tema`
-- [ ] `technical_indicators_williams` — `technical-indicators/williams`
-- [ ] `technical_indicators_wma` — `technical-indicators/wma`
+> **Implemented, not yet live-tested this session.**
+
+- [ ] implemented `technical_indicators_adx` — `technical-indicators/adx`
+- [ ] implemented `technical_indicators_dema` — `technical-indicators/dema`
+- [ ] implemented `technical_indicators_ema` — `technical-indicators/ema`
+- [ ] implemented `technical_indicators_rsi` — `technical-indicators/rsi`
+- [ ] implemented `technical_indicators_sma` — `technical-indicators/sma`
+- [ ] implemented `technical_indicators_standarddeviation` — `technical-indicators/standarddeviation`
+- [ ] implemented `technical_indicators_tema` — `technical-indicators/tema`
+- [ ] implemented `technical_indicators_williams` — `technical-indicators/williams`
+- [ ] implemented `technical_indicators_wma` — `technical-indicators/wma`
 
 ## `client.news` — News, press releases, and FMP editorial articles.
 

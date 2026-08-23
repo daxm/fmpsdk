@@ -2073,3 +2073,444 @@ class SplitResult(TypedDict):
     numerator: int
     denominator: int
     splitType: str
+
+
+# --- client.indexes ---------------------------------------------------------
+
+
+class IndexListResult(TypedDict):
+    symbol: str
+    name: str
+    exchange: str
+    currency: str
+
+
+class IndexConstituentResult(TypedDict):
+    """Shape shared by `sp500_constituent`, `nasdaq_constituent`, and
+    `dowjones_constituent` — same question (current index membership) at
+    different index scope, identical fields in all three documented
+    examples."""
+
+    symbol: str
+    name: str
+    sector: str
+    subSector: str
+    headQuarter: str
+    dateFirstAdded: str | None
+    cik: str
+    founded: str
+
+
+class HistoricalIndexConstituentResult(TypedDict):
+    """Shape shared by `historical_sp500_constituent`,
+    `historical_nasdaq_constituent`, and `historical_dowjones_constituent`
+    — same rationale as `IndexConstituentResult`."""
+
+    dateAdded: str
+    addedSecurity: str
+    removedTicker: str | None
+    removedSecurity: str | None
+    date: str
+    symbol: str
+    reason: str
+
+
+# --- client.commodity --------------------------------------------------------
+
+
+class CommoditiesListResult(TypedDict):
+    symbol: str
+    name: str
+    exchange: str | None
+    tradeMonth: str
+    currency: str
+
+
+# --- client.crypto ------------------------------------------------------------
+
+
+class CryptocurrencyListResult(TypedDict):
+    symbol: str
+    name: str
+    exchange: str
+    icoDate: str | None
+    circulatingSupply: float
+    totalSupply: float | None
+
+
+# --- client.fundraisers -------------------------------------------------------
+
+
+class CrowdfundingOfferingResult(TypedDict):
+    """Shape shared by `crowdfunding_offerings` (one issuer's campaigns by
+    CIK) and `crowdfunding_offerings_latest` (market-wide, paginated) —
+    identical fields in both documented examples."""
+
+    cik: str
+    companyName: str
+    date: str | None
+    filingDate: str
+    acceptedDate: str
+    formType: str
+    formSignification: str
+    nameOfIssuer: str
+    legalStatusForm: str
+    jurisdictionOrganization: str
+    issuerStreet: str
+    issuerCity: str
+    issuerStateOrCountry: str
+    issuerZipCode: str
+    issuerWebsite: str | None
+    intermediaryCompanyName: str
+    intermediaryCommissionCik: str
+    intermediaryCommissionFileNumber: str
+    compensationAmount: str
+    financialInterest: str | None
+    securityOfferedType: str
+    securityOfferedOtherDescription: str | None
+    numberOfSecurityOffered: int
+    offeringPrice: float
+    offeringAmount: float
+    overSubscriptionAccepted: str
+    overSubscriptionAllocationType: str
+    maximumOfferingAmount: float
+    offeringDeadlineDate: str
+    currentNumberOfEmployees: int
+    totalAssetMostRecentFiscalYear: float
+    totalAssetPriorFiscalYear: float
+    cashAndCashEquiValentMostRecentFiscalYear: float
+    cashAndCashEquiValentPriorFiscalYear: float
+    accountsReceivableMostRecentFiscalYear: float
+    accountsReceivablePriorFiscalYear: float
+    shortTermDebtMostRecentFiscalYear: float
+    shortTermDebtPriorFiscalYear: float
+    longTermDebtMostRecentFiscalYear: float
+    longTermDebtPriorFiscalYear: float
+    revenueMostRecentFiscalYear: float
+    revenuePriorFiscalYear: float
+    costGoodsSoldMostRecentFiscalYear: float
+    costGoodsSoldPriorFiscalYear: float
+    taxesPaidMostRecentFiscalYear: float
+    taxesPaidPriorFiscalYear: float
+    netIncomeMostRecentFiscalYear: float
+    netIncomePriorFiscalYear: float
+
+
+class CrowdfundingOfferingSearchResult(TypedDict):
+    cik: str
+    name: str
+    date: str | None
+
+
+class FundraisingResult(TypedDict):
+    """Shape shared by `fundraising` (one issuer's Reg D filings by CIK)
+    and `fundraising_latest` (market-wide, paginated) — identical fields
+    in both documented examples."""
+
+    cik: str
+    companyName: str
+    date: str
+    filingDate: str
+    acceptedDate: str
+    formType: str
+    formSignification: str
+    entityName: str
+    issuerStreet: str
+    issuerCity: str
+    issuerStateOrCountry: str
+    issuerStateOrCountryDescription: str
+    issuerZipCode: str
+    issuerPhoneNumber: str
+    jurisdictionOfIncorporation: str
+    entityType: str
+    incorporatedWithinFiveYears: bool | None
+    yearOfIncorporation: str
+    relatedPersonFirstName: str
+    relatedPersonLastName: str
+    relatedPersonStreet: str
+    relatedPersonCity: str
+    relatedPersonStateOrCountry: str
+    relatedPersonStateOrCountryDescription: str
+    relatedPersonZipCode: str
+    relatedPersonRelationship: str
+    industryGroupType: str
+    revenueRange: str
+    federalExemptionsExclusions: str
+    isAmendment: bool
+    dateOfFirstSale: str
+    durationOfOfferingIsMoreThanYear: bool
+    securitiesOfferedAreOfEquityType: bool
+    isBusinessCombinationTransaction: bool
+    minimumInvestmentAccepted: float
+    totalOfferingAmount: float
+    totalAmountSold: float
+    totalAmountRemaining: float
+    hasNonAccreditedInvestors: bool
+    totalNumberAlreadyInvested: int
+    salesCommissions: float
+    findersFees: float
+    grossProceedsUsed: float
+
+
+class FundraisingSearchResult(TypedDict):
+    cik: str
+    name: str
+    date: str | None
+
+
+# --- client.forex --------------------------------------------------------------
+
+
+class ForexListResult(TypedDict):
+    symbol: str
+    fromCurrency: str
+    toCurrency: str
+    fromName: str
+    toName: str
+
+
+# --- client.insider_trades -----------------------------------------------------
+
+
+class InsiderTradingResult(TypedDict):
+    """Shape shared by `insider_trading_latest` and
+    `insider_trading_search` — identical fields in both documented
+    examples."""
+
+    symbol: str
+    filingDate: str
+    transactionDate: str
+    reportingCik: str
+    companyCik: str
+    transactionType: str
+    securitiesOwned: float
+    reportingName: str
+    typeOfOwner: str
+    acquisitionOrDisposition: str
+    directOrIndirect: str
+    formType: str
+    securitiesTransacted: float
+    price: float
+    securityName: str
+    url: str
+
+
+class InsiderTradingReportingNameResult(TypedDict):
+    reportingCik: str
+    reportingName: str
+
+
+class InsiderTradingTransactionTypeResult(TypedDict):
+    transactionType: str
+
+
+class InsiderTradingStatisticsResult(TypedDict):
+    symbol: str
+    cik: str
+    year: int
+    quarter: int
+    acquiredTransactions: int
+    disposedTransactions: int
+    acquiredDisposedRatio: float
+    totalAcquired: float
+    totalDisposed: float
+    averageAcquired: float
+    averageDisposed: float
+    totalPurchases: int
+    totalSales: int
+
+
+class AcquisitionOfBeneficialOwnershipResult(TypedDict):
+    cik: str
+    symbol: str
+    filingDate: str
+    acceptedDate: str
+    cusip: str
+    nameOfReportingPerson: str
+    citizenshipOrPlaceOfOrganization: str
+    soleVotingPower: str
+    sharedVotingPower: str
+    soleDispositivePower: str
+    sharedDispositivePower: str
+    amountBeneficiallyOwned: str
+    percentOfClass: str
+    typeOfReportingPerson: str
+    url: str
+
+
+# --- client.market_performance --------------------------------------------------
+
+
+class MarketMoverResult(TypedDict):
+    """Shape shared by `biggest_gainers`, `biggest_losers`, and
+    `most_actives` — same question (a ranked list of stocks) at different
+    ranking criteria, identical fields in all three documented examples."""
+
+    symbol: str
+    price: float
+    name: str
+    change: float
+    changesPercentage: float
+    exchange: str
+
+
+class SectorPerformanceResult(TypedDict):
+    """Shape shared by `sector_performance_snapshot` (one date) and
+    `historical_sector_performance` (a date range) — identical fields."""
+
+    date: str
+    sector: str
+    exchange: str
+    averageChange: float
+
+
+class IndustryPerformanceResult(TypedDict):
+    """Shape shared by `industry_performance_snapshot` (one date) and
+    `historical_industry_performance` (a date range) — identical fields."""
+
+    date: str
+    industry: str
+    exchange: str
+    averageChange: float
+
+
+class SectorPeResult(TypedDict):
+    """Shape shared by `sector_pe_snapshot` (one date) and
+    `historical_sector_pe` (a date range) — identical fields."""
+
+    date: str
+    sector: str
+    exchange: str
+    pe: float
+
+
+class IndustryPeResult(TypedDict):
+    """Shape shared by `industry_pe_snapshot` (one date) and
+    `historical_industry_pe` (a date range) — identical fields."""
+
+    date: str
+    industry: str
+    exchange: str
+    pe: float
+
+
+# --- client.market_hours --------------------------------------------------------
+
+
+class ExchangeMarketHoursResult(TypedDict):
+    """Shape shared by `exchange_market_hours` (one exchange) and
+    `all_exchange_market_hours` (every exchange) — identical fields."""
+
+    exchange: str
+    name: str
+    openingHour: str
+    closingHour: str
+    timezone: str
+    isMarketOpen: bool
+
+
+class HolidaysByExchangeResult(TypedDict):
+    exchange: str
+    date: str
+    name: str
+    isClosed: bool
+    adjOpenTime: str | None
+    adjCloseTime: str | None
+
+
+# --- client.technical_indicators -------------------------------------------------
+# One TypedDict per indicator, not shared: the indicator's own value lives
+# under a key literally named after the indicator (`sma`, `rsi`, ...), so
+# the shapes differ in key name, not just semantics — can't be the same
+# TypedDict. All 9 share the same 6 OHLCV+date base fields otherwise.
+
+
+class SmaResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    sma: float
+
+
+class EmaResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    ema: float
+
+
+class WmaResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    wma: float
+
+
+class DemaResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    dema: float
+
+
+class TemaResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    tema: float
+
+
+class RsiResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    rsi: float
+
+
+class StandardDeviationResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    standardDeviation: float
+
+
+class WilliamsResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    williams: float
+
+
+class AdxResult(TypedDict):
+    date: str
+    open: float
+    high: float
+    low: float
+    close: float
+    volume: int
+    adx: float
+    splitType: str
