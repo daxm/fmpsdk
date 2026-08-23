@@ -33,7 +33,9 @@ class DirectoryEndpoints:
         classes and exchanges. No parameters; this is the full universe."""
         return cast("list[StockListResult]", self._get("stock-list", {}))
 
-    def financial_statement_symbol_list(self) -> list[FinancialStatementSymbolListResult]:
+    def financial_statement_symbol_list(
+        self,
+    ) -> list[FinancialStatementSymbolListResult]:
         """``GET financial-statement-symbol-list`` — symbols for which FMP
         has financial statements (income/balance/cash flow) available,
         distinct from :meth:`stock_list`'s full tradable universe."""
@@ -42,7 +44,9 @@ class DirectoryEndpoints:
             self._get("financial-statement-symbol-list", {}),
         )
 
-    def cik_list(self, page: int | None = None, limit: int | None = None) -> list[CikListResult]:
+    def cik_list(
+        self, page: int | None = None, limit: int | None = None
+    ) -> list[CikListResult]:
         """``GET cik-list`` — every SEC CIK on file, paginated.
 
         :param page: zero-indexed page number.
@@ -81,7 +85,9 @@ class DirectoryEndpoints:
             "list[ActivelyTradingListResult]", self._get("actively-trading-list", {})
         )
 
-    def available_exchanges(self, extended: bool | None = None) -> list[AvailableExchangeResult]:
+    def available_exchanges(
+        self, extended: bool | None = None
+    ) -> list[AvailableExchangeResult]:
         """``GET available-exchanges`` — every exchange FMP has data for.
 
         :param extended: include extended exchange metadata.

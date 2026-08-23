@@ -74,7 +74,10 @@ class ChartEndpoints:
         """
         return cast(
             "list[HistoricalPriceEodLightResult]",
-            self._get("historical-price-eod/light", {"symbol": symbol, "from": from_, "to": to}),
+            self._get(
+                "historical-price-eod/light",
+                {"symbol": symbol, "from": from_, "to": to},
+            ),
         )
 
     def historical_price_eod_full(
@@ -89,7 +92,9 @@ class ChartEndpoints:
         """
         return cast(
             "list[HistoricalPriceEodFullResult]",
-            self._get("historical-price-eod/full", {"symbol": symbol, "from": from_, "to": to}),
+            self._get(
+                "historical-price-eod/full", {"symbol": symbol, "from": from_, "to": to}
+            ),
         )
 
     def historical_price_eod_non_split_adjusted(

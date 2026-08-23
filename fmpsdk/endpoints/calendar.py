@@ -33,7 +33,8 @@ class CalendarEndpoints:
         :param limit: max results to return.
         """
         return cast(
-            "list[DividendResult]", self._get("dividends", {"symbol": symbol, "limit": limit})
+            "list[DividendResult]",
+            self._get("dividends", {"symbol": symbol, "limit": limit}),
         )
 
     def dividends_calendar(
@@ -52,7 +53,10 @@ class CalendarEndpoints:
         )
 
     def earnings(
-        self, symbol: str, limit: int | None = None, include_report_times: bool | None = None
+        self,
+        symbol: str,
+        limit: int | None = None,
+        include_report_times: bool | None = None,
     ) -> list[EarningsResult]:
         """``GET earnings`` — one company's earnings report history.
 
@@ -65,7 +69,11 @@ class CalendarEndpoints:
             "list[EarningsResult]",
             self._get(
                 "earnings",
-                {"symbol": symbol, "limit": limit, "includeReportTimes": include_report_times},
+                {
+                    "symbol": symbol,
+                    "limit": limit,
+                    "includeReportTimes": include_report_times,
+                },
             ),
         )
 
@@ -107,7 +115,8 @@ class CalendarEndpoints:
         :param to: end date, ``YYYY-MM-DD``.
         """
         return cast(
-            "list[IposCalendarResult]", self._get("ipos-calendar", {"from": from_, "to": to})
+            "list[IposCalendarResult]",
+            self._get("ipos-calendar", {"from": from_, "to": to}),
         )
 
     def ipos_disclosure(

@@ -55,7 +55,8 @@ class AnalystEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
         return cast(
-            "list[RatingsSnapshotResult]", self._get("ratings-snapshot", {"symbol": symbol})
+            "list[RatingsSnapshotResult]",
+            self._get("ratings-snapshot", {"symbol": symbol}),
         )
 
     def ratings_historical(
@@ -123,5 +124,6 @@ class AnalystEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
         return cast(
-            "list[GradesConsensusResult]", self._get("grades-consensus", {"symbol": symbol})
+            "list[GradesConsensusResult]",
+            self._get("grades-consensus", {"symbol": symbol}),
         )

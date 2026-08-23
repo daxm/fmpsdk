@@ -29,7 +29,14 @@ PERIOD_ANY: tuple[str, ...] = PERIOD_FISCAL + PERIOD_ANNUAL_QUARTER
 # are a strict subset of what `technical_indicators_*` accepts (which also
 # takes `1day`, for which there is no `historical-chart` path — daily bars
 # live at `historical_price_eod_full` instead).
-TIMEFRAME_INTRADAY: tuple[str, ...] = ("1min", "5min", "15min", "30min", "1hour", "4hour")
+TIMEFRAME_INTRADAY: tuple[str, ...] = (
+    "1min",
+    "5min",
+    "15min",
+    "30min",
+    "1hour",
+    "4hour",
+)
 TIMEFRAME_TECHNICAL: tuple[str, ...] = TIMEFRAME_INTRADAY + ("1day",)
 
 # --- technical indicators -------------------------------------------------

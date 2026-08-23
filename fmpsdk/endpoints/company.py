@@ -51,7 +51,9 @@ class CompanyEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[CompanyNotesResult]", self._get("company-notes", {"symbol": symbol}))
+        return cast(
+            "list[CompanyNotesResult]", self._get("company-notes", {"symbol": symbol})
+        )
 
     def stock_peers(self, symbol: str) -> list[StockPeersResult]:
         """``GET stock-peers`` — companies on the same exchange, sector,
@@ -59,7 +61,9 @@ class CompanyEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[StockPeersResult]", self._get("stock-peers", {"symbol": symbol}))
+        return cast(
+            "list[StockPeersResult]", self._get("stock-peers", {"symbol": symbol})
+        )
 
     def delisted_companies(
         self, page: int | None = None, limit: int | None = None
@@ -110,7 +114,8 @@ class CompanyEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
         return cast(
-            "list[MarketCapResult]", self._get("market-capitalization", {"symbol": symbol})
+            "list[MarketCapResult]",
+            self._get("market-capitalization", {"symbol": symbol}),
         )
 
     def market_capitalization_batch(self, symbols: str) -> list[MarketCapResult]:
@@ -153,7 +158,9 @@ class CompanyEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[SharesFloatResult]", self._get("shares-float", {"symbol": symbol}))
+        return cast(
+            "list[SharesFloatResult]", self._get("shares-float", {"symbol": symbol})
+        )
 
     def shares_float_all(
         self, limit: int | None = None, page: int | None = None
@@ -200,7 +207,9 @@ class CompanyEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[KeyExecutiveResult]", self._get("key-executives", {"symbol": symbol}))
+        return cast(
+            "list[KeyExecutiveResult]", self._get("key-executives", {"symbol": symbol})
+        )
 
     def governance_executive_compensation(
         self, symbol: str

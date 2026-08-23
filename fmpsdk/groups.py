@@ -122,7 +122,9 @@ class CompanyGroup:
         self.delisted_companies = bind("delisted_companies")
         self.employee_count = bind("employee_count")
         self.executive_compensation_benchmark = bind("executive_compensation_benchmark")
-        self.governance_executive_compensation = bind("governance_executive_compensation")
+        self.governance_executive_compensation = bind(
+            "governance_executive_compensation"
+        )
         self.historical_employee_count = bind("historical_employee_count")
         self.historical_market_capitalization = bind("historical_market_capitalization")
         self.key_executives = bind("key_executives")
@@ -151,7 +153,9 @@ class DcfGroup:
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.custom_discounted_cash_flow = bind("custom_discounted_cash_flow")
-        self.custom_levered_discounted_cash_flow = bind("custom_levered_discounted_cash_flow")
+        self.custom_levered_discounted_cash_flow = bind(
+            "custom_levered_discounted_cash_flow"
+        )
         self.discounted_cash_flow = bind("discounted_cash_flow")
         self.levered_discounted_cash_flow = bind("levered_discounted_cash_flow")
 
@@ -195,7 +199,9 @@ class StatementsGroup:
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.balance_sheet_statement = bind("balance_sheet_statement")
-        self.balance_sheet_statement_as_reported = bind("balance_sheet_statement_as_reported")
+        self.balance_sheet_statement_as_reported = bind(
+            "balance_sheet_statement_as_reported"
+        )
         self.balance_sheet_statement_growth = bind("balance_sheet_statement_growth")
         self.balance_sheet_statement_ttm = bind("balance_sheet_statement_ttm")
         self.cash_flow_statement = bind("cash_flow_statement")

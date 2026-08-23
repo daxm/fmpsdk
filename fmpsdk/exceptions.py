@@ -21,7 +21,9 @@ class FMPError(Exception):
         message above it.
     """
 
-    def __init__(self, message: str, status_code: int | None = None, response_text: str = "") -> None:
+    def __init__(
+        self, message: str, status_code: int | None = None, response_text: str = ""
+    ) -> None:
         super().__init__(message)
         self.status_code = status_code
         self.response_text = response_text
@@ -41,7 +43,9 @@ class FMPPlanLimitError(FMPError):
     """
 
     def __init__(self, status_code: int | None = None, response_text: str = "") -> None:
-        super().__init__(PLAN_LIMIT_MESSAGE, status_code=status_code, response_text=response_text)
+        super().__init__(
+            PLAN_LIMIT_MESSAGE, status_code=status_code, response_text=response_text
+        )
 
 
 class FMPRateLimitError(FMPError):

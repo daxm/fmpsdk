@@ -39,7 +39,8 @@ class CommitmentOfTradersEndpoints:
         return cast(
             "list[CommitmentOfTradersReportResult]",
             self._get(
-                "commitment-of-traders-report", {"symbol": symbol, "from": from_, "to": to}
+                "commitment-of-traders-report",
+                {"symbol": symbol, "from": from_, "to": to},
             ),
         )
 
@@ -61,7 +62,8 @@ class CommitmentOfTradersEndpoints:
         return cast(
             "list[CommitmentOfTradersAnalysisResult]",
             self._get(
-                "commitment-of-traders-analysis", {"symbol": symbol, "from": from_, "to": to}
+                "commitment-of-traders-analysis",
+                {"symbol": symbol, "from": from_, "to": to},
             ),
         )
 
@@ -69,5 +71,6 @@ class CommitmentOfTradersEndpoints:
         """``GET commitment-of-traders-list`` — every symbol a COT report
         is available for. No parameters."""
         return cast(
-            "list[CommitmentOfTradersListResult]", self._get("commitment-of-traders-list", {})
+            "list[CommitmentOfTradersListResult]",
+            self._get("commitment-of-traders-list", {}),
         )

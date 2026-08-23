@@ -30,7 +30,8 @@ class EconomicsEndpoints:
         :param to: end date, ``YYYY-MM-DD``.
         """
         return cast(
-            "list[TreasuryRatesResult]", self._get("treasury-rates", {"from": from_, "to": to})
+            "list[TreasuryRatesResult]",
+            self._get("treasury-rates", {"from": from_, "to": to}),
         )
 
     def economic_indicators(
@@ -64,7 +65,9 @@ class EconomicsEndpoints:
         """
         return cast(
             "list[EconomicCalendarResult]",
-            self._get("economic-calendar", {"country": country, "from": from_, "to": to}),
+            self._get(
+                "economic-calendar", {"country": country, "from": from_, "to": to}
+            ),
         )
 
     def market_risk_premium(self) -> list[MarketRiskPremiumResult]:

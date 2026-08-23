@@ -56,7 +56,9 @@ class StatementsEndpoints:
         """
         return cast(
             "list[IncomeStatementResult]",
-            self._get("income-statement", {"symbol": symbol, "limit": limit, "period": period}),
+            self._get(
+                "income-statement", {"symbol": symbol, "limit": limit, "period": period}
+            ),
         )
 
     def income_statement_ttm(
@@ -105,7 +107,8 @@ class StatementsEndpoints:
         return cast(
             "list[IncomeStatementGrowthResult]",
             self._get(
-                "income-statement-growth", {"symbol": symbol, "limit": limit, "period": period}
+                "income-statement-growth",
+                {"symbol": symbol, "limit": limit, "period": period},
             ),
         )
 
@@ -122,7 +125,8 @@ class StatementsEndpoints:
         return cast(
             "list[BalanceSheetStatementResult]",
             self._get(
-                "balance-sheet-statement", {"symbol": symbol, "limit": limit, "period": period}
+                "balance-sheet-statement",
+                {"symbol": symbol, "limit": limit, "period": period},
             ),
         )
 
@@ -140,7 +144,9 @@ class StatementsEndpoints:
         """
         return cast(
             "list[BalanceSheetStatementTtmResult]",
-            self._get("balance-sheet-statement-ttm", {"symbol": symbol, "limit": limit}),
+            self._get(
+                "balance-sheet-statement-ttm", {"symbol": symbol, "limit": limit}
+            ),
         )
 
     def balance_sheet_statement_as_reported(
@@ -192,7 +198,8 @@ class StatementsEndpoints:
         return cast(
             "list[CashFlowStatementResult]",
             self._get(
-                "cash-flow-statement", {"symbol": symbol, "limit": limit, "period": period}
+                "cash-flow-statement",
+                {"symbol": symbol, "limit": limit, "period": period},
             ),
         )
 
@@ -292,7 +299,9 @@ class StatementsEndpoints:
         """
         return cast(
             "list[KeyMetricsResult]",
-            self._get("key-metrics", {"symbol": symbol, "limit": limit, "period": period}),
+            self._get(
+                "key-metrics", {"symbol": symbol, "limit": limit, "period": period}
+            ),
         )
 
     def key_metrics_ttm(self, symbol: str) -> list[KeyMetricsTtmResult]:
@@ -303,7 +312,10 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[KeyMetricsTtmResult]", self._get("key-metrics-ttm", {"symbol": symbol}))
+        return cast(
+            "list[KeyMetricsTtmResult]",
+            self._get("key-metrics-ttm", {"symbol": symbol}),
+        )
 
     def ratios(
         self, symbol: str, limit: int | None = None, period: str | None = None
@@ -328,7 +340,9 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[RatiosTtmResult]", self._get("ratios-ttm", {"symbol": symbol}))
+        return cast(
+            "list[RatiosTtmResult]", self._get("ratios-ttm", {"symbol": symbol})
+        )
 
     def financial_scores(self, symbol: str) -> list[FinancialScoresResult]:
         """``GET financial-scores`` — Altman Z-Score and Piotroski Score,
@@ -337,7 +351,8 @@ class StatementsEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
         return cast(
-            "list[FinancialScoresResult]", self._get("financial-scores", {"symbol": symbol})
+            "list[FinancialScoresResult]",
+            self._get("financial-scores", {"symbol": symbol}),
         )
 
     def owner_earnings(
@@ -366,7 +381,10 @@ class StatementsEndpoints:
         """
         return cast(
             "list[EnterpriseValuesResult]",
-            self._get("enterprise-values", {"symbol": symbol, "limit": limit, "period": period}),
+            self._get(
+                "enterprise-values",
+                {"symbol": symbol, "limit": limit, "period": period},
+            ),
         )
 
     def financial_growth(
@@ -381,7 +399,9 @@ class StatementsEndpoints:
         """
         return cast(
             "list[FinancialGrowthResult]",
-            self._get("financial-growth", {"symbol": symbol, "limit": limit, "period": period}),
+            self._get(
+                "financial-growth", {"symbol": symbol, "limit": limit, "period": period}
+            ),
         )
 
     def financial_reports_dates(self, symbol: str) -> list[FinancialReportsDatesResult]:
@@ -421,7 +441,10 @@ class StatementsEndpoints:
         """
         return cast(
             "FinancialReportsJsonResult",
-            self._get("financial-reports-json", {"symbol": symbol, "year": year, "period": period}),
+            self._get(
+                "financial-reports-json",
+                {"symbol": symbol, "year": year, "period": period},
+            ),
         )
 
     def financial_reports_xlsx(self, symbol: str, year: str, period: str) -> bytes:

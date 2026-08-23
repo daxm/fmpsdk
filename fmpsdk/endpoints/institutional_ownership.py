@@ -59,7 +59,9 @@ class InstitutionalOwnershipEndpoints:
             ),
         )
 
-    def institutional_ownership_dates(self, cik: str) -> list[InstitutionalOwnershipDatesResult]:
+    def institutional_ownership_dates(
+        self, cik: str
+    ) -> list[InstitutionalOwnershipDatesResult]:
         """``GET institutional-ownership/dates`` — every fiscal
         year/quarter one filer has a Form 13F on file for.
 
@@ -92,7 +94,13 @@ class InstitutionalOwnershipEndpoints:
             "list[InstitutionalOwnershipExtractAnalyticsHolderResult]",
             self._get(
                 "institutional-ownership/extract-analytics/holder",
-                {"symbol": symbol, "year": year, "quarter": quarter, "page": page, "limit": limit},
+                {
+                    "symbol": symbol,
+                    "year": year,
+                    "quarter": quarter,
+                    "page": page,
+                    "limit": limit,
+                },
             ),
         )
 
@@ -164,6 +172,7 @@ class InstitutionalOwnershipEndpoints:
         return cast(
             "list[InstitutionalOwnershipIndustrySummaryResult]",
             self._get(
-                "institutional-ownership/industry-summary", {"year": year, "quarter": quarter}
+                "institutional-ownership/industry-summary",
+                {"year": year, "quarter": quarter},
             ),
         )

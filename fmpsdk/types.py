@@ -238,7 +238,9 @@ class PriceTargetSummaryResult(TypedDict):
     lastYearAvgPriceTarget: float
     allTimeCount: int
     allTimeAvgPriceTarget: float
-    publishers: str  # FMP sends this field as a JSON-encoded string, not a native array.
+    publishers: (
+        str  # FMP sends this field as a JSON-encoded string, not a native array.
+    )
 
 
 class PriceTargetConsensusResult(TypedDict):

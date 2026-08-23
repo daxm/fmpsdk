@@ -36,7 +36,9 @@ class SearchEndpoints:
         """
         return cast(
             "list[SearchSymbolResult]",
-            self._get("search-symbol", {"query": query, "limit": limit, "exchange": exchange}),
+            self._get(
+                "search-symbol", {"query": query, "limit": limit, "exchange": exchange}
+            ),
         )
 
     def search_name(
@@ -51,7 +53,9 @@ class SearchEndpoints:
         """
         return cast(
             "list[SearchSymbolResult]",
-            self._get("search-name", {"query": query, "limit": limit, "exchange": exchange}),
+            self._get(
+                "search-name", {"query": query, "limit": limit, "exchange": exchange}
+            ),
         )
 
     def search_cik(self, cik: str, limit: int | None = None) -> list[SearchCikResult]:
@@ -60,14 +64,19 @@ class SearchEndpoints:
         :param cik: SEC Central Index Key, e.g. ``"320193"``.
         :param limit: max results to return.
         """
-        return cast("list[SearchCikResult]", self._get("search-cik", {"cik": cik, "limit": limit}))
+        return cast(
+            "list[SearchCikResult]",
+            self._get("search-cik", {"cik": cik, "limit": limit}),
+        )
 
     def search_cusip(self, cusip: str) -> list[SearchCusipResult]:
         """``GET search-cusip`` — resolve identity records from a CUSIP.
 
         :param cusip: 9-character CUSIP, e.g. ``"037833100"``.
         """
-        return cast("list[SearchCusipResult]", self._get("search-cusip", {"cusip": cusip}))
+        return cast(
+            "list[SearchCusipResult]", self._get("search-cusip", {"cusip": cusip})
+        )
 
     def search_isin(self, isin: str) -> list[SearchIsinResult]:
         """``GET search-isin`` — resolve identity records from an ISIN.
@@ -76,7 +85,9 @@ class SearchEndpoints:
         """
         return cast("list[SearchIsinResult]", self._get("search-isin", {"isin": isin}))
 
-    def search_exchange_variants(self, symbol: str) -> list[SearchExchangeVariantsResult]:
+    def search_exchange_variants(
+        self, symbol: str
+    ) -> list[SearchExchangeVariantsResult]:
         """``GET search-exchange-variants`` — every exchange listing a symbol
         trades on, with a full profile record per listing.
 

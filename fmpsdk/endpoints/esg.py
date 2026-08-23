@@ -24,7 +24,8 @@ class EsgEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
         return cast(
-            "list[EsgDisclosuresResult]", self._get("esg-disclosures", {"symbol": symbol})
+            "list[EsgDisclosuresResult]",
+            self._get("esg-disclosures", {"symbol": symbol}),
         )
 
     def esg_ratings(self, symbol: str) -> list[EsgRatingsResult]:
@@ -33,7 +34,9 @@ class EsgEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         """
-        return cast("list[EsgRatingsResult]", self._get("esg-ratings", {"symbol": symbol}))
+        return cast(
+            "list[EsgRatingsResult]", self._get("esg-ratings", {"symbol": symbol})
+        )
 
     def esg_benchmark(self, year: str | None = None) -> list[EsgBenchmarkResult]:
         """``GET esg-benchmark`` — average ESG scores by sector, for
@@ -41,4 +44,6 @@ class EsgEndpoints:
 
         :param year: fiscal year, e.g. ``"2023"``.
         """
-        return cast("list[EsgBenchmarkResult]", self._get("esg-benchmark", {"year": year}))
+        return cast(
+            "list[EsgBenchmarkResult]", self._get("esg-benchmark", {"year": year})
+        )

@@ -33,7 +33,9 @@ class FundsEndpoints:
 
         :param symbol: ETF ticker symbol, e.g. ``"SPY"``.
         """
-        return cast("list[EtfHoldingsResult]", self._get("etf/holdings", {"symbol": symbol}))
+        return cast(
+            "list[EtfHoldingsResult]", self._get("etf/holdings", {"symbol": symbol})
+        )
 
     def etf_info(self, symbol: str) -> list[EtfInfoResult]:
         """``GET etf/info`` — fund-level metadata: expense ratio, AUM,
@@ -62,7 +64,8 @@ class FundsEndpoints:
         :param symbol: asset ticker symbol, e.g. ``"AAPL"``.
         """
         return cast(
-            "list[EtfAssetExposureResult]", self._get("etf/asset-exposure", {"symbol": symbol})
+            "list[EtfAssetExposureResult]",
+            self._get("etf/asset-exposure", {"symbol": symbol}),
         )
 
     def etf_sector_weightings(self, symbol: str) -> list[EtfSectorWeightingsResult]:

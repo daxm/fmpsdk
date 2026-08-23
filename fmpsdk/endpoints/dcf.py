@@ -82,7 +82,9 @@ class DcfEndpoints:
             self._get("discounted-cash-flow", {"symbol": symbol}),
         )
 
-    def levered_discounted_cash_flow(self, symbol: str) -> list[LeveredDiscountedCashFlowResult]:
+    def levered_discounted_cash_flow(
+        self, symbol: str
+    ) -> list[LeveredDiscountedCashFlowResult]:
         """``GET levered-discounted-cash-flow`` — DCF valuation net of
         debt, using FMP's own model assumptions.
 
