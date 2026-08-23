@@ -2,9 +2,9 @@
 methods. ``fmp_articles`` works on the free tier. ``news_general_latest``
 and the ``news_stock``/``news_crypto``/``news_forex`` family (with their
 "-latest" siblings) — 7 methods — require an FMP Starter-tier plan or
-higher. ``news_press_releases`` and ``news_press_releases_latest`` still
-402 on both the free and Starter tiers as of 2026-08-23 — they require
-FMP Premium or Ultimate (not yet confirmed which).
+higher. ``news_press_releases`` and ``news_press_releases_latest``
+require an FMP Premium-tier plan or higher (402 on free and Starter;
+confirmed working on Premium 2026-08-23).
 """
 
 from __future__ import annotations

@@ -4,13 +4,17 @@ methods. ``quote``, ``quote_short``, ``batch_index_quotes``,
 ``batch_forex_quotes`` are also reachable from ``client.indexes``/
 ``client.commodity``/``client.crypto``/``client.forex`` respectively.
 
-Only the 5 single-symbol methods (``quote``, ``quote_short``,
+The 5 single-symbol methods (``quote``, ``quote_short``,
 ``aftermarket_quote``, ``aftermarket_trade``, ``stock_price_change``)
-work on the free tier — every ``batch_*`` method still 402s on both the
-free and Starter tiers as of 2026-08-23 (requires FMP Premium or
-Ultimate, not yet confirmed which), including the singular-named ones
-(``batch_quote``, ``batch_exchange_quote``, ``batch_aftermarket_*``),
-not just the plural whole-asset-class ones.
+work on the free tier. ``batch_quote``, ``batch_quote_short``,
+``batch_aftermarket_quote``, and ``batch_aftermarket_trade`` require an
+FMP Starter-tier plan or higher. The remaining 7 ``batch_*`` methods
+(``batch_exchange_quote`` and the 6 whole-asset-class ones —
+``batch_etf_quotes``, ``batch_mutualfund_quotes``,
+``batch_commodity_quotes``, ``batch_crypto_quotes``,
+``batch_forex_quotes``, ``batch_index_quotes``) require an FMP
+Premium-tier plan or higher (402 on free and Starter; confirmed working
+on Premium 2026-08-23).
 """
 
 from __future__ import annotations

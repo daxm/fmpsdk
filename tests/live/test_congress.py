@@ -59,3 +59,23 @@ def test_senate_trades_by_id(live_client):
 def test_senate_trades_by_name(live_client):
     result = live_client.senate_trades_by_name(name="Jerry")
     assert isinstance(result, list)
+
+
+def test_senate_net_worth(live_client):
+    result = live_client.senate_net_worth(senate_id=_SENATE_ID)
+    assert isinstance(result, list)
+
+
+def test_senate_net_worth_aggregated(live_client):
+    result = live_client.senate_net_worth_aggregated(senate_id=_SENATE_ID)
+    assert isinstance(result, list)
+
+
+def test_senate_positions(live_client):
+    result = live_client.senate_positions(senate_id=_SENATE_ID)
+    assert isinstance(result, list)
+
+
+def test_senate_profile(live_client):
+    result = live_client.senate_profile(senate_id=_SENATE_ID)
+    assert isinstance(result, list)

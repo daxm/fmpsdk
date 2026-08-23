@@ -35,7 +35,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 160 / 238 methods done, 78 ultimate-pending, 0 left untested.** **This
+**Progress: 181 / 238 methods done, 57 ultimate-pending, 0 left untested.** **This
 is the full 238/238 catalog now implemented in code, and every single method has now
 been attempted at least once (unit-tested, and live-tested except where already
 Bucket-2-confirmed)** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
@@ -77,8 +77,31 @@ that stayed **fully** gated even at Starter: `bulk` (18), `commitment_of_traders
 `indexes`'s constituent-list methods (6), `quote`'s `batch_*` family (11), `statements`'s
 TTM/latest (4). Whole test suite re-run after the reorg: 268/268 unit, 160/160 live
 (includes the 51 newly-moved), 78/78 ultimate still failing as expected — clean split,
-no regressions. Docstrings for affected methods/groups still need a pass to state the
-new Starter-tier facts (see the group sections below for what's stale).
+no regressions. Docstrings for all affected methods/groups updated same session to state
+the new Starter-tier facts, replacing flat "requires Ultimate" claims (never actually
+verified against a real Ultimate key) with "requires FMP Premium or Ultimate, not yet
+confirmed which" wherever a method was still gated.
+
+**2026-08-23, same day, later still — Dax upgraded Starter → Premium** (750 calls/min at
+this tier). Re-ran the remaining 78 `ultimate-pending` methods' existing `tests/ultimate/`
+test bodies against the Premium-tier key: **21 now pass, 57 still 402.** Same
+move/retag/docstring process as the Starter pass. Groups that flipped entirely to `done`:
+`commitment_of_traders` (3/3), `company` (now 3/3, closing that group out completely —
+`mergers_acquisitions_search` and `executive_compensation_benchmark` were the last 2),
+`congress` (now 10/10 + the 2 free-tier `-latest` listings = 12/12, closing that group out
+completely), `indexes` (all 6 constituent-list methods, closing that group out
+completely), `news` (now 10/10, closing that group out completely — `news_press_releases`
+and `news_press_releases_latest` were the last 2). Partial: `quote` (4 of the remaining 7
+`batch_*` methods now pass — `batch_quote`, `batch_quote_short`,
+`batch_aftermarket_quote`, `batch_aftermarket_trade`; the other 7, including
+`batch_exchange_quote` and all 6 whole-asset-class ones, still gated). Groups that stayed
+**fully** gated even at Premium: `bulk` (18), `earnings_transcript` (4), `esg` (3), `funds`
+(6 remaining), `institutional_ownership` (8), `statements`'s TTM/latest (4), `tipranks`
+(7) — these 57 now carry "402 on free, Starter, and Premium tiers" and await a future
+Ultimate-tier pass (the last rung on FMP's ladder, so whatever's still gated there simply
+*is* Ultimate-only — no more ambiguity to track past that point). Whole suite re-verified:
+268/268 unit, 181/181 live, 57/57 ultimate still failing as expected — clean split, no
+regressions. Docstrings updated same session for all 6 affected groups/methods.
 
 ---
 
@@ -183,7 +206,7 @@ new Starter-tier facts (see the group sections below for what's stale).
 - [x] done `company_notes` — `company-notes`
 - [x] done `delisted_companies` — `delisted-companies`
 - [x] done `employee_count` — `employee-count`
-- [x] ultimate-pending `executive_compensation_benchmark` — `executive-compensation-benchmark` (402 on free tier and on Starter tier)
+- [x] done `executive_compensation_benchmark` — `executive-compensation-benchmark` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `governance_executive_compensation` — `governance-executive-compensation`
 - [x] done `historical_employee_count` — `historical-employee-count`
 - [x] done `historical_market_capitalization` — `historical-market-capitalization`
@@ -191,7 +214,7 @@ new Starter-tier facts (see the group sections below for what's stale).
 - [x] done `market_capitalization` — `market-capitalization`
 - [x] done `market_capitalization_batch` — `market-capitalization-batch`
 - [x] done `mergers_acquisitions_latest` — `mergers-acquisitions-latest` (works on Starter tier; 402 on free tier)
-- [x] ultimate-pending `mergers_acquisitions_search` — `mergers-acquisitions-search` (402 on free tier and on Starter tier)
+- [x] done `mergers_acquisitions_search` — `mergers-acquisitions-search` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `profile` — `profile`
 - [x] done `profile_cik` — `profile-cik`
 - [x] done `shares_float` — `shares-float`
@@ -207,9 +230,9 @@ new Starter-tier facts (see the group sections below for what's stale).
 > methods 402 on the free tier. Reclassified below per the workflow doc's
 > "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `commitment_of_traders_analysis` — `commitment-of-traders-analysis` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `commitment_of_traders_list` — `commitment-of-traders-list` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `commitment_of_traders_report` — `commitment-of-traders-report` (402 on free tier and on Starter tier)
+- [x] done `commitment_of_traders_analysis` — `commitment-of-traders-analysis` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `commitment_of_traders_list` — `commitment-of-traders-list` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `commitment_of_traders_report` — `commitment-of-traders-report` (works on Premium tier; 402 on free and Starter tiers)
 
 ## `client.dcf` — Discounted-cash-flow valuations, standard and custom-input.
 
@@ -242,9 +265,9 @@ new Starter-tier facts (see the group sections below for what's stale).
 
 3 methods.
 
-- [x] ultimate-pending `esg_benchmark` — `esg-benchmark` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `esg_disclosures` — `esg-disclosures` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `esg_ratings` — `esg-ratings` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `esg_benchmark` — `esg-benchmark` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `esg_disclosures` — `esg-disclosures` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `esg_ratings` — `esg-ratings` (402 on free, Starter, and Premium tiers)
 
 ## `client.funds` — ETF and mutual-fund composition, info, and N-PORT/13F-style disclosures.
 
@@ -255,15 +278,15 @@ new Starter-tier facts (see the group sections below for what's stale).
 > methods 402 on the free tier. Reclassified below per the workflow doc's
 > "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `etf_asset_exposure` — `etf/asset-exposure` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `etf_asset_exposure` — `etf/asset-exposure` (402 on free, Starter, and Premium tiers)
 - [x] done `etf_country_weightings` — `etf/country-weightings` (works on Starter tier; 402 on free tier)
-- [x] ultimate-pending `etf_holdings` — `etf/holdings` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `etf_holdings` — `etf/holdings` (402 on free, Starter, and Premium tiers)
 - [x] done `etf_info` — `etf/info` (works on Starter tier; 402 on free tier)
 - [x] done `etf_sector_weightings` — `etf/sector-weightings` (works on Starter tier; 402 on free tier)
-- [x] ultimate-pending `funds_disclosure` — `funds/disclosure` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `funds_disclosure_dates` — `funds/disclosure-dates` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `funds_disclosure` — `funds/disclosure` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `funds_disclosure_dates` — `funds/disclosure-dates` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (402 on free, Starter, and Premium tiers)
 
 ## `client.statements` — Financial statements and everything computed directly from them.
 
@@ -290,11 +313,11 @@ new Starter-tier facts (see the group sections below for what's stale).
 - [x] done `balance_sheet_statement` — `balance-sheet-statement`
 - [x] done `balance_sheet_statement_as_reported` — `balance-sheet-statement-as-reported`
 - [x] done `balance_sheet_statement_growth` — `balance-sheet-statement-growth`
-- [x] ultimate-pending `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (402 on free, Starter, and Premium tiers)
 - [x] done `cash_flow_statement` — `cash-flow-statement`
 - [x] done `cash_flow_statement_as_reported` — `cash-flow-statement-as-reported`
 - [x] done `cash_flow_statement_growth` — `cash-flow-statement-growth`
-- [x] ultimate-pending `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (402 on free, Starter, and Premium tiers)
 - [x] done `enterprise_values` — `enterprise-values`
 - [x] done `financial_growth` — `financial-growth`
 - [x] done `financial_reports_dates` — `financial-reports-dates`
@@ -305,10 +328,10 @@ new Starter-tier facts (see the group sections below for what's stale).
 - [x] done `income_statement` — `income-statement`
 - [x] done `income_statement_as_reported` — `income-statement-as-reported`
 - [x] done `income_statement_growth` — `income-statement-growth`
-- [x] ultimate-pending `income_statement_ttm` — `income-statement-ttm` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `income_statement_ttm` — `income-statement-ttm` (402 on free, Starter, and Premium tiers)
 - [x] done `key_metrics` — `key-metrics`
 - [x] done `key_metrics_ttm` — `key-metrics-ttm`
-- [x] ultimate-pending `latest_financial_statements` — `latest-financial-statements` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `latest_financial_statements` — `latest-financial-statements` (402 on free, Starter, and Premium tiers)
 - [x] done `owner_earnings` — `owner-earnings`
 - [x] done `ratios` — `ratios`
 - [x] done `ratios_ttm` — `ratios-ttm`
@@ -323,14 +346,14 @@ new Starter-tier facts (see the group sections below for what's stale).
 
 8 methods.
 
-- [x] ultimate-pending `institutional_ownership_dates` — `institutional-ownership/dates` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_extract` — `institutional-ownership/extract` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_latest` — `institutional-ownership/latest` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `institutional_ownership_dates` — `institutional-ownership/dates` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_extract` — `institutional-ownership/extract` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_latest` — `institutional-ownership/latest` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (402 on free, Starter, and Premium tiers)
 
 ## `client.indexes` — Stock-market indexes, their quotes/charts, and their constituent lists.
 
@@ -344,13 +367,13 @@ new Starter-tier facts (see the group sections below for what's stale).
 > verified via `assert client.indexes.historical_chart is
 > client.chart.historical_chart` at write time.
 
-- [x] ultimate-pending `dowjones_constituent` — `dowjones-constituent` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `historical_dowjones_constituent` — `historical-dowjones-constituent` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `historical_nasdaq_constituent` — `historical-nasdaq-constituent` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `historical_sp500_constituent` — `historical-sp500-constituent` (402 on free tier and on Starter tier)
+- [x] done `dowjones_constituent` — `dowjones-constituent` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `historical_dowjones_constituent` — `historical-dowjones-constituent` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `historical_nasdaq_constituent` — `historical-nasdaq-constituent` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `historical_sp500_constituent` — `historical-sp500-constituent` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `index_list` — `index-list`
-- [x] ultimate-pending `nasdaq_constituent` — `nasdaq-constituent` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `sp500_constituent` — `sp500-constituent` (402 on free tier and on Starter tier)
+- [x] done `nasdaq_constituent` — `nasdaq-constituent` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `sp500_constituent` — `sp500-constituent` (works on Premium tier; 402 on free and Starter tiers)
 
 ## `client.commodity` — Commodity instruments: list, quotes, charts.
 
@@ -469,8 +492,8 @@ new Starter-tier facts (see the group sections below for what's stale).
 - [x] done `news_forex` — `news/forex` (works on Starter tier; 402 on free tier)
 - [x] done `news_forex_latest` — `news/forex-latest` (works on Starter tier; 402 on free tier)
 - [x] done `news_general_latest` — `news/general-latest` (works on Starter tier; 402 on free tier)
-- [x] ultimate-pending `news_press_releases` — `news/press-releases` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `news_press_releases_latest` — `news/press-releases-latest` (402 on free tier and on Starter tier)
+- [x] done `news_press_releases` — `news/press-releases` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `news_press_releases_latest` — `news/press-releases-latest` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `news_stock` — `news/stock` (works on Starter tier; 402 on free tier)
 - [x] done `news_stock_latest` — `news/stock-latest` (works on Starter tier; 402 on free tier)
 
@@ -489,17 +512,17 @@ new Starter-tier facts (see the group sections below for what's stale).
 
 - [x] done `aftermarket_quote` — `aftermarket-quote`
 - [x] done `aftermarket_trade` — `aftermarket-trade`
-- [x] ultimate-pending `batch_aftermarket_quote` — `batch-aftermarket-quote` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_aftermarket_trade` — `batch-aftermarket-trade` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_commodity_quotes` — `batch-commodity-quotes` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_crypto_quotes` — `batch-crypto-quotes` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_etf_quotes` — `batch-etf-quotes` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_exchange_quote` — `batch-exchange-quote` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_forex_quotes` — `batch-forex-quotes` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_index_quotes` — `batch-index-quotes` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_quote` — `batch-quote` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `batch_quote_short` — `batch-quote-short` (402 on free tier and on Starter tier)
+- [x] done `batch_aftermarket_quote` — `batch-aftermarket-quote` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `batch_aftermarket_trade` — `batch-aftermarket-trade` (works on Premium tier; 402 on free and Starter tiers)
+- [x] ultimate-pending `batch_commodity_quotes` — `batch-commodity-quotes` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `batch_crypto_quotes` — `batch-crypto-quotes` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `batch_etf_quotes` — `batch-etf-quotes` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `batch_exchange_quote` — `batch-exchange-quote` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `batch_forex_quotes` — `batch-forex-quotes` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `batch_index_quotes` — `batch-index-quotes` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (402 on free, Starter, and Premium tiers)
+- [x] done `batch_quote` — `batch-quote` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `batch_quote_short` — `batch-quote-short` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `quote` — `quote`
 - [x] done `quote_short` — `quote-short`
 - [x] done `stock_price_change` — `stock-price-change`
@@ -537,10 +560,10 @@ new Starter-tier facts (see the group sections below for what's stale).
 
 4 methods.
 
-- [x] ultimate-pending `earning_call_transcript` — `earning-call-transcript` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `earning_call_transcript_dates` — `earning-call-transcript-dates` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `earning_call_transcript_latest` — `earning-call-transcript-latest` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `earnings_transcript_list` — `earnings-transcript-list` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `earning_call_transcript` — `earning-call-transcript` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `earning_call_transcript_dates` — `earning-call-transcript-dates` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `earning_call_transcript_latest` — `earning-call-transcript-latest` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `earnings_transcript_list` — `earnings-transcript-list` (402 on free, Starter, and Premium tiers)
 
 ## `client.congress` — U.S. Senate and House financial disclosures, trades, and member profiles.
 
@@ -559,10 +582,10 @@ new Starter-tier facts (see the group sections below for what's stale).
 - [x] done `house_trades_by_id` — `house-trades-by-id` (works on Starter tier; 402 on free tier)
 - [x] done `house_trades_by_name` — `house-trades-by-name` (works on Starter tier; 402 on free tier)
 - [x] done `senate_latest` — `senate-latest`
-- [x] ultimate-pending `senate_net_worth` — `senate-net-worth` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `senate_net_worth_aggregated` — `senate-net-worth-aggregated` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `senate_positions` — `senate-positions` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `senate_profile` — `senate-profile` (402 on free tier and on Starter tier)
+- [x] done `senate_net_worth` — `senate-net-worth` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `senate_net_worth_aggregated` — `senate-net-worth-aggregated` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `senate_positions` — `senate-positions` (works on Premium tier; 402 on free and Starter tiers)
+- [x] done `senate_profile` — `senate-profile` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `senate_trades` — `senate-trades` (works on Starter tier; 402 on free tier)
 - [x] done `senate_trades_by_id` — `senate-trades-by-id` (works on Starter tier; 402 on free tier)
 - [x] done `senate_trades_by_name` — `senate-trades-by-name` (works on Starter tier; 402 on free tier)
@@ -579,24 +602,24 @@ new Starter-tier facts (see the group sections below for what's stale).
 
 18 methods.
 
-- [x] ultimate-pending `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `dcf_bulk` — `dcf-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `earnings_surprises_bulk` — `earnings-surprises-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `eod_bulk` — `eod-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `etf_holder_bulk` — `etf-holder-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `income_statement_bulk` — `income-statement-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `income_statement_growth_bulk` — `income-statement-growth-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `peers_bulk` — `peers-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `price_target_summary_bulk` — `price-target-summary-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `profile_bulk` — `profile-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `rating_bulk` — `rating-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `ratios_ttm_bulk` — `ratios-ttm-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `scores_bulk` — `scores-bulk` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `dcf_bulk` — `dcf-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `earnings_surprises_bulk` — `earnings-surprises-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `eod_bulk` — `eod-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `etf_holder_bulk` — `etf-holder-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `income_statement_bulk` — `income-statement-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `income_statement_growth_bulk` — `income-statement-growth-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `peers_bulk` — `peers-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `price_target_summary_bulk` — `price-target-summary-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `profile_bulk` — `profile-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `rating_bulk` — `rating-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `ratios_ttm_bulk` — `ratios-ttm-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `scores_bulk` — `scores-bulk` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (402 on free, Starter, and Premium tiers)
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
@@ -611,10 +634,10 @@ new Starter-tier facts (see the group sections below for what's stale).
 
 7 methods.
 
-- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on free tier and on Starter tier)
-- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on free tier and on Starter tier)
+- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on free, Starter, and Premium tiers)

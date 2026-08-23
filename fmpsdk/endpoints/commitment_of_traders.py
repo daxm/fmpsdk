@@ -1,7 +1,7 @@
 """client.commitment_of_traders — CFTC Commitment of Traders reports and
 derived sentiment analysis for futures/commodity markets. 3 methods.
-Still 402s on both the free and Starter tiers as of 2026-08-23 — every
-method requires FMP Premium or Ultimate (not yet confirmed which).
+Requires an FMP Premium-tier plan or higher — 402s on the free and
+Starter tiers (confirmed working on Premium 2026-08-23).
 Unlike most of this package, ``symbol`` is optional on the report
 and analysis methods — omit it for the whole market.
 """

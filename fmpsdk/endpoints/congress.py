@@ -5,9 +5,9 @@ symbol/id/name-scoped trade lookups (``house_trades``,
 ``house_trades_by_id``, ``house_trades_by_name``, ``senate_trades``,
 ``senate_trades_by_id``, ``senate_trades_by_name``) require an FMP
 Starter-tier plan or higher. ``senate_profile``, ``senate_positions``,
-``senate_net_worth``, and ``senate_net_worth_aggregated`` still 402 on
-both the free and Starter tiers as of 2026-08-23 — they require FMP
-Premium or Ultimate (not yet confirmed which).
+``senate_net_worth``, and ``senate_net_worth_aggregated`` require an
+FMP Premium-tier plan or higher (402 on free and Starter; confirmed
+working on Premium 2026-08-23).
 
 Every method that takes a member ID names its parameter ``senate_id``,
 including the House ones (``house_trades_by_id``) — that's FMP's own

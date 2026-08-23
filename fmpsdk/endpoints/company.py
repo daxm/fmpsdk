@@ -194,8 +194,8 @@ class CompanyEndpoints:
     def mergers_acquisitions_search(self, name: str) -> list[MergersAcquisitionsResult]:
         """``GET mergers-acquisitions-search`` — the same M&A filing data
         as :meth:`mergers_acquisitions_latest`, filtered by company name.
-        Still 402s on both the free and Starter tiers as of 2026-08-23 —
-        requires FMP Premium or Ultimate (not yet confirmed which).
+        Requires an FMP Premium-tier plan or higher (402 on free and
+        Starter; confirmed working on Premium 2026-08-23).
 
         :param name: company name (acquirer or target) to search for, e.g. ``"Apple"``.
         """
@@ -232,8 +232,8 @@ class CompanyEndpoints:
     ) -> list[ExecutiveCompensationBenchmarkResult]:
         """``GET executive-compensation-benchmark`` — average executive
         compensation by industry, for cross-company benchmarking.
-        Still 402s on both the free and Starter tiers as of 2026-08-23 —
-        requires FMP Premium or Ultimate (not yet confirmed which).
+        Requires an FMP Premium-tier plan or higher (402 on free and
+        Starter; confirmed working on Premium 2026-08-23).
 
         :param year: filing year, e.g. ``"2024"``.
         """

@@ -92,3 +92,14 @@ def test_mergers_acquisitions_latest(live_client):
     result = live_client.mergers_acquisitions_latest(limit=10)
     assert len(result) > 0
     assert "symbol" in result[0]
+
+
+def test_mergers_acquisitions_search(live_client):
+    result = live_client.mergers_acquisitions_search(name="Apple")
+    assert isinstance(result, list)
+
+
+def test_executive_compensation_benchmark(live_client):
+    result = live_client.executive_compensation_benchmark(year="2024")
+    assert len(result) > 0
+    assert "industryTitle" in result[0]

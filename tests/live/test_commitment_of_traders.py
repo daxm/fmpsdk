@@ -1,18 +1,15 @@
-"""Ultimate-tier (Bucket 2) live tests for client.commitment_of_traders.
+"""Live tests for client.commitment_of_traders against the real FMP API.
 
-Discovered live, not predicted by REWRITE_ARCHITECTURE.md's group
-directory (which lists no Bucket 2 flag on `commitment_of_traders`): all
-3 methods 402 on the free tier — the whole group. Skipped by default
-(`-m "not ultimate"` / excluded unless explicitly selected); run for real
-only during a deliberately-timed FMP Ultimate month, per the rewrite
-workflow.
+All methods below were confirmed on 2026-08-23 to require at least an FMP
+Premium-tier key (they 402 on free and Starter) -- moved here from
+tests/ultimate/test_commitment_of_traders.py once Dax upgraded from Starter to Premium.
 """
 
 from __future__ import annotations
 
 import pytest
 
-pytestmark = pytest.mark.ultimate
+pytestmark = pytest.mark.live
 
 
 def test_commitment_of_traders_report(live_client):

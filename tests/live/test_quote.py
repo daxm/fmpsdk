@@ -35,3 +35,23 @@ def test_aftermarket_trade(live_client):
 def test_stock_price_change(live_client):
     result = live_client.stock_price_change(symbol="AAPL")
     assert result[0]["symbol"] == "AAPL"
+
+
+def test_batch_quote(live_client):
+    result = live_client.batch_quote(symbols="AAPL,MSFT")
+    assert len(result) > 0
+
+
+def test_batch_quote_short(live_client):
+    result = live_client.batch_quote_short(symbols="AAPL,MSFT")
+    assert len(result) > 0
+
+
+def test_batch_aftermarket_quote(live_client):
+    result = live_client.batch_aftermarket_quote(symbols="AAPL,MSFT")
+    assert isinstance(result, list)
+
+
+def test_batch_aftermarket_trade(live_client):
+    result = live_client.batch_aftermarket_trade(symbols="AAPL,MSFT")
+    assert isinstance(result, list)

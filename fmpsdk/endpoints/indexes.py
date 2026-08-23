@@ -3,9 +3,9 @@ constituent lists. 7 primary methods; ``historical_chart``,
 ``historical_price_eod_full``, and ``historical_price_eod_light`` are
 also reachable here from ``client.chart``. Only ``index_list`` works on
 the free tier — the 3 constituent-list methods and their 3
-``historical_*`` counterparts all still 402 on both the free and
-Starter tiers as of 2026-08-23 (require FMP Premium or Ultimate, not
-yet confirmed which).
+``historical_*`` counterparts all require an FMP Premium-tier plan or
+higher (402 on free and Starter; confirmed working on Premium
+2026-08-23).
 """
 
 from __future__ import annotations

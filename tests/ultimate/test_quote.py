@@ -18,24 +18,10 @@ import pytest
 pytestmark = pytest.mark.ultimate
 
 
-def test_batch_quote(live_client):
-    result = live_client.batch_quote(symbols="AAPL,MSFT")
-    assert len(result) > 0
-
-
-def test_batch_quote_short(live_client):
-    result = live_client.batch_quote_short(symbols="AAPL,MSFT")
-    assert len(result) > 0
-
-
-def test_batch_aftermarket_quote(live_client):
-    result = live_client.batch_aftermarket_quote(symbols="AAPL,MSFT")
-    assert isinstance(result, list)
-
-
-def test_batch_aftermarket_trade(live_client):
-    result = live_client.batch_aftermarket_trade(symbols="AAPL,MSFT")
-    assert isinstance(result, list)
+# NOTE (2026-08-23): re-tested against Dax's FMP Premium-tier key.
+# 4 of this group's remaining methods now pass (moved to
+# tests/live/test_quote.py); the 7 below still 402 on
+# Premium -- gated at Ultimate, or Premium's own further sub-limits.
 
 
 def test_batch_exchange_quote(live_client):

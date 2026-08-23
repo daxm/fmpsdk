@@ -19,3 +19,39 @@ def test_index_list(live_client):
     result = live_client.index_list()
     assert len(result) > 0
     assert "symbol" in result[0]
+
+
+def test_sp500_constituent(live_client):
+    result = live_client.sp500_constituent()
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_nasdaq_constituent(live_client):
+    result = live_client.nasdaq_constituent()
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_dowjones_constituent(live_client):
+    result = live_client.dowjones_constituent()
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_historical_sp500_constituent(live_client):
+    result = live_client.historical_sp500_constituent()
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_historical_nasdaq_constituent(live_client):
+    result = live_client.historical_nasdaq_constituent()
+    assert len(result) > 0
+    assert "symbol" in result[0]
+
+
+def test_historical_dowjones_constituent(live_client):
+    result = live_client.historical_dowjones_constituent()
+    assert len(result) > 0
+    assert "symbol" in result[0]

@@ -55,3 +55,14 @@ def test_news_stock_latest(live_client):
     result = live_client.news_stock_latest(limit=1)
     assert len(result) > 0
     assert "title" in result[0]
+
+
+def test_news_press_releases(live_client):
+    result = live_client.news_press_releases(symbols="AAPL", limit=1)
+    assert isinstance(result, list)
+
+
+def test_news_press_releases_latest(live_client):
+    result = live_client.news_press_releases_latest(limit=1)
+    assert len(result) > 0
+    assert "title" in result[0]
