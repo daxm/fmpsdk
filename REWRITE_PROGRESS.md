@@ -25,9 +25,12 @@ is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-p
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
 **Progress: 65 / 238 methods done** (49 more implemented + unit-tested pending
-Ultimate verification; 99 more implemented across two code-only passes but not yet
-unit-tested or live-verified — see the `indexes` through `congress` groups below).
-Remaining unstarted: `bulk` (18) and `tipranks` (7), both flagged likely Bucket 2.
+Ultimate verification; **124 more implemented across three code-only passes but not
+yet unit-tested or live-verified** — see the `indexes` through `tipranks` groups
+below). **This is the full 238/238 catalog now implemented in code** — every
+canonical method in REWRITE_ARCHITECTURE.md §6 has a Python implementation. What's
+left is entirely verification: unit tests for the 124 `implemented`-tagged methods,
+then live-testing everything not already Bucket-2-confirmed.
 
 ---
 
@@ -505,38 +508,51 @@ Remaining unstarted: `bulk` (18) and `tipranks` (7), both flagged likely Bucket 
 ## `client.bulk` — Whole-universe bulk downloads.
 
 > **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
+> **Implemented, not yet live-tested this session.** 17 of 18 methods return every
+> field as a JSON string, including semantically numeric/boolean fields — a real,
+> documented quirk (see `types/bulk.py`'s module docstring), not a transcription
+> choice. `profile_bulk` is the lone exception (real JSON types) and reuses
+> `ProfileResult` directly rather than duplicating it, since its example response is
+> field-for-field identical to `profile`/`profile_cik`'s.
 
 18 methods.
 
-- [ ] `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk`
-- [ ] `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk`
-- [ ] `cash_flow_statement_bulk` — `cash-flow-statement-bulk`
-- [ ] `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk`
-- [ ] `dcf_bulk` — `dcf-bulk`
-- [ ] `earnings_surprises_bulk` — `earnings-surprises-bulk`
-- [ ] `eod_bulk` — `eod-bulk`
-- [ ] `etf_holder_bulk` — `etf-holder-bulk`
-- [ ] `income_statement_bulk` — `income-statement-bulk`
-- [ ] `income_statement_growth_bulk` — `income-statement-growth-bulk`
-- [ ] `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk`
-- [ ] `peers_bulk` — `peers-bulk`
-- [ ] `price_target_summary_bulk` — `price-target-summary-bulk`
-- [ ] `profile_bulk` — `profile-bulk`
-- [ ] `rating_bulk` — `rating-bulk`
-- [ ] `ratios_ttm_bulk` — `ratios-ttm-bulk`
-- [ ] `scores_bulk` — `scores-bulk`
-- [ ] `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk`
+- [ ] implemented `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk`
+- [ ] implemented `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk`
+- [ ] implemented `cash_flow_statement_bulk` — `cash-flow-statement-bulk`
+- [ ] implemented `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk`
+- [ ] implemented `dcf_bulk` — `dcf-bulk`
+- [ ] implemented `earnings_surprises_bulk` — `earnings-surprises-bulk`
+- [ ] implemented `eod_bulk` — `eod-bulk`
+- [ ] implemented `etf_holder_bulk` — `etf-holder-bulk`
+- [ ] implemented `income_statement_bulk` — `income-statement-bulk`
+- [ ] implemented `income_statement_growth_bulk` — `income-statement-growth-bulk`
+- [ ] implemented `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk`
+- [ ] implemented `peers_bulk` — `peers-bulk`
+- [ ] implemented `price_target_summary_bulk` — `price-target-summary-bulk`
+- [ ] implemented `profile_bulk` — `profile-bulk`
+- [ ] implemented `rating_bulk` — `rating-bulk`
+- [ ] implemented `ratios_ttm_bulk` — `ratios-ttm-bulk`
+- [ ] implemented `scores_bulk` — `scores-bulk`
+- [ ] implemented `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk`
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
 > **Likely Bucket 2 (Ultimate-gated):** Not in the original pricing audit by name (found later via docs), but licensed partner data — treat as Ultimate-only until proven otherwise.
+> **Implemented, not yet live-tested this session.** `tipranks_pit_symbol` and
+> `tipranks_pit_analyst` share one response type (`TipranksPointInTimeResult`) —
+> identical fields in both documented examples. The 3 summary methods
+> (`tipranks_symbol_summary`/`tipranks_analyst_summary`/`tipranks_firm_summary`) each
+> get their own top-level type (different identifying field: symbol/expertUID/
+> firmName) but share two small nested breakdown types
+> (`TipranksRecommendationBreakdown`, `TipranksAnalystActionBreakdown`).
 
 7 methods.
 
-- [ ] `tipranks_analyst_summary` — `tipranks-analyst-summary`
-- [ ] `tipranks_analysts` — `tipranks-analysts`
-- [ ] `tipranks_firm_summary` — `tipranks-firm-summary`
-- [ ] `tipranks_pit_analyst` — `tipranks-pit-analyst`
-- [ ] `tipranks_pit_symbol` — `tipranks-pit-symbol`
-- [ ] `tipranks_search` — `tipranks-search`
-- [ ] `tipranks_symbol_summary` — `tipranks-symbol-summary`
+- [ ] implemented `tipranks_analyst_summary` — `tipranks-analyst-summary`
+- [ ] implemented `tipranks_analysts` — `tipranks-analysts`
+- [ ] implemented `tipranks_firm_summary` — `tipranks-firm-summary`
+- [ ] implemented `tipranks_pit_analyst` — `tipranks-pit-analyst`
+- [ ] implemented `tipranks_pit_symbol` — `tipranks-pit-symbol`
+- [ ] implemented `tipranks_search` — `tipranks-search`
+- [ ] implemented `tipranks_symbol_summary` — `tipranks-symbol-summary`

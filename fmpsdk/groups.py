@@ -498,6 +498,47 @@ class CongressGroup:
         self.senate_trades_by_name = bind("senate_trades_by_name")
 
 
+class BulkGroup:
+    """``client.bulk`` — 18 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.balance_sheet_statement_bulk = bind("balance_sheet_statement_bulk")
+        self.balance_sheet_statement_growth_bulk = bind(
+            "balance_sheet_statement_growth_bulk"
+        )
+        self.cash_flow_statement_bulk = bind("cash_flow_statement_bulk")
+        self.cash_flow_statement_growth_bulk = bind("cash_flow_statement_growth_bulk")
+        self.dcf_bulk = bind("dcf_bulk")
+        self.earnings_surprises_bulk = bind("earnings_surprises_bulk")
+        self.eod_bulk = bind("eod_bulk")
+        self.etf_holder_bulk = bind("etf_holder_bulk")
+        self.income_statement_bulk = bind("income_statement_bulk")
+        self.income_statement_growth_bulk = bind("income_statement_growth_bulk")
+        self.key_metrics_ttm_bulk = bind("key_metrics_ttm_bulk")
+        self.peers_bulk = bind("peers_bulk")
+        self.price_target_summary_bulk = bind("price_target_summary_bulk")
+        self.profile_bulk = bind("profile_bulk")
+        self.rating_bulk = bind("rating_bulk")
+        self.ratios_ttm_bulk = bind("ratios_ttm_bulk")
+        self.scores_bulk = bind("scores_bulk")
+        self.upgrades_downgrades_consensus_bulk = bind(
+            "upgrades_downgrades_consensus_bulk"
+        )
+
+
+class TipranksGroup:
+    """``client.tipranks`` — 7 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.tipranks_analyst_summary = bind("tipranks_analyst_summary")
+        self.tipranks_analysts = bind("tipranks_analysts")
+        self.tipranks_firm_summary = bind("tipranks_firm_summary")
+        self.tipranks_pit_analyst = bind("tipranks_pit_analyst")
+        self.tipranks_pit_symbol = bind("tipranks_pit_symbol")
+        self.tipranks_search = bind("tipranks_search")
+        self.tipranks_symbol_summary = bind("tipranks_symbol_summary")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -534,3 +575,5 @@ def attach_groups(client: "Client") -> None:
     client.sec_filings = SecFilingsGroup(bind)
     client.earnings_transcript = EarningsTranscriptGroup(bind)
     client.congress = CongressGroup(bind)
+    client.bulk = BulkGroup(bind)
+    client.tipranks = TipranksGroup(bind)

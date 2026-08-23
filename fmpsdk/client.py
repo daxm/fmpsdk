@@ -28,6 +28,7 @@ from .exceptions import (
 )
 from .groups import attach_groups
 from .endpoints.analyst import AnalystEndpoints
+from .endpoints.bulk import BulkEndpoints
 from .endpoints.calendar import CalendarEndpoints
 from .endpoints.chart import ChartEndpoints
 from .endpoints.commitment_of_traders import CommitmentOfTradersEndpoints
@@ -54,6 +55,7 @@ from .endpoints.search import SearchEndpoints
 from .endpoints.sec_filings import SecFilingsEndpoints
 from .endpoints.statements import StatementsEndpoints
 from .endpoints.technical_indicators import TechnicalIndicatorsEndpoints
+from .endpoints.tipranks import TipranksEndpoints
 
 logger = logging.getLogger("fmpsdk")
 
@@ -140,6 +142,8 @@ class Client(
     SecFilingsEndpoints,
     EarningsTranscriptEndpoints,
     CongressEndpoints,
+    BulkEndpoints,
+    TipranksEndpoints,
 ):
     """fmpsdk client.
 
