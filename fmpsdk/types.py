@@ -851,6 +851,42 @@ class MarketRiskPremiumResult(TypedDict):
     totalEquityRiskPremium: float
 
 
+# --- client.esg ---------------------------------------------------------
+
+
+class EsgDisclosuresResult(TypedDict):
+    date: str
+    acceptedDate: str
+    symbol: str
+    cik: str
+    companyName: str
+    formType: str
+    environmentalScore: float
+    socialScore: float
+    governanceScore: float
+    ESGScore: float
+    url: str
+
+
+class EsgRatingsResult(TypedDict):
+    symbol: str
+    cik: str
+    companyName: str
+    industry: str
+    fiscalYear: int
+    ESGRiskRating: str
+    industryRank: str
+
+
+class EsgBenchmarkResult(TypedDict):
+    fiscalYear: int
+    sector: str
+    environmentalScore: float
+    socialScore: float
+    governanceScore: float
+    ESGScore: float
+
+
 class HistoricalChartResult(TypedDict):
     """Response for the 6 `historical_chart` intraday timeframes (§5.3
     collapse: `1min`/`5min`/`15min`/`30min`/`1hour`/`4hour` share one

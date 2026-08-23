@@ -35,6 +35,7 @@ from .endpoints.company import CompanyEndpoints
 from .endpoints.dcf import DcfEndpoints
 from .endpoints.directory import DirectoryEndpoints
 from .endpoints.economics import EconomicsEndpoints
+from .endpoints.esg import EsgEndpoints
 from .endpoints.search import SearchEndpoints
 
 logger = logging.getLogger("fmpsdk")
@@ -104,6 +105,7 @@ class Client(
     CommitmentOfTradersEndpoints,
     DcfEndpoints,
     EconomicsEndpoints,
+    EsgEndpoints,
 ):
     """fmpsdk client.
 

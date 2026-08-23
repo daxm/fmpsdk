@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 42 / 238 methods done** (25 more implemented + unit-tested, pending
+**Progress: 42 / 238 methods done** (28 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -184,13 +184,14 @@ Ultimate verification).
 
 ## `client.esg` — ESG disclosures, ratings, and benchmarks.
 
-> **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
+> **Bucket 2 (Ultimate-gated), confirmed live:** the pricing-audit prediction held —
+> all 3 methods 402 on the free tier. Tests live in `tests/ultimate/test_esg.py` only.
 
 3 methods.
 
-- [ ] `esg_benchmark` — `esg-benchmark`
-- [ ] `esg_disclosures` — `esg-disclosures`
-- [ ] `esg_ratings` — `esg-ratings`
+- [x] ultimate-pending `esg_benchmark` — `esg-benchmark` (402 on free tier)
+- [x] ultimate-pending `esg_disclosures` — `esg-disclosures` (402 on free tier)
+- [x] ultimate-pending `esg_ratings` — `esg-ratings` (402 on free tier)
 
 ## `client.funds` — ETF and mutual-fund composition, info, and N-PORT/13F-style disclosures.
 

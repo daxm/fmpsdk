@@ -166,6 +166,15 @@ class EconomicsGroup:
         self.treasury_rates = bind("treasury_rates")
 
 
+class EsgGroup:
+    """``client.esg`` — 3 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.esg_benchmark = bind("esg_benchmark")
+        self.esg_disclosures = bind("esg_disclosures")
+        self.esg_ratings = bind("esg_ratings")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -184,3 +193,4 @@ def attach_groups(client: "Client") -> None:
     client.commitment_of_traders = CommitmentOfTradersGroup(bind)
     client.dcf = DcfGroup(bind)
     client.economics = EconomicsGroup(bind)
+    client.esg = EsgGroup(bind)
