@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 39 / 238 methods done** (24 more implemented + unit-tested, pending
+**Progress: 42 / 238 methods done** (25 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -171,10 +171,16 @@ Ultimate verification).
 
 4 methods.
 
-- [ ] `economic_calendar` — `economic-calendar`
-- [ ] `economic_indicators` — `economic-indicators`
-- [ ] `market_risk_premium` — `market-risk-premium`
-- [ ] `treasury_rates` — `treasury-rates`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found
+> `economic_calendar` 402s on the free tier while the other 3 work.
+> Reclassified below per the workflow doc's "if a Bucket 1 method 402s,
+> mark it `ultimate-pending`" rule.
+
+- [x] ultimate-pending `economic_calendar` — `economic-calendar` (402 on free tier)
+- [x] done `economic_indicators` — `economic-indicators`
+- [x] done `market_risk_premium` — `market-risk-premium`
+- [x] done `treasury_rates` — `treasury-rates`
 
 ## `client.esg` — ESG disclosures, ratings, and benchmarks.
 

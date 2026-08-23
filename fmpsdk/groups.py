@@ -156,6 +156,16 @@ class DcfGroup:
         self.levered_discounted_cash_flow = bind("levered_discounted_cash_flow")
 
 
+class EconomicsGroup:
+    """``client.economics`` — 4 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.economic_calendar = bind("economic_calendar")
+        self.economic_indicators = bind("economic_indicators")
+        self.market_risk_premium = bind("market_risk_premium")
+        self.treasury_rates = bind("treasury_rates")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -173,3 +183,4 @@ def attach_groups(client: "Client") -> None:
     client.company = CompanyGroup(bind)
     client.commitment_of_traders = CommitmentOfTradersGroup(bind)
     client.dcf = DcfGroup(bind)
+    client.economics = EconomicsGroup(bind)

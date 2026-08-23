@@ -34,6 +34,7 @@ from .endpoints.commitment_of_traders import CommitmentOfTradersEndpoints
 from .endpoints.company import CompanyEndpoints
 from .endpoints.dcf import DcfEndpoints
 from .endpoints.directory import DirectoryEndpoints
+from .endpoints.economics import EconomicsEndpoints
 from .endpoints.search import SearchEndpoints
 
 logger = logging.getLogger("fmpsdk")
@@ -102,6 +103,7 @@ class Client(
     CompanyEndpoints,
     CommitmentOfTradersEndpoints,
     DcfEndpoints,
+    EconomicsEndpoints,
 ):
     """fmpsdk client.
 

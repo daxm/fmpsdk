@@ -805,6 +805,52 @@ class CustomLeveredDiscountedCashFlowResult(TypedDict):
     operatingCashFlowPercentage: float
 
 
+# --- client.economics --------------------------------------------------------
+
+
+class TreasuryRatesResult(TypedDict):
+    date: str
+    month1: float
+    month2: float
+    month3: float
+    month6: float
+    year1: float
+    year2: float
+    year3: float
+    year5: float
+    year7: float
+    year10: float
+    year20: float
+    year30: float
+
+
+class EconomicIndicatorsResult(TypedDict):
+    name: str
+    date: str
+    value: float
+
+
+class EconomicCalendarResult(TypedDict):
+    date: str
+    country: str
+    event: str
+    currency: str
+    previous: float
+    estimate: float
+    actual: float
+    change: float
+    impact: str
+    changePercentage: float
+    unit: str
+
+
+class MarketRiskPremiumResult(TypedDict):
+    country: str
+    continent: str
+    countryRiskPremium: float
+    totalEquityRiskPremium: float
+
+
 class HistoricalChartResult(TypedDict):
     """Response for the 6 `historical_chart` intraday timeframes (§5.3
     collapse: `1min`/`5min`/`15min`/`30min`/`1hour`/`4hour` share one
