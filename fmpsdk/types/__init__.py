@@ -1,0 +1,387 @@
+"""TypedDicts for FMP response shapes, generated from api-docs.md example
+responses (REWRITE_ARCHITECTURE.md §8.4, §11). Cast at the JSON boundary in
+each endpoint method via ``typing.cast()`` — zero runtime cost, no new
+dependency.
+
+One TypedDict per response *shape*, not per method: methods verified
+identical under §5.1's V2 test (e.g. ``search_symbol`` / ``search_name``)
+share a type. Methods that merely sit in the same group but answer
+different questions (§7.8: ``profile`` means five different things across
+the catalog) always get separate types.
+
+Split into one module per alias group (mirroring ``endpoints/``) once this
+package passed ~2900 lines and 155 types across 27 groups — the split fell
+out mechanically from what each ``endpoints/<group>.py`` actually imports;
+no type is used by more than one group. This ``__init__.py`` re-exports
+every name so ``from fmpsdk.types import X`` (used throughout
+``endpoints/``) is unchanged regardless of which submodule ``X`` actually
+lives in — nothing outside this package needs to know the split exists.
+When adding a new group's types, add the submodule here in the same two
+places: the import block and ``__all__``.
+"""
+
+from __future__ import annotations
+
+from .analyst import (
+    AnalystEstimatesResult,
+    RatingsSnapshotResult,
+    RatingsHistoricalResult,
+    PriceTargetSummaryResult,
+    PriceTargetConsensusResult,
+    GradesResult,
+    GradesHistoricalResult,
+    GradesConsensusResult,
+)
+from .calendar import (
+    DividendResult,
+    EarningsResult,
+    IposCalendarResult,
+    IposDisclosureResult,
+    IposProspectusResult,
+    SplitResult,
+)
+from .chart import (
+    HistoricalChartResult,
+    HistoricalPriceEodLightResult,
+    HistoricalPriceEodFullResult,
+    HistoricalPriceEodNonSplitAdjustedResult,
+    HistoricalPriceEodDividendAdjustedResult,
+)
+from .commitment_of_traders import (
+    CommitmentOfTradersReportResult,
+    CommitmentOfTradersAnalysisResult,
+    CommitmentOfTradersListResult,
+)
+from .commodity import CommoditiesListResult
+from .company import (
+    ProfileResult,
+    CompanyNotesResult,
+    StockPeersResult,
+    DelistedCompanyResult,
+    EmployeeCountResult,
+    MarketCapResult,
+    SharesFloatResult,
+    SharesFloatAllResult,
+    MergersAcquisitionsResult,
+    KeyExecutiveResult,
+    ExecutiveCompensationResult,
+    ExecutiveCompensationBenchmarkResult,
+)
+from .congress import (
+    CongressionalTradeResult,
+    SenateProfileResult,
+    SenatePositionResult,
+    SenateNetWorthResult,
+    SenateNetWorthAggregatedResult,
+)
+from .crypto import CryptocurrencyListResult
+from .dcf import (
+    DiscountedCashFlowResult,
+    LeveredDiscountedCashFlowResult,
+    CustomDiscountedCashFlowResult,
+    CustomLeveredDiscountedCashFlowResult,
+)
+from .directory import (
+    StockListResult,
+    FinancialStatementSymbolListResult,
+    CikListResult,
+    SymbolChangeResult,
+    EtfListResult,
+    ActivelyTradingListResult,
+    AvailableExchangeResult,
+    AvailableSectorResult,
+    AvailableIndustryResult,
+    AvailableCountryResult,
+)
+from .earnings_transcript import (
+    EarningCallTranscriptResult,
+    EarningCallTranscriptDatesResult,
+    EarningCallTranscriptLatestResult,
+    EarningsTranscriptListResult,
+)
+from .economics import (
+    TreasuryRatesResult,
+    EconomicIndicatorsResult,
+    EconomicCalendarResult,
+    MarketRiskPremiumResult,
+)
+from .esg import (
+    EsgDisclosuresResult,
+    EsgRatingsResult,
+    EsgBenchmarkResult,
+)
+from .forex import ForexListResult
+from .fundraisers import (
+    CrowdfundingOfferingResult,
+    CrowdfundingOfferingSearchResult,
+    FundraisingResult,
+    FundraisingSearchResult,
+)
+from .funds import (
+    EtfHoldingsResult,
+    EtfInfoSectorExposure,
+    EtfInfoResult,
+    EtfCountryWeightingsResult,
+    EtfAssetExposureResult,
+    EtfSectorWeightingsResult,
+    FundsDisclosureHoldersLatestResult,
+    FundsDisclosureResult,
+    FundsDisclosureHoldersSearchResult,
+    FundsDisclosureDatesResult,
+)
+from .indexes import (
+    IndexListResult,
+    IndexConstituentResult,
+    HistoricalIndexConstituentResult,
+)
+from .insider_trades import (
+    InsiderTradingResult,
+    InsiderTradingReportingNameResult,
+    InsiderTradingTransactionTypeResult,
+    InsiderTradingStatisticsResult,
+    AcquisitionOfBeneficialOwnershipResult,
+)
+from .institutional_ownership import (
+    InstitutionalOwnershipLatestResult,
+    InstitutionalOwnershipExtractResult,
+    InstitutionalOwnershipDatesResult,
+    InstitutionalOwnershipExtractAnalyticsHolderResult,
+    InstitutionalOwnershipHolderPerformanceSummaryResult,
+    InstitutionalOwnershipHolderIndustryBreakdownResult,
+    InstitutionalOwnershipSymbolPositionsSummaryResult,
+    InstitutionalOwnershipIndustrySummaryResult,
+)
+from .market_hours import (
+    ExchangeMarketHoursResult,
+    HolidaysByExchangeResult,
+)
+from .market_performance import (
+    MarketMoverResult,
+    SectorPerformanceResult,
+    IndustryPerformanceResult,
+    SectorPeResult,
+    IndustryPeResult,
+)
+from .news import (
+    FmpArticlesResult,
+    NewsArticleResult,
+)
+from .quote import (
+    QuoteResult,
+    QuoteShortResult,
+    AftermarketTradeResult,
+    AftermarketQuoteResult,
+    StockPriceChangeResult,
+)
+from .search import (
+    SearchSymbolResult,
+    SearchCikResult,
+    SearchCusipResult,
+    SearchIsinResult,
+    CompanyScreenerResult,
+    SearchExchangeVariantsResult,
+)
+from .sec_filings import (
+    SecFilingResult,
+    SecFilingSearchResult,
+    SecFilingsCompanySearchResult,
+    SecProfileResult,
+    StandardIndustrialClassificationResult,
+    IndustryClassificationResult,
+)
+from .statements import (
+    IncomeStatementResult,
+    BalanceSheetStatementResult,
+    BalanceSheetStatementTtmResult,
+    CashFlowStatementResult,
+    LatestFinancialStatementsResult,
+    KeyMetricsResult,
+    KeyMetricsTtmResult,
+    RatiosResult,
+    RatiosTtmResult,
+    FinancialScoresResult,
+    OwnerEarningsResult,
+    EnterpriseValuesResult,
+    IncomeStatementGrowthResult,
+    BalanceSheetStatementGrowthResult,
+    CashFlowStatementGrowthResult,
+    FinancialGrowthResult,
+    FinancialReportsDatesResult,
+    FinancialReportsJsonResult,
+    IncomeStatementAsReportedResult,
+    BalanceSheetStatementAsReportedResult,
+    CashFlowStatementAsReportedResult,
+    FinancialStatementFullAsReportedResult,
+    RevenueProductSegmentationResult,
+    RevenueGeographicSegmentationResult,
+)
+from .technical_indicators import (
+    SmaResult,
+    EmaResult,
+    WmaResult,
+    DemaResult,
+    TemaResult,
+    RsiResult,
+    StandardDeviationResult,
+    WilliamsResult,
+    AdxResult,
+)
+
+__all__ = [
+    "AcquisitionOfBeneficialOwnershipResult",
+    "ActivelyTradingListResult",
+    "AdxResult",
+    "AftermarketQuoteResult",
+    "AftermarketTradeResult",
+    "AnalystEstimatesResult",
+    "AvailableCountryResult",
+    "AvailableExchangeResult",
+    "AvailableIndustryResult",
+    "AvailableSectorResult",
+    "BalanceSheetStatementAsReportedResult",
+    "BalanceSheetStatementGrowthResult",
+    "BalanceSheetStatementResult",
+    "BalanceSheetStatementTtmResult",
+    "CashFlowStatementAsReportedResult",
+    "CashFlowStatementGrowthResult",
+    "CashFlowStatementResult",
+    "CikListResult",
+    "CommitmentOfTradersAnalysisResult",
+    "CommitmentOfTradersListResult",
+    "CommitmentOfTradersReportResult",
+    "CommoditiesListResult",
+    "CompanyNotesResult",
+    "CompanyScreenerResult",
+    "CongressionalTradeResult",
+    "CrowdfundingOfferingResult",
+    "CrowdfundingOfferingSearchResult",
+    "CryptocurrencyListResult",
+    "CustomDiscountedCashFlowResult",
+    "CustomLeveredDiscountedCashFlowResult",
+    "DelistedCompanyResult",
+    "DemaResult",
+    "DiscountedCashFlowResult",
+    "DividendResult",
+    "EarningCallTranscriptDatesResult",
+    "EarningCallTranscriptLatestResult",
+    "EarningCallTranscriptResult",
+    "EarningsResult",
+    "EarningsTranscriptListResult",
+    "EconomicCalendarResult",
+    "EconomicIndicatorsResult",
+    "EmaResult",
+    "EmployeeCountResult",
+    "EnterpriseValuesResult",
+    "EsgBenchmarkResult",
+    "EsgDisclosuresResult",
+    "EsgRatingsResult",
+    "EtfAssetExposureResult",
+    "EtfCountryWeightingsResult",
+    "EtfHoldingsResult",
+    "EtfInfoResult",
+    "EtfInfoSectorExposure",
+    "EtfListResult",
+    "EtfSectorWeightingsResult",
+    "ExchangeMarketHoursResult",
+    "ExecutiveCompensationBenchmarkResult",
+    "ExecutiveCompensationResult",
+    "FinancialGrowthResult",
+    "FinancialReportsDatesResult",
+    "FinancialReportsJsonResult",
+    "FinancialScoresResult",
+    "FinancialStatementFullAsReportedResult",
+    "FinancialStatementSymbolListResult",
+    "FmpArticlesResult",
+    "ForexListResult",
+    "FundraisingResult",
+    "FundraisingSearchResult",
+    "FundsDisclosureDatesResult",
+    "FundsDisclosureHoldersLatestResult",
+    "FundsDisclosureHoldersSearchResult",
+    "FundsDisclosureResult",
+    "GradesConsensusResult",
+    "GradesHistoricalResult",
+    "GradesResult",
+    "HistoricalChartResult",
+    "HistoricalIndexConstituentResult",
+    "HistoricalPriceEodDividendAdjustedResult",
+    "HistoricalPriceEodFullResult",
+    "HistoricalPriceEodLightResult",
+    "HistoricalPriceEodNonSplitAdjustedResult",
+    "HolidaysByExchangeResult",
+    "IncomeStatementAsReportedResult",
+    "IncomeStatementGrowthResult",
+    "IncomeStatementResult",
+    "IndexConstituentResult",
+    "IndexListResult",
+    "IndustryClassificationResult",
+    "IndustryPeResult",
+    "IndustryPerformanceResult",
+    "InsiderTradingReportingNameResult",
+    "InsiderTradingResult",
+    "InsiderTradingStatisticsResult",
+    "InsiderTradingTransactionTypeResult",
+    "InstitutionalOwnershipDatesResult",
+    "InstitutionalOwnershipExtractAnalyticsHolderResult",
+    "InstitutionalOwnershipExtractResult",
+    "InstitutionalOwnershipHolderIndustryBreakdownResult",
+    "InstitutionalOwnershipHolderPerformanceSummaryResult",
+    "InstitutionalOwnershipIndustrySummaryResult",
+    "InstitutionalOwnershipLatestResult",
+    "InstitutionalOwnershipSymbolPositionsSummaryResult",
+    "IposCalendarResult",
+    "IposDisclosureResult",
+    "IposProspectusResult",
+    "KeyExecutiveResult",
+    "KeyMetricsResult",
+    "KeyMetricsTtmResult",
+    "LatestFinancialStatementsResult",
+    "LeveredDiscountedCashFlowResult",
+    "MarketCapResult",
+    "MarketMoverResult",
+    "MarketRiskPremiumResult",
+    "MergersAcquisitionsResult",
+    "NewsArticleResult",
+    "OwnerEarningsResult",
+    "PriceTargetConsensusResult",
+    "PriceTargetSummaryResult",
+    "ProfileResult",
+    "QuoteResult",
+    "QuoteShortResult",
+    "RatingsHistoricalResult",
+    "RatingsSnapshotResult",
+    "RatiosResult",
+    "RatiosTtmResult",
+    "RevenueGeographicSegmentationResult",
+    "RevenueProductSegmentationResult",
+    "RsiResult",
+    "SearchCikResult",
+    "SearchCusipResult",
+    "SearchExchangeVariantsResult",
+    "SearchIsinResult",
+    "SearchSymbolResult",
+    "SecFilingResult",
+    "SecFilingSearchResult",
+    "SecFilingsCompanySearchResult",
+    "SecProfileResult",
+    "SectorPeResult",
+    "SectorPerformanceResult",
+    "SenateNetWorthAggregatedResult",
+    "SenateNetWorthResult",
+    "SenatePositionResult",
+    "SenateProfileResult",
+    "SharesFloatAllResult",
+    "SharesFloatResult",
+    "SmaResult",
+    "SplitResult",
+    "StandardDeviationResult",
+    "StandardIndustrialClassificationResult",
+    "StockListResult",
+    "StockPeersResult",
+    "StockPriceChangeResult",
+    "SymbolChangeResult",
+    "TemaResult",
+    "TreasuryRatesResult",
+    "WilliamsResult",
+    "WmaResult",
+]

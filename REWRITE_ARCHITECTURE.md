@@ -1502,7 +1502,17 @@ fmpsdk/
         ...                (statements.py is the largest at 27; commodity/crypto/forex are 1.)
     groups.py              The 29 alias group objects. Pure attribute binding to bound methods
                            on the client, including the 10 cross-listings (§4.3). No logic.
-    types.py               TypedDicts, generated from api-docs.md example responses.
+    types/                 TypedDicts, generated from api-docs.md example responses. Amended
+                           2026-08-23: originally a single types.py per this section as
+                           written; split into a package (one module per alias group,
+                           mirroring endpoints/) once it passed ~2900 lines / 155 types
+                           across 27 groups. The split is mechanical and lossless — no
+                           TypedDict is used by more than one group's endpoints/<group>.py,
+                           so group ownership falls out of the existing import graph, not a
+                           judgment call. types/__init__.py re-exports every name, so
+                           `from ..types import X` in every endpoints/<group>.py is
+                           unchanged; nothing outside this package needs to know the split
+                           exists. Same file-per-group convention as endpoints/.
     _crossref.py           Generated FMP-path <-> method-name table (§2.4). Regenerable from
                            api-docs.md in one pass; feeds the README table required by brief 3.2.
 tests/
