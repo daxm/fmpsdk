@@ -243,6 +243,8 @@ class CashFlowStatementResult(TypedDict):
 
 
 class LatestFinancialStatementsResult(TypedDict):
+    """One company with a newly filed financial statement. Requires an FMP Ultimate-tier plan. Returned by `latest_financial_statements()`."""
+
     symbol: str
     calendarYear: int
     period: str
@@ -251,6 +253,8 @@ class LatestFinancialStatementsResult(TypedDict):
 
 
 class KeyMetricsResult(TypedDict):
+    """Valuation and efficiency metrics (EV multiples, ROIC, cash conversion cycle, ...) for one company, one period. Returned by `key_metrics()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -352,6 +356,8 @@ class KeyMetricsTtmResult(TypedDict):
 
 
 class RatiosResult(TypedDict):
+    """Profitability, liquidity, efficiency, and leverage ratios for one company, one period. Returned by `ratios()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -490,6 +496,8 @@ class RatiosTtmResult(TypedDict):
 
 
 class FinancialScoresResult(TypedDict):
+    """Altman Z-Score and Piotroski Score, for bankruptcy-risk and financial-strength assessment. Returned by `financial_scores()`."""
+
     symbol: str
     reportedCurrency: str
     altmanZScore: float
@@ -504,6 +512,8 @@ class FinancialScoresResult(TypedDict):
 
 
 class OwnerEarningsResult(TypedDict):
+    """Buffett-style owner earnings (net income adjusted for maintenance vs. growth capex). Returned by `owner_earnings()`."""
+
     symbol: str
     reportedCurrency: str
     fiscalYear: str
@@ -517,6 +527,8 @@ class OwnerEarningsResult(TypedDict):
 
 
 class EnterpriseValuesResult(TypedDict):
+    """Market cap plus debt minus cash, for one period. Returned by `enterprise_values()`."""
+
     symbol: str
     date: str
     stockPrice: float
@@ -528,6 +540,8 @@ class EnterpriseValuesResult(TypedDict):
 
 
 class IncomeStatementGrowthResult(TypedDict):
+    """Year-over-year growth rate for every income-statement line item. Returned by `income_statement_growth()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -565,6 +579,8 @@ class IncomeStatementGrowthResult(TypedDict):
 
 
 class BalanceSheetStatementGrowthResult(TypedDict):
+    """Year-over-year growth rate for every balance-sheet line item. Returned by `balance_sheet_statement_growth()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -624,6 +640,8 @@ class BalanceSheetStatementGrowthResult(TypedDict):
 
 
 class CashFlowStatementGrowthResult(TypedDict):
+    """Year-over-year growth rate for every cash-flow-statement line item. Returned by `cash_flow_statement_growth()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -669,6 +687,8 @@ class CashFlowStatementGrowthResult(TypedDict):
 
 
 class FinancialGrowthResult(TypedDict):
+    """Cross-statement growth metrics (revenue, margins, per-share trends over 3/5/10 years). Returned by `financial_growth()`."""
+
     symbol: str
     date: str
     fiscalYear: str
@@ -716,6 +736,8 @@ class FinancialGrowthResult(TypedDict):
 
 
 class FinancialReportsDatesResult(TypedDict):
+    """One fiscal year/period FMP has a 10-K report for, with links to the JSON and XLSX forms. Returned by `financial_reports_dates()`."""
+
     symbol: str
     fiscalYear: int
     period: str
@@ -750,6 +772,8 @@ class IncomeStatementAsReportedResult(TypedDict):
 
 
 class BalanceSheetStatementAsReportedResult(TypedDict):
+    """Balance sheet data exactly as filed, XBRL tag names as keys. Returned by `balance_sheet_statement_as_reported()`."""
+
     symbol: str
     fiscalYear: int
     period: str
@@ -759,6 +783,8 @@ class BalanceSheetStatementAsReportedResult(TypedDict):
 
 
 class CashFlowStatementAsReportedResult(TypedDict):
+    """Cash flow data exactly as filed, XBRL tag names as keys. Returned by `cash_flow_statement_as_reported()`."""
+
     symbol: str
     fiscalYear: int
     period: str
@@ -797,6 +823,8 @@ class RevenueProductSegmentationResult(TypedDict):
 
 
 class RevenueGeographicSegmentationResult(TypedDict):
+    """Revenue broken down by geographic region, for one fiscal period. Returned by `revenue_geographic_segmentation()`."""
+
     symbol: str
     fiscalYear: int
     period: str

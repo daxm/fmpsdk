@@ -12,6 +12,8 @@ from typing import TypedDict
 
 
 class SmaResult(TypedDict):
+    """One bar of simple moving average, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -22,6 +24,8 @@ class SmaResult(TypedDict):
 
 
 class EmaResult(TypedDict):
+    """One bar of exponential moving average, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -32,6 +36,8 @@ class EmaResult(TypedDict):
 
 
 class WmaResult(TypedDict):
+    """One bar of weighted moving average, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -42,6 +48,8 @@ class WmaResult(TypedDict):
 
 
 class DemaResult(TypedDict):
+    """One bar of double exponential moving average, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -52,6 +60,8 @@ class DemaResult(TypedDict):
 
 
 class TemaResult(TypedDict):
+    """One bar of triple exponential moving average, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -62,6 +72,8 @@ class TemaResult(TypedDict):
 
 
 class RsiResult(TypedDict):
+    """One bar of relative strength index, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -72,6 +84,8 @@ class RsiResult(TypedDict):
 
 
 class StandardDeviationResult(TypedDict):
+    """One bar of rolling standard deviation, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -82,6 +96,8 @@ class StandardDeviationResult(TypedDict):
 
 
 class WilliamsResult(TypedDict):
+    """One bar of Williams %R, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float
@@ -92,6 +108,8 @@ class WilliamsResult(TypedDict):
 
 
 class AdxResult(TypedDict):
+    """One bar of average directional index, with its OHLCV base fields."""
+
     date: str
     open: float
     high: float

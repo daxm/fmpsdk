@@ -25,6 +25,9 @@ class TipranksAnalystActionBreakdown(TypedDict):
 
 
 class TipranksRatingResult(TypedDict):
+    """One individual TipRanks analyst rating. Returned by
+    `tipranks_search()`."""
+
     symbol: str
     date: str
     recommendationDate: str
@@ -134,6 +137,10 @@ TipranksFirmSummaryResult = TypedDict(
 
 
 class TipranksAnalystDirectoryResult(TypedDict):
+    """One analyst directory entry: stable TipRanks ID, firm, star
+    rating, and aggregate performance metrics. Returned by
+    `tipranks_analysts()`."""
+
     expertUID: str
     analystName: str
     firmName: str

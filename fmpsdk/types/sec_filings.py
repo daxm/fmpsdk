@@ -52,6 +52,10 @@ class SecFilingsCompanySearchResult(TypedDict):
 
 
 class SecProfileResult(TypedDict):
+    """Full SEC-registrant profile: business/mailing address, SIC
+    classification, CEO, fiscal year end, IPO date, and more. Returned
+    by `sec_profile()`."""
+
     symbol: str
     cik: str
     registrantName: str
@@ -90,6 +94,9 @@ class SecProfileResult(TypedDict):
 
 
 class StandardIndustrialClassificationResult(TypedDict):
+    """One SIC code and its industry title. Returned by
+    `standard_industrial_classification_list()`."""
+
     office: str
     sicCode: str
     industryTitle: str

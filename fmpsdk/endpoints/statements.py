@@ -1,9 +1,9 @@
-"""client.statements — Financial statements and everything computed
-directly from them (REWRITE_ARCHITECTURE.md §6, ``client.statements``).
-27 canonical methods, no cross-listings — the largest group in the
-catalog. ``period`` splits across three incompatible vocabularies per
-method (§8.1): see each method's docstring for which
-``constants.PERIOD_*`` applies.
+"""client.statements — Financial statements (income, balance sheet,
+cash flow) and everything computed directly from them: ratios, key
+metrics, growth rates, scores, and more. 27 methods, the largest group
+in this package. ``period`` splits across three incompatible
+vocabularies depending on the method — see each method's docstring for
+which ``constants.PERIOD_*`` applies.
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ class StatementsEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
         :param period: one of ``constants.PERIOD_ANY`` (``"Q1"``-``"Q4"``,
-            ``"FY"``, ``"annual"``, ``"quarter"``, §8.1).
+            ``"FY"``, ``"annual"``, ``"quarter"``).
         """
         return cast(
             "list[IncomeStatementResult]",
@@ -65,7 +65,8 @@ class StatementsEndpoints:
         self, symbol: str, limit: int | None = None
     ) -> list[IncomeStatementResult]:
         """``GET income-statement-ttm`` — the same shape as
-        :meth:`income_statement`, trailing twelve months.
+        :meth:`income_statement`, trailing twelve months. Requires an
+        FMP Ultimate-tier plan — 402s on the free tier.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -84,7 +85,7 @@ class StatementsEndpoints:
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
         :param period: one of ``constants.PERIOD_ANNUAL_QUARTER``
-            (``"annual"``, ``"quarter"`` — no fiscal-quarter tokens here, §8.1).
+            (``"annual"``, ``"quarter"`` — no fiscal-quarter tokens here).
         """
         return cast(
             "list[IncomeStatementAsReportedResult]",
@@ -102,7 +103,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[IncomeStatementGrowthResult]",
@@ -120,7 +121,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[BalanceSheetStatementResult]",
@@ -135,9 +136,8 @@ class StatementsEndpoints:
     ) -> list[BalanceSheetStatementTtmResult]:
         """``GET balance-sheet-statement-ttm`` — near-identical shape to
         :meth:`balance_sheet_statement`, trailing twelve months (kept as
-        its own type — the TTM example is missing
-        ``capitalLeaseObligationsNonCurrent``, see
-        ``types.BalanceSheetStatementTtmResult``).
+        its own type — see `BalanceSheetStatementTtmResult`). Requires
+        an FMP Ultimate-tier plan — 402s on the free tier.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -157,7 +157,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER``.
         """
         return cast(
             "list[BalanceSheetStatementAsReportedResult]",
@@ -175,7 +175,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[BalanceSheetStatementGrowthResult]",
@@ -193,7 +193,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[CashFlowStatementResult]",
@@ -207,7 +207,8 @@ class StatementsEndpoints:
         self, symbol: str, limit: int | None = None
     ) -> list[CashFlowStatementResult]:
         """``GET cash-flow-statement-ttm`` — the same shape as
-        :meth:`cash_flow_statement`, trailing twelve months.
+        :meth:`cash_flow_statement`, trailing twelve months. Requires an
+        FMP Ultimate-tier plan — 402s on the free tier.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -225,7 +226,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER``.
         """
         return cast(
             "list[CashFlowStatementAsReportedResult]",
@@ -243,7 +244,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[CashFlowStatementGrowthResult]",
@@ -262,7 +263,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER``.
         """
         return cast(
             "list[FinancialStatementFullAsReportedResult]",
@@ -277,6 +278,7 @@ class StatementsEndpoints:
     ) -> list[LatestFinancialStatementsResult]:
         """``GET latest-financial-statements`` — every company with a
         newly filed statement, paginated across the whole market.
+        Requires an FMP Ultimate-tier plan — 402s on the free tier.
 
         :param page: zero-indexed page number.
         :param limit: max results per page.
@@ -295,7 +297,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[KeyMetricsResult]",
@@ -325,7 +327,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[RatiosResult]",
@@ -377,7 +379,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[EnterpriseValuesResult]",
@@ -395,7 +397,7 @@ class StatementsEndpoints:
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param limit: max results to return.
-        :param period: one of ``constants.PERIOD_ANY`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANY``.
         """
         return cast(
             "list[FinancialGrowthResult]",
@@ -421,23 +423,21 @@ class StatementsEndpoints:
     ) -> FinancialReportsJsonResult:
         """``GET financial-reports-json`` — the full annual report (Form
         10-K) broken into its filed sections (Cover Page, Auditor
-        Information, ...). Section names and structure vary by filing —
-        see ``types.FinancialReportsJsonResult`` for why this returns a
-        loosely typed dict rather than a fixed TypedDict.
+        Information, ...). Section names and structure vary by filing,
+        so the return type is a loosely typed dict rather than a fixed
+        TypedDict.
 
-        Returns a single object, **not** ``list[dict]`` — verified live: a
-        second documented exception to the package's response contract
-        (§8.4), alongside :meth:`financial_reports_xlsx`. FMP's own docs
-        show this endpoint's example response array-wrapped like every
-        other endpoint in the catalog, but the real body is one bare JSON
-        object (``{"symbol": ..., "Cover Page": [...], ...}``), not
-        ``[{...}]``.
+        Unlike every other method in this package, **returns a single
+        object, not a list** — despite FMP's own docs showing this
+        endpoint's example response array-wrapped like everything else,
+        the real response body is one bare JSON object
+        (``{"symbol": ..., "Cover Page": [...], ...}``).
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param year: fiscal year, e.g. ``"2022"``.
         :param period: one of ``constants.PERIOD_FISCAL``
             (``"Q1"``-``"Q4"``, ``"FY"`` — no ``annual``/``quarter`` tokens
-            here, §8.1).
+            here).
         """
         return cast(
             "FinancialReportsJsonResult",
@@ -451,19 +451,14 @@ class StatementsEndpoints:
         """``GET financial-reports-xlsx`` — the same annual report as
         :meth:`financial_reports_json`, as a downloadable XLSX workbook.
 
-        Returns raw ``bytes``, **not** ``list[dict]`` — the one
-        documented exception to the package's response contract (§8.4).
-        Verified live: despite an ``application/json`` content-type
-        header and a docs example that's a byte-for-byte copy of
-        ``financial-reports-json``'s, the real response body starts with
-        the ZIP magic bytes (``PK\\x03\\x04``) that every XLSX file
-        (itself a ZIP container) begins with. Routed through
-        ``self._get_bytes`` rather than ``self._get`` for exactly this
-        reason — ``response.json()`` would raise on real XLSX bytes.
+        Returns raw ``bytes``, not JSON — despite an
+        ``application/json`` content-type header, the real response
+        body is a binary XLSX file (a ZIP container). Write it straight
+        to a ``.xlsx`` file rather than trying to parse it as JSON.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
         :param year: fiscal year, e.g. ``"2022"``.
-        :param period: one of ``constants.PERIOD_FISCAL`` (§8.1).
+        :param period: one of ``constants.PERIOD_FISCAL``.
         """
         return self._get_bytes(
             "financial-reports-xlsx", {"symbol": symbol, "year": year, "period": period}
@@ -476,7 +471,7 @@ class StatementsEndpoints:
         product line, one row per fiscal period.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
-        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER``.
         :param structure: response layout, e.g. ``"flat"``.
         """
         return cast(
@@ -494,7 +489,7 @@ class StatementsEndpoints:
         by geographic region, one row per fiscal period.
 
         :param symbol: ticker symbol, e.g. ``"AAPL"``.
-        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER`` (§8.1).
+        :param period: one of ``constants.PERIOD_ANNUAL_QUARTER``.
         :param structure: response layout, e.g. ``"flat"``.
         """
         return cast(

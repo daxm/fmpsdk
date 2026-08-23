@@ -1,6 +1,7 @@
-"""client.sec_filings — SEC filing search, SEC company identity, and SIC
-industry classification (REWRITE_ARCHITECTURE.md §6, ``client.sec_filings``).
-12 canonical methods, no cross-listings.
+"""client.sec_filings — SEC filing search, SEC company identity, and
+SIC industry classification. 12 methods. Only
+``industry_classification_search`` and ``all_industry_classification``
+require an FMP Ultimate-tier plan — the other 10 work on the free tier.
 """
 
 from __future__ import annotations

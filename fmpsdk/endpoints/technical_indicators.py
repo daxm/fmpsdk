@@ -1,12 +1,8 @@
 """client.technical_indicators — Computed technical indicator series
-(REWRITE_ARCHITECTURE.md §6, ``client.technical_indicators``). 9 canonical
-methods, no cross-listings. All 9 share an identical ``symbol*``,
-``periodLength*``, ``timeframe*``, ``from``, ``to`` param set — factored
-into one private builder (same pattern as ``endpoints/dcf.py``'s
-``_custom_dcf_params``). The response shapes are NOT shared despite
-sharing the same 6 OHLCV+date base fields: each indicator's value lives
-under a key literally named after the indicator (``sma``, ``rsi``, ...),
-so the 9 result types stay separate (see ``types.py``'s note on this).
+(SMA, EMA, WMA, DEMA, TEMA, RSI, standard deviation, Williams %R, ADX).
+9 methods, all taking the same ``symbol``/``period_length``/
+``timeframe``/``from``/``to`` parameters. Requires an FMP Ultimate-tier
+plan — every method here 402s on the free tier.
 """
 
 from __future__ import annotations

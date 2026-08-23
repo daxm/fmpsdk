@@ -1,8 +1,6 @@
-"""client.tipranks — TipRanks partner analyst data (REWRITE_ARCHITECTURE.md
-§6, ``client.tipranks``). 7 canonical methods, no cross-listings. Not in
-the original pricing-tier audit by name (found later via docs) — licensed
-partner data, treated as Ultimate-only until proven otherwise, per the
-workflow doc's note.
+"""client.tipranks — TipRanks partner analyst ratings and coverage
+data. 7 methods. Requires an FMP Ultimate-tier plan — every method here
+402s on the free tier.
 """
 
 from __future__ import annotations

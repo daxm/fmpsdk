@@ -1,6 +1,8 @@
-"""client.search — Identifier lookup (symbol/name/CIK/CUSIP/ISIN) and the
-screener. Primary group for these 7 canonical methods
-(REWRITE_ARCHITECTURE.md §6, ``client.search``). No cross-listings.
+"""client.search — Identifier lookup (symbol/name/CIK/CUSIP/ISIN) and
+the company screener. 7 methods. ``search_symbol``, ``search_name``,
+and ``search_cik`` work on the free tier; ``search_cusip``,
+``search_isin``, ``search_exchange_variants``, and ``company_screener``
+require an FMP Ultimate-tier plan.
 """
 
 from __future__ import annotations
@@ -26,9 +28,6 @@ class SearchEndpoints:
         self, query: str, limit: int | None = None, exchange: str | None = None
     ) -> list[SearchSymbolResult]:
         """``GET search-symbol`` — resolve a ticker symbol from a query fragment.
-
-        ``search-X`` (as opposed to ``X-search``) means *resolve an
-        identifier*: input is a fragment, output is identity records (§7.3).
 
         :param query: symbol or partial symbol to search for, e.g. ``"AAPL"``.
         :param limit: max results to return.
@@ -122,12 +121,8 @@ class SearchEndpoints:
         include_all_share_classes: bool | None = None,
     ) -> list[CompanyScreenerResult]:
         """``GET company-screener`` — filter the whole equity universe by
-        market cap, price, sector, and more.
-
-        Unlike its siblings in this group, this is a dataset query (input is
-        a filter, output is domain records) rather than an identifier
-        lookup, even though its own path lacks the ``-search`` suffix that
-        usually marks that distinction (§7.3).
+        market cap, price, sector, and more. Requires an FMP
+        Ultimate-tier plan — 402s on the free tier.
         """
         return cast(
             "list[CompanyScreenerResult]",

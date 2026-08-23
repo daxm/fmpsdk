@@ -19,6 +19,8 @@ class SearchSymbolResult(TypedDict):
 
 
 class SearchCikResult(TypedDict):
+    """One identity record resolved from a CIK search. Returned by `search_cik()`."""
+
     symbol: str
     companyName: str
     cik: str
@@ -28,6 +30,8 @@ class SearchCikResult(TypedDict):
 
 
 class SearchCusipResult(TypedDict):
+    """One identity record resolved from a CUSIP search. Returned by `search_cusip()`."""
+
     symbol: str
     companyName: str
     cusip: str
@@ -35,6 +39,8 @@ class SearchCusipResult(TypedDict):
 
 
 class SearchIsinResult(TypedDict):
+    """One identity record resolved from an ISIN search. Returned by `search_isin()`."""
+
     symbol: str
     name: str
     isin: str
@@ -42,6 +48,8 @@ class SearchIsinResult(TypedDict):
 
 
 class CompanyScreenerResult(TypedDict):
+    """One company matching the screener's filter criteria. Returned by `company_screener()`."""
+
     symbol: str
     companyName: str
     marketCap: float
@@ -60,6 +68,8 @@ class CompanyScreenerResult(TypedDict):
 
 
 class SearchExchangeVariantsResult(TypedDict):
+    """One exchange listing of a symbol, with a full profile record for that listing. Returned by `search_exchange_variants()`."""
+
     symbol: str
     price: float
     beta: float
