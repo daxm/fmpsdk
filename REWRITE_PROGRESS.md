@@ -24,13 +24,20 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 65 / 238 methods done** (49 more implemented + unit-tested pending
-Ultimate verification; **124 more implemented across three code-only passes but not
-yet unit-tested or live-verified** — see the `indexes` through `tipranks` groups
-below). **This is the full 238/238 catalog now implemented in code** — every
-canonical method in REWRITE_ARCHITECTURE.md §6 has a Python implementation. What's
-left is entirely verification: unit tests for the 124 `implemented`-tagged methods,
-then live-testing everything not already Bucket-2-confirmed.
+**Progress: 80 / 238 methods done** (68 more implemented + unit-tested pending
+Ultimate verification; 11 more implemented + unit-tested but not yet live-tested
+(`market_performance`, live-testing deferred mid-session when the daily API quota
+ran out — see `fmpsdk-rewrite-status` memory note); **79 more implemented across
+two code-only passes but not yet unit-tested or live-verified** — see the `news`
+through `tipranks` groups below). **This is the full 238/238 catalog now
+implemented in code** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
+Python implementation. 2026-08-23's second work session unit-tested and
+live-tested all 45 `indexes`-through-`technical_indicators` methods from the first
+code-only pass (`market_performance` unit-tested only, live-testing pending).
+What's left: unit tests for the remaining 79 `implemented`-tagged methods
+(`news`/`quote`/`sec_filings`/`earnings_transcript`/`congress`/`bulk`/`tipranks`),
+then live-testing everything not already Bucket-2-confirmed, starting with
+`market_performance`.
 
 ---
 
@@ -288,118 +295,126 @@ then live-testing everything not already Bucket-2-confirmed.
 
 7 methods.
 
-> **Implemented, not yet live-tested this session** (code-only pass — see
-> `fmpsdk-rewrite-status` memory note for why). 3 cross-listed from
+> **Unit-tested and live-tested 2026-08-23.** Only `index_list` is
+> free-tier reachable — the other 6 own methods all 402 despite no
+> Bucket 2 flag in REWRITE_ARCHITECTURE.md §3.5. 3 cross-listed from
 > `client.chart` (`historical_chart`, `historical_price_eod_full`,
 > `historical_price_eod_light`) already hold the identity invariant —
 > verified via `assert client.indexes.historical_chart is
 > client.chart.historical_chart` at write time.
 
-- [ ] implemented `dowjones_constituent` — `dowjones-constituent`
-- [ ] implemented `historical_dowjones_constituent` — `historical-dowjones-constituent`
-- [ ] implemented `historical_nasdaq_constituent` — `historical-nasdaq-constituent`
-- [ ] implemented `historical_sp500_constituent` — `historical-sp500-constituent`
-- [ ] implemented `index_list` — `index-list`
-- [ ] implemented `nasdaq_constituent` — `nasdaq-constituent`
-- [ ] implemented `sp500_constituent` — `sp500-constituent`
+- [x] ultimate-pending `dowjones_constituent` — `dowjones-constituent` (402 on free tier)
+- [x] ultimate-pending `historical_dowjones_constituent` — `historical-dowjones-constituent` (402 on free tier)
+- [x] ultimate-pending `historical_nasdaq_constituent` — `historical-nasdaq-constituent` (402 on free tier)
+- [x] ultimate-pending `historical_sp500_constituent` — `historical-sp500-constituent` (402 on free tier)
+- [x] done `index_list` — `index-list`
+- [x] ultimate-pending `nasdaq_constituent` — `nasdaq-constituent` (402 on free tier)
+- [x] ultimate-pending `sp500_constituent` — `sp500-constituent` (402 on free tier)
 
 ## `client.commodity` — Commodity instruments: list, quotes, charts.
 
 1 methods.
 
-> **Implemented, not yet live-tested this session.** `quote`/`quote_short`/
+> **Unit-tested and live-tested 2026-08-23.** `quote`/`quote_short`/
 > `batch_commodity_quotes` will cross-list here once `client.quote` is
 > built; the 3 `client.chart` cross-listings are already wired.
 
-- [ ] implemented `commodities_list` — `commodities-list`
+- [x] done `commodities_list` — `commodities-list`
 
 ## `client.crypto` — Cryptocurrency instruments: list, quotes, charts.
 
 1 methods.
 
-> **Implemented, not yet live-tested this session.** Same cross-listing
-> note as `client.commodity` above.
+> **Unit-tested and live-tested 2026-08-23.** Same cross-listing note as
+> `client.commodity` above.
 
-- [ ] implemented `cryptocurrency_list` — `cryptocurrency-list`
+- [x] done `cryptocurrency_list` — `cryptocurrency-list`
 
 ## `client.fundraisers` — Reg CF crowdfunding and Reg D/A equity offerings.
 
 6 methods.
 
-> **Implemented, not yet live-tested this session.**
+> **Unit-tested and live-tested 2026-08-23** — all 6 free-tier reachable.
 
-- [ ] implemented `crowdfunding_offerings` — `crowdfunding-offerings`
-- [ ] implemented `crowdfunding_offerings_latest` — `crowdfunding-offerings-latest`
-- [ ] implemented `crowdfunding_offerings_search` — `crowdfunding-offerings-search`
-- [ ] implemented `fundraising` — `fundraising`
-- [ ] implemented `fundraising_latest` — `fundraising-latest`
-- [ ] implemented `fundraising_search` — `fundraising-search`
+- [x] done `crowdfunding_offerings` — `crowdfunding-offerings`
+- [x] done `crowdfunding_offerings_latest` — `crowdfunding-offerings-latest`
+- [x] done `crowdfunding_offerings_search` — `crowdfunding-offerings-search`
+- [x] done `fundraising` — `fundraising`
+- [x] done `fundraising_latest` — `fundraising-latest`
+- [x] done `fundraising_search` — `fundraising-search`
 
 ## `client.forex` — FX pairs: list, quotes, charts.
 
 1 methods.
 
-> **Implemented, not yet live-tested this session.** Same cross-listing
-> note as `client.commodity` above.
+> **Unit-tested and live-tested 2026-08-23.** Same cross-listing note as
+> `client.commodity` above.
 
-- [ ] implemented `forex_list` — `forex-list`
+- [x] done `forex_list` — `forex-list`
 
 ## `client.insider_trades` — Form 4 insider transactions, statistics, and beneficial-ownership acquisitions.
 
 6 methods.
 
-> **Implemented, not yet live-tested this session.**
+> **Unit-tested and live-tested 2026-08-23.** Only `insider_trading_latest`
+> and `insider_trading_transaction_type` are free-tier reachable — the
+> other 4 all 402 despite no Bucket 2 flag in REWRITE_ARCHITECTURE.md §3.5.
 
-- [ ] implemented `acquisition_of_beneficial_ownership` — `acquisition-of-beneficial-ownership`
-- [ ] implemented `insider_trading_latest` — `insider-trading/latest`
-- [ ] implemented `insider_trading_reporting_name` — `insider-trading/reporting-name`
-- [ ] implemented `insider_trading_search` — `insider-trading/search`
-- [ ] implemented `insider_trading_statistics` — `insider-trading/statistics`
-- [ ] implemented `insider_trading_transaction_type` — `insider-trading-transaction-type`
+- [x] ultimate-pending `acquisition_of_beneficial_ownership` — `acquisition-of-beneficial-ownership` (402 on free tier)
+- [x] done `insider_trading_latest` — `insider-trading/latest`
+- [x] ultimate-pending `insider_trading_reporting_name` — `insider-trading/reporting-name` (402 on free tier)
+- [x] ultimate-pending `insider_trading_search` — `insider-trading/search` (402 on free tier)
+- [x] ultimate-pending `insider_trading_statistics` — `insider-trading/statistics` (402 on free tier)
+- [x] done `insider_trading_transaction_type` — `insider-trading-transaction-type`
 
 ## `client.market_performance` — Sector/industry performance and P/E, snapshot and historical, plus market leaders.
 
 11 methods.
 
-> **Implemented, not yet live-tested this session.**
+> **Unit-tested 2026-08-23; live-testing deferred to next session** —
+> daily API quota ran out mid-session before this group's turn (see
+> `fmpsdk-rewrite-status` memory note). Test live before anything else
+> next time the quota resets.
 
-- [ ] implemented `biggest_gainers` — `biggest-gainers`
-- [ ] implemented `biggest_losers` — `biggest-losers`
-- [ ] implemented `historical_industry_pe` — `historical-industry-pe`
-- [ ] implemented `historical_industry_performance` — `historical-industry-performance`
-- [ ] implemented `historical_sector_pe` — `historical-sector-pe`
-- [ ] implemented `historical_sector_performance` — `historical-sector-performance`
-- [ ] implemented `industry_pe_snapshot` — `industry-pe-snapshot`
-- [ ] implemented `industry_performance_snapshot` — `industry-performance-snapshot`
-- [ ] implemented `most_actives` — `most-actives`
-- [ ] implemented `sector_pe_snapshot` — `sector-pe-snapshot`
-- [ ] implemented `sector_performance_snapshot` — `sector-performance-snapshot`
+- [x] unit `biggest_gainers` — `biggest-gainers`
+- [x] unit `biggest_losers` — `biggest-losers`
+- [x] unit `historical_industry_pe` — `historical-industry-pe`
+- [x] unit `historical_industry_performance` — `historical-industry-performance`
+- [x] unit `historical_sector_pe` — `historical-sector-pe`
+- [x] unit `historical_sector_performance` — `historical-sector-performance`
+- [x] unit `industry_pe_snapshot` — `industry-pe-snapshot`
+- [x] unit `industry_performance_snapshot` — `industry-performance-snapshot`
+- [x] unit `most_actives` — `most-actives`
+- [x] unit `sector_pe_snapshot` — `sector-pe-snapshot`
+- [x] unit `sector_performance_snapshot` — `sector-performance-snapshot`
 
 ## `client.market_hours` — Exchange trading sessions and holiday calendars.
 
 3 methods.
 
-> **Implemented, not yet live-tested this session.**
+> **Unit-tested and live-tested 2026-08-23** — all 3 free-tier reachable.
 
-- [ ] implemented `all_exchange_market_hours` — `all-exchange-market-hours`
-- [ ] implemented `exchange_market_hours` — `exchange-market-hours`
-- [ ] implemented `holidays_by_exchange` — `holidays-by-exchange`
+- [x] done `all_exchange_market_hours` — `all-exchange-market-hours`
+- [x] done `exchange_market_hours` — `exchange-market-hours`
+- [x] done `holidays_by_exchange` — `holidays-by-exchange`
 
 ## `client.technical_indicators` — Computed technical indicator series.
 
 9 methods.
 
-> **Implemented, not yet live-tested this session.**
+> **Unit-tested and live-tested 2026-08-23** — all 9 402 on the free
+> tier, the whole group gated, despite no Bucket 2 flag in
+> REWRITE_ARCHITECTURE.md §3.5.
 
-- [ ] implemented `technical_indicators_adx` — `technical-indicators/adx`
-- [ ] implemented `technical_indicators_dema` — `technical-indicators/dema`
-- [ ] implemented `technical_indicators_ema` — `technical-indicators/ema`
-- [ ] implemented `technical_indicators_rsi` — `technical-indicators/rsi`
-- [ ] implemented `technical_indicators_sma` — `technical-indicators/sma`
-- [ ] implemented `technical_indicators_standarddeviation` — `technical-indicators/standarddeviation`
-- [ ] implemented `technical_indicators_tema` — `technical-indicators/tema`
-- [ ] implemented `technical_indicators_williams` — `technical-indicators/williams`
-- [ ] implemented `technical_indicators_wma` — `technical-indicators/wma`
+- [x] ultimate-pending `technical_indicators_adx` — `technical-indicators/adx` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_dema` — `technical-indicators/dema` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_ema` — `technical-indicators/ema` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_rsi` — `technical-indicators/rsi` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_sma` — `technical-indicators/sma` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_standarddeviation` — `technical-indicators/standarddeviation` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_tema` — `technical-indicators/tema` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_williams` — `technical-indicators/williams` (402 on free tier)
+- [x] ultimate-pending `technical_indicators_wma` — `technical-indicators/wma` (402 on free tier)
 
 ## `client.news` — News, press releases, and FMP editorial articles.
 
