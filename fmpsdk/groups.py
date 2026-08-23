@@ -96,6 +96,24 @@ class CalendarGroup:
         self.splits_calendar = bind("splits_calendar")
 
 
+class ChartGroup:
+    """``client.chart`` — 5 primary methods. 3 of them
+    (``historical_chart``, ``historical_price_eod_full``,
+    ``historical_price_eod_light``) are also cross-listed into
+    ``indexes``/``commodity``/``crypto``/``forex`` once those groups exist."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.historical_chart = bind("historical_chart")
+        self.historical_price_eod_dividend_adjusted = bind(
+            "historical_price_eod_dividend_adjusted"
+        )
+        self.historical_price_eod_full = bind("historical_price_eod_full")
+        self.historical_price_eod_light = bind("historical_price_eod_light")
+        self.historical_price_eod_non_split_adjusted = bind(
+            "historical_price_eod_non_split_adjusted"
+        )
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -109,3 +127,4 @@ def attach_groups(client: "Client") -> None:
     client.directory = DirectoryGroup(bind)
     client.analyst = AnalystGroup(bind)
     client.calendar = CalendarGroup(bind)
+    client.chart = ChartGroup(bind)

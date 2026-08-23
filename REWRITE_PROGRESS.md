@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 17 / 238 methods done** (17 more implemented + unit-tested, pending
+**Progress: 21 / 238 methods done** (18 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -105,11 +105,18 @@ Ultimate verification).
 
 5 methods.
 
-- [ ] `historical_chart` — `historical-chart/{timeframe}`
-- [ ] `historical_price_eod_dividend_adjusted` — `historical-price-eod/dividend-adjusted`
-- [ ] `historical_price_eod_full` — `historical-price-eod/full`
-- [ ] `historical_price_eod_light` — `historical-price-eod/light`
-- [ ] `historical_price_eod_non_split_adjusted` — `historical-price-eod/non-split-adjusted`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found
+> `historical_chart` (all 6 intraday timeframes) 402s on the free tier
+> while all 4 `historical_price_eod_*` daily methods work. Reclassified
+> below per the workflow doc's "if a Bucket 1 method 402s, mark it
+> `ultimate-pending`" rule.
+
+- [x] ultimate-pending `historical_chart` — `historical-chart/{timeframe}` (402 on free tier)
+- [x] done `historical_price_eod_dividend_adjusted` — `historical-price-eod/dividend-adjusted`
+- [x] done `historical_price_eod_full` — `historical-price-eod/full`
+- [x] done `historical_price_eod_light` — `historical-price-eod/light`
+- [x] done `historical_price_eod_non_split_adjusted` — `historical-price-eod/non-split-adjusted`
 
 ## `client.company` — Company-level reference and profile data, incl. market cap, float, executives, M&A.
 
