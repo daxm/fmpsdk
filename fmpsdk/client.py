@@ -38,6 +38,7 @@ from .endpoints.economics import EconomicsEndpoints
 from .endpoints.esg import EsgEndpoints
 from .endpoints.funds import FundsEndpoints
 from .endpoints.search import SearchEndpoints
+from .endpoints.statements import StatementsEndpoints
 
 logger = logging.getLogger("fmpsdk")
 
@@ -108,6 +109,7 @@ class Client(
     EconomicsEndpoints,
     EsgEndpoints,
     FundsEndpoints,
+    StatementsEndpoints,
 ):
     """fmpsdk client.
 
@@ -140,6 +142,9 @@ class Client(
         """Issue one GET against ``stable/{path}``, retrying transient
         failures per the backoff policy above, and raise a typed
         :class:`~fmpsdk.exceptions.FMPError` on any non-2xx response.
+        Parses the response body as JSON — this is the path every
+        canonical method uses except :meth:`_get_bytes`'s one caller
+        (§8.4's documented exception to the ``List[Dict]`` contract).
 
         :param path: the FMP ``stable/`` path, e.g. ``"search-symbol"``.
         :param params: query parameters. ``None`` values are dropped rather
@@ -147,6 +152,26 @@ class Client(
             invent a package-wide default for things like ``limit``/``page``
             (§8.8).
         """
+        return self._request(path, params, _parse_json)
+
+    def _get_bytes(self, path: str, params: dict) -> bytes:
+        """Same request/retry/error-mapping path as :meth:`_get`, but
+        returns the raw response body instead of parsing it as JSON.
+
+        Exists for exactly one caller: ``financial_reports_xlsx``. Its FMP
+        response is a binary XLSX (ZIP-container) despite an
+        ``application/json`` content-type header — verified live (§8.4),
+        not assumed from the docs, whose example response for this
+        endpoint is a byte-for-byte copy of ``financial-reports-json``'s
+        and cannot be trusted. ``response.json()`` would raise
+        ``JSONDecodeError`` against real XLSX bytes, so this endpoint
+        cannot share :meth:`_get`'s parsing path.
+        """
+        return self._request(path, params, lambda response: response.content)
+
+    def _request(self, path: str, params: dict, parse):
+        """Shared GET/retry/error-mapping core for :meth:`_get` and
+        :meth:`_get_bytes` — identical policy, different body handling."""
         url = f"{BASE_URL}{path}"
         query = {key: value for key, value in params.items() if value is not None}
         headers = {"apikey": self.api_key}
@@ -170,7 +195,7 @@ class Client(
                 continue
 
             if response.ok:
-                return _parse_json(response)
+                return parse(response)
 
             if _is_retryable(response) and attempt < self.max_retries:
                 time.sleep(_compute_backoff_delay(attempt))

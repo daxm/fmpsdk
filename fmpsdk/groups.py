@@ -190,6 +190,41 @@ class FundsGroup:
         self.funds_disclosure_holders_search = bind("funds_disclosure_holders_search")
 
 
+class StatementsGroup:
+    """``client.statements`` — 27 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.balance_sheet_statement = bind("balance_sheet_statement")
+        self.balance_sheet_statement_as_reported = bind("balance_sheet_statement_as_reported")
+        self.balance_sheet_statement_growth = bind("balance_sheet_statement_growth")
+        self.balance_sheet_statement_ttm = bind("balance_sheet_statement_ttm")
+        self.cash_flow_statement = bind("cash_flow_statement")
+        self.cash_flow_statement_as_reported = bind("cash_flow_statement_as_reported")
+        self.cash_flow_statement_growth = bind("cash_flow_statement_growth")
+        self.cash_flow_statement_ttm = bind("cash_flow_statement_ttm")
+        self.enterprise_values = bind("enterprise_values")
+        self.financial_growth = bind("financial_growth")
+        self.financial_reports_dates = bind("financial_reports_dates")
+        self.financial_reports_json = bind("financial_reports_json")
+        self.financial_reports_xlsx = bind("financial_reports_xlsx")
+        self.financial_scores = bind("financial_scores")
+        self.financial_statement_full_as_reported = bind(
+            "financial_statement_full_as_reported"
+        )
+        self.income_statement = bind("income_statement")
+        self.income_statement_as_reported = bind("income_statement_as_reported")
+        self.income_statement_growth = bind("income_statement_growth")
+        self.income_statement_ttm = bind("income_statement_ttm")
+        self.key_metrics = bind("key_metrics")
+        self.key_metrics_ttm = bind("key_metrics_ttm")
+        self.latest_financial_statements = bind("latest_financial_statements")
+        self.owner_earnings = bind("owner_earnings")
+        self.ratios = bind("ratios")
+        self.ratios_ttm = bind("ratios_ttm")
+        self.revenue_geographic_segmentation = bind("revenue_geographic_segmentation")
+        self.revenue_product_segmentation = bind("revenue_product_segmentation")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -210,3 +245,4 @@ def attach_groups(client: "Client") -> None:
     client.economics = EconomicsGroup(bind)
     client.esg = EsgGroup(bind)
     client.funds = FundsGroup(bind)
+    client.statements = StatementsGroup(bind)

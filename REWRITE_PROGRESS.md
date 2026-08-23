@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 42 / 238 methods done** (37 more implemented + unit-tested, pending
+**Progress: 65 / 238 methods done** (41 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -216,33 +216,51 @@ Ultimate verification).
 
 27 methods.
 
-- [ ] `balance_sheet_statement` — `balance-sheet-statement`
-- [ ] `balance_sheet_statement_as_reported` — `balance-sheet-statement-as-reported`
-- [ ] `balance_sheet_statement_growth` — `balance-sheet-statement-growth`
-- [ ] `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm`
-- [ ] `cash_flow_statement` — `cash-flow-statement`
-- [ ] `cash_flow_statement_as_reported` — `cash-flow-statement-as-reported`
-- [ ] `cash_flow_statement_growth` — `cash-flow-statement-growth`
-- [ ] `cash_flow_statement_ttm` — `cash-flow-statement-ttm`
-- [ ] `enterprise_values` — `enterprise-values`
-- [ ] `financial_growth` — `financial-growth`
-- [ ] `financial_reports_dates` — `financial-reports-dates`
-- [ ] `financial_reports_json` — `financial-reports-json`
-- [ ] `financial_reports_xlsx` — `financial-reports-xlsx`
-- [ ] `financial_scores` — `financial-scores`
-- [ ] `financial_statement_full_as_reported` — `financial-statement-full-as-reported`
-- [ ] `income_statement` — `income-statement`
-- [ ] `income_statement_as_reported` — `income-statement-as-reported`
-- [ ] `income_statement_growth` — `income-statement-growth`
-- [ ] `income_statement_ttm` — `income-statement-ttm`
-- [ ] `key_metrics` — `key-metrics`
-- [ ] `key_metrics_ttm` — `key-metrics-ttm`
-- [ ] `latest_financial_statements` — `latest-financial-statements`
-- [ ] `owner_earnings` — `owner-earnings`
-- [ ] `ratios` — `ratios`
-- [ ] `ratios_ttm` — `ratios-ttm`
-- [ ] `revenue_geographic_segmentation` — `revenue-geographic-segmentation`
-- [ ] `revenue_product_segmentation` — `revenue-product-segmentation`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found 4 of 27
+> methods 402 on the free tier. Reclassified below per the workflow doc's
+> "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
+>
+> **Two doc/reality mismatches found and resolved, not just noted:**
+> `financial_reports_xlsx` really does return binary XLSX bytes (verified
+> via ZIP magic bytes `PK\x03\x04`) despite a lying `application/json`
+> content-type header and a docs example that's a copy-paste of the JSON
+> endpoint's — exactly what REWRITE_ARCHITECTURE.md §8.4 predicted and
+> flagged for live verification. `financial_reports_json` turned out to
+> return a single bare object, **not** array-wrapped like the other 242
+> endpoints in the catalog (contradicting FMP's own docs, which show it
+> array-wrapped) — a second, previously-unflagged exception to the
+> `List[Dict]` response contract. Both are implemented correctly (not
+> forced into the wrong shape) — see `client.py`'s `_get_bytes()` and
+> `financial_reports_json`'s return type in `endpoints/statements.py`.
+
+- [x] done `balance_sheet_statement` — `balance-sheet-statement`
+- [x] done `balance_sheet_statement_as_reported` — `balance-sheet-statement-as-reported`
+- [x] done `balance_sheet_statement_growth` — `balance-sheet-statement-growth`
+- [x] ultimate-pending `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (402 on free tier)
+- [x] done `cash_flow_statement` — `cash-flow-statement`
+- [x] done `cash_flow_statement_as_reported` — `cash-flow-statement-as-reported`
+- [x] done `cash_flow_statement_growth` — `cash-flow-statement-growth`
+- [x] ultimate-pending `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (402 on free tier)
+- [x] done `enterprise_values` — `enterprise-values`
+- [x] done `financial_growth` — `financial-growth`
+- [x] done `financial_reports_dates` — `financial-reports-dates`
+- [x] done `financial_reports_json` — `financial-reports-json` (returns a single dict, not array-wrapped — verified live, contradicts FMP's own docs)
+- [x] done `financial_reports_xlsx` — `financial-reports-xlsx` (returns raw `bytes` — verified live per §8.4)
+- [x] done `financial_scores` — `financial-scores`
+- [x] done `financial_statement_full_as_reported` — `financial-statement-full-as-reported`
+- [x] done `income_statement` — `income-statement`
+- [x] done `income_statement_as_reported` — `income-statement-as-reported`
+- [x] done `income_statement_growth` — `income-statement-growth`
+- [x] ultimate-pending `income_statement_ttm` — `income-statement-ttm` (402 on free tier)
+- [x] done `key_metrics` — `key-metrics`
+- [x] done `key_metrics_ttm` — `key-metrics-ttm`
+- [x] ultimate-pending `latest_financial_statements` — `latest-financial-statements` (402 on free tier)
+- [x] done `owner_earnings` — `owner-earnings`
+- [x] done `ratios` — `ratios`
+- [x] done `ratios_ttm` — `ratios-ttm`
+- [x] done `revenue_geographic_segmentation` — `revenue-geographic-segmentation`
+- [x] done `revenue_product_segmentation` — `revenue-product-segmentation`
 
 ## `client.institutional_ownership` — Form 13F institutional holdings, holders, and derived analytics.
 
