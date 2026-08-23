@@ -1,8 +1,9 @@
 """Typed exception hierarchy for fmpsdk.
 
 Every non-2xx response from FMP raises one of these instead of returning
-``None`` or an error-shaped ``dict`` that a caller could mistake for data.
-See REWRITE_DESIGN_BRIEF.md §3.6 and REWRITE_ARCHITECTURE.md §10.7.
+``None`` or an error-shaped ``dict`` that a caller could mistake for
+data. Catch :class:`FMPError` for "something went wrong," or one of the
+subclasses below for a specific cause.
 """
 
 from __future__ import annotations

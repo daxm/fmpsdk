@@ -1,34 +1,36 @@
-"""Validated constant lists carried forward from the legacy ``settings.py``.
+"""Validated constant lists of the string values FMP's endpoints accept
+for parameters like ``period``, ``sector``, ``timeframe``, and
+``exchange`` — pass one of these rather than guessing at the right
+spelling.
 
-Per REWRITE_ARCHITECTURE.md §8.1-§8.3: these are re-verified against current
-``stable`` API docs, not blindly copied. Several legacy constants were wrong
-and are corrected here rather than carried forward silently:
+A few of these are split more finely than you might expect:
 
-- ``PERIOD_VALUES`` split into three value sets (§8.1) — the old single list
-  was correct for only 7 of the 25 endpoints that take a ``period`` param.
-- ``TECHNICAL_INDICATORS_TIME_DELTA_VALUES`` had a dead ``v3`` token
-  (``"daily"``) that current docs call ``"1day"`` (§8.2).
-- ``SERIES_TYPE_VALUES`` and the ``*_FILENAME`` constants are dropped as
-  dead ``v3``-era artifacts (§8.3) — no ``stable`` endpoint uses them.
-- ``ECONOMIC_INDICATOR_VALUES`` gains ``tradeBalanceGoodsAndServices``,
-  missing from the legacy list but present in current docs (§8.3).
+- ``period`` comes in three incompatible value sets depending on the
+  endpoint — ``PERIOD_ANNUAL_QUARTER``, ``PERIOD_FISCAL``, and
+  ``PERIOD_ANY`` — because FMP itself doesn't accept the same values
+  everywhere a ``period`` parameter appears. Check which one a given
+  method's docstring points at rather than assuming ``PERIOD_ANY``
+  always works.
+- ``TIMEFRAME_INTRADAY`` and ``TIMEFRAME_TECHNICAL`` are similarly two
+  distinct vocabularies — technical-indicator endpoints additionally
+  accept ``"1day"``, which isn't a valid ``historical_chart`` timeframe.
 """
 
 from __future__ import annotations
 
 # --- period ------------------------------------------------------------
 # 25 endpoints take a `period` parameter across three incompatible value
-# sets (§8.1). Bind the right one per endpoint; do not use one global
-# PERIOD_VALUES constant.
+# sets. Use the one the method's own docstring points at, not a single
+# global PERIOD_VALUES constant.
 PERIOD_ANNUAL_QUARTER: tuple[str, ...] = ("annual", "quarter")
 PERIOD_FISCAL: tuple[str, ...] = ("Q1", "Q2", "Q3", "Q4", "FY")
 PERIOD_ANY: tuple[str, ...] = PERIOD_FISCAL + PERIOD_ANNUAL_QUARTER
 
 # --- timeframe -----------------------------------------------------------
-# Two distinct vocabularies (§8.2) — `historical_chart`'s intraday intervals
-# are a strict subset of what `technical_indicators_*` accepts (which also
-# takes `1day`, for which there is no `historical-chart` path — daily bars
-# live at `historical_price_eod_full` instead).
+# Two distinct vocabularies: `historical_chart`'s intraday intervals are a
+# strict subset of what `technical_indicators_*` accepts (which also takes
+# `1day`, for which there is no `historical-chart` path — daily bars live
+# at `historical_price_eod_full` instead).
 TIMEFRAME_INTRADAY: tuple[str, ...] = (
     "1min",
     "5min",
@@ -84,9 +86,9 @@ ECONOMIC_INDICATOR_VALUES: tuple[str, ...] = (
 )
 
 # --- industries / sectors -------------------------------------------------
-# Static fallback only (§10.2) — `client.directory.available_industries()`
-# and `client.directory.available_sectors()` are the source of truth.
-# Carried forward from the legacy settings.py verbatim; not re-scraped here.
+# A static fallback, not the source of truth — call
+# `client.directory.available_industries()` / `available_sectors()` for
+# the live, current list.
 INDUSTRY_VALUES: tuple[str, ...] = (
     "Entertainment",
     "Oil & Gas Midstream",

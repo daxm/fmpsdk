@@ -1,11 +1,15 @@
 """The fmpsdk Client: owns the API key, HTTP session, timeouts, and retry
 policy, and is the single request/response/error-mapping path that every
-canonical method funnels through.
+API method funnels through.
 
-Canonical methods themselves are NOT defined here — they live in
-``endpoints/<group>.py`` as mixin classes, and this module composes them
-onto :class:`Client` (REWRITE_ARCHITECTURE.md §11). Alias groups
-(``client.search``, ``client.quote``, ...) are attached in ``groups.py``.
+The methods themselves are grouped into mixin classes under
+``endpoints/`` (one module per FMP data category), composed onto
+:class:`Client` below. Each is also reachable through a matching
+namespace attribute, e.g. ``client.quote.aftermarket_quote(...)``
+alongside ``client.aftermarket_quote(...)`` — see ``groups.py``. (The
+one exception is ``quote()`` itself, whose namespace attribute
+``client.quote`` shadows the top-level method of the same name — call
+it as ``client.quote.quote(...)``.)
 """
 
 from __future__ import annotations
@@ -176,15 +180,13 @@ class Client(
         """Issue one GET against ``stable/{path}``, retrying transient
         failures per the backoff policy above, and raise a typed
         :class:`~fmpsdk.exceptions.FMPError` on any non-2xx response.
-        Parses the response body as JSON — this is the path every
-        canonical method uses except :meth:`_get_bytes`'s one caller
-        (§8.4's documented exception to the ``List[Dict]`` contract).
+        Parses the response body as JSON — every method uses this except
+        ``financial_reports_xlsx``, which needs raw bytes and uses
+        :meth:`_get_bytes` instead.
 
         :param path: the FMP ``stable/`` path, e.g. ``"search-symbol"``.
         :param params: query parameters. ``None`` values are dropped rather
-            than sent — FMP's own per-endpoint defaults apply, and we never
-            invent a package-wide default for things like ``limit``/``page``
-            (§8.8).
+            than sent, so FMP's own per-endpoint defaults apply.
         """
         return self._request(path, params, _parse_json)
 
@@ -192,14 +194,11 @@ class Client(
         """Same request/retry/error-mapping path as :meth:`_get`, but
         returns the raw response body instead of parsing it as JSON.
 
-        Exists for exactly one caller: ``financial_reports_xlsx``. Its FMP
-        response is a binary XLSX (ZIP-container) despite an
-        ``application/json`` content-type header — verified live (§8.4),
-        not assumed from the docs, whose example response for this
-        endpoint is a byte-for-byte copy of ``financial-reports-json``'s
-        and cannot be trusted. ``response.json()`` would raise
-        ``JSONDecodeError`` against real XLSX bytes, so this endpoint
-        cannot share :meth:`_get`'s parsing path.
+        Exists for exactly one caller: ``financial_reports_xlsx``, whose
+        FMP response is a binary XLSX (ZIP-container) despite an
+        ``application/json`` content-type header. ``response.json()``
+        would raise ``JSONDecodeError`` against real XLSX bytes, so this
+        endpoint cannot share :meth:`_get`'s parsing path.
         """
         return self._request(path, params, lambda response: response.content)
 

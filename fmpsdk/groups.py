@@ -1,18 +1,16 @@
-"""Alias-layer group objects — thin namespaces over the canonical methods
-defined on :class:`~fmpsdk.client.Client` (REWRITE_ARCHITECTURE.md §3-§4).
+"""Namespace groups — ``client.quote``, ``client.search``, and so on —
+thin wrappers grouping the methods defined on
+:class:`~fmpsdk.client.Client` by FMP data category, so you can browse
+or autocomplete one category at a time instead of one flat list of 200+
+methods on ``client`` itself.
 
-Never a second implementation: every attribute assigned here must be the
-*same* bound-method object wherever a canonical method is cross-listed into
-more than one group — ``client.crypto.quote is client.quote.quote`` must
-hold for the 10 cross-listings once they exist (§3.4, §11 invariant 2).
-
-That identity is NOT automatic. ``instance.method`` constructs a fresh
-``MethodType`` wrapper on every attribute access in CPython — two groups
-each independently doing ``self.quote = client.quote`` in their own
-``__init__`` would get two distinct (``==``-equal but not ``is``-identical)
-objects. ``_MethodBinder`` below closes over one cache per ``attach_groups``
-call so every group asking for the same canonical method name gets back the
-exact object bound the first time.
+A handful of methods answer more than one category's question and so
+are reachable from more than one group — e.g. ``quote`` from both
+``client.quote.quote(...)`` and ``client.crypto.quote(...)``. These are
+always the exact same underlying method (``client.crypto.quote is
+client.quote.quote``), never a duplicate implementation, so a symbol
+cache or memoized wrapper keyed by the callable works the same way
+regardless of which group you reached it through.
 """
 
 from __future__ import annotations
@@ -52,10 +50,10 @@ class SearchGroup:
 
 
 class DirectoryGroup:
-    """``client.directory`` — 10 primary methods. 1 cross-listed from
-    ``client.earnings_transcript`` (``earnings_transcript_list``, §4.3 —
-    FMP documents this path under both "Directory" and
-    "EarningsTranscript")."""
+    """``client.directory`` — 10 primary methods. 1
+    (``earnings_transcript_list``) is shared with
+    ``client.earnings_transcript`` — FMP documents this endpoint under
+    both "Directory" and "Earnings Transcripts"."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.actively_trading_list = bind("actively_trading_list")
@@ -68,7 +66,7 @@ class DirectoryGroup:
         self.financial_statement_symbol_list = bind("financial_statement_symbol_list")
         self.stock_list = bind("stock_list")
         self.symbol_change = bind("symbol_change")
-        # Cross-listed from client.earnings_transcript (§4.3).
+        # Also reachable from client.earnings_transcript.
         self.earnings_transcript_list = bind("earnings_transcript_list")
 
 
@@ -261,10 +259,11 @@ class InstitutionalOwnershipGroup:
 
 
 class IndexesGroup:
-    """``client.indexes`` — 7 primary methods. 3 cross-listed from
-    ``client.chart`` (``historical_chart``, ``historical_price_eod_full``,
-    ``historical_price_eod_light``) and 3 from ``client.quote`` (``quote``,
-    ``quote_short``, ``batch_index_quotes``) — all 6 per §4.3."""
+    """``client.indexes`` — 7 primary methods, plus 6 shared with other
+    groups: ``historical_chart``, ``historical_price_eod_full``, and
+    ``historical_price_eod_light`` (also on ``client.chart``), and
+    ``quote``, ``quote_short``, and ``batch_index_quotes`` (also on
+    ``client.quote``)."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.dowjones_constituent = bind("dowjones_constituent")
@@ -274,11 +273,11 @@ class IndexesGroup:
         self.index_list = bind("index_list")
         self.nasdaq_constituent = bind("nasdaq_constituent")
         self.sp500_constituent = bind("sp500_constituent")
-        # Cross-listed from client.chart (§4.3).
+        # Cross-listed from client.chart.
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
-        # Cross-listed from client.quote (§4.3).
+        # Cross-listed from client.quote.
         self.quote = bind("quote")
         self.quote_short = bind("quote_short")
         self.batch_index_quotes = bind("batch_index_quotes")
@@ -287,15 +286,15 @@ class IndexesGroup:
 class CommodityGroup:
     """``client.commodity`` — 1 primary method. 3 cross-listed from
     ``client.chart`` and 3 from ``client.quote`` (``quote``,
-    ``quote_short``, ``batch_commodity_quotes``) — all 6 per §4.3."""
+    ``quote_short``, ``batch_commodity_quotes``) — 6 in total."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.commodities_list = bind("commodities_list")
-        # Cross-listed from client.chart (§4.3).
+        # Cross-listed from client.chart.
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
-        # Cross-listed from client.quote (§4.3).
+        # Cross-listed from client.quote.
         self.quote = bind("quote")
         self.quote_short = bind("quote_short")
         self.batch_commodity_quotes = bind("batch_commodity_quotes")
@@ -304,15 +303,15 @@ class CommodityGroup:
 class CryptoGroup:
     """``client.crypto`` — 1 primary method. 3 cross-listed from
     ``client.chart`` and 3 from ``client.quote`` (``quote``,
-    ``quote_short``, ``batch_crypto_quotes``) — all 6 per §4.3."""
+    ``quote_short``, ``batch_crypto_quotes``) — 6 in total."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.cryptocurrency_list = bind("cryptocurrency_list")
-        # Cross-listed from client.chart (§4.3).
+        # Cross-listed from client.chart.
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
-        # Cross-listed from client.quote (§4.3).
+        # Cross-listed from client.quote.
         self.quote = bind("quote")
         self.quote_short = bind("quote_short")
         self.batch_crypto_quotes = bind("batch_crypto_quotes")
@@ -333,15 +332,15 @@ class FundraisersGroup:
 class ForexGroup:
     """``client.forex`` — 1 primary method. 3 cross-listed from
     ``client.chart`` and 3 from ``client.quote`` (``quote``,
-    ``quote_short``, ``batch_forex_quotes``) — all 6 per §4.3."""
+    ``quote_short``, ``batch_forex_quotes``) — 6 in total."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.forex_list = bind("forex_list")
-        # Cross-listed from client.chart (§4.3).
+        # Cross-listed from client.chart.
         self.historical_chart = bind("historical_chart")
         self.historical_price_eod_full = bind("historical_price_eod_full")
         self.historical_price_eod_light = bind("historical_price_eod_light")
-        # Cross-listed from client.quote (§4.3).
+        # Cross-listed from client.quote.
         self.quote = bind("quote")
         self.quote_short = bind("quote_short")
         self.batch_forex_quotes = bind("batch_forex_quotes")
@@ -423,9 +422,9 @@ class NewsGroup:
 
 
 class QuoteGroup:
-    """``client.quote`` — 16 primary methods. 6 are cross-listed out into
-    ``indexes``/``commodity``/``crypto``/``forex`` (§4.3, see those
-    groups' own docstrings)."""
+    """``client.quote`` — 16 primary methods. 6 are also reachable from
+    ``client.indexes``/``commodity``/``crypto``/``forex`` (the ones that
+    apply to that asset class)."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.aftermarket_quote = bind("aftermarket_quote")
@@ -470,8 +469,8 @@ class SecFilingsGroup:
 
 class EarningsTranscriptGroup:
     """``client.earnings_transcript`` — 4 primary methods. 1
-    (``earnings_transcript_list``) is also cross-listed into
-    ``client.directory`` (§4.3, see that group's docstring)."""
+    (``earnings_transcript_list``) is also reachable from
+    ``client.directory``."""
 
     def __init__(self, bind: _MethodBinder) -> None:
         self.earning_call_transcript = bind("earning_call_transcript")
