@@ -73,7 +73,5 @@ def test_historical_sector_pe(live_client):
 
 
 def test_historical_industry_pe(live_client):
-    result = live_client.historical_industry_pe(
-        industry=_INDUSTRY, exchange=_EXCHANGE
-    )
+    result = live_client.historical_industry_pe(industry=_INDUSTRY, exchange=_EXCHANGE)
     assert len(result) > 0

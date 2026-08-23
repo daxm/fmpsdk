@@ -25,17 +25,19 @@ is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-p
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
 **Progress: 91 / 238 methods done** (68 more implemented + unit-tested pending
-Ultimate verification; **79 more implemented across two code-only passes but not
-yet unit-tested or live-verified** — see the `news` through `tipranks` groups
-below). **This is the full 238/238 catalog now implemented in code** — every
+Ultimate verification; **79 more implemented and unit-tested (2026-08-23) but not
+yet live-verified** — see the `news` through `tipranks` groups below, all tagged
+`unit`). **This is the full 238/238 catalog now implemented in code** — every
 canonical method in REWRITE_ARCHITECTURE.md §6 has a Python implementation.
 2026-08-23's second work session unit-tested and live-tested all 45
 `indexes`-through-`technical_indicators` methods from the first code-only pass;
 a third session live-tested the remaining `market_performance` group (11/11,
-no 402s), closing out everything from the first two code-only passes.
-What's left: unit tests for the remaining 79 `implemented`-tagged methods
-(`news`/`quote`/`sec_filings`/`earnings_transcript`/`congress`/`bulk`/`tipranks`),
-then live-testing everything not already Bucket-2-confirmed.
+no 402s) and wrote mocked unit tests for all 79 methods in `news`/`quote`/
+`sec_filings`/`earnings_transcript`/`congress`/`bulk`/`tipranks` (268/268 unit
+tests passing, zero API calls spent). What's left: live-test those 79 —
+`news`/`quote`/`sec_filings`/`congress` are the Bucket-1 candidates;
+`earnings_transcript`/`bulk`/`tipranks` are pre-flagged Bucket 2, so expect
+402s there (confirm live rather than assume, per the workflow's discipline).
 
 ---
 
@@ -415,110 +417,110 @@ then live-testing everything not already Bucket-2-confirmed.
 
 10 methods.
 
-> **Implemented, not yet live-tested this session** (code-only pass, same as the
+> **Implemented and unit-tested 2026-08-23** (code-only pass, same as the
 > `indexes`-through-`technical_indicators` batch above — see `fmpsdk-rewrite-status`
-> memory note).
+> memory note). Live-testing pending.
 
-- [ ] implemented `fmp_articles` — `fmp-articles`
-- [ ] implemented `news_crypto` — `news/crypto`
-- [ ] implemented `news_crypto_latest` — `news/crypto-latest`
-- [ ] implemented `news_forex` — `news/forex`
-- [ ] implemented `news_forex_latest` — `news/forex-latest`
-- [ ] implemented `news_general_latest` — `news/general-latest`
-- [ ] implemented `news_press_releases` — `news/press-releases`
-- [ ] implemented `news_press_releases_latest` — `news/press-releases-latest`
-- [ ] implemented `news_stock` — `news/stock`
-- [ ] implemented `news_stock_latest` — `news/stock-latest`
+- [x] unit `fmp_articles` — `fmp-articles`
+- [x] unit `news_crypto` — `news/crypto`
+- [x] unit `news_crypto_latest` — `news/crypto-latest`
+- [x] unit `news_forex` — `news/forex`
+- [x] unit `news_forex_latest` — `news/forex-latest`
+- [x] unit `news_general_latest` — `news/general-latest`
+- [x] unit `news_press_releases` — `news/press-releases`
+- [x] unit `news_press_releases_latest` — `news/press-releases-latest`
+- [x] unit `news_stock` — `news/stock`
+- [x] unit `news_stock_latest` — `news/stock-latest`
 
 ## `client.quote` — Real-time and aftermarket quotes, single and batch.
 
 16 methods.
 
-> **Implemented, not yet live-tested this session.** This completes the full §4.3
+> **Implemented and unit-tested 2026-08-23; live-testing pending.** This completes the full §4.3
 > cross-listing table: `quote`/`quote_short`/`batch_index_quotes`/
 > `batch_commodity_quotes`/`batch_crypto_quotes`/`batch_forex_quotes` are now wired
 > into `client.indexes`/`commodity`/`crypto`/`forex` in `groups.py` — all 10
 > cross-listings in the whole rewrite are wired, identity-asserted at write time.
 
-- [ ] implemented `aftermarket_quote` — `aftermarket-quote`
-- [ ] implemented `aftermarket_trade` — `aftermarket-trade`
-- [ ] implemented `batch_aftermarket_quote` — `batch-aftermarket-quote`
-- [ ] implemented `batch_aftermarket_trade` — `batch-aftermarket-trade`
-- [ ] implemented `batch_commodity_quotes` — `batch-commodity-quotes`
-- [ ] implemented `batch_crypto_quotes` — `batch-crypto-quotes`
-- [ ] implemented `batch_etf_quotes` — `batch-etf-quotes`
-- [ ] implemented `batch_exchange_quote` — `batch-exchange-quote`
-- [ ] implemented `batch_forex_quotes` — `batch-forex-quotes`
-- [ ] implemented `batch_index_quotes` — `batch-index-quotes`
-- [ ] implemented `batch_mutualfund_quotes` — `batch-mutualfund-quotes`
-- [ ] implemented `batch_quote` — `batch-quote`
-- [ ] implemented `batch_quote_short` — `batch-quote-short`
-- [ ] implemented `quote` — `quote`
-- [ ] implemented `quote_short` — `quote-short`
-- [ ] implemented `stock_price_change` — `stock-price-change`
+- [x] unit `aftermarket_quote` — `aftermarket-quote`
+- [x] unit `aftermarket_trade` — `aftermarket-trade`
+- [x] unit `batch_aftermarket_quote` — `batch-aftermarket-quote`
+- [x] unit `batch_aftermarket_trade` — `batch-aftermarket-trade`
+- [x] unit `batch_commodity_quotes` — `batch-commodity-quotes`
+- [x] unit `batch_crypto_quotes` — `batch-crypto-quotes`
+- [x] unit `batch_etf_quotes` — `batch-etf-quotes`
+- [x] unit `batch_exchange_quote` — `batch-exchange-quote`
+- [x] unit `batch_forex_quotes` — `batch-forex-quotes`
+- [x] unit `batch_index_quotes` — `batch-index-quotes`
+- [x] unit `batch_mutualfund_quotes` — `batch-mutualfund-quotes`
+- [x] unit `batch_quote` — `batch-quote`
+- [x] unit `batch_quote_short` — `batch-quote-short`
+- [x] unit `quote` — `quote`
+- [x] unit `quote_short` — `quote-short`
+- [x] unit `stock_price_change` — `stock-price-change`
 
 ## `client.sec_filings` — SEC filing search, SEC company identity, and SIC industry classification.
 
 12 methods.
 
-> **Implemented, not yet live-tested this session.** `sec_profile`'s second parameter
+> **Implemented and unit-tested 2026-08-23; live-testing pending.** `sec_profile`'s second parameter
 > renders in FMP's own docs as `cik-A`, which reads like a table-rendering artifact
 > rather than a real wire name — exposed here as plain `cik` pending live confirmation.
 
-- [ ] implemented `all_industry_classification` — `all-industry-classification`
-- [ ] implemented `industry_classification_search` — `industry-classification-search`
-- [ ] implemented `sec_filings_8k` — `sec-filings-8k`
-- [ ] implemented `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
-- [ ] implemented `sec_filings_company_search_name` — `sec-filings-company-search/name`
-- [ ] implemented `sec_filings_company_search_symbol` — `sec-filings-company-search/symbol`
-- [ ] implemented `sec_filings_financials` — `sec-filings-financials`
-- [ ] implemented `sec_filings_search_cik` — `sec-filings-search/cik`
-- [ ] implemented `sec_filings_search_form_type` — `sec-filings-search/form-type`
-- [ ] implemented `sec_filings_search_symbol` — `sec-filings-search/symbol`
-- [ ] implemented `sec_profile` — `sec-profile`
-- [ ] implemented `standard_industrial_classification_list` — `standard-industrial-classification-list`
+- [x] unit `all_industry_classification` — `all-industry-classification`
+- [x] unit `industry_classification_search` — `industry-classification-search`
+- [x] unit `sec_filings_8k` — `sec-filings-8k`
+- [x] unit `sec_filings_company_search_cik` — `sec-filings-company-search/cik`
+- [x] unit `sec_filings_company_search_name` — `sec-filings-company-search/name`
+- [x] unit `sec_filings_company_search_symbol` — `sec-filings-company-search/symbol`
+- [x] unit `sec_filings_financials` — `sec-filings-financials`
+- [x] unit `sec_filings_search_cik` — `sec-filings-search/cik`
+- [x] unit `sec_filings_search_form_type` — `sec-filings-search/form-type`
+- [x] unit `sec_filings_search_symbol` — `sec-filings-search/symbol`
+- [x] unit `sec_profile` — `sec-profile`
+- [x] unit `standard_industrial_classification_list` — `standard-industrial-classification-list`
 
 ## `client.earnings_transcript` — Earnings-call transcripts and their availability metadata.
 
 > **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
-> **Implemented, not yet live-tested this session.** `earnings_transcript_list` is
+> **Implemented and unit-tested 2026-08-23; live-testing pending.** `earnings_transcript_list` is
 > cross-listed into `client.directory` (§4.3) — wired in `groups.py`.
 
 4 methods.
 
-- [ ] implemented `earning_call_transcript` — `earning-call-transcript`
-- [ ] implemented `earning_call_transcript_dates` — `earning-call-transcript-dates`
-- [ ] implemented `earning_call_transcript_latest` — `earning-call-transcript-latest`
-- [ ] implemented `earnings_transcript_list` — `earnings-transcript-list`
+- [x] unit `earning_call_transcript` — `earning-call-transcript`
+- [x] unit `earning_call_transcript_dates` — `earning-call-transcript-dates`
+- [x] unit `earning_call_transcript_latest` — `earning-call-transcript-latest`
+- [x] unit `earnings_transcript_list` — `earnings-transcript-list`
 
 ## `client.congress` — U.S. Senate and House financial disclosures, trades, and member profiles.
 
 12 methods.
 
-> **Implemented, not yet live-tested this session.** §7.5's parameter-naming bug
+> **Implemented and unit-tested 2026-08-23; live-testing pending.** §7.5's parameter-naming bug
 > mirrored as documented: `house_trades_by_id` and `senate_trades_by_id` (and every
 > other `senateID`-taking method, including the House ones) expose the Python
 > parameter `senate_id` — the wire name really is `senateID` even on House endpoints,
 > called out loudly in `house_trades_by_id`'s own docstring so it doesn't read as our
 > bug.
 
-- [ ] implemented `house_latest` — `house-latest`
-- [ ] implemented `house_trades` — `house-trades`
-- [ ] implemented `house_trades_by_id` — `house-trades-by-id`
-- [ ] implemented `house_trades_by_name` — `house-trades-by-name`
-- [ ] implemented `senate_latest` — `senate-latest`
-- [ ] implemented `senate_net_worth` — `senate-net-worth`
-- [ ] implemented `senate_net_worth_aggregated` — `senate-net-worth-aggregated`
-- [ ] implemented `senate_positions` — `senate-positions`
-- [ ] implemented `senate_profile` — `senate-profile`
-- [ ] implemented `senate_trades` — `senate-trades`
-- [ ] implemented `senate_trades_by_id` — `senate-trades-by-id`
-- [ ] implemented `senate_trades_by_name` — `senate-trades-by-name`
+- [x] unit `house_latest` — `house-latest`
+- [x] unit `house_trades` — `house-trades`
+- [x] unit `house_trades_by_id` — `house-trades-by-id`
+- [x] unit `house_trades_by_name` — `house-trades-by-name`
+- [x] unit `senate_latest` — `senate-latest`
+- [x] unit `senate_net_worth` — `senate-net-worth`
+- [x] unit `senate_net_worth_aggregated` — `senate-net-worth-aggregated`
+- [x] unit `senate_positions` — `senate-positions`
+- [x] unit `senate_profile` — `senate-profile`
+- [x] unit `senate_trades` — `senate-trades`
+- [x] unit `senate_trades_by_id` — `senate-trades-by-id`
+- [x] unit `senate_trades_by_name` — `senate-trades-by-name`
 
 ## `client.bulk` — Whole-universe bulk downloads.
 
 > **Likely Bucket 2 (Ultimate-gated):** Confirmed Ultimate-only in the pricing audit.
-> **Implemented, not yet live-tested this session.** 17 of 18 methods return every
+> **Implemented and unit-tested 2026-08-23; live-testing pending.** 17 of 18 methods return every
 > field as a JSON string, including semantically numeric/boolean fields — a real,
 > documented quirk (see `types/bulk.py`'s module docstring), not a transcription
 > choice. `profile_bulk` is the lone exception (real JSON types) and reuses
@@ -527,29 +529,29 @@ then live-testing everything not already Bucket-2-confirmed.
 
 18 methods.
 
-- [ ] implemented `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk`
-- [ ] implemented `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk`
-- [ ] implemented `cash_flow_statement_bulk` — `cash-flow-statement-bulk`
-- [ ] implemented `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk`
-- [ ] implemented `dcf_bulk` — `dcf-bulk`
-- [ ] implemented `earnings_surprises_bulk` — `earnings-surprises-bulk`
-- [ ] implemented `eod_bulk` — `eod-bulk`
-- [ ] implemented `etf_holder_bulk` — `etf-holder-bulk`
-- [ ] implemented `income_statement_bulk` — `income-statement-bulk`
-- [ ] implemented `income_statement_growth_bulk` — `income-statement-growth-bulk`
-- [ ] implemented `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk`
-- [ ] implemented `peers_bulk` — `peers-bulk`
-- [ ] implemented `price_target_summary_bulk` — `price-target-summary-bulk`
-- [ ] implemented `profile_bulk` — `profile-bulk`
-- [ ] implemented `rating_bulk` — `rating-bulk`
-- [ ] implemented `ratios_ttm_bulk` — `ratios-ttm-bulk`
-- [ ] implemented `scores_bulk` — `scores-bulk`
-- [ ] implemented `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk`
+- [x] unit `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk`
+- [x] unit `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk`
+- [x] unit `cash_flow_statement_bulk` — `cash-flow-statement-bulk`
+- [x] unit `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk`
+- [x] unit `dcf_bulk` — `dcf-bulk`
+- [x] unit `earnings_surprises_bulk` — `earnings-surprises-bulk`
+- [x] unit `eod_bulk` — `eod-bulk`
+- [x] unit `etf_holder_bulk` — `etf-holder-bulk`
+- [x] unit `income_statement_bulk` — `income-statement-bulk`
+- [x] unit `income_statement_growth_bulk` — `income-statement-growth-bulk`
+- [x] unit `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk`
+- [x] unit `peers_bulk` — `peers-bulk`
+- [x] unit `price_target_summary_bulk` — `price-target-summary-bulk`
+- [x] unit `profile_bulk` — `profile-bulk`
+- [x] unit `rating_bulk` — `rating-bulk`
+- [x] unit `ratios_ttm_bulk` — `ratios-ttm-bulk`
+- [x] unit `scores_bulk` — `scores-bulk`
+- [x] unit `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk`
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
 > **Likely Bucket 2 (Ultimate-gated):** Not in the original pricing audit by name (found later via docs), but licensed partner data — treat as Ultimate-only until proven otherwise.
-> **Implemented, not yet live-tested this session.** `tipranks_pit_symbol` and
+> **Implemented and unit-tested 2026-08-23; live-testing pending.** `tipranks_pit_symbol` and
 > `tipranks_pit_analyst` share one response type (`TipranksPointInTimeResult`) —
 > identical fields in both documented examples. The 3 summary methods
 > (`tipranks_symbol_summary`/`tipranks_analyst_summary`/`tipranks_firm_summary`) each
@@ -559,10 +561,10 @@ then live-testing everything not already Bucket-2-confirmed.
 
 7 methods.
 
-- [ ] implemented `tipranks_analyst_summary` — `tipranks-analyst-summary`
-- [ ] implemented `tipranks_analysts` — `tipranks-analysts`
-- [ ] implemented `tipranks_firm_summary` — `tipranks-firm-summary`
-- [ ] implemented `tipranks_pit_analyst` — `tipranks-pit-analyst`
-- [ ] implemented `tipranks_pit_symbol` — `tipranks-pit-symbol`
-- [ ] implemented `tipranks_search` — `tipranks-search`
-- [ ] implemented `tipranks_symbol_summary` — `tipranks-symbol-summary`
+- [x] unit `tipranks_analyst_summary` — `tipranks-analyst-summary`
+- [x] unit `tipranks_analysts` — `tipranks-analysts`
+- [x] unit `tipranks_firm_summary` — `tipranks-firm-summary`
+- [x] unit `tipranks_pit_analyst` — `tipranks-pit-analyst`
+- [x] unit `tipranks_pit_symbol` — `tipranks-pit-symbol`
+- [x] unit `tipranks_search` — `tipranks-search`
+- [x] unit `tipranks_symbol_summary` — `tipranks-symbol-summary`
