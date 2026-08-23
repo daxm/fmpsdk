@@ -34,6 +34,10 @@ class CongressionalTradeResult(TypedDict):
 
 
 class SenateProfileResult(TypedDict):
+    """A member of Congress's profile: party, state, position, years
+    active. Despite the name, covers House members too. Returned by
+    `senate_profile()`."""
+
     senateID: str
     firstName: str
     lastName: str
@@ -47,6 +51,9 @@ class SenateProfileResult(TypedDict):
 
 
 class SenatePositionResult(TypedDict):
+    """One congressional position a member has held, with term dates,
+    party, and state. Returned by `senate_positions()`."""
+
     senateID: str
     congressNumber: int
     startDate: str
@@ -58,6 +65,10 @@ class SenatePositionResult(TypedDict):
 
 
 class SenateNetWorthResult(TypedDict):
+    """One itemized net-worth disclosure line (an asset, liability, or
+    income entry) for one member in one filing year. Returned by
+    `senate_net_worth()`."""
+
     senateID: str
     formType: str
     year: int
@@ -78,6 +89,9 @@ class SenateNetWorthResult(TypedDict):
 
 
 class SenateNetWorthAggregatedResult(TypedDict):
+    """Aggregated net-worth totals for one member by year, grouped by
+    asset/liability type. Returned by `senate_net_worth_aggregated()`."""
+
     senateID: str
     year: int
     total: float

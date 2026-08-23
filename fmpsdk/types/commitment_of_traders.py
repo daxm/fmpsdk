@@ -145,6 +145,10 @@ class CommitmentOfTradersReportResult(TypedDict):
 
 
 class CommitmentOfTradersAnalysisResult(TypedDict):
+    """Derived sentiment analysis (bullish/bearish market situation, net
+    position change, reversal-trend flag) built on top of the raw COT
+    report. Returned by `commitment_of_traders_analysis()`."""
+
     symbol: str
     date: str
     name: str
@@ -164,5 +168,8 @@ class CommitmentOfTradersAnalysisResult(TypedDict):
 
 
 class CommitmentOfTradersListResult(TypedDict):
+    """One symbol a COT report is available for. Returned by
+    `commitment_of_traders_list()`."""
+
     symbol: str
     name: str

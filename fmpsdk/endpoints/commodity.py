@@ -1,10 +1,8 @@
-"""client.commodity — Commodity instrument reference list
-(REWRITE_ARCHITECTURE.md §6, ``client.commodity``). 1 primary method.
-``quote``, ``quote_short``, ``batch_commodity_quotes``,
+"""client.commodity — Commodity instrument reference list. 1 primary
+method; ``quote``, ``quote_short``, ``batch_commodity_quotes``,
 ``historical_chart``, ``historical_price_eod_full``, and
-``historical_price_eod_light`` are cross-listed in from ``client.quote``/
-``client.chart`` once those groups exist — see §4.3 and the workflow note
-in ``groups.py``.
+``historical_price_eod_light`` are also reachable here from
+``client.quote``/``client.chart``.
 """
 
 from __future__ import annotations

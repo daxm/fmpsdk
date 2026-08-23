@@ -8,6 +8,9 @@ from typing import TypedDict
 
 
 class CommoditiesListResult(TypedDict):
+    """One tradable commodity FMP tracks, with symbol, trade month, and
+    currency. Returned by `commodities_list()`."""
+
     symbol: str
     name: str
     exchange: str | None

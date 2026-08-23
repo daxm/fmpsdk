@@ -1,17 +1,13 @@
 """client.congress — U.S. Senate and House financial disclosures, trades,
-and member profiles (REWRITE_ARCHITECTURE.md §6, ``client.congress``). 12
-canonical methods, no cross-listings.
+and member profiles. 12 methods. Only the two parameterless listings,
+``house_latest`` and ``senate_latest``, work on the free tier — every
+other, symbol/id/name-scoped method here requires an FMP Ultimate-tier
+plan.
 
-§7.5's parameter-naming bug: ``house_trades_by_id`` takes a query
-parameter whose wire name is genuinely ``senateID``, even though it's a
-House endpoint. This is a bug in FMP's API, not their docs — mirrored
-here as-is rather than "fixed" with an invented ``member_id`` alias.
-Exposed as the Python parameter ``senate_id`` on **both**
-``house_trades_by_id`` and ``senate_trades_by_id`` (and the other
-``senateID``-taking methods) because that's what a user would see in a
-request log or FMP's own docs — a House method taking ``senate_id`` looks
-like *our* bug, so this is called out loudly in that method's docstring
-too.
+Every method that takes a member ID names its parameter ``senate_id``,
+including the House ones (``house_trades_by_id``) — that's FMP's own
+wire parameter name (``senateID``) even on House endpoints, not a typo
+introduced here.
 """
 
 from __future__ import annotations
@@ -69,11 +65,9 @@ class CongressEndpoints:
         """``GET house-trades-by-id`` — one House member's trades, looked
         up by member ID.
 
-        :param senate_id: the House member's ID. **Yes, ``senate_id`` on
-            a House method** — this is a real bug in FMP's own API (the
-            wire parameter really is ``senateID`` here, not a doc typo or
-            a mistake in this SDK), mirrored as-is per §7.5. Example:
-            ``"P000197"``.
+        :param senate_id: the House member's ID, e.g. ``"P000197"``. Yes,
+            ``senate_id`` on a House method — FMP's own wire parameter
+            for this endpoint really is named ``senateID``.
         :param page: zero-indexed page number.
         :param limit: max results per page.
         """

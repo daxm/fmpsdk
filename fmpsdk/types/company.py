@@ -50,6 +50,9 @@ class ProfileResult(TypedDict):
 
 
 class CompanyNotesResult(TypedDict):
+    """One corporate debt note the company has issued, with exchange
+    listing. Returned by `company_notes()`."""
+
     cik: str
     symbol: str
     title: str
@@ -57,6 +60,9 @@ class CompanyNotesResult(TypedDict):
 
 
 class StockPeersResult(TypedDict):
+    """One peer company: same exchange, sector, and market-cap range.
+    Returned by `stock_peers()`."""
+
     symbol: str
     companyName: str
     price: float
@@ -64,6 +70,9 @@ class StockPeersResult(TypedDict):
 
 
 class DelistedCompanyResult(TypedDict):
+    """One company removed from public exchanges. Returned by
+    `delisted_companies()`."""
+
     symbol: str
     companyName: str
     exchange: str
@@ -100,6 +109,9 @@ class MarketCapResult(TypedDict):
 
 
 class SharesFloatResult(TypedDict):
+    """Publicly tradable share count and free float percentage for one
+    company. Returned by `shares_float()`."""
+
     symbol: str
     date: str
     freeFloat: float
@@ -137,6 +149,9 @@ class MergersAcquisitionsResult(TypedDict):
 
 
 class KeyExecutiveResult(TypedDict):
+    """One member of company leadership: name, title, pay, and
+    demographic detail. Returned by `key_executives()`."""
+
     title: str
     name: str
     pay: float | None
@@ -151,6 +166,10 @@ class KeyExecutiveResult(TypedDict):
 
 
 class ExecutiveCompensationResult(TypedDict):
+    """One executive's detailed compensation filing: salary, bonus,
+    stock/option awards, total. Returned by
+    `governance_executive_compensation()`."""
+
     cik: str
     symbol: str
     companyName: str
@@ -169,6 +188,10 @@ class ExecutiveCompensationResult(TypedDict):
 
 
 class ExecutiveCompensationBenchmarkResult(TypedDict):
+    """Average executive compensation for one industry, for
+    cross-company benchmarking. Returned by
+    `executive_compensation_benchmark()`."""
+
     industryTitle: str
     year: int
     averageCompensation: float

@@ -1,8 +1,8 @@
-"""client.commitment_of_traders — CFTC Commitment-of-Traders reports and
-analysis (REWRITE_ARCHITECTURE.md §6, ``client.commitment_of_traders``).
-3 canonical methods, no cross-listings. Unlike most of the catalog,
-``symbol`` is optional here — FMP's own docs don't mark it required for
-either the report or the analysis endpoint.
+"""client.commitment_of_traders — CFTC Commitment of Traders reports and
+derived sentiment analysis for futures/commodity markets. 3 methods.
+Requires an FMP Ultimate-tier plan — every method 402s on the free
+tier. Unlike most of this package, ``symbol`` is optional on the report
+and analysis methods — omit it for the whole market.
 """
 
 from __future__ import annotations
