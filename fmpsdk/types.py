@@ -2513,4 +2513,3 @@ class AdxResult(TypedDict):
     close: float
     volume: int
     adx: float
-    splitType: str
