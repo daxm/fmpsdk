@@ -175,6 +175,21 @@ class EsgGroup:
         self.esg_ratings = bind("esg_ratings")
 
 
+class FundsGroup:
+    """``client.funds`` — 9 primary methods, no cross-listings."""
+
+    def __init__(self, bind: _MethodBinder) -> None:
+        self.etf_asset_exposure = bind("etf_asset_exposure")
+        self.etf_country_weightings = bind("etf_country_weightings")
+        self.etf_holdings = bind("etf_holdings")
+        self.etf_info = bind("etf_info")
+        self.etf_sector_weightings = bind("etf_sector_weightings")
+        self.funds_disclosure = bind("funds_disclosure")
+        self.funds_disclosure_dates = bind("funds_disclosure_dates")
+        self.funds_disclosure_holders_latest = bind("funds_disclosure_holders_latest")
+        self.funds_disclosure_holders_search = bind("funds_disclosure_holders_search")
+
+
 def attach_groups(client: "Client") -> None:
     """Attach every alias-group namespace to ``client``.
 
@@ -194,3 +209,4 @@ def attach_groups(client: "Client") -> None:
     client.dcf = DcfGroup(bind)
     client.economics = EconomicsGroup(bind)
     client.esg = EsgGroup(bind)
+    client.funds = FundsGroup(bind)

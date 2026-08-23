@@ -24,7 +24,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 42 / 238 methods done** (28 more implemented + unit-tested, pending
+**Progress: 42 / 238 methods done** (37 more implemented + unit-tested, pending
 Ultimate verification).
 
 ---
@@ -197,15 +197,20 @@ Ultimate verification).
 
 9 methods.
 
-- [ ] `etf_asset_exposure` — `etf/asset-exposure`
-- [ ] `etf_country_weightings` — `etf/country-weightings`
-- [ ] `etf_holdings` — `etf/holdings`
-- [ ] `etf_info` — `etf/info`
-- [ ] `etf_sector_weightings` — `etf/sector-weightings`
-- [ ] `funds_disclosure` — `funds/disclosure`
-- [ ] `funds_disclosure_dates` — `funds/disclosure-dates`
-- [ ] `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest`
-- [ ] `funds_disclosure_holders_search` — `funds/disclosure-holders-search`
+> **Correction to the group directory's Bucket assignment:** not flagged as
+> Bucket 2 in REWRITE_ARCHITECTURE.md §3.5, but live-testing found all 9
+> methods 402 on the free tier. Reclassified below per the workflow doc's
+> "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
+
+- [x] ultimate-pending `etf_asset_exposure` — `etf/asset-exposure` (402 on free tier)
+- [x] ultimate-pending `etf_country_weightings` — `etf/country-weightings` (402 on free tier)
+- [x] ultimate-pending `etf_holdings` — `etf/holdings` (402 on free tier)
+- [x] ultimate-pending `etf_info` — `etf/info` (402 on free tier)
+- [x] ultimate-pending `etf_sector_weightings` — `etf/sector-weightings` (402 on free tier)
+- [x] ultimate-pending `funds_disclosure` — `funds/disclosure` (402 on free tier)
+- [x] ultimate-pending `funds_disclosure_dates` — `funds/disclosure-dates` (402 on free tier)
+- [x] ultimate-pending `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (402 on free tier)
+- [x] ultimate-pending `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (402 on free tier)
 
 ## `client.statements` — Financial statements and everything computed directly from them.
 
