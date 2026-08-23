@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fmpsdk"
 version = "20250102.0"
-description = ""
+description = "A Python SDK for the Financial Modeling Prep (FMP) stable API — typed responses, automatic retries, and methods organized into per-category client namespaces."
 authors = ["Dax Mickelson <github@daxm.net>"]
 readme = "README.md"
 license = "BSD-3-Clause"
