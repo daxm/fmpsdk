@@ -12,7 +12,12 @@ reshuffling its API, then I had a personal issue delay me further. Things are ba
 Because of that gap, roughly half of this package's old methods had gone defunct against FMP's
 current API, so rather than patch around that I rebuilt it from scratch against FMP's `stable/`
 API. If you're on `20250102.0` or earlier you're on the old, pre-rewrite methods; anything newer
-uses the schema described below.
+uses the schema described below. Old releases are yanked from PyPI (a plain `pip install fmpsdk`
+now always gets the rewrite), but still installable if you pin one explicitly, e.g.
+`pip install fmpsdk==20250102.0` — note that won't actually restore functionality, though: FMP
+sunset the legacy `/api/v3/` API those old methods called entirely on 2025-08-31, so a pinned old
+version installs fine but its calls will fail regardless. It's there for compatibility with
+existing pinned requirements files while you migrate, not as a way to keep avoiding the rewrite.
 
 ## What's covered
 
