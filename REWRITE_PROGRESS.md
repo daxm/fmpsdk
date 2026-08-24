@@ -17,6 +17,10 @@ Commit it alongside the method(s) it tracks, as its own line in the diff.
 - `[x] done` — implemented, unit-tested, live-verified on some real tier, nothing left.
   Check the parenthetical: plain `done` with no tier note means free-tier; `(works on
   Starter tier; ...)` etc. means it needed that paid tier or higher
+- `[x] untested (community add-on)` — implemented and unit-tested (mocked only); gated
+  behind something outside the Free/Starter/Premium/Ultimate ladder entirely (a separate
+  FMP add-on purchase) that this maintainer has decided not to buy. Permanent, not a
+  todo — only a community PR with real verification can move one of these to `done`.
 - `[ ] blocked: <reason>` — attempted, hit something unexpected (e.g. a doc/reality
   mismatch worth flagging), not resolved yet
 
@@ -35,7 +39,8 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 231 / 238 methods done, 7 ultimate-pending, 0 left untested.** **This
+**Progress: 231 / 238 methods done, 7 untested (community add-on — see the 2026-08-24
+entry below), 0 left ultimate-pending.** **This
 is the full 238/238 catalog now implemented in code, and every single method has now
 been attempted at least once (unit-tested, and live-tested except where already
 Bucket-2-confirmed)** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
@@ -137,7 +142,16 @@ session: `quote`'s module docstring had wrongly claimed 7 `batch_*` methods were
 
 **This closes out the entire standard-tier testing backlog — 231/238 done, with the
 remaining 7 blocked on a separate product purchase (TipRanks add-on) rather than a plan
-tier, and nothing left to re-test unless Dax buys that add-on.**
+tier.**
+
+**2026-08-24, same day — Dax decided not to buy the TipRanks add-on.** The project's
+testing effort ends here, permanently, not as a "waiting for the next tier" pause: the 7
+`tipranks` methods are retagged `untested (community add-on)` rather than
+`ultimate-pending`, since there's no further FMP purchase planned that would move them.
+README and `fmpsdk/endpoints/tipranks.py`'s module docstring updated to say so plainly —
+implemented and unit-tested (mocked) like everything else, but never verified against a
+real response, and that's expected to stay true unless a user with the add-on sends a PR.
+**There is no more tier-testing work left in this project.**
 
 ---
 
@@ -659,7 +673,13 @@ tier, and nothing left to re-test unless Dax buys that add-on.**
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
-> **Confirmed Bucket 2 (Ultimate-gated), 2026-08-23:** all 7 methods 402'd, matching
+> **Update, 2026-08-24:** re-tested through every standard FMP tier up to and including
+> Ultimate — all 7 still 402. FMP's own error message says why: this needs a separate
+> paid add-on ("TipRanks data boost"), not covered by any Free/Starter/Premium/Ultimate
+> plan. Dax has decided not to buy it, so this group stays permanently
+> `untested (community add-on)` — see the dated entries near the top of this file.
+>
+> **Original note, 2026-08-23:** all 7 methods 402'd on the free tier, matching
 > the workflow doc's treat-as-Ultimate-until-proven-otherwise call — the whole group.
 > `tipranks_pit_symbol` and `tipranks_pit_analyst` share one response type
 > (`TipranksPointInTimeResult`) — identical fields in both documented examples. The 3
@@ -670,10 +690,10 @@ tier, and nothing left to re-test unless Dax buys that add-on.**
 
 7 methods.
 
-- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
-- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
-- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
-- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
-- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
-- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
-- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] untested (community add-on) `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)
+- [x] untested (community add-on) `tipranks_analysts` — `tipranks-analysts` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)
+- [x] untested (community add-on) `tipranks_firm_summary` — `tipranks-firm-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)
+- [x] untested (community add-on) `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)
+- [x] untested (community add-on) `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)
+- [x] untested (community add-on) `tipranks_search` — `tipranks-search` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)
+- [x] untested (community add-on) `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on; Dax has decided not to buy it, so this stays untested)

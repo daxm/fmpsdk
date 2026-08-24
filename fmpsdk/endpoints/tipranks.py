@@ -4,6 +4,12 @@ data. 7 methods. **Not gated by plan tier at all** — confirmed
 tier. FMP's own error message names the real requirement: a separate
 paid add-on ("TipRanks data boost"), purchased independently of the
 Free/Starter/Premium/Ultimate ladder, via the dashboard's Add-ons tab.
+
+This maintainer doesn't have that add-on and isn't buying it, so these
+7 methods are implemented and unit-tested (mocked) but **never
+verified against a real response** — unlike every other group in this
+package. Field names/shapes below come from FMP's documented examples
+only. If you have the add-on and find a mismatch, a PR is welcome.
 """
 
 from __future__ import annotations

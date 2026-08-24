@@ -32,8 +32,10 @@ under a matching namespace, e.g. `client.statements.income_statement(...)`:
   trading, market movers
 - **Bulk downloads** — whole-universe data dumps, one call instead of one per symbol
 
-Every method's own docstring says whether it works on FMP's free tier or requires an
-Ultimate-tier plan — see [Pricing tiers](#pricing-tiers) below.
+Every method's own docstring says which FMP plan tier it needs (Free/Starter/Premium/
+Ultimate) — see [Pricing tiers](#pricing-tiers) below. One exception: the 7
+`client.tipranks` methods are implemented and unit-tested but **untested against a real
+response** — see that section for why.
 
 ## How to Use
 1. Requires Python 3.9+. Install the package: `pip install fmpsdk python-dotenv` (`python-dotenv`
@@ -65,7 +67,7 @@ print(f"Company Profile: {client.company.profile(symbol=symbol)}")
 try:
     client.statements.income_statement_ttm(symbol=symbol)
 except fmpsdk.FMPPlanLimitError:
-    print("This endpoint needs an FMP Ultimate-tier plan.")
+    print("Your FMP plan doesn't cover this endpoint — check its docstring for which tier does.")
 except fmpsdk.FMPAuthenticationError:
     print("Check your FMP_API_KEY.")
 ```
@@ -76,11 +78,21 @@ shadows the top-level `quote()` method of the same name — call that one as
 `client.quote.quote(symbol="AAPL")`.
 
 ## Pricing tiers
-FMP gates a lot of endpoints behind its paid Ultimate-tier plan; a gated call raises
-`fmpsdk.FMPPlanLimitError` rather than returning data. There's no single tier table to keep in
-sync here — instead, every group module's docstring (e.g. `fmpsdk/endpoints/search.py`) and every
-method's own docstring says plainly whether it's free-tier or Ultimate-tier, right next to the
-code that calls it. Check those, or just try the call and catch `FMPPlanLimitError`.
+FMP's plans form a ladder — Free, Starter, Premium, Ultimate — and each one adds more
+endpoints on top of the last. A call your plan doesn't cover raises
+`fmpsdk.FMPPlanLimitError` rather than returning data. There's no single tier table to keep
+in sync here — instead, every group module's docstring (e.g. `fmpsdk/endpoints/search.py`)
+and every method's own docstring says plainly which tier it needs, right next to the code
+that calls it, verified live against a real key at every tier from Free through Ultimate.
+Check those, or just try the call and catch `FMPPlanLimitError`.
+
+**One exception, outside that ladder entirely: `client.tipranks`'s 7 methods.** They still
+402 even on Ultimate — FMP's own error message says why: TipRanks data needs a separate
+paid add-on ("TipRanks data boost"), bought independently of the four plan tiers above. We
+haven't purchased it, so these 7 methods are implemented and unit-tested (mocked) but
+**never verified against a real response** — treat them as unverified rather than
+confirmed-working. If you have that add-on and hit a bug in one of them, a PR with the fix
+(and what the real response actually looks like) is welcome.
 
 ## License
 BSD 3-Clause — see [LICENSE.md](LICENSE.md).
