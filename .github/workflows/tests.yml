@@ -1,7 +1,11 @@
-# Run the mocked unit test suite on pull requests and pushes to master.
-# Deliberately does NOT run the `live`/`ultimate` markers — those need a real
-# FMP_API_KEY and spend real API quota, so they stay a manual/local step, not CI.
-name: Unit tests
+# Run black formatting check + the mocked unit test suite on pull requests and
+# pushes to master. Deliberately does NOT run the `live`/`ultimate` markers --
+# those need a real FMP_API_KEY and spend real API quota, so they stay a
+# manual/local step, not CI. (This replaced the old black.yml, which was
+# mislabeled "--check mode" but actually ran `isort . && black .` with no
+# --check flag -- it silently reformatted in the ephemeral runner and never
+# failed the build. This workflow's black step is a real gate.)
+name: CI
 on: [push, pull_request]
 jobs:
   unit:
@@ -21,6 +25,8 @@ jobs:
         python -VV
         python -m pip install --upgrade pip
         pip install .
-        pip install pytest requests-mock python-dotenv pytest-recording
+        pip install black pytest requests-mock python-dotenv pytest-recording
+    - name: Check formatting
+      run: black --check fmpsdk/
     - name: Run unit tests
       run: pytest -m unit

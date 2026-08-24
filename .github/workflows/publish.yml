@@ -5,10 +5,10 @@
 #
 # Triggered by pushing a version tag (e.g. `v20260824.0`) -- which
 # deploy_a_release.sh does as its last step, only after the unit suite, a
-# local build, and a human confirming the version all pass. black --check
-# and pytest both run again here too -- this workflow, not the separate
-# black.yml one, is the real gate for a release: nothing else here is
-# conditioned on black.yml's result.
+# local build, and a human confirming the version all pass. black --check and
+# pytest both run again here too, independent of tests.yml's own copy of both
+# (which runs on every push/PR, not just a release tag) -- this workflow is
+# the one whose outcome actually blocks a release.
 name: Publish to PyPI
 on:
   push:
