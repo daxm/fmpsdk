@@ -16,7 +16,7 @@ from .exceptions import (
     FMPValidationError,
 )
 
-__version__ = "20250102.0"
+__version__ = "20260824.0"
 
 __all__ = [
     "Client",
