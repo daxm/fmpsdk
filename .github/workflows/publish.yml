@@ -4,8 +4,11 @@
 # configured on PyPI's project settings -> Publishing page.
 #
 # Triggered by pushing a version tag (e.g. `v20260824.0`) -- which
-# deploy_a_release.sh does as its last step, only after black, the unit
-# suite, and a local build all pass and a human has confirmed the version.
+# deploy_a_release.sh does as its last step, only after the unit suite, a
+# local build, and a human confirming the version all pass. black --check
+# and pytest both run again here too -- this workflow, not the separate
+# black.yml one, is the real gate for a release: nothing else here is
+# conditioned on black.yml's result.
 name: Publish to PyPI
 on:
   push:
@@ -30,6 +33,8 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install --with dev
+      - name: Check formatting
+        run: poetry run black --check fmpsdk/
       - name: Run unit tests
         run: poetry run pytest -m unit
       - name: Build

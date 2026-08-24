@@ -5,27 +5,18 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 echo "Building a new release of fmpsdk!"
 echo
 
-for cmd in poetry black pytest git; do
+for cmd in poetry pytest git; do
     if ! command -v "$cmd" >/dev/null 2>&1; then
         echo "'$cmd' isn't on PATH. Did you 'source .venv/bin/activate' first?"
         exit 1
     fi
 done
 
-# --- 1. Formatting check, fmpsdk/ only -- that's the code that actually ships to
-#     PyPI. (tests/ can carry its own independent drift; that's a separate concern
-#     from whether a release is safe to cut.) ---
-echo "Checking black formatting on fmpsdk/ ..."
-if ! black --check fmpsdk/; then
-    echo
-    echo "fmpsdk/ isn't black-formatted. Run 'black fmpsdk/' and re-run this script."
-    exit 1
-fi
-echo "OK."
-echo
-
-# --- 2. Unit tests. No network, no API quota spent -- the whole point of having
-#     268 of them is to catch a regression here, not after it's on PyPI. ---
+# --- 1. Unit tests. No network, no API quota spent -- the whole point of having
+#     268 of them is to catch a regression here, not after it's on PyPI.
+#     (Formatting isn't checked here anymore -- .github/workflows/publish.yml runs
+#     black --check as a real gate on the tag push this script ends with, so a
+#     second local copy of that check would just be duplicated effort.) ---
 echo "Running unit tests..."
 if ! pytest -m unit -q; then
     echo
@@ -35,7 +26,7 @@ fi
 echo "OK."
 echo
 
-# --- 3. poetry's own sanity check on pyproject.toml ---
+# --- 2. poetry's own sanity check on pyproject.toml ---
 echo "Running poetry check..."
 if ! poetry check; then
     echo
@@ -45,7 +36,7 @@ fi
 echo "OK."
 echo
 
-# --- 4. The version is declared in two places: pyproject.toml (what actually gets
+# --- 3. The version is declared in two places: pyproject.toml (what actually gets
 #     published) and fmpsdk/__init__.py's __version__ (what `import fmpsdk;
 #     fmpsdk.__version__` reports at runtime for anyone who installs it). If these
 #     drift, the installed package lies about its own version. Both must be bumped

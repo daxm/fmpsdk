@@ -19,6 +19,7 @@ pytest = "*"
 requests-mock = "*"
 python-dotenv = "*"
 pytest-recording = "*"
+black = "*"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
