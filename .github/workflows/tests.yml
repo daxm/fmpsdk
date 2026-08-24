@@ -1,0 +1,26 @@
+# Run the mocked unit test suite on pull requests and pushes to master.
+# Deliberately does NOT run the `live`/`ultimate` markers — those need a real
+# FMP_API_KEY and spend real API quota, so they stay a manual/local step, not CI.
+name: Unit tests
+on: [push, pull_request]
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        set -xe
+        python -VV
+        python -m pip install --upgrade pip
+        pip install .
+        pip install pytest requests-mock python-dotenv pytest-recording
+    - name: Run unit tests
+      run: pytest -m unit

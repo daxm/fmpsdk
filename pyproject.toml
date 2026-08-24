@@ -5,6 +5,10 @@ description = "A Python SDK for the Financial Modeling Prep (FMP) stable API —
 authors = ["Dax Mickelson <github@daxm.net>"]
 readme = "README.md"
 license = "BSD-3-Clause"
+# PEP 561: ships fmpsdk/py.typed so type checkers (mypy, pyright) treat this
+# package's own type hints as authoritative instead of falling back to
+# untyped/Any for anyone who imports it.
+include = ["fmpsdk/py.typed"]
 
 [tool.poetry.dependencies]
 python = ">=3.9"

@@ -1,0 +1,57 @@
+# fmpsdk
+
+> Python SDK for the Financial Modeling Prep (FMP) `stable/` API. 238 methods across 29
+> data groups, each reachable as both `client.<method>(...)` and `client.<group>.<method>(...)`.
+> Typed responses (`TypedDict`), automatic retries, and typed exceptions instead of `None`
+> or error-shaped dicts on a bad call.
+
+Before writing any code against this package: don't guess method names, parameters, or
+return shapes. Every one of them is documented inline, verified against real API
+responses, and cheap to read directly — treat the source as the reference, not this file.
+
+## Start here
+
+- README.md: install command, the `Client()` pattern, a full working example, the
+  `client.quote` naming gotcha (it's a namespace, not the `quote()` method), and how
+  FMP's plan tiers work.
+- fmpsdk/client.py: the `Client` class itself — constructor options (timeouts, retry
+  count), and the module docstring's one-line note on the namespace-vs-method shadowing.
+- fmpsdk/exceptions.py: the typed exception hierarchy raised on any non-2xx response
+  (`FMPPlanLimitError`, `FMPAuthenticationError`, `FMPNotFoundError`, `FMPRateLimitError`,
+  `FMPServerError`, `FMPValidationError`) — catch these, don't parse error strings.
+
+## Method and type reference
+
+- fmpsdk/endpoints/*.py: one file per data group (`analyst.py`, `bulk.py`, `calendar.py`,
+  `chart.py`, `commitment_of_traders.py`, `commodity.py`, `company.py`, `congress.py`,
+  `crypto.py`, `dcf.py`, `directory.py`, `earnings_transcript.py`, `economics.py`,
+  `esg.py`, `forex.py`, `fundraisers.py`, `funds.py`, `indexes.py`, `insider_trades.py`,
+  `institutional_ownership.py`, `market_hours.py`, `market_performance.py`, `news.py`,
+  `quote.py`, `search.py`, `sec_filings.py`, `statements.py`, `technical_indicators.py`,
+  `tipranks.py`). Every method's docstring states its real FMP wire path, every
+  parameter, its return type, and — plainly, not as a caveat to dig for — exactly which
+  FMP plan tier it needs (Free/Starter/Premium/Ultimate), verified live at every tier.
+  The one exception is `tipranks.py`: unit-tested but never live-verified (needs a
+  separate FMP add-on this project doesn't have — see CONTRIBUTING.md).
+- fmpsdk/types/*.py: the `TypedDict` response shape returned by each method, one module
+  per group matching `endpoints/`. Field-level docstrings flag anything non-obvious
+  (FMP's own typos kept verbatim, a field shadowing a Python keyword, an all-string CSV
+  response, etc.) — read the type before assuming a field's real name or presence.
+- The package ships `py.typed` (PEP 561) — a type checker (mypy, pyright) resolves every
+  method's real signature and every response's real `TypedDict`, so prefer trusting
+  that over re-deriving field names from a printed dict at runtime.
+
+## Contributing
+
+- CONTRIBUTING.md: dev setup, the `unit`/`live`/`ultimate` pytest markers, the
+  live-testing discipline for adding or fixing an endpoint, and specifically how to
+  verify and PR a fix for the untested `tipranks` group.
+- REWRITE_PROGRESS.md: the authoritative status of every one of the 238 methods (built,
+  unit-tested, live-verified against which tier, or still untested) — check this before
+  assuming a method is broken or unverified.
+
+## Background, not needed to just use the package
+
+- REWRITE_ARCHITECTURE.md / REWRITE_DESIGN_BRIEF.md: the design docs behind this
+  package's ground-up rewrite (naming/taxonomy decisions, corrected legacy constants).
+  Historical reasoning, not a usage guide.

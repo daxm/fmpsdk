@@ -94,6 +94,10 @@ haven't purchased it, so these 7 methods are implemented and unit-tested (mocked
 confirmed-working. If you have that add-on and hit a bug in one of them, a PR with the fix
 (and what the real response actually looks like) is welcome.
 
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) — dev setup, the unit/live/ultimate test tiers, and
+specifically how to verify and PR a fix for the untested `tipranks` methods above.
+
 ## License
 BSD 3-Clause — see [LICENSE.md](LICENSE.md).
 
