@@ -1,17 +1,16 @@
-"""Ultimate-tier (Bucket 2) live tests for client.esg.
+"""Live tests for client.esg against the real FMP API.
 
-Confirms the workflow doc's original pricing-tier audit, which already
-named ESG as FMP-Ultimate-gated: all 3 methods 402 on the free tier.
-Skipped by default (`-m "not ultimate"` / excluded unless explicitly
-selected); run for real only during a deliberately-timed FMP Ultimate
-month, per the rewrite workflow.
+All methods below were confirmed on 2026-08-24 to require an FMP
+Ultimate-tier key (they 402 on free, Starter, and Premium) -- moved
+here from tests/ultimate/test_esg.py once Dax upgraded from
+Premium to Ultimate.
 """
 
 from __future__ import annotations
 
 import pytest
 
-pytestmark = pytest.mark.ultimate
+pytestmark = pytest.mark.live
 
 
 def test_esg_disclosures(live_client):

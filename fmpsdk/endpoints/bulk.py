@@ -1,12 +1,14 @@
 """client.bulk — Whole-universe bulk downloads: one call returns a
 field set for every company FMP covers, instead of one call per symbol.
-18 methods. Still 402s on both the free and Starter tiers as of
-2026-08-23 — every method requires FMP Premium or Ultimate (not yet
-confirmed which).
+18 methods. Requires an FMP Ultimate-tier plan — 402s on free, Starter,
+and Premium (confirmed working on Ultimate 2026-08-24).
 
-Every method except ``profile_bulk`` returns every field as a JSON
-string, including semantically numeric/boolean ones — see
-``types/bulk.py``'s module docstring.
+Every response is real CSV (``text/csv``), not JSON, despite FMP's own
+docs showing JSON-looking examples — confirmed live 2026-08-24,
+including ``profile_bulk`` (previously assumed to be the one exception
+returning real JSON; it doesn't). Every field on every method's result
+comes back as a plain string — see ``types/bulk.py``'s module
+docstring.
 """
 
 from __future__ import annotations
@@ -27,7 +29,7 @@ from ..types import (
     KeyMetricsTtmBulkResult,
     PeersBulkResult,
     PriceTargetSummaryBulkResult,
-    ProfileResult,
+    ProfileBulkResult,
     RatingBulkResult,
     RatiosTtmBulkResult,
     ScoresBulkResult,
@@ -37,35 +39,37 @@ from ..types import (
 
 class BulkEndpoints:
     """Mixed into :class:`fmpsdk.client.Client`. Each method issues one GET
-    against its ``stable/`` path via ``self._get`` (defined on ``Client``).
+    against its ``stable/`` path via ``self._get_csv`` (defined on
+    ``Client``) — every bulk response is real CSV, not JSON.
     """
 
-    def profile_bulk(self, part: str) -> list[ProfileResult]:
+    def profile_bulk(self, part: str) -> list[ProfileBulkResult]:
         """``GET profile-bulk`` — company profiles for a whole page
-        ("part") of the universe at once. Same response shape as
-        `profile`/`profile_cik` — see `ProfileResult`. Unlike every
-        other method in this group, returns real JSON types, not
-        strings.
+        ("part") of the universe at once. Same field set as
+        `profile`/`profile_cik` (`ProfileResult`), but every value is a
+        `str` — see `ProfileBulkResult`.
 
         :param part: which page of the universe to fetch, e.g. ``"0"``.
         """
-        return cast("list[ProfileResult]", self._get("profile-bulk", {"part": part}))
+        return cast(
+            "list[ProfileBulkResult]", self._get_csv("profile-bulk", {"part": part})
+        )
 
     def rating_bulk(self) -> list[RatingBulkResult]:
         """``GET rating-bulk`` — current overall rating and component
         scores for every company at once. No parameters."""
-        return cast("list[RatingBulkResult]", self._get("rating-bulk", {}))
+        return cast("list[RatingBulkResult]", self._get_csv("rating-bulk", {}))
 
     def dcf_bulk(self) -> list[DcfBulkResult]:
         """``GET dcf-bulk`` — discounted-cash-flow valuation for every
         company at once. No parameters."""
-        return cast("list[DcfBulkResult]", self._get("dcf-bulk", {}))
+        return cast("list[DcfBulkResult]", self._get_csv("dcf-bulk", {}))
 
     def scores_bulk(self) -> list[ScoresBulkResult]:
         """``GET scores-bulk`` — Altman Z-Score, Piotroski score, and
         related financial-health metrics for every company at once. No
         parameters."""
-        return cast("list[ScoresBulkResult]", self._get("scores-bulk", {}))
+        return cast("list[ScoresBulkResult]", self._get_csv("scores-bulk", {}))
 
     def price_target_summary_bulk(self) -> list[PriceTargetSummaryBulkResult]:
         """``GET price-target-summary-bulk`` — analyst price-target
@@ -73,7 +77,7 @@ class BulkEndpoints:
         once. No parameters."""
         return cast(
             "list[PriceTargetSummaryBulkResult]",
-            self._get("price-target-summary-bulk", {}),
+            self._get_csv("price-target-summary-bulk", {}),
         )
 
     def etf_holder_bulk(self, part: str) -> list[EtfHolderBulkResult]:
@@ -83,7 +87,8 @@ class BulkEndpoints:
         :param part: which page of the universe to fetch, e.g. ``"1"``.
         """
         return cast(
-            "list[EtfHolderBulkResult]", self._get("etf-holder-bulk", {"part": part})
+            "list[EtfHolderBulkResult]",
+            self._get_csv("etf-holder-bulk", {"part": part}),
         )
 
     def upgrades_downgrades_consensus_bulk(
@@ -94,7 +99,7 @@ class BulkEndpoints:
         parameters."""
         return cast(
             "list[UpgradesDowngradesConsensusBulkResult]",
-            self._get("upgrades-downgrades-consensus-bulk", {}),
+            self._get_csv("upgrades-downgrades-consensus-bulk", {}),
         )
 
     def key_metrics_ttm_bulk(self) -> list[KeyMetricsTtmBulkResult]:
@@ -102,18 +107,18 @@ class BulkEndpoints:
         metrics for every company at once. No parameters — non-filterable,
         always the latest TTM data."""
         return cast(
-            "list[KeyMetricsTtmBulkResult]", self._get("key-metrics-ttm-bulk", {})
+            "list[KeyMetricsTtmBulkResult]", self._get_csv("key-metrics-ttm-bulk", {})
         )
 
     def ratios_ttm_bulk(self) -> list[RatiosTtmBulkResult]:
         """``GET ratios-ttm-bulk`` — trailing-twelve-month financial
         ratios for every company at once. No parameters."""
-        return cast("list[RatiosTtmBulkResult]", self._get("ratios-ttm-bulk", {}))
+        return cast("list[RatiosTtmBulkResult]", self._get_csv("ratios-ttm-bulk", {}))
 
     def peers_bulk(self) -> list[PeersBulkResult]:
         """``GET peers-bulk`` — peer-company list for every company at
         once. No parameters."""
-        return cast("list[PeersBulkResult]", self._get("peers-bulk", {}))
+        return cast("list[PeersBulkResult]", self._get_csv("peers-bulk", {}))
 
     def earnings_surprises_bulk(self, year: str) -> list[EarningsSurprisesBulkResult]:
         """``GET earnings-surprises-bulk`` — actual vs. estimated EPS for
@@ -123,7 +128,7 @@ class BulkEndpoints:
         """
         return cast(
             "list[EarningsSurprisesBulkResult]",
-            self._get("earnings-surprises-bulk", {"year": year}),
+            self._get_csv("earnings-surprises-bulk", {"year": year}),
         )
 
     def income_statement_bulk(
@@ -138,7 +143,7 @@ class BulkEndpoints:
         """
         return cast(
             "list[IncomeStatementBulkResult]",
-            self._get("income-statement-bulk", {"year": year, "period": period}),
+            self._get_csv("income-statement-bulk", {"year": year, "period": period}),
         )
 
     def income_statement_growth_bulk(
@@ -152,7 +157,9 @@ class BulkEndpoints:
         """
         return cast(
             "list[IncomeStatementGrowthBulkResult]",
-            self._get("income-statement-growth-bulk", {"year": year, "period": period}),
+            self._get_csv(
+                "income-statement-growth-bulk", {"year": year, "period": period}
+            ),
         )
 
     def balance_sheet_statement_bulk(
@@ -166,7 +173,9 @@ class BulkEndpoints:
         """
         return cast(
             "list[BalanceSheetStatementBulkResult]",
-            self._get("balance-sheet-statement-bulk", {"year": year, "period": period}),
+            self._get_csv(
+                "balance-sheet-statement-bulk", {"year": year, "period": period}
+            ),
         )
 
     def balance_sheet_statement_growth_bulk(
@@ -180,7 +189,7 @@ class BulkEndpoints:
         """
         return cast(
             "list[BalanceSheetStatementGrowthBulkResult]",
-            self._get(
+            self._get_csv(
                 "balance-sheet-statement-growth-bulk",
                 {"year": year, "period": period},
             ),
@@ -197,7 +206,7 @@ class BulkEndpoints:
         """
         return cast(
             "list[CashFlowStatementBulkResult]",
-            self._get("cash-flow-statement-bulk", {"year": year, "period": period}),
+            self._get_csv("cash-flow-statement-bulk", {"year": year, "period": period}),
         )
 
     def cash_flow_statement_growth_bulk(
@@ -211,7 +220,7 @@ class BulkEndpoints:
         """
         return cast(
             "list[CashFlowStatementGrowthBulkResult]",
-            self._get(
+            self._get_csv(
                 "cash-flow-statement-growth-bulk", {"year": year, "period": period}
             ),
         )
@@ -222,4 +231,4 @@ class BulkEndpoints:
 
         :param date: date, ``YYYY-MM-DD``.
         """
-        return cast("list[EodBulkResult]", self._get("eod-bulk", {"date": date}))
+        return cast("list[EodBulkResult]", self._get_csv("eod-bulk", {"date": date}))

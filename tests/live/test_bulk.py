@@ -1,17 +1,16 @@
-"""Ultimate-tier (Bucket 2) live tests for client.bulk.
+"""Live tests for client.bulk against the real FMP API.
 
-Confirms the workflow doc's original pricing-tier audit, which already
-named most Bulk as FMP-Ultimate-gated: all 18 methods 402 on the free
-tier, confirmed live 2026-08-23 — the whole group, not a subset.
-Skipped by default; run for real only during a deliberately-timed FMP
-Ultimate month, per the rewrite workflow.
+All methods below were confirmed on 2026-08-24 to require an FMP
+Ultimate-tier key (they 402 on free, Starter, and Premium) -- moved
+here from tests/ultimate/test_bulk.py once Dax upgraded from
+Premium to Ultimate.
 """
 
 from __future__ import annotations
 
 import pytest
 
-pytestmark = pytest.mark.ultimate
+pytestmark = pytest.mark.live
 
 
 def test_profile_bulk(live_client):

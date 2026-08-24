@@ -55,3 +55,38 @@ def test_batch_aftermarket_quote(live_client):
 def test_batch_aftermarket_trade(live_client):
     result = live_client.batch_aftermarket_trade(symbols="AAPL,MSFT")
     assert isinstance(result, list)
+
+
+def test_batch_exchange_quote(live_client):
+    result = live_client.batch_exchange_quote(exchange="NASDAQ")
+    assert len(result) > 0
+
+
+def test_batch_etf_quotes(live_client):
+    result = live_client.batch_etf_quotes()
+    assert len(result) > 0
+
+
+def test_batch_mutualfund_quotes(live_client):
+    result = live_client.batch_mutualfund_quotes()
+    assert len(result) > 0
+
+
+def test_batch_commodity_quotes(live_client):
+    result = live_client.batch_commodity_quotes()
+    assert len(result) > 0
+
+
+def test_batch_crypto_quotes(live_client):
+    result = live_client.batch_crypto_quotes()
+    assert len(result) > 0
+
+
+def test_batch_forex_quotes(live_client):
+    result = live_client.batch_forex_quotes()
+    assert len(result) > 0
+
+
+def test_batch_index_quotes(live_client):
+    result = live_client.batch_index_quotes()
+    assert len(result) > 0

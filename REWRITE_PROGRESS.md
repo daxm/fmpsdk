@@ -35,7 +35,7 @@ live-testing discipline (attempt each method as it's built, one fixed cheap test
 is the real source of truth — if a "Bucket 1" method 402s, mark it `ultimate-pending`
 and move on; if a "Bucket 2" method turns out to work on the current key, even better.
 
-**Progress: 181 / 238 methods done, 57 ultimate-pending, 0 left untested.** **This
+**Progress: 231 / 238 methods done, 7 ultimate-pending, 0 left untested.** **This
 is the full 238/238 catalog now implemented in code, and every single method has now
 been attempted at least once (unit-tested, and live-tested except where already
 Bucket-2-confirmed)** — every canonical method in REWRITE_ARCHITECTURE.md §6 has a
@@ -102,6 +102,42 @@ Ultimate-tier pass (the last rung on FMP's ladder, so whatever's still gated the
 *is* Ultimate-only — no more ambiguity to track past that point). Whole suite re-verified:
 268/268 unit, 181/181 live, 57/57 ultimate still failing as expected — clean split, no
 regressions. Docstrings updated same session for all 6 affected groups/methods.
+
+**2026-08-24 — Dax upgraded Premium → Ultimate** (3000 calls/min at this tier — FMP's top
+standard plan). Re-ran the remaining 57 `ultimate-pending` methods against the
+Ultimate-tier key: **50 now pass, 7 still 402.** Along the way, running `bulk`'s tests for
+the first time against a real 200 response (rather than an immediate 402) surfaced a real
+bug that had nothing to do with plan tier: **every `client.bulk` method's real response is
+CSV (`text/csv`), not JSON**, despite FMP's own docs showing JSON-looking examples — the
+existing code called `Client._get`, which parses JSON and raised `JSONDecodeError` against
+real bulk data. Fixed by adding `Client._get_csv` (shares the retry/error-mapping core via
+`_request`, same pattern as `_get_bytes` for `financial_reports_xlsx`) and switching all 18
+`bulk` methods to it. Field names/order in every existing `*BulkResult` TypedDict were
+verified against real CSV headers and all matched exactly — the one exception was
+`profile_bulk`, previously typed as the JSON-shaped `ProfileResult` on the (wrong) belief
+that it was the one bulk method returning real JSON; it's CSV too, all-`str` like every
+other bulk method, so a new `ProfileBulkResult` TypedDict replaces that reuse. `tests/unit/
+test_bulk.py`'s 18 mocks switched from `json=` to `text=` CSV fixtures to match. See
+[[fmpsdk-rewrite-status]] for the full account.
+
+Groups that flipped entirely to `done`: `bulk` (all 18, once the CSV fix landed),
+`earnings_transcript` (4/4), `esg` (3/3), `institutional_ownership` (8/8), `funds` (now
+9/9, closing that group out completely), `quote` (now 16/16, closing that group out
+completely — the remaining 7 `batch_*` methods), `statements` (now 27/27, closing that
+group out completely — the TTM/`latest_financial_statements` quartet). **`tipranks`'s 7
+methods still 402 even on Ultimate — but this is not a tier gap.** FMP's own error message
+names the real cause: a separate paid add-on ("TipRanks data boost"), purchased
+independently of the Free/Starter/Premium/Ultimate ladder via the dashboard's Add-ons tab.
+Retagged accordingly below rather than left implying a 5th tier exists. Whole suite
+re-verified: 268/268 unit, 231/231 live, 7/7 ultimate (tipranks) still failing as
+expected — clean split, no regressions. Docstrings updated same session for all 7 affected
+groups/methods (including a genuine mistake caught and fixed from the Premium-pass
+session: `quote`'s module docstring had wrongly claimed 7 `batch_*` methods were
+"confirmed working on Premium" when they'd actually still been gated at that tier).
+
+**This closes out the entire standard-tier testing backlog — 231/238 done, with the
+remaining 7 blocked on a separate product purchase (TipRanks add-on) rather than a plan
+tier, and nothing left to re-test unless Dax buys that add-on.**
 
 ---
 
@@ -265,9 +301,9 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 
 3 methods.
 
-- [x] ultimate-pending `esg_benchmark` — `esg-benchmark` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `esg_disclosures` — `esg-disclosures` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `esg_ratings` — `esg-ratings` (402 on free, Starter, and Premium tiers)
+- [x] done `esg_benchmark` — `esg-benchmark` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `esg_disclosures` — `esg-disclosures` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `esg_ratings` — `esg-ratings` (works on Ultimate tier; 402 on free, Starter, and Premium)
 
 ## `client.funds` — ETF and mutual-fund composition, info, and N-PORT/13F-style disclosures.
 
@@ -278,15 +314,15 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 > methods 402 on the free tier. Reclassified below per the workflow doc's
 > "if a Bucket 1 method 402s, mark it `ultimate-pending`" rule.
 
-- [x] ultimate-pending `etf_asset_exposure` — `etf/asset-exposure` (402 on free, Starter, and Premium tiers)
+- [x] done `etf_asset_exposure` — `etf/asset-exposure` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `etf_country_weightings` — `etf/country-weightings` (works on Starter tier; 402 on free tier)
-- [x] ultimate-pending `etf_holdings` — `etf/holdings` (402 on free, Starter, and Premium tiers)
+- [x] done `etf_holdings` — `etf/holdings` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `etf_info` — `etf/info` (works on Starter tier; 402 on free tier)
 - [x] done `etf_sector_weightings` — `etf/sector-weightings` (works on Starter tier; 402 on free tier)
-- [x] ultimate-pending `funds_disclosure` — `funds/disclosure` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `funds_disclosure_dates` — `funds/disclosure-dates` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (402 on free, Starter, and Premium tiers)
+- [x] done `funds_disclosure` — `funds/disclosure` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `funds_disclosure_dates` — `funds/disclosure-dates` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `funds_disclosure_holders_latest` — `funds/disclosure-holders-latest` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `funds_disclosure_holders_search` — `funds/disclosure-holders-search` (works on Ultimate tier; 402 on free, Starter, and Premium)
 
 ## `client.statements` — Financial statements and everything computed directly from them.
 
@@ -313,11 +349,11 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 - [x] done `balance_sheet_statement` — `balance-sheet-statement`
 - [x] done `balance_sheet_statement_as_reported` — `balance-sheet-statement-as-reported`
 - [x] done `balance_sheet_statement_growth` — `balance-sheet-statement-growth`
-- [x] ultimate-pending `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (402 on free, Starter, and Premium tiers)
+- [x] done `balance_sheet_statement_ttm` — `balance-sheet-statement-ttm` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `cash_flow_statement` — `cash-flow-statement`
 - [x] done `cash_flow_statement_as_reported` — `cash-flow-statement-as-reported`
 - [x] done `cash_flow_statement_growth` — `cash-flow-statement-growth`
-- [x] ultimate-pending `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (402 on free, Starter, and Premium tiers)
+- [x] done `cash_flow_statement_ttm` — `cash-flow-statement-ttm` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `enterprise_values` — `enterprise-values`
 - [x] done `financial_growth` — `financial-growth`
 - [x] done `financial_reports_dates` — `financial-reports-dates`
@@ -328,10 +364,10 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 - [x] done `income_statement` — `income-statement`
 - [x] done `income_statement_as_reported` — `income-statement-as-reported`
 - [x] done `income_statement_growth` — `income-statement-growth`
-- [x] ultimate-pending `income_statement_ttm` — `income-statement-ttm` (402 on free, Starter, and Premium tiers)
+- [x] done `income_statement_ttm` — `income-statement-ttm` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `key_metrics` — `key-metrics`
 - [x] done `key_metrics_ttm` — `key-metrics-ttm`
-- [x] ultimate-pending `latest_financial_statements` — `latest-financial-statements` (402 on free, Starter, and Premium tiers)
+- [x] done `latest_financial_statements` — `latest-financial-statements` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `owner_earnings` — `owner-earnings`
 - [x] done `ratios` — `ratios`
 - [x] done `ratios_ttm` — `ratios-ttm`
@@ -346,14 +382,14 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 
 8 methods.
 
-- [x] ultimate-pending `institutional_ownership_dates` — `institutional-ownership/dates` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_extract` — `institutional-ownership/extract` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_latest` — `institutional-ownership/latest` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (402 on free, Starter, and Premium tiers)
+- [x] done `institutional_ownership_dates` — `institutional-ownership/dates` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_extract` — `institutional-ownership/extract` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_extract_analytics_holder` — `institutional-ownership/extract-analytics/holder` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_holder_industry_breakdown` — `institutional-ownership/holder-industry-breakdown` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_holder_performance_summary` — `institutional-ownership/holder-performance-summary` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_industry_summary` — `institutional-ownership/industry-summary` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_latest` — `institutional-ownership/latest` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `institutional_ownership_symbol_positions_summary` — `institutional-ownership/symbol-positions-summary` (works on Ultimate tier; 402 on free, Starter, and Premium)
 
 ## `client.indexes` — Stock-market indexes, their quotes/charts, and their constituent lists.
 
@@ -514,13 +550,13 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 - [x] done `aftermarket_trade` — `aftermarket-trade`
 - [x] done `batch_aftermarket_quote` — `batch-aftermarket-quote` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `batch_aftermarket_trade` — `batch-aftermarket-trade` (works on Premium tier; 402 on free and Starter tiers)
-- [x] ultimate-pending `batch_commodity_quotes` — `batch-commodity-quotes` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `batch_crypto_quotes` — `batch-crypto-quotes` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `batch_etf_quotes` — `batch-etf-quotes` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `batch_exchange_quote` — `batch-exchange-quote` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `batch_forex_quotes` — `batch-forex-quotes` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `batch_index_quotes` — `batch-index-quotes` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (402 on free, Starter, and Premium tiers)
+- [x] done `batch_commodity_quotes` — `batch-commodity-quotes` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `batch_crypto_quotes` — `batch-crypto-quotes` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `batch_etf_quotes` — `batch-etf-quotes` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `batch_exchange_quote` — `batch-exchange-quote` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `batch_forex_quotes` — `batch-forex-quotes` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `batch_index_quotes` — `batch-index-quotes` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `batch_mutualfund_quotes` — `batch-mutualfund-quotes` (works on Ultimate tier; 402 on free, Starter, and Premium)
 - [x] done `batch_quote` — `batch-quote` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `batch_quote_short` — `batch-quote-short` (works on Premium tier; 402 on free and Starter tiers)
 - [x] done `quote` — `quote`
@@ -560,10 +596,10 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 
 4 methods.
 
-- [x] ultimate-pending `earning_call_transcript` — `earning-call-transcript` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `earning_call_transcript_dates` — `earning-call-transcript-dates` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `earning_call_transcript_latest` — `earning-call-transcript-latest` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `earnings_transcript_list` — `earnings-transcript-list` (402 on free, Starter, and Premium tiers)
+- [x] done `earning_call_transcript` — `earning-call-transcript` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `earning_call_transcript_dates` — `earning-call-transcript-dates` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `earning_call_transcript_latest` — `earning-call-transcript-latest` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `earnings_transcript_list` — `earnings-transcript-list` (works on Ultimate tier; 402 on free, Starter, and Premium)
 
 ## `client.congress` — U.S. Senate and House financial disclosures, trades, and member profiles.
 
@@ -602,24 +638,24 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 
 18 methods.
 
-- [x] ultimate-pending `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `dcf_bulk` — `dcf-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `earnings_surprises_bulk` — `earnings-surprises-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `eod_bulk` — `eod-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `etf_holder_bulk` — `etf-holder-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `income_statement_bulk` — `income-statement-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `income_statement_growth_bulk` — `income-statement-growth-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `peers_bulk` — `peers-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `price_target_summary_bulk` — `price-target-summary-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `profile_bulk` — `profile-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `rating_bulk` — `rating-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `ratios_ttm_bulk` — `ratios-ttm-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `scores_bulk` — `scores-bulk` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (402 on free, Starter, and Premium tiers)
+- [x] done `balance_sheet_statement_bulk` — `balance-sheet-statement-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `balance_sheet_statement_growth_bulk` — `balance-sheet-statement-growth-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `cash_flow_statement_bulk` — `cash-flow-statement-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `cash_flow_statement_growth_bulk` — `cash-flow-statement-growth-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `dcf_bulk` — `dcf-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `earnings_surprises_bulk` — `earnings-surprises-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `eod_bulk` — `eod-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `etf_holder_bulk` — `etf-holder-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `income_statement_bulk` — `income-statement-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `income_statement_growth_bulk` — `income-statement-growth-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `key_metrics_ttm_bulk` — `key-metrics-ttm-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `peers_bulk` — `peers-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `price_target_summary_bulk` — `price-target-summary-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `profile_bulk` — `profile-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `rating_bulk` — `rating-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `ratios_ttm_bulk` — `ratios-ttm-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `scores_bulk` — `scores-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
+- [x] done `upgrades_downgrades_consensus_bulk` — `upgrades-downgrades-consensus-bulk` (works on Ultimate tier; 402 on free, Starter, and Premium)
 
 ## `client.tipranks` — TipRanks partner analyst data.
 
@@ -634,10 +670,10 @@ regressions. Docstrings updated same session for all 6 affected groups/methods.
 
 7 methods.
 
-- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on free, Starter, and Premium tiers)
-- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on free, Starter, and Premium tiers)
+- [x] ultimate-pending `tipranks_analyst_summary` — `tipranks-analyst-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] ultimate-pending `tipranks_analysts` — `tipranks-analysts` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] ultimate-pending `tipranks_firm_summary` — `tipranks-firm-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] ultimate-pending `tipranks_pit_analyst` — `tipranks-pit-analyst` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] ultimate-pending `tipranks_pit_symbol` — `tipranks-pit-symbol` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] ultimate-pending `tipranks_search` — `tipranks-search` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)
+- [x] ultimate-pending `tipranks_symbol_summary` — `tipranks-symbol-summary` (402 on every plan tier through Ultimate — requires FMP's separate TipRanks add-on, confirmed 2026-08-24)

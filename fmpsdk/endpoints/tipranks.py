@@ -1,7 +1,9 @@
 """client.tipranks — TipRanks partner analyst ratings and coverage
-data. 7 methods. Still 402s on both the free and Starter tiers as of
-2026-08-23 — every method requires FMP Premium or Ultimate (not yet
-confirmed which).
+data. 7 methods. **Not gated by plan tier at all** — confirmed
+2026-08-24 that every method still 402s even on FMP's top Ultimate
+tier. FMP's own error message names the real requirement: a separate
+paid add-on ("TipRanks data boost"), purchased independently of the
+Free/Starter/Premium/Ultimate ladder, via the dashboard's Add-ons tab.
 """
 
 from __future__ import annotations

@@ -136,3 +136,24 @@ def test_revenue_product_segmentation(live_client):
 def test_revenue_geographic_segmentation(live_client):
     result = live_client.revenue_geographic_segmentation(symbol="AAPL")
     assert result[0]["symbol"] == "AAPL"
+
+
+def test_income_statement_ttm(live_client):
+    result = live_client.income_statement_ttm(symbol="AAPL")
+    assert result[0]["symbol"] == "AAPL"
+
+
+def test_balance_sheet_statement_ttm(live_client):
+    result = live_client.balance_sheet_statement_ttm(symbol="AAPL")
+    assert result[0]["symbol"] == "AAPL"
+
+
+def test_cash_flow_statement_ttm(live_client):
+    result = live_client.cash_flow_statement_ttm(symbol="AAPL")
+    assert result[0]["symbol"] == "AAPL"
+
+
+def test_latest_financial_statements(live_client):
+    result = live_client.latest_financial_statements(page=0, limit=10)
+    assert len(result) > 0
+    assert "symbol" in result[0]

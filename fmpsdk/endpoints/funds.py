@@ -2,9 +2,9 @@
 disclosures. 9 methods. ``etf_info``, ``etf_country_weightings``, and
 ``etf_sector_weightings`` require an FMP Starter-tier plan or higher.
 The other 6 (``etf_holdings``, ``etf_asset_exposure``, and all 4
-``funds_disclosure*`` methods) still 402 on both the free and Starter
-tiers as of 2026-08-23 — they require FMP Premium or Ultimate (not yet
-confirmed which).
+``funds_disclosure*`` methods) require an FMP Ultimate-tier plan (402
+on free, Starter, and Premium; confirmed working on Ultimate
+2026-08-24).
 """
 
 from __future__ import annotations

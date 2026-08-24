@@ -13,8 +13,8 @@ FMP Starter-tier plan or higher. The remaining 7 ``batch_*`` methods
 ``batch_etf_quotes``, ``batch_mutualfund_quotes``,
 ``batch_commodity_quotes``, ``batch_crypto_quotes``,
 ``batch_forex_quotes``, ``batch_index_quotes``) require an FMP
-Premium-tier plan or higher (402 on free and Starter; confirmed working
-on Premium 2026-08-23).
+Ultimate-tier plan (402 on free, Starter, and Premium; confirmed
+working on Ultimate 2026-08-24).
 """
 
 from __future__ import annotations

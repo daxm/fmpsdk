@@ -14,6 +14,8 @@ it as ``client.quote.quote(...)``.)
 
 from __future__ import annotations
 
+import csv
+import io
 import logging
 import os
 import random
@@ -181,8 +183,9 @@ class Client(
         failures per the backoff policy above, and raise a typed
         :class:`~fmpsdk.exceptions.FMPError` on any non-2xx response.
         Parses the response body as JSON — every method uses this except
-        ``financial_reports_xlsx``, which needs raw bytes and uses
-        :meth:`_get_bytes` instead.
+        ``financial_reports_xlsx`` (raw bytes, :meth:`_get_bytes`) and
+        every ``client.bulk`` method (real CSV despite the group's
+        misleading original name, :meth:`_get_csv`).
 
         :param path: the FMP ``stable/`` path, e.g. ``"search-symbol"``.
         :param params: query parameters. ``None`` values are dropped rather
@@ -202,9 +205,27 @@ class Client(
         """
         return self._request(path, params, lambda response: response.content)
 
+    def _get_csv(self, path: str, params: dict) -> list[dict[str, str]]:
+        """Same request/retry/error-mapping path as :meth:`_get`, but
+        parses the response body as CSV instead of JSON.
+
+        Exists for every ``client.bulk`` method: despite FMP's own docs
+        showing JSON-looking example payloads, every bulk endpoint's
+        real response is ``text/csv`` (confirmed live 2026-08-24,
+        including ``profile_bulk`` — the one bulk method previously,
+        and wrongly, assumed to return real JSON). ``response.json()``
+        raises ``JSONDecodeError`` against real bulk responses, so this
+        group cannot share :meth:`_get`'s parsing path. Every value
+        comes back as a plain ``str`` (``csv.DictReader``'s native
+        type), which is why every ``*BulkResult`` TypedDict in
+        ``types/bulk.py`` types its fields as ``str``.
+        """
+        return self._request(path, params, _parse_csv)
+
     def _request(self, path: str, params: dict, parse):
-        """Shared GET/retry/error-mapping core for :meth:`_get` and
-        :meth:`_get_bytes` — identical policy, different body handling."""
+        """Shared GET/retry/error-mapping core for :meth:`_get`,
+        :meth:`_get_bytes`, and :meth:`_get_csv` — identical policy,
+        different body handling."""
         url = f"{BASE_URL}{path}"
         query = {key: value for key, value in params.items() if value is not None}
         headers = {"apikey": self.api_key}
@@ -242,3 +263,9 @@ def _parse_json(response: requests.Response) -> list | dict:
     if not response.content:
         return []
     return response.json()
+
+
+def _parse_csv(response: requests.Response) -> list[dict[str, str]]:
+    if not response.content:
+        return []
+    return list(csv.DictReader(io.StringIO(response.text)))

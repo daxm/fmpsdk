@@ -1,17 +1,16 @@
-"""Ultimate-tier (Bucket 2) live tests for client.institutional_ownership.
+"""Live tests for client.institutional_ownership against the real FMP API.
 
-Confirms the workflow doc's original pricing-tier audit, which already
-named "granular Form 13F" as FMP-Ultimate-gated: all 8 methods 402 on the
-free tier. Skipped by default (`-m "not ultimate"` / excluded unless
-explicitly selected); run for real only during a deliberately-timed FMP
-Ultimate month, per the rewrite workflow.
+All methods below were confirmed on 2026-08-24 to require an FMP
+Ultimate-tier key (they 402 on free, Starter, and Premium) -- moved
+here from tests/ultimate/test_institutional_ownership.py once Dax upgraded from
+Premium to Ultimate.
 """
 
 from __future__ import annotations
 
 import pytest
 
-pytestmark = pytest.mark.ultimate
+pytestmark = pytest.mark.live
 
 # Filer's CIK (Berkshire Hathaway), not an issuer's — matches
 # REWRITE_ARCHITECTURE.md's own doc examples for these filer-scoped

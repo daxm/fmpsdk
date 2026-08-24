@@ -1,15 +1,21 @@
 """Response shapes returned by ``client.bulk`` methods.
 
-**Every method except `profile_bulk` returns every field as a JSON
-string, including fields that are semantically numeric or boolean** —
-e.g. `rating_bulk`'s `"discountedCashFlowScore": "5"`,
+**Every bulk endpoint's real response is CSV, not JSON** — confirmed
+live 2026-08-24 against an FMP Ultimate-tier key, including
+``profile_bulk`` (previously assumed, wrongly, to be the one exception
+returning real JSON). ``Client._get_csv`` parses every response with
+``csv.DictReader``, whose native type is ``str`` for every field, so
+**every field on every ``*BulkResult`` TypedDict here is typed `str`,
+including ones that are semantically numeric or boolean** — e.g.
+`rating_bulk`'s `"discountedCashFlowScore": "5"`,
 `earnings_surprises_bulk`'s `"epsActual": "0.3631"`. Don't assume
-`int`/`float` on these without converting first. `profile_bulk` is the
-lone exception, with real JSON numbers/booleans (it shares its shape
-with `ProfileResult`, from `profile`/`profile_cik`). This whole group
-is Ultimate-gated on FMP's free tier, so the all-string typing is taken
-from FMP's documented examples rather than a live response — worth a
-sanity check against a real response if you're on a paid plan.
+`int`/`float` on these without converting first. Field names and order
+were taken from FMP's documented examples during the original build and
+later verified field-for-field against real CSV headers — every one
+matched except `profile_bulk`'s wrong type, now fixed as
+`ProfileBulkResult` (a separate, all-`str` type — it no longer shares
+`ProfileResult`, from `profile`/`profile_cik`, which has real
+`int`/`float`/`bool` fields that don't exist in a CSV response).
 
 `cash_flow_statement_growth_bulk`'s field names preserve FMP's own
 typos verbatim (`...Activites`, missing the second `i`, on 3 fields) —
@@ -19,6 +25,50 @@ not fixed here, since that would break parsing a real response.
 from __future__ import annotations
 
 from typing import TypedDict
+
+
+class ProfileBulkResult(TypedDict):
+    """Company profile for a whole page ("part") of the universe at
+    once. Same field set as `ProfileResult` (`profile`/`profile_cik`),
+    but every value is a `str` — this is a CSV response, unlike the
+    single-company JSON endpoints. Returned by `profile_bulk()`."""
+
+    symbol: str
+    price: str
+    marketCap: str
+    beta: str
+    lastDividend: str
+    range: str
+    change: str
+    changePercentage: str
+    volume: str
+    averageVolume: str
+    companyName: str
+    currency: str
+    cik: str
+    isin: str
+    cusip: str
+    exchangeFullName: str
+    exchange: str
+    industry: str
+    website: str
+    description: str
+    ceo: str
+    sector: str
+    country: str
+    fullTimeEmployees: str
+    phone: str
+    address: str
+    city: str
+    state: str
+    zip: str
+    image: str
+    ipoDate: str
+    defaultImage: str
+    isEtf: str
+    isActivelyTrading: str
+    isAdr: str
+    isFund: str
 
 
 class RatingBulkResult(TypedDict):
