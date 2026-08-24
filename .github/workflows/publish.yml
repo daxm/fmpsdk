@@ -1,0 +1,38 @@
+# Publishes to PyPI via Trusted Publishing (OIDC) -- no stored token, no
+# long-lived secret anywhere. PyPI grants this workflow a short-lived
+# credential per run, scoped to exactly this repo + workflow file, as
+# configured on PyPI's project settings -> Publishing page.
+#
+# Triggered by pushing a version tag (e.g. `v20260824.0`) -- which
+# deploy_a_release.sh does as its last step, only after black, the unit
+# suite, and a local build all pass and a human has confirmed the version.
+name: Publish to PyPI
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # required for PyPI's OIDC trusted-publishing exchange
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install poetry
+        run: pip install poetry
+      - name: Install dependencies
+        run: poetry install --with dev
+      - name: Run unit tests
+        run: poetry run pytest -m unit
+      - name: Build
+        run: poetry build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

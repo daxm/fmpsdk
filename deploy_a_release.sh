@@ -68,7 +68,9 @@ if git rev-parse "v$PYPROJECT_VERSION" >/dev/null 2>&1; then
     exit 1
 fi
 
-echo "About to publish fmpsdk $PYPROJECT_VERSION to PyPI."
+echo "About to release fmpsdk $PYPROJECT_VERSION: tagging v$PYPROJECT_VERSION and"
+echo "pushing it will trigger .github/workflows/publish.yml, which builds and"
+echo "publishes to PyPI via Trusted Publishing (no token stored anywhere)."
 read -p "Is that version correct and bumped from the last release? (y/n): " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -77,12 +79,11 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 echo
 
-echo "Building package via poetry"
+# Local build is just a sanity check that packaging itself doesn't error --
+# the artifact that actually gets published is the one CI builds fresh after
+# this tag triggers publish.yml, not this one.
+echo "Building package via poetry (sanity check only, not what gets published)"
 poetry build
-echo
-
-echo "Publishing package"
-poetry publish
 echo
 
 echo "Tagging release v$PYPROJECT_VERSION and pushing the tag"
@@ -90,4 +91,6 @@ git tag "v$PYPROJECT_VERSION"
 git push origin "v$PYPROJECT_VERSION"
 
 echo
-echo "Done. Released fmpsdk $PYPROJECT_VERSION to PyPI, tagged v$PYPROJECT_VERSION."
+echo "Tag pushed. GitHub Actions is now building and publishing fmpsdk"
+echo "$PYPROJECT_VERSION to PyPI: https://github.com/daxm/fmpsdk/actions"
+echo "Once that run goes green, verify at https://pypi.org/project/fmpsdk/$PYPROJECT_VERSION/"
