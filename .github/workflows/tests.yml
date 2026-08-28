@@ -30,3 +30,28 @@ jobs:
       run: black --check fmpsdk/
     - name: Run unit tests
       run: pytest -m unit
+
+  # The GitHub-only MCP server (mcp/) and the generated artifacts it shares with
+  # tools/. Separate job: needs Python 3.10+ (fastmcp) and its own deps.
+  mcp:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.12"
+    - name: Install dependencies
+      run: |
+        set -xe
+        python -m pip install --upgrade pip
+        pip install . ./mcp
+        pip install black pytest
+    - name: Check formatting
+      run: black --check mcp/ tools/
+    - name: Generated artifacts are in sync with the source
+      run: |
+        python tools/gen_tiers.py --check
+        python tools/gen_openapi.py --check
+    - name: Run mcp test suite
+      run: pytest mcp/tests

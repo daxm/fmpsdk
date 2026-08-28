@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fmpsdk-mcp"
+version = "0.1.0"
+description = "Model Context Protocol server for the fmpsdk Financial Modeling Prep library. GitHub-only; not published to PyPI."
+readme = "README.md"
+license = "BSD-3-Clause"
+requires-python = ">=3.10"
+authors = [{ name = "Dax Mickelson", email = "github@daxm.net" }]
+dependencies = [
+    "fmpsdk>=20260824",
+    "fastmcp>=2.0",
+]
+
+[project.scripts]
+fmpsdk-mcp = "fmpsdk_mcp.server:main"
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.hatch.build.targets.wheel]
+# Ships fmpsdk_mcp/ including its resources/ data files (llms.txt, tiers.json).
+packages = ["fmpsdk_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
