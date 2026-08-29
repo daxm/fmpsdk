@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.daxm/fmpsdk-mcp",
+  "title": "Financial Modeling Prep (fmpsdk)",
+  "description": "Financial Modeling Prep API as MCP tools — quotes, statements, prices, and ~240 endpoints.",
+  "repository": {
+    "url": "https://github.com/daxm/fmpsdk",
+    "source": "github"
+  },
+  "version": "20260829.1",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "fmpsdk-mcp",
+      "version": "20260829.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "FMP_API_KEY",
+          "description": "Financial Modeling Prep API key (https://site.financialmodelingprep.com/developer/docs)",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ]
+}

@@ -62,6 +62,18 @@ if git rev-parse "mcp-v$VERSION" >/dev/null 2>&1; then
     exit 1
 fi
 
+# server.json (the MCP Registry metadata) carries the version in two spots.
+# publish-mcp.yml rewrites both from the tag, but the committed file should
+# still match __version__ so a manual `mcp-publisher publish` is correct too.
+SJ_VERSION=$(sed -nE 's/.*"version": "([0-9.]+)".*/\1/p' mcp/server.json | head -1)
+if [[ "$SJ_VERSION" != "$VERSION" ]]; then
+    echo "Version mismatch:"
+    echo "  mcp/fmpsdk_mcp/__init__.py: $VERSION"
+    echo "  mcp/server.json:            $SJ_VERSION"
+    echo "Set both 'version' fields in mcp/server.json to $VERSION, then re-run."
+    exit 1
+fi
+
 echo "About to release fmpsdk-mcp $VERSION: tagging mcp-v$VERSION and pushing it"
 echo "will trigger .github/workflows/publish-mcp.yml, which builds and publishes"
 echo "to PyPI via Trusted Publishing."

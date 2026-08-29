@@ -43,3 +43,23 @@ jobs:
         run: python -m build --outdir dist mcp/
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      # Register/update the server in the official MCP Registry. It stores only
+      # metadata (mcp/server.json) pointing at the PyPI package just published;
+      # ownership is proven by the `mcp-name: io.github.daxm/fmpsdk-mcp` marker
+      # in mcp/README.md, which is fmpsdk-mcp's PyPI description. Auth is GitHub
+      # OIDC via the id-token:write permission above -- no secret.
+      # If this step fails with "Package validation failed", PyPI's JSON API
+      # hasn't caught up yet; just re-run the job.
+      - name: Install mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+      - name: Sync server.json to the released version
+        run: |
+          v="${GITHUB_REF_NAME#mcp-v}"
+          jq --arg v "$v" '.version = $v | .packages[0].version = $v' mcp/server.json > mcp/server.json.tmp
+          mv mcp/server.json.tmp mcp/server.json
+      - name: Publish to the MCP Registry
+        run: |
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish mcp/server.json

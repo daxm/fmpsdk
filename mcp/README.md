@@ -1,5 +1,7 @@
 # fmpsdk-mcp
 
+<!-- mcp-name: io.github.daxm/fmpsdk-mcp -->
+
 A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes
 the [`fmpsdk`](https://pypi.org/project/fmpsdk/) library — the full Financial
 Modeling Prep API — to an MCP client such as Claude Desktop or Claude Code.
