@@ -4,15 +4,39 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fmpsdk-mcp"
-version = "0.1.0"
-description = "Model Context Protocol server for the fmpsdk Financial Modeling Prep library. GitHub-only; not published to PyPI."
+dynamic = ["version"]  # single-sourced from fmpsdk_mcp/__init__.py
+description = "Model Context Protocol server for the fmpsdk Financial Modeling Prep library."
 readme = "README.md"
 license = "BSD-3-Clause"
+license-files = ["LICENSE.md"]
 requires-python = ">=3.10"
 authors = [{ name = "Dax Mickelson", email = "github@daxm.net" }]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "financial-modeling-prep",
+    "fmp",
+    "stocks",
+    "finance",
+    "llm",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+# fmpsdk floor is the release that first shipped the stable/ rewrite the catalog
+# introspects. fastmcp moves fast; cap below the next major until tested there.
 dependencies = [
     "fmpsdk>=20260824",
-    "fastmcp>=2.0",
+    "fastmcp>=2.9,<4",
 ]
 
 [project.scripts]
@@ -20,6 +44,14 @@ fmpsdk-mcp = "fmpsdk_mcp.server:main"
 
 [project.optional-dependencies]
 test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/daxm/fmpsdk"
+Repository = "https://github.com/daxm/fmpsdk"
+Issues = "https://github.com/daxm/fmpsdk/issues"
+
+[tool.hatch.version]
+path = "fmpsdk_mcp/__init__.py"
 
 [tool.hatch.build.targets.wheel]
 # Ships fmpsdk_mcp/ including its resources/ data files (llms.txt, tiers.json).

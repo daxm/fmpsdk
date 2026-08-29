@@ -4,9 +4,9 @@ A [Model Context Protocol](https://modelcontextprotocol.io) server that exposes
 the [`fmpsdk`](https://pypi.org/project/fmpsdk/) library — the full Financial
 Modeling Prep API — to an MCP client such as Claude Desktop or Claude Code.
 
-**Distributed from GitHub only. It is deliberately not published to PyPI** — it
-carries an extra dependency (`fastmcp`) and targets a different audience than
-the SDK. The SDK on PyPI is unchanged by this.
+Published to PyPI as [`fmpsdk-mcp`](https://pypi.org/project/fmpsdk-mcp/); it
+lives in the [fmpsdk repo](https://github.com/daxm/fmpsdk) under `mcp/`. It is a
+separate package so `pip install fmpsdk` never pulls in `fastmcp`.
 
 ## What it exposes
 
@@ -21,31 +21,39 @@ are paged (50 rows) with `page` / `total` / `more`; the `bulk` group and the
 whole-asset-class `batch_*_quotes` endpoints are refused — use the `fmpsdk`
 library directly for dataset-scale work.
 
-## Install / configure
+## Install
 
-Requires [`uv`](https://docs.astral.sh/uv/). No checkout needed — `uvx` runs it
-straight from this repo's `mcp/` subdirectory:
+Needs [`uv`](https://docs.astral.sh/uv/) (for `uvx`) and an
+[FMP API key](https://site.financialmodelingprep.com/developer/docs).
+
+**Claude Code:**
+
+```sh
+claude mcp add fmpsdk -s user -e FMP_API_KEY=your-fmp-api-key -- uvx fmpsdk-mcp
+```
+
+**Claude Desktop** — add to `claude_desktop_config.json`:
 
 ```jsonc
 {
   "mcpServers": {
     "fmpsdk": {
       "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/daxm/fmpsdk@master#subdirectory=mcp",
-        "fmpsdk-mcp"
-      ],
+      "args": ["fmpsdk-mcp"],
       "env": { "FMP_API_KEY": "your-fmp-api-key" }
     }
   }
 }
 ```
 
-- **Claude Desktop:** add the block to `claude_desktop_config.json`.
-- **Claude Code:** `claude mcp add-json fmpsdk '{ ... }'`, or drop it in `.mcp.json`.
+`uvx` fetches and caches the package on first launch (a few seconds). Pin a
+version with `uvx fmpsdk-mcp@20260829.0`.
 
-Pin a released version by swapping `@master` for a tag once you cut one.
+To run an unreleased revision straight from a branch instead:
+
+```sh
+uvx --from git+https://github.com/daxm/fmpsdk@master#subdirectory=mcp fmpsdk-mcp
+```
 
 ## Develop
 
@@ -54,7 +62,12 @@ cd mcp
 uv sync
 uv run fastmcp dev fmpsdk_mcp/server.py   # opens the MCP Inspector
 FMP_API_KEY=... uv run fmpsdk-mcp         # run the stdio server directly
+uv run --extra test pytest               # the test suite
 ```
+
+Cut a release with `mcp/deploy_a_release.sh` after bumping `__version__` in
+`fmpsdk_mcp/__init__.py` — it runs the gate, then tags `mcp-v<version>` and
+pushes, which triggers `.github/workflows/publish-mcp.yml`.
 
 ## Related: `openapi.json`
 

@@ -1,0 +1,45 @@
+# Publishes the fmpsdk-mcp package (mcp/ subdirectory) to PyPI via Trusted
+# Publishing (OIDC) -- no stored token. This is a SEPARATE project and pending
+# publisher from fmpsdk itself; configure it on PyPI's fmpsdk-mcp project
+# settings -> Publishing page, pointing at this workflow filename.
+#
+# Triggered by pushing an `mcp-v*` tag (e.g. `mcp-v20260829.0`), which
+# mcp/deploy_a_release.sh does as its last step after the gate below passes
+# locally. The SDK's own `v*` tags never match this, and vice versa.
+name: Publish fmpsdk-mcp to PyPI
+on:
+  push:
+    tags:
+      - "mcp-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # required for PyPI's OIDC trusted-publishing exchange
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          set -xe
+          python -m pip install --upgrade pip build
+          pip install . ./mcp black pytest
+      - name: Check formatting
+        run: black --check mcp/ tools/
+      - name: Generated artifacts are in sync with the source
+        run: |
+          python tools/gen_openapi.py --check
+          python tools/gen_tiers.py --check
+      - name: Run mcp test suite
+        run: pytest mcp/tests
+      - name: Build (from the mcp/ subdirectory)
+        run: python -m build --outdir dist mcp/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
