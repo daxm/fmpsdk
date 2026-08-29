@@ -1,0 +1,61 @@
+# Registers/updates fmpsdk-mcp in the official MCP Registry
+# (registry.modelcontextprotocol.io) after a successful PyPI publish.
+#
+# Deliberately a SEPARATE workflow file from publish-mcp.yml. That file is
+# fmpsdk-mcp's PyPI Trusted Publisher, and PyPI binds that trust to the workflow
+# *filename* (not the job). Running the third-party `mcp-publisher` binary in
+# its own file means a compromise of that binary cannot mint a PyPI-audience
+# OIDC token and publish to PyPI. The `id-token: write` below is used only for
+# this workflow's own GitHub-OIDC login to the MCP Registry.
+#
+# The binary is pinned to a specific release and its archive is checked against
+# a known SHA-256 before it is extracted or run.
+name: Publish fmpsdk-mcp to the MCP Registry
+on:
+  workflow_run:
+    workflows: ["Publish fmpsdk-mcp to PyPI"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  registry:
+    runs-on: ubuntu-latest
+    # Only after the PyPI publish succeeded, and only for `mcp-v*` tag pushes.
+    if: >-
+      ${{ github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.event == 'push' &&
+          startsWith(github.event.workflow_run.head_branch, 'mcp-v') }}
+    permissions:
+      id-token: write   # MCP Registry GitHub-OIDC login only
+    env:
+      # mcp-publisher release to use, and the SHA-256 of its
+      # mcp-publisher_linux_amd64.tar.gz asset (matches the GitHub API
+      # `assets[].digest` for this tag). Bump both together to upgrade.
+      MCP_PUBLISHER_VERSION: v1.8.1
+      MCP_PUBLISHER_SHA256: a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc
+      RELEASE_TAG: ${{ github.event.workflow_run.head_branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - name: Install mcp-publisher (pinned + SHA-256 verified)
+        run: |
+          set -euo pipefail
+          url="https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/mcp-publisher_linux_amd64.tar.gz"
+          curl -fsSL -o mcp-publisher.tgz "$url"
+          echo "${MCP_PUBLISHER_SHA256}  mcp-publisher.tgz" | sha256sum -c -
+          tar xzf mcp-publisher.tgz mcp-publisher
+          rm mcp-publisher.tgz
+      - name: Sync server.json to the released version
+        run: |
+          set -euo pipefail
+          v="${RELEASE_TAG#mcp-v}"
+          jq --arg v "$v" '.version = $v | .packages[0].version = $v' mcp/server.json > mcp/server.json.tmp
+          mv mcp/server.json.tmp mcp/server.json
+      - name: Publish to the MCP Registry
+        run: |
+          set -euo pipefail
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish mcp/server.json
